@@ -317,6 +317,7 @@ class Diary {
     this.tags = const [],
     this.venues = defaultVenues,
     this.nextNo = 1,
+    this.hidden = const [],
   });
 
   /// Snapshot of every film referenced by a stub or wish, so records never
@@ -328,6 +329,9 @@ class Diary {
   final List<Venue> venues;
   final int nextNo;
 
+  /// Film ids marked "Not interested" in recommendations.
+  final List<String> hidden;
+
   Diary copyWith({
     Map<String, Film>? films,
     List<Stub>? stubs,
@@ -335,6 +339,7 @@ class Diary {
     List<String>? tags,
     List<Venue>? venues,
     int? nextNo,
+    List<String>? hidden,
   }) => Diary(
     films: films ?? this.films,
     stubs: stubs ?? this.stubs,
@@ -342,6 +347,7 @@ class Diary {
     tags: tags ?? this.tags,
     venues: venues ?? this.venues,
     nextNo: nextNo ?? this.nextNo,
+    hidden: hidden ?? this.hidden,
   );
 
   factory Diary.fromJson(Map<String, dynamic> j) => Diary(
@@ -355,6 +361,7 @@ class Diary {
         ? defaultVenues
         : (j['venues'] as List).map((e) => Venue.fromJson(e as Map<String, dynamic>)).toList(),
     nextNo: (j['nextNo'] as int?) ?? 1,
+    hidden: ((j['hidden'] as List?) ?? const []).cast<String>(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -365,6 +372,7 @@ class Diary {
     'tags': tags,
     'venues': venues.map((v) => v.toJson()).toList(),
     'nextNo': nextNo,
+    if (hidden.isNotEmpty) 'hidden': hidden,
   };
 
   VenueType venueType(String? name) {

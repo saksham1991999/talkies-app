@@ -91,6 +91,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comingSoon => 'Coming soon';
 
   @override
+  String get forYou => 'For you';
+
+  @override
+  String becauseYouLiked(String title) {
+    return 'Because you liked $title';
+  }
+
+  @override
+  String get notInterested => 'Not interested';
+
+  @override
+  String get hiddenFromRecs => 'Hidden from recommendations';
+
+  @override
   String get seeAll => 'See all';
 
   @override

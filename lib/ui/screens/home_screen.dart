@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models.dart';
@@ -27,6 +28,8 @@ class HomeScreen extends ConsumerWidget {
     final recent = [...diary.stubs]..sort((a, b) => byWatchOrder(b, a));
     final fresh = catalog?.newReleases(today, worldwide: worldwide).take(12).toList() ?? const <Film>[];
     final soon = catalog?.upcoming(today, worldwide: worldwide).take(12).toList() ?? const <Film>[];
+    final recs = ref.watch(recsProvider);
+    void hide(Film f) => _hide(context, ref, f);
 
     return Scaffold(
       floatingActionButton: RecordFab(onPressed: () => startRecord(context), tooltip: l.recordFilm),
@@ -59,9 +62,17 @@ class HomeScreen extends ConsumerWidget {
               EmptyNote(l.emptyHome, action: l.recordFilm, onAction: () => startRecord(context))
             else
               for (final s in recent.take(4)) StubRow(s, key: ValueKey(s.id)),
+            if (recs.forYou.isNotEmpty) ...[
+              SectionTitle(l.forYou),
+              _PosterStrip(films: recs.forYou, strip: _year, onHide: hide),
+            ],
             if (fresh.isNotEmpty) ...[
               SectionTitle(l.newReleases, action: l.seeAll, onAction: () => _films(ref, FilmsSegment.fresh)),
               _PosterStrip(films: fresh, strip: (f) => fmtRelease(context, f)),
+            ],
+            for (final (anchor, films) in recs.because) ...[
+              SectionTitle(l.becauseYouLiked(anchor.title)),
+              _PosterStrip(films: films, strip: _year, onHide: hide),
             ],
             if (soon.isNotEmpty) ...[
               SectionTitle(l.comingSoon, action: l.seeAll, onAction: () => _films(ref, FilmsSegment.upcoming)),
@@ -71,6 +82,23 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  static String? _year(Film f) => f.year?.toString();
+
+  /// "Not interested", with Undo.
+  void _hide(BuildContext context, WidgetRef ref, Film f) {
+    final diary = ref.read(diaryProvider.notifier);
+    HapticFeedback.selectionClick();
+    diary.setHidden(f.id, true);
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(context.l.hiddenFromRecs),
+          action: SnackBarAction(label: context.l.undo, onPressed: () => diary.setHidden(f.id, false)),
+        ),
+      );
   }
 
   void _films(WidgetRef ref, FilmsSegment s) {
@@ -240,9 +268,12 @@ class _VenueSplit extends StatelessWidget {
 }
 
 class _PosterStrip extends StatelessWidget {
-  const _PosterStrip({required this.films, required this.strip});
+  const _PosterStrip({required this.films, required this.strip, this.onHide});
   final List<Film> films;
-  final String Function(Film) strip;
+  final String? Function(Film) strip;
+
+  /// Long-press action: "Not interested".
+  final void Function(Film)? onHide;
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -252,7 +283,13 @@ class _PosterStrip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       itemCount: films.length,
       separatorBuilder: (_, _) => const SizedBox(width: 12),
-      itemBuilder: (_, i) => PosterTile(films[i], width: 108, strip: strip(films[i])),
+      itemBuilder: (context, i) => PosterTile(
+        films[i],
+        width: 108,
+        strip: strip(films[i]),
+        onLongPress: onHide == null ? null : () => onHide!(films[i]),
+        longPressHint: onHide == null ? null : context.l.notInterested,
+      ),
     ),
   );
 }

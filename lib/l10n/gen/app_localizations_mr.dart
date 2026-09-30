@@ -91,6 +91,20 @@ class AppLocalizationsMr extends AppLocalizations {
   String get comingSoon => 'लवकरच येणार';
 
   @override
+  String get forYou => 'तुमच्यासाठी';
+
+  @override
+  String becauseYouLiked(String title) {
+    return 'तुम्हाला $title आवडला म्हणून';
+  }
+
+  @override
+  String get notInterested => 'रस नाही';
+
+  @override
+  String get hiddenFromRecs => 'सुचवण्यांमधून लपवला';
+
+  @override
   String get seeAll => 'सर्व पाहा';
 
   @override

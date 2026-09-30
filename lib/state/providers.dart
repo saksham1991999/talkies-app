@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/catalog.dart';
 import '../data/json_file.dart';
 import '../data/models.dart';
+import '../data/recommend.dart';
 
 /// App documents directory. Overridden in main() and in tests.
 final docsDirProvider = Provider<Directory>((ref) => throw UnimplementedError('override docsDirProvider'));
@@ -17,6 +18,22 @@ final todayProvider = Provider<DateTime>((ref) => dateOnly(DateTime.now()));
 final catalogProvider = FutureProvider<Catalog>((ref) async {
   final raw = await rootBundle.loadString('assets/catalog/catalog.json', cache: false);
   return loadCatalog(raw, File('${ref.watch(docsDirProvider).path}/catalog_delta.json'));
+});
+
+/// Home recommendations. Recomputed when viewings, hidden films, the catalog,
+/// the day or the region change. Not on watchlist changes: a film added from a
+/// row stays there with its tick, and leaves on the next recompute.
+// ponytail: one scan of the catalog on the UI thread; move into Isolate.run behind a FutureProvider if Home janks
+final recsProvider = Provider<Recs>((ref) {
+  final catalog = ref.watch(catalogProvider).value;
+  if (catalog == null) return Recs.none;
+  ref.watch(diaryProvider.select((d) => (d.stubs, d.hidden)));
+  return recommend(
+    catalog,
+    ref.read(diaryProvider),
+    ref.watch(todayProvider),
+    worldwide: ref.watch(settingsProvider.select((s) => s.worldwide)),
+  );
 });
 
 // ---------------------------------------------------------------------------
@@ -290,6 +307,12 @@ class DiaryNotifier extends Notifier<Diary> {
         ),
       );
     }
+  }
+
+  /// "Not interested": the film leaves recommendations and counts as a mild dislike.
+  void setHidden(String filmId, bool on) {
+    final rest = state.hidden.where((id) => id != filmId);
+    _commit(state.copyWith(hidden: [...rest, if (on) filmId]));
   }
 
   void setPlanned(String filmId, DateTime? planned) {

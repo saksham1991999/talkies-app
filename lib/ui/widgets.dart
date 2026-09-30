@@ -458,7 +458,7 @@ class SectionTitle extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: Text(text, style: disp(20, p.ink))),
+          Expanded(child: Text(text, maxLines: 2, overflow: TextOverflow.ellipsis, style: disp(20, p.ink))),
           if (action != null)
             TextButton(
               onPressed: onAction,

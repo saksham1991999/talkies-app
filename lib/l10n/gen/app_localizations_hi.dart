@@ -91,6 +91,20 @@ class AppLocalizationsHi extends AppLocalizations {
   String get comingSoon => 'जल्द आ रही हैं';
 
   @override
+  String get forYou => 'आपके लिए';
+
+  @override
+  String becauseYouLiked(String title) {
+    return 'क्योंकि आपको $title पसंद आई';
+  }
+
+  @override
+  String get notInterested => 'दिलचस्पी नहीं';
+
+  @override
+  String get hiddenFromRecs => 'सुझावों से हटाई गई';
+
+  @override
   String get seeAll => 'सब देखें';
 
   @override

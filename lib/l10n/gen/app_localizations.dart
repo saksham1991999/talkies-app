@@ -263,6 +263,30 @@ abstract class AppLocalizations {
   /// **'Coming soon'**
   String get comingSoon;
 
+  /// No description provided for @forYou.
+  ///
+  /// In en, this message translates to:
+  /// **'For you'**
+  String get forYou;
+
+  /// No description provided for @becauseYouLiked.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you liked {title}'**
+  String becauseYouLiked(String title);
+
+  /// No description provided for @notInterested.
+  ///
+  /// In en, this message translates to:
+  /// **'Not interested'**
+  String get notInterested;
+
+  /// No description provided for @hiddenFromRecs.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden from recommendations'**
+  String get hiddenFromRecs;
+
   /// No description provided for @seeAll.
   ///
   /// In en, this message translates to:

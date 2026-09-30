@@ -91,6 +91,20 @@ class AppLocalizationsKn extends AppLocalizations {
   String get comingSoon => 'ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ';
 
   @override
+  String get forYou => 'ನಿಮಗಾಗಿ';
+
+  @override
+  String becauseYouLiked(String title) {
+    return 'ನಿಮಗೆ $title ಇಷ್ಟವಾದ ಕಾರಣ';
+  }
+
+  @override
+  String get notInterested => 'ಆಸಕ್ತಿ ಇಲ್ಲ';
+
+  @override
+  String get hiddenFromRecs => 'ಶಿಫಾರಸುಗಳಿಂದ ಮರೆಮಾಡಲಾಗಿದೆ';
+
+  @override
   String get seeAll => 'ಎಲ್ಲಾ ನೋಡಿ';
 
   @override

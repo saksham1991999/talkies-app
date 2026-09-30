@@ -91,6 +91,20 @@ class AppLocalizationsTa extends AppLocalizations {
   String get comingSoon => 'விரைவில் வருபவை';
 
   @override
+  String get forYou => 'உங்களுக்காக';
+
+  @override
+  String becauseYouLiked(String title) {
+    return '$title உங்களுக்குப் பிடித்ததால்';
+  }
+
+  @override
+  String get notInterested => 'ஆர்வமில்லை';
+
+  @override
+  String get hiddenFromRecs => 'பரிந்துரைகளிலிருந்து மறைக்கப்பட்டது';
+
+  @override
   String get seeAll => 'எல்லாம் பார்';
 
   @override

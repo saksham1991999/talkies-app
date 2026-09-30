@@ -91,6 +91,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String get comingSoon => 'শীঘ্রই আসছে';
 
   @override
+  String get forYou => 'আপনার জন্য';
+
+  @override
+  String becauseYouLiked(String title) {
+    return 'আপনার $title ভালো লেগেছে বলে';
+  }
+
+  @override
+  String get notInterested => 'আগ্রহ নেই';
+
+  @override
+  String get hiddenFromRecs => 'সুপারিশ থেকে লুকানো হয়েছে';
+
+  @override
   String get seeAll => 'সব দেখুন';
 
   @override

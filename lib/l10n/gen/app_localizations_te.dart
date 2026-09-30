@@ -91,6 +91,20 @@ class AppLocalizationsTe extends AppLocalizations {
   String get comingSoon => 'త్వరలో వస్తున్నవి';
 
   @override
+  String get forYou => 'మీ కోసం';
+
+  @override
+  String becauseYouLiked(String title) {
+    return 'మీకు $title నచ్చింది కాబట్టి';
+  }
+
+  @override
+  String get notInterested => 'ఆసక్తి లేదు';
+
+  @override
+  String get hiddenFromRecs => 'సిఫార్సుల నుండి దాచబడింది';
+
+  @override
   String get seeAll => 'అన్నీ చూడండి';
 
   @override

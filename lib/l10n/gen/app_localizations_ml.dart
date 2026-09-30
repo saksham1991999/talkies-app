@@ -91,6 +91,20 @@ class AppLocalizationsMl extends AppLocalizations {
   String get comingSoon => 'ഉടൻ വരുന്നു';
 
   @override
+  String get forYou => 'നിങ്ങൾക്കായി';
+
+  @override
+  String becauseYouLiked(String title) {
+    return '$title ഇഷ്ടപ്പെട്ടതിനാൽ';
+  }
+
+  @override
+  String get notInterested => 'താൽപ്പര്യമില്ല';
+
+  @override
+  String get hiddenFromRecs => 'നിർദ്ദേശങ്ങളിൽ നിന്ന് മറച്ചു';
+
+  @override
   String get seeAll => 'എല്ലാം കാണുക';
 
   @override
