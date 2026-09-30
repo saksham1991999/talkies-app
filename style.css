@@ -1,0 +1,166 @@
+:root {
+  --wall: #e3e6d8;
+  --paper: #f2cbc1;
+  --ink: #2a1316;
+  --ink-soft: #6b5450;
+  --sindoor: #b0342b;
+  --velvet: #3a1519;
+  --grain-opacity: 0.07;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wall: #170d0e;
+    --paper: #2e1316;
+    --ink: #f1e5dd;
+    --ink-soft: #b9a49b;
+    --sindoor: #e26e60;
+    --velvet: #241416;
+    --grain-opacity: 0.05;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--wall); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--wall);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+}
+
+/* Grain sits on the wall, behind everything. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.display { font-family: "Tanker", system-ui, sans-serif; font-weight: 400; }
+
+a { color: var(--sindoor); text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
+
+.bar {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 20px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+}
+.bar .brand {
+  font-size: 30px;
+  letter-spacing: 0.06em;
+  color: var(--sindoor);
+  text-decoration: none;
+  margin-right: auto;
+}
+.bar nav { display: flex; gap: 22px; }
+.bar nav a { color: var(--ink-soft); text-decoration: none; font-weight: 500; }
+.bar nav a:hover { color: var(--ink); }
+.bar nav a[aria-current="page"] { color: var(--ink); font-weight: 700; }
+
+main { max-width: 720px; margin: 0 auto; padding: 28px 20px 56px; }
+
+/* The ticket: a paper stub with two notches cut at the perforation. */
+.stub {
+  --perf: 132px;
+  --notch: 14px;
+  background: var(--paper);
+  border-radius: 18px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 var(--perf), transparent calc(var(--notch) - 0.5px), #000 var(--notch)),
+    radial-gradient(circle var(--notch) at 100% var(--perf), transparent calc(var(--notch) - 0.5px), #000 var(--notch));
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle var(--notch) at 0 var(--perf), transparent calc(var(--notch) - 0.5px), #000 var(--notch)),
+    radial-gradient(circle var(--notch) at 100% var(--perf), transparent calc(var(--notch) - 0.5px), #000 var(--notch));
+  mask-composite: intersect;
+}
+.stub-head {
+  height: var(--perf);
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+}
+/* Perforation: round dots from notch to notch, centred on the notch line. */
+.stub-head::after {
+  content: "";
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: -3px;
+  height: 6px;
+  background: radial-gradient(circle 3px, var(--sindoor) 2.5px, transparent 3px) 0 0 / 16px 6px repeat-x;
+  opacity: 0.75;
+}
+.stub-head h1 {
+  margin: 0;
+  font-size: clamp(34px, 7vw, 52px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+.stub-head .serial {
+  text-align: right;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.stub-head .serial b {
+  display: block;
+  color: var(--sindoor);
+  font-family: "Tanker", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: 0.04em;
+}
+.stub-body { padding: 30px 36px 36px; }
+.stub-body h2 { font-size: 19px; margin: 30px 0 6px; }
+.stub-body h2:first-child { margin-top: 0; }
+.stub-body p, .stub-body ul { margin: 0 0 12px; }
+.stub-body ul { padding-left: 22px; }
+.stub-body li { margin-bottom: 6px; }
+.lead { font-size: 19px; }
+
+footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Landing */
+.hero {
+  min-height: calc(100vh - 200px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px 0;
+}
+.hero img { width: 132px; height: 132px; border-radius: 30px; display: block; margin: 0 auto 26px; }
+.hero h1 { margin: 0; font-size: clamp(64px, 16vw, 132px); line-height: 1; letter-spacing: 0.05em; color: var(--sindoor); }
+.hero p { margin: 14px auto 0; max-width: 30ch; font-size: 21px; }
+.hero .stores { margin-top: 26px; color: var(--ink-soft); font-size: 16px; }
+
+@media (max-width: 520px) {
+  .stub { --perf: 150px; }
+  .stub-head { padding: 0 26px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; }
+  .stub-head .serial { text-align: left; }
+  .stub-head .serial b { display: inline; margin-right: 8px; font-size: 20px; }
+  .stub-body { padding: 26px 26px 30px; }
+  .bar { gap: 18px; }
+}
