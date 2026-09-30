@@ -1,0 +1,229 @@
+/* Landing: the lobby of a single-screen hall. Velvet in light and dark mode. */
+body.landing {
+  --paper: #f2cbc1;
+  --paper-ott: #f0dc9c;
+  --paper-home: #cde0c3;
+  --paper-tv: #c7d9e8;
+  --ink: #2a1316;
+  --ink-soft: #6b5450;
+  --sindoor: #b0342b;
+  --velvet: #3a1519;
+  --on-velvet: #efdfd6;
+  --on-velvet-soft: #c9ada4;
+  --grain-opacity: 0.09;
+  background: var(--velvet);
+  color: var(--on-velvet);
+  overflow-x: clip;
+}
+html:has(body.landing) { background: #3a1519; }
+.landing main { max-width: none; margin: 0; padding: 0; }
+
+.landing a { color: var(--on-velvet); }
+.landing a:hover { color: #fff; }
+
+.lobby-nav {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  padding: 22px 20px 0;
+  font-size: 15px;
+}
+.lobby-nav a { color: var(--on-velvet-soft); text-decoration: none; font-weight: 500; }
+.lobby-nav a:hover { color: var(--on-velvet); }
+
+/* First screen */
+.lobby {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vh 0 7vh;
+  overflow-x: clip;
+}
+.wordmark {
+  margin: 0;
+  padding: 0.06em 16px 0;
+  font-size: clamp(92px, 19vw, 250px);
+  line-height: 0.92;
+  letter-spacing: 0.045em;
+  color: var(--paper);
+  text-align: center;
+}
+
+/* The ticket roll: real stubs, feeding past slowly. Visible without motion. */
+.roll {
+  width: 118vw;
+  margin: clamp(18px, 3vh, 34px) 0 0;
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+.roll-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: feed 90s linear infinite;
+}
+@keyframes feed { to { transform: translateX(calc(-50% - 9px)); } }
+@media (prefers-reduced-motion: reduce) { .roll-track { animation: none; } }
+
+.t {
+  --perf: 74%;
+  --notch: 9px;
+  position: relative;
+  flex: none;
+  width: 330px;
+  height: 142px;
+  display: grid;
+  line-height: 1.35;
+  grid-template-columns: var(--perf) 1fr;
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at var(--perf) 0, transparent calc(var(--notch) - 0.5px), #000 var(--notch)),
+    radial-gradient(circle var(--notch) at var(--perf) 100%, transparent calc(var(--notch) - 0.5px), #000 var(--notch));
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle var(--notch) at var(--perf) 0, transparent calc(var(--notch) - 0.5px), #000 var(--notch)),
+    radial-gradient(circle var(--notch) at var(--perf) 100%, transparent calc(var(--notch) - 0.5px), #000 var(--notch));
+  mask-composite: intersect;
+}
+.t.ott { background: var(--paper-ott); }
+.t.home { background: var(--paper-home); }
+.t.tv { background: var(--paper-tv); }
+.t-main {
+  padding: 18px 12px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.t-title { font-size: 18px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t-native { font-size: 14px; color: var(--ink-soft); margin-bottom: 8px; }
+.t-meta { font-size: 13px; color: var(--ink-soft); }
+.t-foil {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+/* Perforation: round dots from notch to notch. */
+.t-foil::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 14px;
+  bottom: 14px;
+  width: 4px;
+  background: radial-gradient(circle 1.6px, rgba(42, 19, 22, 0.35) 1.4px, transparent 1.7px) 0 0 / 4px 9px repeat-y;
+}
+.t-foil small { font-family: "Tanker", system-ui, sans-serif; font-size: 12px; letter-spacing: 0.06em; color: var(--ink-soft); }
+.t-foil b { font-family: "Tanker", system-ui, sans-serif; font-weight: 400; font-size: 27px; letter-spacing: 0.03em; color: var(--sindoor); line-height: 1; }
+.t-foil em { font-style: normal; font-family: "Tanker", system-ui, sans-serif; font-size: 13px; letter-spacing: 0.05em; margin-top: 4px; }
+.t-stamp {
+  position: absolute;
+  right: 29%;
+  top: 12px;
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(176, 52, 43, 0.72);
+  border-radius: 50%;
+  color: rgba(176, 52, 43, 0.8);
+  font-size: 11px;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transform: rotate(-14deg);
+}
+
+/* ADMIT ONE: the ticket that is the way in. Uses .stub from style.css.
+   The wrapper casts one tight shadow upward, onto the roll it lies on. */
+.admit-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: -18px;
+  filter: drop-shadow(0 -3px 4px rgba(24, 7, 9, 0.6));
+}
+.admit {
+  --perf: 104px;
+  width: min(580px, calc(100vw - 32px));
+  color: var(--ink);
+}
+.admit .stub-head { padding: 0 34px; }
+.admit .stub-head h2 { margin: 0; font-size: clamp(34px, 7vw, 50px); letter-spacing: 0.03em; line-height: 1; }
+.admit .serial { color: var(--ink-soft); }
+.admit .stub-body { padding: 26px 34px 30px; }
+.admit .stub-body p { margin: 0; font-size: 18px; line-height: 1.5; text-wrap: balance; }
+.stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0 14px;
+}
+.stores a { display: block; border-radius: 9px; line-height: 0; }
+.stores a:hover { opacity: 0.86; }
+.stores a:focus-visible { outline: 2px solid var(--sindoor); outline-offset: 3px; }
+.stores img { height: 48px; width: auto; display: block; }
+.admit .fine { font-size: 14px; color: var(--ink-soft); }
+
+/* Real screens from the app. */
+.screens {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4vh 20px 9vh;
+}
+.screens ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+}
+.screens li { margin: 0; }
+.screens img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 600 / 1237;
+  border-radius: 20px;
+  background: #2a0e11;
+  /* Self-coloured edge, so the maroon screens do not melt into the velvet. */
+  outline: 1px solid rgba(239, 223, 214, 0.14);
+  outline-offset: -1px;
+}
+.screens p {
+  margin: 14px 2px 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--on-velvet-soft);
+}
+.screens p b { display: block; color: var(--on-velvet); font-weight: 600; }
+
+.landing footer { color: var(--on-velvet-soft); }
+.landing footer a { color: var(--on-velvet-soft); }
+.landing footer nav { display: flex; justify-content: center; gap: 22px; margin-bottom: 10px; }
+
+@media (max-width: 900px) {
+  .screens ul {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 62vw;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+  .screens li { scroll-snap-align: start; }
+}
+@media (max-width: 520px) {
+  .t { width: 290px; height: 128px; }
+  .admit { --perf: 118px; }
+  .admit .stub-head { padding: 0 24px; }
+  .admit .stub-body { padding: 22px 24px 26px; }
+  .admit .stub-body p { font-size: 17px; }
+  .stores img { height: 44px; }
+}
