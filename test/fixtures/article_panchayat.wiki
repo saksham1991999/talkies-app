@@ -1,0 +1,708 @@
+{{short description|Indian comedy-drama television series}}
+{{Use dmy dates|date = April 2020}}
+{{Use Indian English|date = April 2020}}
+{{Infobox television
+| image                = Panchayat (TV series) logo.png
+| caption              = 
+| country              = India
+| num_seasons          = 4
+| num_episodes         = 32
+| language             = Hindi
+| first_aired          = {{Start date|2020|4|3|df=yes}}
+| last_aired           = present
+| network              = [[Amazon Prime Video]]
+| starring             = {{ubl|[[Jitendra Kumar]]|[[Raghubir Yadav]]|[[Neena Gupta]]|[[Faisal Malik]]|[[Chandan Roy]]|[[#Sanvika (Actress)|Sanvika Singh]]|[[Durgesh Kumar]]|[[Ashok Pathak]]|[[Sunita Rajwar]]|
+[[#b|Bulloo Kumar]]|[[Pankaj Jha]]}}
+| director             = {{Ubl
+  | '''Season 1–4:'''
+  | Deepak Kumar Mishra
+  |'''Season 4:'''
+  |Akshat Vijaywargiya}}
+| writer               = Chandan Kumar
+| music                = [[Anurag Saikia]]
+| cinematography       = [[Amitabha Singh]]
+| editor               = Amit Kulkarni
+| runtime              = 23–50 minutes
+| company              = [[The Viral Fever]]
+| executive_producer   = [[Sameer Saxena (filmmaker)|Sameer Saxena]]
+| genre                = [[Comedy]]<br>[[Drama (film and television)|Drama]]
+}}
+
+'''''Panchayat''''' is an Indian [[Hindi]]-language [[comedy drama]] web series created by [[The Viral Fever]] for [[Amazon Prime Video]]. Written by Chandan Kumar and directed by Deepak Kumar Mishra & Akshat Vijaywargiya, the series stars [[Jitendra Kumar]], [[Raghubir Yadav]], [[Neena Gupta]], [[Chandan Roy]], [[Faisal Malik]], and [[Panchayat (TV series)#Sanvika (Actress)|Sanvikaa]], alongside [[Durgesh Kumar]], [[Ashok Pathak]], [[Sunita Rajwar]] and [[Pankaj Jha]]. It follows an engineering graduate who becomes the secretary of a [[gram panchayat]] in the fictional village of Phulera in [[Uttar Pradesh]] due to limited job opportunities.
+
+The series premiered on 3 April 2020 and received critical acclaim for its writing, performances, and portrayal of rural life. It has four seasons as of June 2025. In July 2025, the series was renewed for a fifth season, which is scheduled to premiere in October or November of 2026.<ref>{{Cite web |date=7 July 2025 |last=Sarkar |first=Arpita |title=Panchayat Season 5 Announced: Here's when Jitendra Kumar's series will release |url=https://www.ottplay.com/news/panchayat-season-5-announced-heres-when-to-expect-jitendra-kumars-series/24f6f49995100 |website=[[OTTplay]] |access-date=17 February 2026}}</ref>
+
+== Premise ==
+The series deals with the experiences of an urban engineering graduate, unfamiliar with village cultures, who on completing his degree gets a low-salary position as a secretary of a [[Gram panchayat]] in a remote village called Phulera in [[Uttar Pradesh]].<ref>{{cite web|url=https://www.indiatoday.in/television/web-series/story/jitendra-kumar-reunites-with-neena-gupta-in-web-series-panchayat-watch-trailer-1661296-2020-03-30|title=Jitendra Kumar reunites with Neena Gupta in web series Panchayat|date=March 30, 2020|website=India Today|language=en|access-date=2020-04-08|archive-date=31 March 2020|archive-url=https://web.archive.org/web/20200331182620/https://www.indiatoday.in/television/web-series/story/jitendra-kumar-reunites-with-neena-gupta-in-web-series-panchayat-watch-trailer-1661296-2020-03-30|url-status=live}}</ref>
+
+==Cast and characters==
+{| style="text-align:center"
+! style="background:#d3d3d3;" | Portrayed by
+! style="background:#d3d3d3;" | Character
+! style="background:#d3d3d3;" | 1
+! style="background:#d3d3d3;" | 2
+! style="background:#d3d3d3;" | 3
+! style="background:#d3d3d3;" | 4
+|-
+| style="background:#c8ffcc;" | [[Jitendra Kumar]]
+| style="background:#c8ffcc;" | Abhishek Tripathi
+| colspan="4" rowspan="5" style="background:#c8ffcc;" | Main
+|-
+| style="background:#c8ffcc;" | [[Raghubir Yadav]]
+| style="background:#c8ffcc;" | Brij Bhushan Dubey
+|-
+| style="background:#c8ffcc;" | [[Neena Gupta]]
+| style="background:#c8ffcc;" | Manju Devi
+|-
+| style="background:#c8ffcc;" | [[Faisal Malik]]
+| style="background:#c8ffcc;" | Prahlad Pandey
+|-
+| style="background:#c8ffcc;" | [[Chandan Roy]]
+| style="background:#c8ffcc;" | Vikas Shukla 
+|-
+| style="background:#c8ffcc;" | [[Sanvikaa]]
+| style="background:#c8ffcc;" | Rinki Dubey
+| colspan="2" rowspan="2" style="background:#cce5ff;" | Recurring
+| colspan="2" rowspan="2" style="background:#c8ffcc;" | Main
+|-
+| style="background:#c8ffcc;" | [[Durgesh Kumar]]
+| style="background:#c8ffcc;" | Bhushan Sharma "Banrakas"
+|-
+| style="background:#c8ffcc;" | [[Ashok Pathak]]
+| style="background:#c8ffcc;" | Binod
+| colspan="1" rowspan="4"  style="background:#e2e3e5;" | None
+| colspan="2" rowspan="4" style="background:#cce5ff;" | Recurring
+| rowspan="4" style="background:#c8ffcc;" | Main
+|-
+| style="background:#c8ffcc;" | [[Sunita Rajwar]]
+| style="background:#c8ffcc;" | Kranti Devi
+|-
+| style="background:#c8ffcc;" | Bulloo Kumar
+| style="background:#c8ffcc;" | Madhav Jasoos
+|-
+| style="background:#c8ffcc;" | [[Pankaj Jha]]
+| style="background:#c8ffcc;" | [[Member of the Legislative Assembly (India)|MLA]] Chandra Kishore Singh
+|-[ Manish Rai ( Pramod Cha )
+| style="background:#cce5ff;" | Tripti Sahu
+| style="background:#cce5ff;" | Khushboo Shukla 
+| style="background:#e2e3e5;" | None
+| colspan="3" style="background:#cce5ff;" | Recurring
+|-
+| style="background:#cce5ff;" | Kirandeep Kaur
+| style="background:#cce5ff;" | Chitra Singh
+| colspan="2" style="background:#e2e3e5;" | None
+| colspan="2" style="background:#cce5ff;" | Recurring
+|-
+| style="background:#cce5ff;" | Gaurav Singh
+| style="background:#cce5ff;" | Chuttan Singh
+| colspan="4" style="background:#cce5ff;" | Recurring
+|-
+| style="background:#cce5ff;" | [[Aasif Khan]]
+| style="background:#cce5ff;" | Ganesh
+| style="background:#cce5ff;" | Recurring
+| style="background:#ffeeba;" | Special
+| colspan="2" style="background:#e2e3e5;" | None
+|-
+| style="background:#cce5ff;" | Subendhu Chakraborty
+| style="background:#cce5ff;" | Mangal
+| colspan="4" rowspan="7" style="background:#cce5ff;" | Recurring
+|-
+| style="background:#cce5ff;" | Shrikant Verma
+| style="background:#cce5ff;" | Parmeshwar
+|-
+| style="background:#cce5ff;" | Diwakar Dhyani
+| style="background:#cce5ff;" | Sudhir Jaiswal (BDO)
+|-
+| style="background:#cce5ff;" | Sushil Tondon
+| style="background:#cce5ff;" | Bhindeshwar
+|-
+| style="background:#cce5ff;" | Ankit Motghare
+| style="background:#cce5ff;" | Theka (Shopkeeper)
+|-
+|Vishwanath Chatterjee
+|[[Sub-inspector|SI]] Sanjay Yadav
+|-
+| style="background:#cce5ff;" | Sandeep Shikhar
+| style="background:#cce5ff;" | Deenbandhu
+|-
+| style="background:#cce5ff;" | [[Rajesh Jais]]
+| style="background:#cce5ff;" | Virendra Gupta (BDO)
+| style="background:#e2e3e5;" | None
+| colspan="3" style="background:#cce5ff;" | Recurring
+|-
+| style="background:#cce5ff;" | Shiv Swaroop
+| style="background:#cce5ff;" | Rahul
+| colspan="2" rowspan="2" style="background:#e2e3e5;" | None
+| colspan="2" rowspan="2" style="background:#cce5ff;" | Recurring
+|-
+| style="background:#cce5ff;" | Abha Sharma
+| style="background:#cce5ff;" | Damyanti Devi "Ammaji"
+|-
+| style="background:#f8d7da;" | [[Swanand Kirkire]]
+| style="background:#f8d7da;" | Saansad ji
+| rowspan="3" colspan="2" style="background:#e2e3e5;" | None
+| rowspan="2" style="background:#f8d7da;" | Guest
+| style="background:#ffeeba;" | Special
+|-
+| style="background:#f8d7da;" | [[Saad bilgami|Saad Bilgrami]]
+| style="background:#f8d7da;" | Aditya
+| style="background:#e2e3e5;" | None
+|-
+| style="background:#f8d7da;" | [[Ram Gopal Bajaj]]
+| style="background:#f8d7da;" | Manju Devi's father
+| style="background:#e2e3e5;" | None
+| style="background:#f8d7da;" | Guest
+|-
+| style="background:#ffeeba;" | [[Biswapati Sarkar]]
+| style="background:#ffeeba;" | Prateek
+| colspan="2" style="background:#ffeeba;" | Special
+| colspan="2" style="background:#e2e3e5;" | None
+|-
+| style="background:#ffeeba;" | Satish Ray
+| style="background:#ffeeba;" | Siddharth "Siddhu" Gupta
+| colspan="3" style="background:#ffeeba;" | Special
+| style="background:#e2e3e5;" | None
+|}
+<small>''Source''</small><ref>{{cite web|url=https://www.indiatoday.in/binge-watch/story/raghubir-yadav-on-panchayat-the-script-has-captured-the-real-essence-of-a-village-1663954-2020-04-06|title=Raghubir Yadav on Panchayat: The script has captured the real essence of a village|date=April 6, 2020|website=India Today|language=en|access-date=2020-04-28|archive-date=12 June 2020|archive-url=https://web.archive.org/web/20200612065945/https://www.indiatoday.in/binge-watch/story/raghubir-yadav-on-panchayat-the-script-has-captured-the-real-essence-of-a-village-1663954-2020-04-06|url-status=live}}</ref><ref>{{cite web|url=https://www.ndtv.com/entertainment/neena-gupta-on-panchayat-i-didnt-think-anyone-will-watch-the-series-2208976|title=Neena Gupta On Panchayat: "I Didn't Think Anyone Will Watch The Series"|website=NDTV.com|access-date=2020-04-28|archive-date=12 June 2020|archive-url=https://web.archive.org/web/20200612065942/https://www.ndtv.com/entertainment/neena-gupta-on-panchayat-i-didnt-think-anyone-will-watch-the-series-2208976|url-status=live}}</ref><ref>{{cite web|url=https://www.zestvine.com/sanvikaa-rinki-panchayat/|title=Meet Beautiful Sanvikaa Pooja Singh From Panchayat Web Series – Rinki|date=2022-06-05|website=Zestvine|language=en-US|access-date=2022-06-20|archive-date=29 June 2022|archive-url=https://web.archive.org/web/20220629093441/https://www.zestvine.com/sanvikaa-rinki-panchayat/|url-status=live}}</ref><ref>{{cite web|url=https://thecinemaholic.com/panchayat-amazon-prime/|title=Panchayat Season 2: Will it Happen?|date=2020-04-16|website=TheCinemaholic|language=en-US|access-date=2022-02-19|archive-date=19 February 2022|archive-url=https://web.archive.org/web/20220219150647/https://thecinemaholic.com/panchayat-amazon-prime/|url-status=live |last1=Patel |first1=Varun }}</ref>
+
+==Episodes==
+===Overview===
+{{Series overview
+| color1     = #000000
+| link1      = Panchayat (TV series)#Season 1 (2020)
+| episodes1  = 8
+| released1  = {{Start date|df=yes|2020|4|3}}
+| color2     = #383554
+| link2      = Panchayat (TV series)#Season 2 (2022)
+| episodes2  = 8
+| released2  = {{Start date|df=yes|2022|5|18}}
+| color3     = #7695D7
+| link3      = Panchayat (TV series)#Season 3 (2024)
+| episodes3  = 8
+| released3  = {{Start date|df=yes|2024|5|28}}
+| color4     = #5FA777
+| link4      = Panchayat (TV series)#Season 4 (2025)
+| episodes4  = 8
+| released4  = {{Start date|2025|6|24|df=yes}}
+}}
+
+=== Season 1 (2020) ===
+{{Episode table|background=#000000 |overall=|title=|writer=|director=Deepak Kumar Mishra|airdate=3 July 2020|episodes={{Episode list
+ |EpisodeNumber = 1
+ |Title = Gram Panchayat Phulera
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Abhishek Tripathi is a fresh engineering graduate who has not been placed in his final year. With only a job offer of a panchayat secretary, he tries to give it a shot as there is no other option left after graduating. He reaches Phulera and meets the former village chief (husband of the current village chief), the deputy chief and his office assistant. When Abhishek reaches Phulera, the doors of the panchayat office are locked and the keys missing. By the time the doors are opened (blown from the frame), the situation inside the office room turns him down. Abhishek decides that he needs to switch his job at the earliest and the only way to do so is by cracking the CAT (Common Admission Test) and taking admission in one of the IIMs.
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 2
+ |Title = Bhootha Ped
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Abhishek, working as panchayat secretary, is also preparing for CAT after office hours. He has arranged for emergency lights as there is a power shutdown in the village every night. He plans to install a solar-powered light in the panchayat office from the total lights allotted. His plan is thwarted when one of the panchayat members suggests installing the light at a place called Bhootha Ped (haunted tree) which will help the Pradhan garner votes in the upcoming election. Abhishek now undertakes the mission to uncover the truth.
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 3
+ |Title = Chakke Wali Kursi
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Abhishek buys a comfy revolving chair since working and studying in the crude plastic chairs proved quite uncomfortable. This chair soon becomes a bone of contention between him and the Pradhan, who feels diminished in the eyes of the people compared to Abhishek since he does not possess a fancy chair. The Pradhan hatches an elaborate plan to spirit the chair away from Abhishek, which culminates in Abhishek having to give away his chair to a disgruntled bridegroom to placate him for swearing at him.  
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 4
+ |Title = Hamara Neta Kaisa Ho?
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Abhishek is instructed by the BDO to put up family planning slogans. Since this is a pet project of the DM, he threatens him with disciplinary action if the work is not done on time. Abhishek gets the slogans painted and then walks around with Pradhan, Prahlad and Vikas to check on the work. The second slogan, "Do bacche meethi Kheer, do se jyaada bawaseer" compares children born, after the first two, to a case of piles which provokes a strong reaction among villagers who have more than 2 kids. This puts Pradhan in a tough position since they all threaten to vote against him at the next election and he has the slogan removed. Manju Devi calls out the Pradhan on his weak leadership. Pradhan sees a picture of Sardar Patel and gets inspired. He has Abhishek call a meeting of the ward and tells the gathering that he stands by the slogan. Prahlad and Vikas also support the Pradhan. Abhishek tells the Panchayat that they should tell anyone offended by the slogan that it is like a warning on a cigarette packet that is meant to offend and scare. Pradhan instructs Vikas to put the slogan back. After the meeting, the BDO calls Abhishek to tell him that the piles' slogan was not mandatory after a father of 6 in another village, offended by the slogan, burnt down the Panchayat office. Abhishek asks Pradhan if he wants to reconsider his decision but the Pradhan, inspired by Sardar Patel says that his decision is final.
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 5
+ |Title = Computer Nahi Monitor
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Frustrated by the lack of nightlife in the village, Abhishek decides to drink beer but forgets to lock the door of his room and finds his monitor stolen from the panchayat office the next morning. A furious Pradhan reprimands Abhishek for being careless and asks him to find new accommodation. Abhishek and Prahlad lodge an FIR at the local police station. A police officer arrives later at the panchayat office and suspects Abhishek of stealing the monitor for money. The officer along with Pradhan and others interrogates an irritated Abhishek who then explains his frustration because of his village routine and lonely life. Abhishek's outburst convinces Pradhan of his innocence. That night, Pradhan arranges a party along with Prahlad and Vikas to cheer Abhishek up. The next morning, Abhishek finds his stolen monitor returned, with a note saying the monitor was mistaken for a television.
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 6
+ |Title = Bahot Hua Samman
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Abhishek is having his photograph taken for the exam and Vikas gets into a verbal altercation with two men trying to sit on Abhishek's bike. The men threaten to "fix" him when he shows up to get his photos the next day. Vikas wants to involve Pradhan in this but Abhishek stops him. The next day when he goes to pick up his photos, the photographer says that since he got into a tussle with men from his village, he is supporting them and he has deleted his pics. The men call him at night to taunt him. Now Abhishek has to take Pradhan's help to resolve the matter.
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 7
+ |Title = Ladka Tez Hai Lekin..
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Pradhanji fixed his daughter's marriage to a guy whose family demanded 20 lakh rupees as dowry. When Pradhanji asked Abhishek about the situation he told him he won't take dowry from anyone even if he would get a good salary which impresses Pradhanji. Then he started testing Abhishek's ability whether he'll crack the CAT examination or not, meanwhile a couple is fighting over their son's name which Abhishek suggested. Finally, Pradhanji decided to ask Abhishek about marriage by letting her daughter choose any finger between the two, The same way the arguing couple decides their son's name. But, on the day of the examination, Pradhanji and Vikas found that Abhishek's exam had not gone well. So he has no option but to change his decision.
+ |LineColor = #000000
+}}
+{{Episode list
+ |EpisodeNumber = 8
+ |Title = Jab Jaago Tabhi Savera
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2020|4|3}}
+ |ShortSummary = Abhishek is not in a good mood even after 2 months of his CAT examination, Vikas tries to cheer him up. Abhishek vents out all his frustrations on him and later apologizes. Somedays before Republic Day Manju Devi taunts Abhishek for not clearing the CAT examination, where he taunts back as Manju Devi is the actual Pradhan but, every year Pradhanji hosted the flag ceremony. This prompted Manju Devi to learn the National anthem of India as she decided to host the flag ceremony, but fails to remember the National anthem. On the day of Republic Day, the District Magistrate notices the banner as Pradhanji has a larger image and decides to go as an inquiry, where she is about to suspend Abhishek. Manju Devi arrives. Then she hosted the flag ceremony and everyone celebrates. Abhishek realised his mistake and decided to try one more year for the CAT examination. At last, he climbs on the water tank as his colleagues suggested earlier to fall in love with the village, where he meets Rinki, the daughter of Pradhanji as the episode comes to an end. It is hinted that Abhishek is attracted towards Rinki, which confirms the saying that he would indeed fall in love.
+ |LineColor = #000000
+}}
+}}
+
+=== Season 2 (2022) ===
+{{Episode table|background=#383554 |overall=|title=|writer=|director=Deepak Kumar Mishra|airdate=|episodes={{Episode list
+ |EpisodeNumber = 1
+ |Title = Naach
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary = Prahlad and Vikas suspect that Abhishek and Rinki are involved with each other, based on Abhishek's unusual happiness after drinking tea on the water tanker. Meanwhile, at the pond digging site, soil is being dug out to be sold to Parmeshwar but Pradhan is not able to negotiate well because of his closeness with Parmeshwar. Abhishek comes up with a plan to make Manju Devi bargain instead of Pradhan since she's very blunt and a better negotiator. After the negotiations, Parmeshwar realises the plan and confronts them and leaves abruptly. In an effort to save the deal, Abhishek, Prahlad & Vikas go to his factory to look for him and eventually find him at the local dance. During the dance, Parmeshwar finds out that one of the two dancers is a man in disguise, and that makes the crowd go berserk and ends up hurting the other dancer in the subsequent violence. Just as the trio reaches the dance, Parmeshwar asks them to help out the girl who had been injured, Abhishek is tasked to take her to the dispensary. When the girl points out that he is actually reluctant to continue with a job he doesn't like, Abhishek dismisses Vikas and Prahlad, who abandon the thought of Abhishek being involved with Rinki.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 2
+ |Title = Bol Chaal Band
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary =
+Due to lagging village development work, Bhushan stands up against Pradhan due to his past grudge and questions Abhishek about his loyalty, labelling him a bootlicker. Abhishek consults his friend Siddharth, who advises him to maintain distance from Pradhan. Later Bhushan catches Abhishek at the temple while he is taking signatures from Manju Devi. Pradhan doubts Abhishek after being ignored and rushes to the office to know the truth. Pradhan invites Abhishek to Rinki's birthday celebration. There, he reveals how Bhushan troubled him. Later, Abhishek confronts Bhushan, who flees after Pradhan, Prahlad and Vikas confront him.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 3
+ |Title = Kranti
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary = Even as the installation of toilets takes place in the village at his behest, Abhishek receives word from the BDO that the DM would be visiting Phulera since somebody has tipped off her office that the village was falsely accorded an open-defaecation-free status. With Pradhan, Vikas and Prahlad on alert, the gang soon learns that Bhushan has instigated a rebellion through a man who unfortunately couldn't get a toilet installed at his home. Abhishek tasks Vikas and Prahlad with the prevention of the rebellion, fully aware that Bhushan could misuse Pradhan's lack of public hygiene against the gang.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 4
+ |Title = Tension
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary =
+An anti-alcoholism public announcement car is to go through the village but Vikas and Abhishek discover that the driver himself is heavily drunk. Despite insisting that he will be fine, he skids off the road and they are forced to take him to the panchayat office. They are unable to call either Prahlad, whose son Rahul, an army officer posted in Kashmir, is in town on a holiday, or Pradhan ji, who is meeting Rinki's prospective groom and his family at lunch, for help. Due to confusion about the venue, Pradhan Ji's family and the groom's family end up in different restaurants and despite having made a prior reservation, Pradhan is told to come to the other place and the groom's family ends up insulting him. They decide to leave, realizing marrying Rinki into that family will be a mistake as they do not respect them. Meanwhile, Abhishek and Vikas try to sober up the driver, who later says that he doesn't earn enough and warns Abhishek of the same alcoholic fate. At the end of the day, the gang ends up drinking anyway and lightens up, while the driver sobers up and leaves.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 5
+ |Title = Jaise Ko Taisa
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary = Abhishek gets CCTV cameras installed in a few corners of Phulera. A farmer tries to use the camera recordings in order to trace his missing goat. Fate seems to have a trick up their sleeve, though, when Manju Devi mistakenly switches her slippers with those of Bhushan's wife Kranti. Bhushan threatens Abhishek and Vikas with an FIR on grounds of "blatant abuse of power" upon seeing the goof-up, and the duo visit Pradhan and Manju, requesting them to settle the matter. While there, Abhishek realizes that Bhushan has been scheming to report the gang in complete reliance on the CCTV footage. He then stages a plot to return the slippers to Kranti in a polybag, but it hits her head; while Abhishek angrily deletes the footage on seeing through Bhushan's notorious designs in the presence of the group, everyone is forced to visit Pradhan's house all of a sudden whence it turns out that Manju Devi had a scuffle with Kranti; the latter threatens to run for office next year, even pulling Abhishek, who is clearly on the side of the Pradhan's family.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 6
+ |Title = Aukaat
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary = A desperate Pradhan Ji makes an attempt to fulfil his biggest election promise of building a healthy road on the highway link. The local MLA, Chandra Kishore Singh, sends Pradhan, Prahlad and Vikas to a protest over the rails. The trio gets arrested in the process, and Abhishek bails them out. They make plans to invite the MLA to Phulera for voter support. Chandra Kishore, however, is unimpressed and swears harshly at Abhishek when he tries to defend the trio's release, claiming that the MLA would have earned some publicity in exchange for the funds Pradhan demanded to construct the road. Abhishek, feeling disturbed, eventually calms down after Rinki texts him, asking him to let go.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 7
+ |Title = Dost Yaar
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary = Siddharth decides to surprise Abhishek by visiting Phulera for a day. Meanwhile, Prahlad, Vikas and Pradhan Ji collect funds for the 3-day kirtan planned in the village. Eventually bored, the group decides to have beer in the fields. While there, the topic of inviting the MLA to a religious congregation comes up, which Abhishek takes strong exception to, revealing how he was hurt due to Pradhan Ji not standing up for him when the MLA abused him and reminding him of the times he has stood up for him; he loudly wonders whether Pradhan Ji even truly considers him a friend, and leaves with Siddharth abruptly. Later, the two of them decide to have a beer anyway, only to discover a snake there. They call Prahlad, Vikas and Pradhan Ji for help and they arrive promptly, scouring the office and concluding the snake has left. Later Pradhan Ji hosts them both for the night, and Abhishek reconciles with him, saying he is fine with the MLA visiting.
+ |LineColor = #383554
+}}
+{{Episode list
+ |EpisodeNumber = 8
+ |Title = Parivaar
+
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2022|5|18}}
+ |ShortSummary = Pradhan prepares for the religious congregation, donating Rs.20000. Bhushan, after knowing Pradhan is boasting about his donation for politics, decides to provide his tent services for free. Meanwhile, the gang decides to have a beer in the office left from the other day. Siddharth also joins the gang via a video call. Prahlad is suddenly cut short through a call informing him that Rahul is martyred. A wave of sorrow engulfs Phulera, with Bhushan and Kranti also abandoning their vendetta against Pradhan and Manju Devi in the process. Upon learning that Chandra Kishore would be visiting Phulera for a sympathy tribute, Pradhan instructs Manju Devi, who, with assistance from Kranti and the women of the village, succeeds in blocking his convoy; Manju Devi then tells him that he has no right to pay any respects to Rahul after disrespecting Prahlad, his father and that he must go back to where he came from. As he reels from the blow to his ego, Chandra Kishore assumes that Abhishek is the reason behind all this and vengefully vows to have him transferred. Meanwhile, Prahlad is heartbroken as the villagers assemble for a funeral. After remaining aloof and alone for 3 days, Prahlad is visited by Pradhan, Vikas and Abhishek. As Prahlad breaks into tears, Pradhan, Vikas and Abhishek comfort and console him.
+
+The episode ends with a post-credits scene wherein Manju Devi and Rinki receive a letter and, on opening and reading it, conclude that it is a transfer order for Abhishek, who is unaware, just akin to the women, that it is under duress from Chandra Kishore.
+ |LineColor = #383554
+}}
+}}
+
+===Season 3 (2024)===
+{{Episode table|background=#7695D7|overall=b|title=b|director=Deepak Kumar Mishra|writer=b|airdate=b|episodes={{Episode list
+ |EpisodeNumber = 1
+ |Title = Rangbaazi
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = Pradhanji's desperate attempt to prevent Abhishek's impending transfer intensifies the conflict between the Pradhanji's supporters and the new secretary who has arrived in the village touting the MLAs support . Bhushan with his cronies Vinod and Madhav try to help the new secretary setup. A grieving Prahlad finds it difficult to make peace with his new reality. The MLA gets arrested on charges of slaughtering and eating a dog and the panchayat uses this to throw out the new secretary and bring back Abhishek. 
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 2
+ |Title = Gaddha
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = Abhishek returns with the resolve of staying away from the village politics. Fearing the loss of public reputation, Pradhan and Manju Devi need Abhishek's help to handle a rebel.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 3
+ |Title = Ghar Ya Eent-Patthar?
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = After Bhushan senses an opportunity to attack Pradhan, Abhishek jumps into damage control mode. Prahlad doesn't like the way Pradhan uses Abhishek for political benefit. Prahlad shows an elderly village woman the importance of family in her last years.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 4
+ |Title = Atma Manthan
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = The final blow to Pradhan's reputation comes after he gets accused of partiality in a welfare scheme implementation. Meanwhile, Bhushan allies with the MLA to topple Pradhan's rule. A rift develops between the residents of the eastern and western halves of the village .
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 5
+ |Title = Shanti Samjhauta
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = Manju Devi reluctantly agrees to Bhushan's proposal of entering into a peace agreement with the MLA. Abhishek too gives his nod as it's impossible to get the road built without MLA's support. The MLA provides specific instructions to the village for the day of his arrival in the village, including a peculiar request to release a dove as a peace symbol. Abhishek and Vikas go to local Bam Bahadur for the bird and find he only has pigeons and decide to make do with it. The MLA arrives on the day of the truce to smooth things over with his daughter. He deliberately sidelines Manju Devi and Pradhan in favour of Bhushan's squad. As he is about to release the pigeon with Bhushan, the pigeon dies, engraging Bam Bahadur who calls the MLA a killer of animals, causing him to flee the village in a panic.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 6
+ |Title = Chingaari
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = To fix their dented image, the Pradhan gang sets a trap to capitalize on a lethal mistake committed by the MLA. Amidst all the political chaos, an unexpected news brings joy to the Pradhan gang. The Pradhan shows his ability to unify the village in order to protect one of their own from the MLA's threats.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 7
+ |Title = Shola
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = The MLA puts out a hit on one of the village residents. The village retaliates against the MLA's actions by planning on buying his horse under false pretenses - through Parmeshwar's son-in-law.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 8
+ |Title = Hamla
+ |DirectedBy = Deepak Kumar Mishra
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2024|5|28}}
+ |ShortSummary = Finally, Pradhan rallies the whole Phulera behind him to fight one last battle for glory. Abhishek finds himself too deep into the murky waters of village politics and loses his objectivity. The MLA is persuaded by the District Magistrate and Assembly Speaker to drop the matter. Finally, unknown gunmen attempt to kill the Pradhan. He survives and is admitted to the hospital. An angry Abhishek fights the MLA and his goons when they visit the hospital. The episode ends with all of them detained by the police.
+ |LineColor = #7695D7
+}}}}
+
+=== Season 4 (2025) ===
+{{Episode table|background=#7695D7|overall=b|title=b|director=Deepak Kumar Mishra,Akshat Vijayvargiya|writer=b|airdate=b|episodes={{Episode list
+ |EpisodeNumber = 1
+ |Title = Case-Mukadma
+ |DirectedBy = Deepak Kumar Mishra, Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = Abhishek fears the police case for slapping Bhushan could ruin his career. Drunk and frustrated, he vents and tries to apologise, hoping Bhushan will drop the case. But Bhushan has other plans because he wants Abhishek’s help to clear his name in the Pradhan shooting. The situation escalates when the MLA also gets involved in the deal.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 2
+ |Title = Zakhm
+ |DirectedBy = Deepak Kumar Mishra, Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = Pradhan, a survivor of an "assassination" attempt, tries to leverage sympathy as he kicks off his election campaign. His team organises a public event where he cleans a dirty village spot despite being wounded. Meanwhile, Bhushan’s camp makes a pre-emptive strike to steal Pradhan’s thunder and gain the upper hand.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 3
+ |Title = Vachan
+ |DirectedBy = Deepak Kumar Mishra, Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = After noticing a crack in Bhushan’s camp, Pradhan sees an opportunity to weaken his rival. Following his instructions, his team tries to break the unity of Bhushan’s camp by targeting one of his key loyalists. But the plan does not go as smoothly as hoped. Loyalties run deep, and winning him over proves more difficult than expected.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 4
+ |Title = Shakti Pradarshan
+ |DirectedBy = Deepak Kumar Mishra, Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = While Pradhan and Manju Devi prepare for a grand nomination, Bhushan and the MLA hatch a plan to humiliate Pradhan's family in front of the villagers. Acting on a secret tip, a team of government officials pays a surprise visit to members of Pradhan’s camp.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 5
+ |Title = Ashirvaad
+ |DirectedBy = Deepak Kumar Mishra, Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = A few days before the election, Manju Devi's father visits Phulera to bless his daughter. During a door-to-door campaign, a physical altercation breaks out between rival camps after Kranti Devi insults Khushbu, Vikas’s pregnant wife, deeply offending both Prahlad and Vikas.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 6
+ |Title = Sanjeevani
+ |DirectedBy = Deepak Kumar Mishra, Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = Jealous of Bhushan gaining strong support in the village, Pradhan’s camp grows anxious. A temporary reprieve comes when the local MP, the MLA’s superior, offers a chance to solve their problems. However, this opportunity comes with a twist, creating a moral dilemma among the camp members, especially Prahlad.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 7
+ |Title = Dramabaaz
+ |DirectedBy = Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = Just before election day, the local electricity transformer malfunctions, causing a power outage across the village. Pradhan’s camp scrambles to get it repaired but faces a dilemma when they learn where the electrician is from. Meanwhile, Bhushan’s camp prepares to deliver the final blow to Pradhan’s campaign.
+ |LineColor = #7695D7
+}}
+{{Episode list
+ |EpisodeNumber = 8
+ |Title = Dabdaba
+ |DirectedBy = Akshat Vijaywargiya
+ |WrittenBy = Chandan Kumar
+ |OriginalAirDate = {{Start date|df=yes|2025|6|24}}
+ |ShortSummary = As Abhishek plans his next move after receiving his CAT results, Pradhan’s family anxiously awaits the election outcome. The advance order of sweets becomes both a topic of conversation and a subtle display of confidence. While both factions try to project strength before the villagers, the MLA keeps a sharp eye on Phulera’s political future. Manju Devi loses the panchayat election by 73 votes, making Abhishek's stay in Phulera difficult, and creating a suspense, paving way for the season finale.
+ |LineColor = #7695D7 
+}}}}
+
+== Production ==
+=== Development ===
+In late 2019, [[The Viral Fever]] signed a deal with the streaming platform [[Amazon Prime Video]] to produce a new [[streaming television]] series for their platform, after the success of their previous collaboration ''Hostel Daze''. Sameer Saxena, the creative head of TVF picked Chandan Kumar and Deepak Kumar Mishra to script the show and direct the series. Mishra earlier directed theatre shows and drama in the past, and in his meeting with the founder and then-creative head of TVF, [[Arunabh Kumar]], he expressed his interest in scripting, acting, and direction. Later, he went on to direct the respective second season of ''[[Permanent Roommates]]'' and [[The Viral Fever#Humorously Yours (2016-present)|Humorously Yours]]. This was his first maiden attempt at directing a full-fledged streaming series for the media.
+
+Mishra drew inspiration from the classic [[Doordarshan]] shows ''[[Malgudi Days (TV series)|Malgudi Days]]'', ''[[Potli Baba Ki]]'', ''[[Swami (disambiguation)|Swami]]'' and ''Tenali Rama'', and decided to make one of them relatable to the current scenario stating that the kinds of shows are not present in this period. He and Chandan did extensive research and travelled across villages for an idea about the script, which was progressed in 2017, but had been delayed due to the research work. Chandan finally drafted the script whose one-line is about an engineering graduate who joins a low-paid salary job in a remote village and initially titled ''SDO Saheb'', before they changed the title to ''Panchayat''.<ref name=":2">{{cite web|date=2020-07-21|title=Villages are not as they are shown on screen, says the man behind Panchayat|url=https://www.hindustantimes.com/villages-are-not-as-they-are-shown-on-screen-says-the-man-behind-panchayat/story-6oOrmwfK8RUnS0NJNU9WBI.html|access-date=2021-02-25|website=Hindustan Times|language=en|archive-date=22 July 2020|archive-url=https://web.archive.org/web/20200722230911/https://www.hindustantimes.com/villages-are-not-as-they-are-shown-on-screen-says-the-man-behind-panchayat/story-6oOrmwfK8RUnS0NJNU9WBI.html|url-status=live}}</ref>
+
+{{Blockquote|text=We wanted to show realism. Usually, villagers are portrayed as 'bhole-bhale' log (simple people), who are ignorant and are shown in a very strange way. People raised their fingers saying that our story was slow, took time to sink in, and without any action, or a leading lady. But my writer and I were clear that we wanted to show a village in 2020 and probably the audience liked that realism. Today's rural youth is watching [[YouTube]] on mobile, they make [[TikTok]] videos, on 'khaprail' (clay-tiled) roofs they have dish antennas, flat-screen TVs are fitted on mud walls...so it's a different world now!|source=Deepak Kumar Mishra, on the conceptualisation of the show ''Panchayat'' in an interview with ''[[Hindustan Times]]''<ref>{{cite web|url=https://www.hindustantimes.com/villages-are-not-as-they-are-shown-on-screen-says-the-man-behind-panchayat/story-6oOrmwfK8RUnS0NJNU9WBI.html|title=Villages are not as they are shown on screen, says the man behind Panchayat|work=Hindustan Times |date=21 July 2020|access-date=25 February 2021|archive-date=22 July 2020|archive-url=https://web.archive.org/web/20200722230911/https://www.hindustantimes.com/villages-are-not-as-they-are-shown-on-screen-says-the-man-behind-panchayat/story-6oOrmwfK8RUnS0NJNU9WBI.html|url-status=live}}</ref>}}
+
+=== Casting ===
+For the main character Abhishek Tripathi, Sameer Saxena picked [[Jitendra Kumar]], who opined that his similarities to the character of the protagonist and the regular collaborations with TVF made it possible. His character had strong similarities with that of Mohan Bhargav, portrayed by [[Shah Rukh Khan]] in the 2004 film ''[[Swades]]''.<ref>{{cite web|date=2020-04-03|title=Panchayat review: Jitendra Kumar takes over from Shah Rukh Khan in this quirky desi drama|url=https://www.hindustantimes.com/tv/panchayat-review-jitendra-kumar-takes-over-from-shah-rukh-khan-in-this-quirky-desi-drama/story-XyURlVj5gUOGLHoay21DFI.html|access-date=2021-02-25|website=Hindustan Times|language=en|archive-date=28 December 2020|archive-url=https://web.archive.org/web/20201228203620/https://www.hindustantimes.com/tv/panchayat-review-jitendra-kumar-takes-over-from-shah-rukh-khan-in-this-quirky-desi-drama/story-XyURlVj5gUOGLHoay21DFI.html|url-status=live}}</ref> About the contrast differences Kumar stated that "The comparisons were inevitable. But I am very happy about it, as I am a huge fan of the film. It left a deep impact on me. I even have a framed poster of the film — the one with SRK sitting in a boat surrounded by local villagers — in my home itself".<ref>{{cite web|date=2020-04-16|title=Would get stressed about being typecast: Panchayat actor Jitendra Kumar|url=https://indianexpress.com/article/entertainment/web-series/id-get-stressed-about-being-typecast-but-now-i-enjoy-it-panchayat-actor-jitendra-kumar-6363928/|access-date=2021-02-25|website=The Indian Express|language=en|archive-date=19 January 2021|archive-url=https://web.archive.org/web/20210119132638/https://indianexpress.com/article/entertainment/web-series/id-get-stressed-about-being-typecast-but-now-i-enjoy-it-panchayat-actor-jitendra-kumar-6363928/|url-status=live}}</ref>
+
+[[Neena Gupta]] plays the role of Manju Devi, the village Pradhan, and a homemaker. She initially accepted the script on the basis of the response to TVF's previous projects as well as their collaboration with [[Raghubir Yadav]] and Jitendra (in her second collaboration after ''[[Shubh Mangal Zyada Saavdhan]]'', in which she played the latter's mother character).<ref>{{cite web|last=Khan|first=Murtaza Ali|date=2020-04-20|title=Panchayat deals with a refreshingly new subject: Neena Gupta|url=https://www.nationalheraldindia.com/entertainment/panchayat-deals-with-a-refreshingly-new-subject-neena-gupta|access-date=2021-02-25|website=National Herald|language=en|archive-date=21 April 2020|archive-url=https://web.archive.org/web/20200421045155/https://www.nationalheraldindia.com/entertainment/panchayat-deals-with-a-refreshingly-new-subject-neena-gupta|url-status=live}}</ref> Yadav played the role of Brij Bhushan Dubey, husband of Manju Devi, and on the connection with his co-star, he stated "It was a great experience to work with Neena Gupta. She used to get into the character entirely. With her, it didn't feel we are here for acting".<ref>{{cite web|date=2020-04-03|title=Panchayat actor Raghubir Yadav: With Neena Gupta as a co-star, it didn't feel like we were acting|url=https://indianexpress.com/article/entertainment/web-series/panchayat-raghubir-yadav-neena-gupta-amazon-prime-video-tvf-6343175/|access-date=2021-02-26|website=The Indian Express|language=en|archive-date=19 January 2021|archive-url=https://web.archive.org/web/20210119131815/https://indianexpress.com/article/entertainment/web-series/panchayat-raghubir-yadav-neena-gupta-amazon-prime-video-tvf-6343175/|url-status=live}}</ref>
+
+Yadav's student, [[Chandan Roy]], played the role of Vikas, the office assistant. He initially confessed that he used to go to auditions every day and one of his friends at the casting bay called him for a small role in the series, which was supposed to be shot in a single day. He initially travelled to Bhopal to shoot for the same series and met one of the assistants in TVF, where the creative team sent a script for Vikas and also got the role, whereas Deepak Kumar Mishra shot the one-day portion which was initially offered to Roy.<ref>{{cite web|date=2020-04-19|title=Chandan Roy: Panchayat's set was like a school for me|url=https://indianexpress.com/article/entertainment/web-series/panchayat-chandan-roy-playing-vikas-6366449/|access-date=2021-02-26|website=The Indian Express|language=en|archive-date=8 August 2021|archive-url=https://web.archive.org/web/20210808142342/https://indianexpress.com/article/entertainment/web-series/panchayat-chandan-roy-playing-vikas-6366449/|url-status=live}}</ref>
+
+=== Filming ===
+The series was shot in a real panchayat office located at [[Mahodiya]] Village, [[Sehore district]] in [[Madhya Pradesh]], whereas the script was set in a fictional backdrop in [[Uttar Pradesh]].<ref>{{cite web|last=Jha|first=Subhash K.|date=2020-04-10|title=It was a challenge shooting in a remote village: Jitendra Kumar shares his experiences about 'Panchayat'|url=https://www.nationalheraldindia.com/entertainment/it-was-a-challenge-shooting-in-a-remote-village-jitendra-kumar-shares-his-experiences-about-panchayat|access-date=2021-02-25|website=National Herald|language=en|archive-date=25 May 2022|archive-url=https://web.archive.org/web/20220525112300/https://www.nationalheraldindia.com/entertainment/it-was-a-challenge-shooting-in-a-remote-village-jitendra-kumar-shares-his-experiences-about-panchayat|url-status=live}}</ref> According to the lead actor Jitendra Kumar, the series was shot in the month of March and April 2019, which wrapped within two months.<ref name=":0">{{cite web|date=April 4, 2020|first=Suhani|last=Singh|title=Jitendra Kumar: Every aspiring actor should work with Neena Gupta|url=https://www.indiatoday.in/binge-watch/story/jitendra-kumar-every-aspiring-actor-should-work-with-neena-gupta-1663252-2020-04-04|access-date=2021-02-26|website=India Today|language=en|archive-date=30 March 2021|archive-url=https://web.archive.org/web/20210330000554/https://www.indiatoday.in/binge-watch/story/jitendra-kumar-every-aspiring-actor-should-work-with-neena-gupta-1663252-2020-04-04|url-status=live}}</ref> However he opined as, during the time period, the temperature was extremely hot and was difficult to shoot, further adding that it was a tough time for the crew members who were 150 in number, as many used to stand in the fields holding umbrellas or lights.<ref name=":0" /> Raghubir Yadav eventually said about shooting in real locations, stating that "It turned out to be really well as the aesthetics and the vivid hues of the village life can be clearly seen in the show."<ref>{{cite web|date=2020-04-16|title=Raghubir Yadav On How Shooting At Real Locations Helped In Keeping Panchayat Realistic|url=https://www.news18.com/news/movies/raghubir-yadav-on-how-shooting-at-real-locations-helped-in-keeping-panchayat-realistic-2580295.html|access-date=2021-02-26|website=News18|language=en|archive-date=11 August 2020|archive-url=https://web.archive.org/web/20200811142300/https://www.news18.com/news/movies/raghubir-yadav-on-how-shooting-at-real-locations-helped-in-keeping-panchayat-realistic-2580295.html|url-status=live}}</ref>
+
+In an interview with ''[[Hindustan Times]]'', Jitendra stated "My initial understanding of a panchayat was a big tree with five PANCH or sarpanch and other people sitting in its shade. They are usually fighting over a land dispute and come up with a solution right there. But actually, a Panchayat is like an office and every panchayat follows a process. The show talks about the problems of villagers which appear to be very funny for us."<ref>{{cite web|date=2020-04-04|title=Jitendra Kumar: 'Ayushmann Khurrana, Neena Gupta bring a lot of positive energy on the sets'|url=https://www.hindustantimes.com/tv/jitendra-kumar-ayushmann-khurrana-neena-gupta-bring-a-lot-of-positive-energy-on-the-sets/story-8L1uVgGpOUTfujsQx8I10I.html|access-date=2021-02-26|website=Hindustan Times|language=en|archive-date=28 December 2020|archive-url=https://web.archive.org/web/20201228203614/https://www.hindustantimes.com/tv/jitendra-kumar-ayushmann-khurrana-neena-gupta-bring-a-lot-of-positive-energy-on-the-sets/story-8L1uVgGpOUTfujsQx8I10I.html|url-status=live}}</ref>
+===Location===
+The series was filmed at a real panchayat office in [[Mahodiya]], [[Sehore district]], [[Madhya Pradesh]], located about 40&nbsp;km from [[Bhopal]]. It marked Deepak Kumar Mishra’s first full-length directorial project following his work on the second seasons of ''[[Permanent Roommates]]'' and ''Humorously Yours!''.<ref name=":2" /> The soundtrack and background score were composed by [[Anurag Saikia]], while cinematography and editing were handled by [[Amitabha Singh]] and Amit Kulkarni, respectively.
+
+== Soundtrack ==
+
+[[Anurag Saikia]] composed the soundtrack and background score for Panchayat. The background score and songs include the use of acoustic guitars, a pianist, an accordion, and the kora, despite the setting in rural India. Saikia initially noted that "The creative producer Abhijeet Singh Parmar wanted 'anything but the usual music,' So we initially tried symphony, then rock, and even jazz. The music for episode one took a month or two to be locked in. Once that was in place, we decided to keep the music acoustic and minimalist".<ref name=":1">{{cite web|last=Ghosh|first=Devarsi|title='Anything but the usual music': Anurag Saikia on his tunes for 'Panchayat' and love for borgeet|url=https://scroll.in/reel/958769/anything-but-the-usual-music-anurag-saikia-on-his-tunes-for-panchayat-and-love-for-borgeet|access-date=2021-02-26|website=Scroll.in|date=12 April 2020|language=en-US|archive-date=26 February 2021|archive-url=https://web.archive.org/web/20210226192626/https://scroll.in/reel/958769/anything-but-the-usual-music-anurag-saikia-on-his-tunes-for-panchayat-and-love-for-borgeet|url-status=live}}</ref>
+
+He initially added that the biggest challenge for him is to feature an ambient sort of music, with a bit of rock. However, the score featured only acoustic instruments. Saikia, in an interview with ''[[Scroll.in]]'' opined that "When an entire score for a scene got chucked, I had to bring the musicians back to the studio, and they often played for the same scene thrice a week. This happened with the theme that is used to introduce the village pradhan's husband."<ref name=":1" />
+
+One of the songs in the series, "Hiya Tho", was received positively by the audience for producing a soulful tune with gibberish lyrics. The word "Hiya", stands for heart in Assamese. Due to his early exposure to Assamese and Western classical music, Anurag Saikia stated that "the song is inspired by the chants we have grown up hearing in monasteries in the North East". He recruited fellow Assamese singer [[Shankuraj Konwar]] for vocal duties since he would understand the song's Assamese roots.<ref>{{cite web|date=2020-08-20|title=Hear Composer Anurag Saikia Meld Prog and Assamese Folk on 'Kukuha' -|url=https://firstpost.com/anurag-saikia-assamese-folk-kukuha-song/|access-date=2021-02-26|website=Firstpost|language=en-US}}{{Dead link|date=August 2024 |bot=InternetArchiveBot |fix-attempted=yes }}</ref>
+
+The original soundtrack album for the series was unveiled on 10 April 2020, followed by the original score on 1 May 2020. The soundtrack features five songs and theme music, all have been performed and written by Saikia, whereas Vivek Hariharan, Raghav Chaitanya, Vinnie Hutton, and Shankuraj Konwar sang the vocals.<ref>{{Citation|title=Panchayat (Music from the Series) - EP by Anurag Saikia|date=10 April 2020|url=https://music.apple.com/in/album/panchayat-music-from-the-series-ep/1504859475|language=en-gb|access-date=2021-02-26|archive-date=25 May 2022|archive-url=https://web.archive.org/web/20220525001701/https://music.apple.com/in/album/panchayat-music-from-the-series-ep/1504859475|url-status=live}}</ref> The background score which released as a separate album format features sixteen tracks{{track listing
+| extra_column = Singer(s)
+| length3 = 3:59
+| length6 =
+| all_writing =
+| length10 =
+| total_length = 12:18
+| title1 = Pasa Phenk
+| extra1 = [[Anurag Saikia]], Vivek Hariharan
+| length1 = 2:38
+| title2 = Paheli
+| extra2 = Anurag Saikia, Raghav Chaitanya
+| length2 = 2:53
+| title3 = Hiya Tho
+| extra3 = Anurag Saikia, Shankuraj Konwar
+| title4 = I'm Happy
+| title5 = Panchayat Title
+| extra4 = Anurag Saikia, Vinnie Hutton
+| headline = ''Panchayat'' (Music from the Series)
+| length4 = 1:43
+| extra5 = Anurag Saikia
+| length5 = 1:03
+| title6 =
+| title7 =
+| title8 =
+| length8 =
+| title9 =
+| length9 =
+| title10 =
+| length7 =
+}}{{Track listing
+| all_writing =
+| length13 = 2:53
+| length10 = 1:01
+| title11 = Chauraaha
+| length11 = 1:34
+| title12 = Thokar
+| length12 = 1:05
+| title13 = Ghar Se Door Ek Ghar
+| title14 = Naaga Naach
+| length9 = 0:41
+| length14 = 1;13
+| total_length = 25:03
+| title15 = Paagal Sala
+| title16 = Chal Chala Chal
+| length15 = 2:37
+| length16 = 0:58
+| title10 = Lauh Purush
+| title9 = Naya Safar
+| title1 = Aur Kitna Dhoor?
+| length4 = 0:56
+| length1 = 2:16
+| title2 = Anjaan Galiyaan
+| length2 = 0:54
+| title3 = Ab Kya?
+| length3 = 1:11
+| title4 = Duniya Gol Hai
+| title5 = Chhoti Chhoti Kushiyaan
+| length8 = 1:53
+| length5 = 1:50
+| title6 = Ek Akela Ped
+| length6 = 2:40
+| title7 = Is Raat Ki Subha Nahi
+| length7 = 1:12
+| title8 = Baat Us Raat Khi
+| headline = ''Panchayat'' (Original Score from the Series)
+}}
+
+==Release==
+
+=== Season 1 ===
+Amazon Prime Video announced the release of eight new Indian originals in January 2020,<ref>{{cite web|date=2020-01-20|title=Amazon Prime Video India 2020 slate includes second seasons of Made In Heaven, Mirzapur; Abhishek Bachchan's digital debut Breathe 2|url=https://www.firstpost.com/entertainment/amazon-prime-video-india-2020-slate-includes-second-seasons-of-made-in-heaven-mirzapur-abhishek-bachchans-digital-debut-breathe-2-7932281.html|access-date=2021-02-26|website=Firstpost|archive-date=21 August 2024|archive-url=https://web.archive.org/web/20240821144835/https://www.firstpost.com/entertainment/amazon-prime-video-india-2020-slate-includes-second-seasons-of-made-in-heaven-mirzapur-abhishek-bachchans-digital-debut-breathe-2-7932281.html|url-status=live}}</ref> with ''Panchayat'' being one of them.<ref>{{cite web|author=Scroll Staff|title=Amazon Prime Video will launch eight new Indian original series for 2020|url=https://scroll.in/reel/950510/amazon-prime-video-will-launch-eight-new-indian-original-series-for-2020|access-date=2021-02-26|website=Scroll.in|date=20 January 2020|language=en-US|archive-date=16 June 2020|archive-url=https://web.archive.org/web/20200616124516/https://scroll.in/reel/950510/amazon-prime-video-will-launch-eight-new-indian-original-series-for-2020|url-status=live}}</ref> The official trailer of ''Panchayat'' was released on 29 March 2020.<ref>{{cite web|date=2020-03-30|title=Panchayat trailer: Jitendra Kumar and Neena Gupta reunite for Amazon Prime Video series|url=https://indianexpress.com/article/entertainment/web-series/panchayat-trailer-jitendra-kumar-and-neena-gupta-reunite-for-amazon-prime-video-series-watch-video-6338803/|access-date=2021-02-26|website=The Indian Express|language=en|archive-date=21 August 2024|archive-url=https://web.archive.org/web/20240821144855/https://indianexpress.com/article/entertainment/web-series/panchayat-trailer-jitendra-kumar-and-neena-gupta-reunite-for-amazon-prime-video-series-watch-video-6338803/|url-status=live}}</ref><ref>{{cite web|date=March 30, 2020|title=Jitendra Kumar reunites with Neena Gupta in web series Panchayat. Watch trailer|url=https://www.indiatoday.in/television/web-series/story/jitendra-kumar-reunites-with-neena-gupta-in-web-series-panchayat-watch-trailer-1661296-2020-03-30|access-date=2021-02-26|website=India Today|language=en|archive-date=31 March 2020|archive-url=https://web.archive.org/web/20200331182620/https://www.indiatoday.in/television/web-series/story/jitendra-kumar-reunites-with-neena-gupta-in-web-series-panchayat-watch-trailer-1661296-2020-03-30|url-status=live}}</ref> The  eight-episode series premiered on 3 April 2020.<ref>{{cite web|title=Trance, Rocketman, 4 More Shots Please, and More on Prime Video in April|url=https://gadgets.ndtv.com/entertainment/news/prime-video-april-2020-releases-trance-movie-rocketman-four-more-shots-please-2-hit-2203131|access-date=2021-02-26|website=NDTV Gadgets 360|date=30 March 2020|language=en|archive-date=17 January 2021|archive-url=https://web.archive.org/web/20210117025608/https://gadgets.ndtv.com/entertainment/news/prime-video-april-2020-releases-trance-movie-rocketman-four-more-shots-please-2-hit-2203131|url-status=live}}</ref><ref>{{Cite news|last=Joshi|first=Namrata|date=2020-04-17|title=Small town swag: Why shows like 'Panchayat', 'Gullak' and 'Hasmukh' are striking a connect with audiences today|language=en-IN|work=The Hindu|url=https://www.thehindu.com/entertainment/movies/why-shows-based-on-small-towns-are-gaining-popularity-in-india/article31365003.ece|access-date=2021-02-26|issn=0971-751X|archive-date=21 August 2024|archive-url=https://web.archive.org/web/20240821144840/https://www.thehindu.com/entertainment/movies/why-shows-based-on-small-towns-are-gaining-popularity-in-india/article31365003.ece|url-status=live}}</ref>
+
+=== Season 2 ===
+On 28 April 2022, the second season was announced after the completion of the production. On 2 May 2022, it was announced that the second season will premiere on 20 May 2022.<ref>{{Cite web |date=May 2, 2022 |first=Shweta |last=Keshri |title=TVF's Panchayat Season 2 to premiere on Amazon Prime Video on May 20 |url=https://www.indiatoday.in/binge-watch/story/tvf-s-panchayat-season-2-to-premiere-on-amazon-prime-video-on-may-20-1944548-2022-05-02 |access-date=2022-05-10 |website=India Today |language=en |archive-date=10 May 2022 |archive-url=https://web.archive.org/web/20220510094101/https://www.indiatoday.in/binge-watch/story/tvf-s-panchayat-season-2-to-premiere-on-amazon-prime-video-on-may-20-1944548-2022-05-02 |url-status=live }}</ref> However, Prime Video released all the episodes on 18 May 2022, two days earlier than its actual premiere date.<ref name="Business Standard">{{Cite news|date=2022-05-18|title=Amazon Prime releases all episodes of Panchayat Season 2 ahead of schedule|language=en-IN|work=Business Standard|url=https://www.business-standard.com/article/entertainment/amazon-prime-releases-all-episodes-of-panchayat-season-2-ahead-of-schedule-122051801680_1.html|access-date=18 May 2022|archive-date=18 May 2022|archive-url=https://web.archive.org/web/20220518183200/https://www.business-standard.com/article/entertainment/amazon-prime-releases-all-episodes-of-panchayat-season-2-ahead-of-schedule-122051801680_1.html|url-status=live}}</ref>
+
+=== Season 3 ===
+Deepak Kumar Mishra revealed to social media that there would be a ''Panchayat'' Season 3.<ref>{{Cite web|url=https://indianexpress.com/article/entertainment/web-series/panchayat-director-confirms-season-3-death-scene-7945659/|title=Panchayat director Deepak Kumar Mishra confirms season 3, talks about the death scene: 'We needed something drastic'|date=May 31, 2022|website=Indian Express|language=en|access-date=2024-06-02|archive-date=21 July 2022|archive-url=https://web.archive.org/web/20220721162354/https://indianexpress.com/article/entertainment/web-series/panchayat-director-confirms-season-3-death-scene-7945659/|url-status=live}}</ref> It was later confirmed that season 3 would also have eight episodes like the previous two seasons and would be released in late 2023. However, it was further delayed to early 2024. Finally, after many delays, it released on 28 May 2024.<ref>{{Cite web|url=https://www.business-standard.com/entertainment/panchayat-season-3-now-out-on-prime-here-is-how-you-can-stream-it-for-free-124052800351_1.html/|title=Panchayat Season 3 now out on Prime: Here is how you can stream it for free|date=May 28, 2022|website=Indian Express|language=en|access-date=2024-06-02}}</ref>
+
+=== Season 4 ===
+On 3 April 2025, marking the fifth anniversary of the series, the makers originally announced that its fourth season will premiere on 2 July 2025. Later, the date was changed to 24 June 2025.<ref>{{cite news |title=Panchayat Season 4 Teaser: Jitendra Kumar Clashes With 'Gopi Bahu' In New Promo; Check Release Date |url=https://www.news18.com/movies/panchayat-season-4-teaser-amazon-prime-video-announces-release-date-on-show-5th-anniversary-ws-l-9285643.html |work=News18 |date=3 April 2025 |language=en}}</ref><ref>{{cite news |title=Panchayat season 4 officially announced: Fans excited as Prime Video announces release date of Jitendra Kumar's cult hit |url=https://www.hindustantimes.com/entertainment/web-series/panchayat-season-4-officially-announced-fans-excited-as-prime-video-announces-release-date-of-jitendra-kumars-cult-hit-101743671681626.html |work=[[Hindustan Times]] |date=3 April 2025}}</ref>
+
+=== Season 5 ===
+On 7 July 2025, TVF and Amazon Prime Video announced on social media that the fifth season will be released in 2026.<ref>{{cite news |title=Panchayat Season 5 confirmed for 2026 after Season 4 breaks franchise records |url=https://www.indiatoday.in/entertainment/ott/story/panchayat-season-5-confirmed-for-2026-season-4-breaks-franchise-records-2752007-2025-07-07 |work=India Today |date=7 July 2025 |language=en}}</ref>
+
+== Reception ==
+''Panchayat'' received mostly positive reviews from critics who praised its writing, performances, direction, and technical aspects. The show's rural setting was appreciated as a refreshing change from the urban themes often seen in TVF’s earlier shows.<ref>{{cite web|url=https://www.headlinesoftoday.com/entertainment/panchayat-tvf-presents-new-series-starring-jitendra-kumar-aka-jeetu-bhaiya-on-amazon-prime-video-2020.html|title=Panchayat : TVF presents new series starring Jitendra Kumar aka Jeetu Bhaiya on Amazon Prime Video 2020|last=Maheshwari|first=Aayushi|date=2020-04-05|website=Headlines of Today|language=en-US|access-date=2020-04-08|archive-date=31 August 2023|archive-url=https://web.archive.org/web/20230831060858/https://www.headlinesoftoday.com/entertainment/panchayat-tvf-presents-new-series-starring-jitendra-kumar-aka-jeetu-bhaiya-on-amazon-prime-video-2020.html|url-status=live}}</ref>
+
+At the inaugural [[Filmfare OTT Awards]], the series won multiple awards in the comedy category except for Best Actress. It was also nominated for Best Original Story, Screenplay, and Dialogues for Chandan Kumar.<ref>{{cite news|title=TVF's Panchayat shines at the Flyx Filmfare OTT Awards 2020 - Times of India|url=https://timesofindia.indiatimes.com/tv/spotlight/tvfs-panchayat-shines-at-the-flyx-filmfare-ott-awards-2020/articleshow/80286368.cms|access-date=2021-02-26|website=The Times of India|date=22 January 2021|language=en|archive-date=31 August 2023|archive-url=https://web.archive.org/web/20230831060852/https://timesofindia.indiatimes.com/tv/spotlight/tvfs-panchayat-shines-at-the-flyx-filmfare-ott-awards-2020/articleshow/80286368.cms|url-status=live}}</ref>
+
+=== Critical response ===
+
+==== Season 1 ====
+Sreeparna Sengupta of ''[[The Times of India]]'' rated four out of five stars and wrote "What keeps Panchayat ticking are the well-timed dialogues and situations that keep you chuckling all along."<ref>{{Citation|title=Panchayat Season 1 Review: A delightful, slice of life series capturing the essence of rural India|newspaper=The Times of India|url=https://timesofindia.indiatimes.com/web-series/reviews/hindi/panchayat/seasonreview/75815984.cms|access-date=2021-02-26|archive-date=17 April 2021|archive-url=https://web.archive.org/web/20210417035657/https://timesofindia.indiatimes.com/web-series/reviews/hindi/panchayat/seasonreview/75815984.cms|url-status=live}}</ref> Nandini Ramanath of ''Scroll.in'' wrote "The series is better placed to explore the foibles of its handful of characters. ''Panchayat'' unfolds as a comedy of mofussil manners. A proposal to install solar-powered lights teaches Abhishek the art of negotiating with the locals. A poorly phrased slogan for family planning leads to the discovery of hidden allies. The theft of a computer monitor is a sign that Abhishek is finally settling into his role."<ref>{{cite web|last=Ramnath|first=Nandini|title='Panchayat' review: Rural India is a jolly good place in this comedy of manners|url=https://scroll.in/reel/958066/panchayat-review-rural-india-is-a-jolly-good-place-in-this-comedy-of-manners|access-date=2021-02-26|website=Scroll.in|date=4 April 2020|language=en-US|archive-date=5 March 2021|archive-url=https://web.archive.org/web/20210305133428/https://scroll.in/reel/958066/panchayat-review-rural-india-is-a-jolly-good-place-in-this-comedy-of-manners|url-status=live}}</ref> Ruchi Kaushal of ''Hindustan Times'' stated "Panchayat is a perfect example that what you really need to make a series sing is a solid script. If you are looking for something beyond the good old Ramayan and Mahabharat during the lockdown, Panchayat should definitely be on your must-watch list."<ref>{{cite web|date=2020-04-03|title=Panchayat review: Jitendra Kumar takes over from Shah Rukh Khan in this quirky desi drama|url=https://www.hindustantimes.com/tv/panchayat-review-jitendra-kumar-takes-over-from-shah-rukh-khan-in-this-quirky-desi-drama/story-XyURlVj5gUOGLHoay21DFI.html|access-date=2021-02-26|website=Hindustan Times|language=en|archive-date=28 December 2020|archive-url=https://web.archive.org/web/20201228203620/https://www.hindustantimes.com/tv/panchayat-review-jitendra-kumar-takes-over-from-shah-rukh-khan-in-this-quirky-desi-drama/story-XyURlVj5gUOGLHoay21DFI.html|url-status=live}}</ref>
+
+Ektaa Malik of ''[[The Indian Express]]'' gave three-and-a-half out of five stating "Panchayat incisively breaks the dual-tone presentation of the Indian small town in mainstream narratives. Jitendra Kumar is continuing his fine form after ''[[Shubh Mangal Zyada Saavdhan]]'' and his 'hairan-pareshan' expression has only gotten better. Though we wonder how long will he keep doing these underdog-needs-to-be-rescued roles."<ref>{{cite web|date=2020-04-04|title=Panchayat review: It takes a village|url=https://indianexpress.com/article/entertainment/web-series/panchayat-review-jitendra-kumar-neena-gupta-raghubir-yadav-6345985/|access-date=2021-02-26|website=The Indian Express|language=en|archive-date=11 December 2020|archive-url=https://web.archive.org/web/20201211085251/https://indianexpress.com/article/entertainment/web-series/panchayat-review-jitendra-kumar-neena-gupta-raghubir-yadav-6345985/|url-status=live}}</ref> Nairita Mukherjee of ''[[India Today]]'' summarised "Panchayat teaches us why rural India is possibly more equipped to handle isolation compared to its urban counterparts. Jitendra Kumar and Raghuvir Yadav drive the show, but we wanted to see much more of Neena Gupta."<ref>{{cite web|date=April 5, 2020|first=Nairita|last=Mukherjee|title=Panchayat Review: Jitendra Kumar and Raghuvir Yadav show is about finding yourself in isolation|url=https://www.indiatoday.in/binge-watch/story/panchayat-review-jitendra-kumar-and-raghuvir-yadav-show-is-about-finding-yourself-in-isolation-1663537-2020-04-05|access-date=2021-02-26|website=India Today|language=en|archive-date=25 January 2021|archive-url=https://web.archive.org/web/20210125184004/https://www.indiatoday.in/binge-watch/story/panchayat-review-jitendra-kumar-and-raghuvir-yadav-show-is-about-finding-yourself-in-isolation-1663537-2020-04-05|url-status=live}}</ref> Saraswati Datar of ''[[The News Minute]]'' stated "There are plenty of laughs but just as many genuine moments of emotion which force you to pause and feel for the people in this quirky tale. Go ahead and watch ''Panchayat'', it's exactly the ray of sunshine we need in gloomy times like these."<ref>{{cite web|date=2020-04-03|title='Panchayat' review: This amusing Amazon Prime series is what you need to beat the blues|url=https://www.thenewsminute.com/article/panchayat-review-amusing-amazon-prime-series-what-you-need-beat-blues-121750|access-date=2021-02-26|website=The News Minute|language=en|archive-date=29 September 2020|archive-url=https://web.archive.org/web/20200929094846/https://www.thenewsminute.com/article/panchayat-review-amusing-amazon-prime-series-what-you-need-beat-blues-121750|url-status=live}}</ref>
+
+Rahul Desai of ''[[Film Companion]]'' stated "The TVF show has one of the finest ensembles of recent times with Chandan Kumar's screenplay ensuring characters don't come across as caricatures."<ref>{{cite web|last=Desai|first=Rahul|date=2020-04-04|title=Panchayat Review: A Flawless TVF Show That Reclaims Rural India From The Movies|url=https://www.filmcompanion.in/features/panchayat-review-a-flawless-tvf-show-that-reclaims-rural-india-from-the-movies/|access-date=2021-02-26|website=Film Companion|language=en-US|archive-date=7 March 2021|archive-url=https://web.archive.org/web/20210307064746/https://www.filmcompanion.in/features/panchayat-review-a-flawless-tvf-show-that-reclaims-rural-india-from-the-movies/|url-status=live}}</ref> Udita Jhunjhunwala of ''[[Firstpost]]'' gave three-and-a-half out of five stating "On-target casting, immersive production design, crafty dialogue, and situations handled with a light touch to make ''Panchayat'' a satisfying watch. And who would have thought ''lauki'' (bottle gourd) could be such an effective peace offering!"<ref>{{cite web|date=2020-04-04|title=Panchayat review: Jitendra Kumar leads TVF's hilarious show with crafty dialogues, immersive production design|url=https://www.firstpost.com/entertainment/panchayat-review-jitendra-kumar-leads-tvfs-hilarious-show-with-crafty-dialogues-immersive-production-design-8224861.html|access-date=2021-02-26|website=Firstpost|archive-date=27 January 2021|archive-url=https://web.archive.org/web/20210127040730/https://www.firstpost.com/entertainment/panchayat-review-jitendra-kumar-leads-tvfs-hilarious-show-with-crafty-dialogues-immersive-production-design-8224861.html|url-status=live}}</ref> Tanisha Bagchi of ''[[The Quint]]'' gave four out of five stating "''Panchayat'' scores in its opening credits too, and by the time the sun sets on the worn-down office, we know one thing for sure - it takes a village to drive away from the fatigue that has crept in owing to Bollywood's obsession to set every other film in a small town."<ref>{{cite web|last=Bagchi|first=Tanisha|date=2020-04-06|title=Review: 'Panchayat' Revels In the Simple Pleasures of Village Life|url=https://www.thequint.com/entertainment/hot-on-web/panchayat-neena-gupta-raghubir-yadav-jitendra-kumar-amazon-prime-review|access-date=2021-02-26|website=TheQuint|language=en|archive-date=10 April 2020|archive-url=https://web.archive.org/web/20200410152546/https://www.thequint.com/entertainment/hot-on-web/panchayat-neena-gupta-raghubir-yadav-jitendra-kumar-amazon-prime-review|url-status=live}}</ref>
+
+Priyanka Sinha Jha of ''[[News18]]'' reviewed "City-slickers, small-town audience or country hicks, whichever category you may fall in, Panchayat is a must-watch for those who enjoy India stories."<ref>{{cite web|date=2020-04-03|title=Panchayat Review: Ensemble of Talented Actors Makes This Web Series a Delightful Watch|url=https://www.news18.com/news/movies/panchayat-review-ensemble-of-talented-actors-make-panchayat-a-delightful-watch-2562773.html|access-date=2021-02-26|website=News18|language=en|archive-date=25 November 2020|archive-url=https://web.archive.org/web/20201125004201/https://www.news18.com/news/movies/panchayat-review-ensemble-of-talented-actors-make-panchayat-a-delightful-watch-2562773.html|url-status=live}}</ref> Shilajit Mitra of ''[[Cinema Express]]'' reviewed "Though the show progresses quickly, with a new distraction emerging every episode, Abhishek stays focused on his goal. He's least bothered about Phulera and its going on. All he wants to do is study, bide his time and clear out. Writer Chandan Kumar and director Deepak Kumar Mishra steer clear of obvious heroism. When Abhishek gets into a scuffle and his ego swells, the scene quickly turns to slapstick."<ref>{{cite web|title=Panchayat web series review: A pleasant update on an old premise|url=https://www.cinemaexpress.com/reviews/hindi/2020/apr/03/panchayat-web-series-review-a-pleasant-update-on-an-old-premise-17860.html|access-date=2021-02-26|website=[[Cinema Express]]|date=3 April 2020 |language=en|archive-date=5 March 2021|archive-url=https://web.archive.org/web/20210305164153/https://www.cinemaexpress.com/reviews/hindi/2020/apr/03/panchayat-web-series-review-a-pleasant-update-on-an-old-premise-17860.html|url-status=live}}</ref> Tanul Thakur of ''[[The Wire (India)|The Wire]]'' wrote "''Panchayat'' has a constant lightness of touch, and that is reflected in the aesthetics, too. Its scenes aren't hurried; a consistent relaxed rhythm informs the entire show."<ref>{{cite web|title=Amazon Prime's 'Panchayat' Is a Unique Ode to Simplicity|url=https://thewire.in/culture/panchayat-amazon-prime-video-review|access-date=2021-02-26|website=The Wire|archive-date=4 February 2021|archive-url=https://web.archive.org/web/20210204082916/https://thewire.in/culture/panchayat-amazon-prime-video-review|url-status=live}}</ref>
+
+====Season 2====
+Ronak Kotecha of the ''[[Times of India]]'' rated the season 3.5/5, stating that "''Panchayat 2'' doesn’t try hard to be comedic or slapstick, it doesn’t try to change the world of patriarchy, societal ills like dowry, or rally for women empowerment. It just exists in a simple no-frills rural life set in the heartland of India. It’s the kind of escapism we need from the grimness of life and that makes it watchable, all over again."<ref>[https://timesofindia.indiatimes.com/web-series/reviews/hindi/panchayat/panchayat-season-2/seasonreview/91662630.cms ''Panchayat Season 2 Review'': That familiar feeling works like a charm all over again] {{Webarchive|url=https://web.archive.org/web/20240821144843/https://timesofindia.indiatimes.com/web-series/reviews/hindi/panchayat/panchayat-season-2/seasonreview/91662630.cms |date=21 August 2024 }} ''[[Times of India]]'',
+Ronak Kotecha, 19 May 2022</ref>
+
+====Season 3====
+A critic for ''[[Bollywood Hungama]]'' rated the season 4 stars out of 5 and wrote "''Panchayat Season 3'' fulfils all the humongous expectations and rests on bravura performances, some funny and dramatic sequences, nail-biting climax and meme-worthy dialogues. This time, the show also scores on the emotional front and also boasts of action scenes."<ref>{{cite news|first=Bollywood|last=Hungama|title=Panchayat Season 3|url=https://www.bollywoodhungama.com/news/features/web-series-review-panchayat-season-3/|magazine=[[Bollywood Hungama]]|date=28 May 2024|access-date=28 May 2024|archive-date=28 May 2024|archive-url=https://web.archive.org/web/20240528201920/https://www.bollywoodhungama.com/news/features/web-series-review-panchayat-season-3/|url-status=live}}{{rating|4|5}}</ref>
+
+== Accolades ==
+=== Season 1 ===
+{| class="wikitable sortable"
+!Date of ceremony
+!Award
+!Category
+!Recipient
+!Result
+!{{Abbr|Ref|Reference(s)}}
+|-
+| rowspan="7" |[[2020 Filmfare OTT Awards|19 December 2020]]
+| rowspan="7" |[[Filmfare OTT Awards]]
+|Best Comedy Series
+|[[Amazon Prime Video]]
+| {{Won}}
+| rowspan="7" |<ref>{{cite web|title=Winners of the Flyx Filmfare OTT Awards|url=https://www.filmfare.com/features/winners-of-the-flyx-filmfare-ott-awards-45407.html|access-date=20 December 2020|website=filmfare.com|language=en|archive-date=19 December 2020|archive-url=https://web.archive.org/web/20201219181529/https://www.filmfare.com/features/winners-of-the-flyx-filmfare-ott-awards-45407.html|url-status=live}}</ref>
+|-
+|Best Actor (Comedy Series)
+|[[Jitendra Kumar]]
+|{{Won}}
+|-
+|Best Supporting Actor (Comedy Series)
+|[[Raghubir Yadav]]
+|{{Won}}
+|-
+|Best Supporting Actress (Comedy Series)
+|[[Neena Gupta]]
+|{{Won}}
+|-
+|Best Original Story (Series)
+| rowspan="3" |Chandan Kumar
+|{{Nom}}
+|-
+|Best Screenplay
+|{{Nom}}
+|-
+|Best Dialogues
+|{{Nom}}
+|}
+
+=== Season 2 ===
+
+{| class="wikitable sortable"
+! Date of ceremony
+! Award
+! Category
+! Recipient
+! Result
+! {{Abbr|Ref|Reference(s)}}
+|-
+| [[54th International Film Festival of India|28 November 2023]]
+| [[International Film Festival of India]]
+| [[IFFI Best Web Series (OTT) Award|Best Web Series (OTT)]]
+| ''Panchayat''
+| {{Won}}
+| <ref name=awards:iexp>{{Cite news|url=https://indianexpress.com/article/entertainment/bollywood/iffi-2023-persian-movie-endless-borders-wins-best-film-award-9046008/ |title=IFFI 2023: Endless Borders wins Best Film award; Michael Douglas receives Satyajit Ray Lifetime Achievement Award|date= 28 November 2023|access-date=28 November 2023|website= The Indian Express}}</ref>
+|}
+
+== In other media ==
+''Panchayat'' has been officially remade by ''TVF'' in Tamil as ''[[Thalaivettiyaan Paalayam]]'' (2024), starring Abishek Kumar, [[Chetan (actor)|Chetan]] and [[Devadarshini]];<ref>{{cite web|url=https://www.thehansindia.com/ott-web-series/thalaivettiyaan-paalayam-review-908271|title=Thalaivettiyaan Paalayam Review: A quirky and pleasant escape into rural life|date=20 September 2024|publisher=www.thehansindia.com|access-date=|language=en|archive-date=24 September 2024|archive-url=https://web.archive.org/web/20240924174400/https://www.thehansindia.com/ott-web-series/thalaivettiyaan-paalayam-review-908271|url-status=live}}</ref> and in Telugu as ''[[Sivarapalli]]'' (2025), starring [[Rag Mayur]], [[Muralidhar Goud]] and [[Rupa Lakshmi]].<ref>{{Cite news |last=Nadadhur |first=Srivathsan |date=2025-01-24 |title='Sivarapalli' web series review: This Telugu remake of 'Panchayat' is uplifted by solid performances |url=https://www.thehindu.com/entertainment/movies/sivarapalli-web-series-review-a-loyal-remake-uplifted-by-solid-performances/article69131543.ece |access-date=2025-01-24 |work=The Hindu |language=en-IN |issn=0971-751X |archive-date=24 January 2025 |archive-url=https://web.archive.org/web/20250124080554/https://www.thehindu.com/entertainment/movies/sivarapalli-web-series-review-a-loyal-remake-uplifted-by-solid-performances/article69131543.ece |url-status=live }}</ref>
+
+== See also ==
+
+* [[List of productions by The Viral Fever]]
+
+== References ==
+{{reflist}}
+
+==External links==
+* {{Official website|https://www.primevideo.com/detail/amzn1.dv.gti.56b88851-43dd-4931-8d01-bf8a83814aaa}}
+* {{IMDb title}}
+* {{Rotten Tomatoes}}
+
+{{Amazon Video original series}}
+{{IFFI Best Web Series OTT Award|state=collapsed}}
+[[Category:2020 Indian television series debuts]]
+[[Category:Hindi television content related lists]]
+[[Category:Amazon Prime Video original programming]]
+[[Category:TVF Play Shows]]
