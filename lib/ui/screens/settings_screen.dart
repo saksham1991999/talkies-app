@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
@@ -9,14 +10,18 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../data/csv_io.dart';
 import '../../data/models.dart';
 import '../../l10n/labels.dart';
+import '../../state/online.dart';
 import '../../state/providers.dart';
+import '../../state/sync.dart';
 import '../common.dart';
 import '../format.dart';
 import '../icons.dart';
+import '../online_parts.dart' show accentName;
 import '../share.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import '../shell.dart' show showWhatsNew;
+import 'account_screen.dart';
 import 'manage_screens.dart';
 
 /// Launcher icon variants. Native side: activity-alias (Android), alternate icons (iOS).
@@ -33,11 +38,37 @@ Future<bool> setAppIcon(String name) async {
   }
 }
 
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  late final BackendNotifier _backend;
+
+  @override
+  void initState() {
+    super.initState();
+    _backend = ref.read(backendProvider.notifier);
+    // The Account group is the one place that may ask the server for a signed-out user. One microtask later,
+    // because Riverpod forbids provider changes while a widget starts.
+    scheduleMicrotask(() {
+      if (!mounted) return;
+      _backend.settingsOpened();
+      unawaited(_backend.ensureChecked());
+    });
+  }
+
+  @override
+  void dispose() {
+    _backend.settingsClosed();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final s = ref.watch(settingsProvider);
     final set = ref.read(settingsProvider.notifier).set;
     final diary = ref.watch(diaryProvider);
@@ -53,20 +84,6 @@ class SettingsScreen extends ConsumerWidget {
       'night' => l.icon_night,
       _ => l.icon_default,
     };
-    String accentName(int i) => switch (accents[i].key) {
-      'marigold' => l.accent_marigold,
-      'peacock' => l.accent_peacock,
-      'mehendi' => l.accent_mehendi,
-      'neel' => l.accent_neel,
-      'jamun' => l.accent_jamun,
-      'gulabi' => l.accent_gulabi,
-      'kesar' => l.accent_kesar,
-      'paan' => l.accent_paan,
-      'chai' => l.accent_chai,
-      'kajal' => l.accent_kajal,
-      _ => l.accent_sindoor,
-    };
-
     Widget options<T>(List<(T, String)> items, T value, void Function(T) onTap) => Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -76,6 +93,7 @@ class SettingsScreen extends ConsumerWidget {
     );
 
     final updated = s.catalogRefreshed;
+    final account = _accountRows(context);
     return Scaffold(
       appBar: AppBar(
         leading: TkButton(Tk.back, tooltip: l.back, onPressed: () => Navigator.pop(context)),
@@ -84,6 +102,7 @@ class SettingsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.only(bottom: 48),
         children: [
+          if (account.isNotEmpty) _Group(l.acctSection, account),
           _Group(l.appearance, [
             _Item(
               l.theme,
@@ -94,7 +113,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             _Item(
-              '${l.accentColor} · ${accentName(s.accent)}',
+              '${l.accentColor} · ${accentName(context, s.accent)}',
               child: Wrap(
                 spacing: 10,
                 runSpacing: 10,
@@ -103,7 +122,7 @@ class SettingsScreen extends ConsumerWidget {
                     Semantics(
                       button: true,
                       selected: s.accent == i,
-                      label: accentName(i),
+                      label: accentName(context, i),
                       child: GestureDetector(
                         key: Key('accent-$i'),
                         onTap: () => set((x) => x.copyWith(accent: i)),
@@ -241,10 +260,7 @@ class SettingsScreen extends ConsumerWidget {
               child: Text(l.aboutBody, style: TextStyle(color: p.inkSoft, height: 1.45)),
             ),
             _Nav(l.whatsNew, onTap: () => showWhatsNew(context)),
-            _Nav(
-              l.privacyPolicy,
-              onTap: () => launchUrl(Uri.parse(privacyUrl), mode: LaunchMode.externalApplication),
-            ),
+            _Nav(l.privacyPolicy, onTap: () => launchUrl(Uri.parse(privacyUrl), mode: LaunchMode.externalApplication)),
             _Nav(
               l.version(appVersion),
               sub: catalog == null ? null : l.searchPrompt(fmtCount(catalog.items.length)),
@@ -254,6 +270,36 @@ class SettingsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  /// "Sign in" while the server is up and nobody is signed in; the account row once somebody is, also while the
+  /// server is down. Nothing at all without a server in the build.
+  List<Widget> _accountRows(BuildContext context) {
+    final l = context.l;
+    final signedIn = ref.watch(signedInProvider);
+    void go() => push(context, const AccountScreen());
+    if (ref.watch(signInVisibleProvider)) {
+      return [_Nav(l.acctSignIn, sub: l.acctSignInHint, onTap: go)];
+    }
+    if (!signedIn) return const [];
+    final me = ref.watch(sessionProvider.select((x) => x?.me));
+    final up = ref.watch(backendProvider) == Backend.up;
+    // The sync engine exists while somebody is signed in. Without an account it is never created here.
+    final choose = ref.watch(syncEngineProvider) == SyncState.needsAccountChoice;
+    final handle = me?.handle == null ? null : '@${me!.handle}';
+    return [
+      _Nav(
+        me?.displayName ?? handle ?? l.acctYou,
+        sub: !up
+            ? l.acctRowSafe
+            : choose
+            ? l.acctSyncChoose
+            : me?.displayName == null
+            ? null
+            : handle,
+        onTap: go,
+      ),
+    ];
   }
 
   Future<void> _export(BuildContext context, WidgetRef ref) async {

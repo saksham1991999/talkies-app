@@ -1,0 +1,90 @@
+{
+  "card": {
+    "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "handle": "ravi_k",
+    "display_name": "Ravi Kumar",
+    "avatar_color": 7
+  },
+  "relation": "friend",
+  "visible": true,
+  "match": {
+    "both": 12,
+    "pct": 47
+  },
+  "stats": {
+    "films": 128,
+    "viewings": 141,
+    "avg_rating": 3.85,
+    "top_genres": [
+      "drama",
+      "action",
+      "thriller"
+    ],
+    "top_langs": [
+      "hi",
+      "ta",
+      "kn"
+    ]
+  },
+  "top_films": [
+    {
+      "film_id": "Q949228",
+      "film": {
+        "id": "Q949228",
+        "t": "Kantara",
+        "y": 2022,
+        "d": "2022-09-30",
+        "g": [
+          "action",
+          "drama"
+        ],
+        "l": [
+          "kn"
+        ],
+        "c": [
+          "IN"
+        ],
+        "dir": [
+          "Rishab Shetty"
+        ],
+        "cast": [
+          "Rishab Shetty",
+          "Sapthami Gowda"
+        ],
+        "p": "en/a/a5/Kantara_film_poster.jpg",
+        "pop": 61
+      },
+      "rating": 4.5
+    }
+  ],
+  "watchlist": [
+    {
+      "film_id": "Q949228",
+      "film": {
+        "id": "Q949228",
+        "t": "Kantara",
+        "y": 2022,
+        "d": "2022-09-30",
+        "g": [
+          "action",
+          "drama"
+        ],
+        "l": [
+          "kn"
+        ],
+        "c": [
+          "IN"
+        ],
+        "dir": [
+          "Rishab Shetty"
+        ],
+        "cast": [
+          "Rishab Shetty",
+          "Sapthami Gowda"
+        ],
+        "p": "en/a/a5/Kantara_film_poster.jpg",
+        "pop": 61
+      }
+    }
+  ]
+}

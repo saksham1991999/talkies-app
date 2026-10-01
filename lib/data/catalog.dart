@@ -73,6 +73,14 @@ class Catalog {
   final Map<String, int> df;
   final List<String> _t, _o, _p;
 
+  late final Map<String, int> _index = {for (var i = 0; i < items.length; i++) items[i].id: i};
+
+  /// Sequel stem of [f]: the shared one for a catalog film, else the plain title stem.
+  String? stemOf(Film f) {
+    final i = _index[f.id];
+    return i == null ? titleStem(f.title) : stems[i];
+  }
+
   /// Normalized title (and original title) to films, most popular first.
   late final Map<String, List<Film>> _exact = () {
     final m = <String, List<Film>>{};

@@ -2,8 +2,8 @@
 NAME = 'Talkies: Movie Ticket Diary'
 AS_SUBTITLE = 'Bollywood & Indian film log'
 AS_KEYWORDS = 'tollywood,kollywood,mollywood,hindi,tamil,telugu,malayalam,kannada,watchlist,tracker,cinema,journal'
-AS_PROMO = ('Turn every film you watch into a ticket stub. Log the hall, seat, show and price, '
-            'track what you stream, and see your year in films. Free. No ads. No account.')
+AS_PROMO = ('Turn every film you watch into a ticket stub. Log the hall, seat, show and price. '
+            'See your year in films. Free. No ads. No account needed. Optional friends and groups.')
 PLAY_SHORT = 'Log every film as a ticket stub. Bollywood, Tamil, Telugu, Malayalam and more.'
 
 DESCRIPTION = """Talkies is a movie diary made for Indian film lovers. Every film you watch becomes a ticket stub, printed on coloured paper like an old single-screen hall ticket. Log Bollywood, Tollywood, Kollywood, Mollywood and Sandalwood films, web series and world cinema in one place.
@@ -39,14 +39,25 @@ CALENDAR AND WATCHLIST
 • A calendar of posters for every day you watched a film
 • Plan a date for films on your watchlist
 
+WITH FRIENDS, IF YOU WANT
+• An account is optional. Sign in with an email code, Google or Apple
+• Sync your diary between your phones
+• Share a profile with friends. New profiles are private, and your diary dates are never shown
+• Make a group. Swipe on films together and pick one
+• Plan a movie night: vote on a time, get reminders and chat with the group
+• After the film, add a stub for every guest who uses Talkies
+• Mark a stub private and no one else sees it
+• Report and block users. Delete your account in Settings to remove all server data
+
 MAKE IT YOURS
 • App in English, Hindi, Tamil, Telugu, Bengali, Marathi, Kannada and Malayalam
 • Dark mode, 11 stamp ink colours and 5 app icons
 • Share a ticket, a month or your stats as an image, on 12 background colours
 
 YOUR DATA STAYS WITH YOU
-• No account, no ads, no tracking
-• Your diary stays on your phone
+• No account needed, no ads, no tracking
+• Without an account, your diary stays on your phone
+• If you sign in, your diary also syncs to the Talkies server
 • Import a CSV from another movie app. Export to CSV. Back up and restore everything as one file
 
 Every feature is free.
@@ -57,7 +68,7 @@ Film details come from Wikidata and Wikipedia."""
 HI_NAME = 'Talkies: मूवी टिकट डायरी'
 HI_AS_SUBTITLE = 'बॉलीवुड और भारतीय फ़िल्में'
 HI_AS_KEYWORDS = 'फ़िल्म,फिल्म,सिनेमा,हिंदी,तमिल,तेलुगु,मलयालम,वॉचलिस्ट,ट्रैकर,डायरी,टिकट,movie,bollywood'
-HI_AS_PROMO = 'हर देखी गई फ़िल्म एक टिकट बन जाती है। हॉल, सीट, शो और दाम लिखें, और अपना फ़िल्मी साल देखें। मुफ़्त। कोई विज्ञापन नहीं।'
+HI_AS_PROMO = 'हर देखी गई फ़िल्म एक टिकट बन जाती है। हॉल, सीट, शो और दाम लिखें, और अपना फ़िल्मी साल देखें। मुफ़्त। कोई विज्ञापन नहीं। अकाउंट ज़रूरी नहीं। दोस्त और ग्रुप वैकल्पिक हैं।'
 HI_PLAY_SHORT = 'हर फ़िल्म का टिकट रखें। बॉलीवुड, तमिल, तेलुगु, मलयालम और भी बहुत कुछ।'
 HI_DESCRIPTION = """Talkies भारतीय फ़िल्म प्रेमियों के लिए एक मूवी डायरी है। आप जो भी फ़िल्म देखते हैं, वह एक टिकट बन जाती है, पुराने सिंगल स्क्रीन हॉल के रंगीन टिकट की तरह।
 
@@ -87,25 +98,48 @@ HI_DESCRIPTION = """Talkies भारतीय फ़िल्म प्रे�
 • हर दिन के पोस्टर के साथ कैलेंडर
 • वॉचलिस्ट की फ़िल्मों के लिए तारीख़ तय करें
 
+दोस्तों के साथ, अगर चाहें
+• अकाउंट वैकल्पिक है। ईमेल कोड, Google या Apple से साइन इन करें
+• अपनी डायरी अपने सभी फ़ोन पर सिंक करें
+• प्रोफ़ाइल दोस्तों के साथ शेयर करें। नई प्रोफ़ाइल निजी रहती है, और डायरी की तारीख़ें किसी को नहीं दिखतीं
+• ग्रुप बनाएँ। साथ में फ़िल्मों पर स्वाइप करें और एक फ़िल्म चुनें
+• मूवी नाइट तय करें: समय पर वोट करें, रिमाइंडर पाएँ और ग्रुप में चैट करें
+• फ़िल्म के बाद, Talkies इस्तेमाल करने वाले हर मेहमान के लिए एक टिकट जोड़ें
+• किसी टिकट को निजी रखें, तो उसे कोई और नहीं देखता
+• यूज़र को रिपोर्ट और ब्लॉक करें। सेटिंग्स में अकाउंट डिलीट करने पर सर्वर का सारा डेटा हट जाता है
+
 अपने हिसाब से
 • ऐप 8 भाषाओं में: हिंदी, अंग्रेज़ी, तमिल, तेलुगु, बांग्ला, मराठी, कन्नड़, मलयालम
 • डार्क मोड, 11 स्याही रंग और 5 ऐप आइकन
 • टिकट या आँकड़े इमेज के रूप में शेयर करें
 
 आपका डेटा आपके पास
-• कोई अकाउंट नहीं, कोई विज्ञापन नहीं, कोई ट्रैकिंग नहीं
-• आपकी डायरी आपके फ़ोन पर ही रहती है
+• अकाउंट ज़रूरी नहीं, कोई विज्ञापन नहीं, कोई ट्रैकिंग नहीं
+• अकाउंट के बिना आपकी डायरी आपके फ़ोन पर ही रहती है
+• साइन इन करने पर डायरी की एक कॉपी Talkies सर्वर पर भी सिंक होती है
 • CSV इंपोर्ट और एक्सपोर्ट, और पूरा बैकअप एक फ़ाइल में
 
 सभी फ़ीचर मुफ़्त हैं।
 
 फ़िल्मों की जानकारी Wikidata और Wikipedia से आती है।"""
 
-WHATS_NEW = 'First release of Talkies.'
-HI_WHATS_NEW = 'Talkies का पहला संस्करण।'
-REVIEW_NOTES = ('Talkies has no login and no account. Every feature is free and available at once. '
-                'The diary stays on the device in one JSON file. Film details come from the bundled Wikidata '
-                'catalog; posters and synopses load from Wikipedia when online. No data is collected.')
+WHATS_NEW = ('New: an optional account. Sign in to sync your diary between phones, add friends, make groups, '
+             'swipe to pick a film, plan movie nights and chat. No account needed: Talkies works as before, '
+             'and your diary stays on your phone unless you sign in. Delete your account any time in Settings.')
+HI_WHATS_NEW = ('नया: वैकल्पिक अकाउंट। साइन इन करके अपनी डायरी फ़ोनों के बीच सिंक करें, दोस्त जोड़ें, ग्रुप बनाएँ, '
+                'स्वाइप करके फ़िल्म चुनें, मूवी नाइट तय करें और चैट करें। अकाउंट ज़रूरी नहीं: Talkies पहले की तरह चलता है, '
+                'और साइन इन किए बिना आपकी डायरी आपके फ़ोन पर ही रहती है। सेटिंग्स में कभी भी अपना अकाउंट डिलीट करें।')
+REVIEW_NOTES = ('Talkies works without an account. No demo account is needed to review the core app. '
+                'Every core feature is free and available at once. The diary stays on the device in one JSON file. '
+                'Film details come from the bundled Wikidata catalog; posters and synopses load from Wikipedia when online.\n\n'
+                'Sign-in is optional. It adds sync, friends, groups, movie nights and chat. '
+                'Sign in with an email code, Google or Apple. '
+                'Account features appear only when the Talkies server is reachable. Otherwise the app hides them '
+                'and everything else works. To try them, sign in with any email address that can receive a one-time code.\n\n'
+                'Without an account, the app sends nothing to a Talkies server. Its only request is an anonymous '
+                'status check, with no identifier, when Settings opens. '
+                'Account deletion is in Settings > Account > Delete account. It removes all server data. '
+                'The diary on the device stays. The app has no analytics and no advertising.')
 
 LIMITS = {
     'NAME': 30, 'HI_NAME': 30, 'AS_SUBTITLE': 30, 'HI_AS_SUBTITLE': 30,

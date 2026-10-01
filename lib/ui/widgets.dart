@@ -24,9 +24,7 @@ const _posterInks = [
 /// Poster files on disk. The default cache keeps only 200 files for 30 days.
 // ponytail: 2,000 files (about 140 MB at most); diaries past ~1,500 films evict
 // each other, copy their posters into the documents dir if that happens.
-final posterCache = CacheManager(
-  Config('posters', stalePeriod: const Duration(days: 365), maxNrOfCacheObjects: 2000),
-);
+final posterCache = CacheManager(Config('posters', stalePeriod: const Duration(days: 365), maxNrOfCacheObjects: 2000));
 
 /// Downloads posters that are not on disk yet, one at a time, so they show
 /// at once when the user opens them. Never throws.
@@ -458,7 +456,9 @@ class SectionTitle extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: Text(text, maxLines: 2, overflow: TextOverflow.ellipsis, style: disp(20, p.ink))),
+          Expanded(
+            child: Text(text, maxLines: 2, overflow: TextOverflow.ellipsis, style: disp(20, p.ink)),
+          ),
           if (action != null)
             TextButton(
               onPressed: onAction,
@@ -476,15 +476,33 @@ class SectionTitle extends StatelessWidget {
 
 /// Selectable option, printed like a ticket class box: square corners, ink rule.
 class OptionBox extends StatelessWidget {
-  const OptionBox({super.key, required this.label, required this.selected, required this.onTap, this.dense = false});
+  const OptionBox({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    this.dense = false,
+    this.minHeight = 0,
+  });
   final String label;
   final bool selected;
   final VoidCallback onTap;
   final bool dense;
 
+  /// A larger tap target: the box is at least this high and the label stays centered. 0 sizes it to the label.
+  final double minHeight;
+
   @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
+    final text = Text(
+      label,
+      style: TextStyle(
+        fontSize: dense ? 12.5 : 13.5,
+        fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+        color: selected ? p.wall : p.ink,
+      ),
+    );
     return Semantics(
       button: true,
       selected: selected,
@@ -499,19 +517,30 @@ class OptionBox extends StatelessWidget {
             borderRadius: BorderRadius.circular(3),
             border: Border.all(color: selected ? p.ink : p.line, width: 1.2),
           ),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: dense ? 12.5 : 13.5,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-              color: selected ? p.wall : p.ink,
-            ),
-          ),
+          child: minHeight == 0
+              ? text
+              : ConstrainedBox(
+                  // The padding and the 1.2 border above and below come out of the minimum.
+                  constraints: BoxConstraints(minHeight: minHeight - 2 * (dense ? 6 : 8) - 2.4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [Flexible(child: text)],
+                  ),
+                ),
         ),
       ),
     );
   }
 }
+
+double _contrast(Color a, Color b) {
+  final x = a.computeLuminance(), y = b.computeLuminance();
+  return (math.max(x, y) + 0.05) / (math.min(x, y) + 0.05);
+}
+
+/// Text on the accent slab: the theme's [Palette.onAccent], unless dark ink reads better on this accent (marigold
+/// and kesar are too light for white text). The same for every slab: buttons, chat messages of mine.
+Color onSlab(Palette p) => _contrast(p.accent, p.onAccent) >= _contrast(p.accent, paperInk) ? p.onAccent : paperInk;
 
 /// Primary action: flat accent slab with square-ish corners, no glow.
 class InkButton extends StatelessWidget {
@@ -524,27 +553,31 @@ class InkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
-    final fg = outlined ? p.ink : p.onAccent;
+    final on = onPressed != null;
+    final fg = outlined ? p.ink : onSlab(p);
+    // The label and icon carry their own colour, so a disabled button dims them here.
+    final shown = on ? fg : fg.withValues(alpha: 0.5);
     return SizedBox(
       height: 50,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: outlined ? Colors.transparent : p.accent,
+          disabledBackgroundColor: outlined ? Colors.transparent : p.accent.withValues(alpha: 0.45),
           foregroundColor: fg,
-          disabledForegroundColor: fg.withValues(alpha: 0.5),
+          disabledForegroundColor: shown,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4),
-            side: outlined ? BorderSide(color: p.ink, width: 1.4) : BorderSide.none,
+            side: outlined ? BorderSide(color: on ? p.ink : p.ink.withValues(alpha: 0.4), width: 1.4) : BorderSide.none,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 18),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (icon != null) ...[TkIcon(icon!, size: 20, color: fg), const SizedBox(width: 8)],
+            if (icon != null) ...[TkIcon(icon!, size: 20, color: shown), const SizedBox(width: 8)],
             Flexible(
-              child: Text(label, overflow: TextOverflow.ellipsis, style: disp(17, fg, spacing: 0.8)),
+              child: Text(label, overflow: TextOverflow.ellipsis, style: disp(17, shown, spacing: 0.8)),
             ),
           ],
         ),

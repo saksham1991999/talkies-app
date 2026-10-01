@@ -14,11 +14,15 @@ import 'custom_film_screen.dart';
 import 'record_screen.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
-  const SearchScreen({super.key, this.forRecord = false, this.recordDay});
+  const SearchScreen({super.key, this.forRecord = false, this.recordDay, this.onPick});
 
   /// Tapping a result opens the stub form instead of the film page.
   final bool forRecord;
   final DateTime? recordDay;
+
+  /// Pick mode, for choosing a film for something else (a group list, a night): tapping a result
+  /// hands the film over and closes the screen. The bookmark button and "add it yourself" are not shown.
+  final ValueChanged<Film>? onPick;
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();
@@ -35,7 +39,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 
   void _pick(Film f) {
-    if (widget.forRecord) {
+    if (widget.onPick != null) {
+      widget.onPick!(f);
+      Navigator.of(context).pop();
+    } else if (widget.forRecord) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => RecordScreen(film: f, day: widget.recordDay),
@@ -111,12 +118,17 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 itemCount: results.length + 1,
                 itemBuilder: (context, i) {
                   if (i < results.length) {
-                    return _ResultRow(results[i], onTap: () => _pick(results[i]), forRecord: widget.forRecord);
+                    return _ResultRow(
+                      results[i],
+                      onTap: () => _pick(results[i]),
+                      forRecord: widget.forRecord || widget.onPick != null,
+                    );
                   }
                   return _Footer(
                     prompt: q.isEmpty
                         ? l.searchPrompt(fmtCount(value.items.length))
                         : (results.isEmpty ? l.noResults(q) : null),
+                    canAdd: widget.onPick == null,
                     onAdd: () => Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (_) =>
@@ -147,10 +159,11 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({required this.prompt, required this.onAdd, required this.p});
+  const _Footer({required this.prompt, required this.onAdd, required this.p, this.canAdd = true});
   final String? prompt;
   final VoidCallback onAdd;
   final Palette p;
+  final bool canAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -168,15 +181,17 @@ class _Footer extends StatelessWidget {
                 style: TextStyle(color: p.inkSoft, height: 1.4),
               ),
             ),
-          Text(l.notFound, style: TextStyle(color: p.inkSoft)),
-          TextButton(
-            key: const Key('add-own-film'),
-            onPressed: onAdd,
-            child: Text(
-              l.addManually,
-              style: TextStyle(color: p.accent, fontWeight: FontWeight.w800, fontSize: 15),
+          if (canAdd) ...[
+            Text(l.notFound, style: TextStyle(color: p.inkSoft)),
+            TextButton(
+              key: const Key('add-own-film'),
+              onPressed: onAdd,
+              child: Text(
+                l.addManually,
+                style: TextStyle(color: p.accent, fontWeight: FontWeight.w800, fontSize: 15),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

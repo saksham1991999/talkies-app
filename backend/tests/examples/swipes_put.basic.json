@@ -1,0 +1,14 @@
+{
+  "swipes": [
+    {
+      "film_id": "Q949228",
+      "vote": "want",
+      "member_id": null
+    },
+    {
+      "film_id": "Q1",
+      "vote": "seen",
+      "member_id": "e1a1a1a1-0000-4000-8000-000000000003"
+    }
+  ]
+}

@@ -3,15 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/models.dart';
+import '../../state/crews.dart';
 import '../../state/providers.dart';
 import '../common.dart';
 import '../format.dart';
 import '../icons.dart';
+import '../night_editor.dart';
 import '../share.dart';
 import '../theme.dart';
+import '../together_widgets.dart';
 import '../widgets.dart';
 
 const _base = 1200;
+
+/// What the grid shows: the stubs, the planned watchlist films, or the movie nights.
+enum _Layer { stubs, wish, nights }
 
 class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
@@ -23,7 +29,7 @@ class CalendarScreen extends ConsumerStatefulWidget {
 class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   final _pages = PageController(initialPage: _base);
   var _page = _base;
-  var _wishMode = false;
+  var _layer = _Layer.stubs;
   VenueType? _type;
 
   DateTime _month(int page) {
@@ -83,7 +89,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   tooltip: l.shareMonth,
                   onPressed: () => showShareSheet(context, MonthShare(year: m.year, month: m.month)),
                 ),
-                if (!_wishMode)
+                if (_layer == _Layer.stubs)
                   Badge(
                     isLabelVisible: _type != null,
                     smallSize: 8,
@@ -105,20 +111,26 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
               child: Row(
                 children: [
-                  OptionBox(
-                    label: l.showStubs,
-                    selected: !_wishMode,
-                    dense: true,
-                    onTap: () => setState(() => _wishMode = false),
+                  Expanded(
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final (v, label) in [
+                          (_Layer.stubs, l.showStubs),
+                          (_Layer.wish, l.showWatchlist),
+                          (_Layer.nights, l.togetherNights),
+                        ])
+                          OptionBox(
+                            key: Key('cal-${v.name}'),
+                            label: label,
+                            selected: _layer == v,
+                            dense: true,
+                            onTap: () => setState(() => _layer = v),
+                          ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                  OptionBox(
-                    label: l.showWatchlist,
-                    selected: _wishMode,
-                    dense: true,
-                    onTap: () => setState(() => _wishMode = true),
-                  ),
-                  const Spacer(),
                   if (_page != _base)
                     TextButton(
                       onPressed: () => _pages.animateToPage(
@@ -151,7 +163,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               child: PageView.builder(
                 controller: _pages,
                 onPageChanged: (i) => setState(() => _page = i),
-                itemBuilder: (_, i) => _MonthGrid(month: _month(i), wishMode: _wishMode, type: _type),
+                itemBuilder: (_, i) => _MonthGrid(month: _month(i), layer: _layer, type: _type),
               ),
             ),
           ],
@@ -162,9 +174,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 }
 
 class _MonthGrid extends ConsumerWidget {
-  const _MonthGrid({required this.month, required this.wishMode, required this.type});
+  const _MonthGrid({required this.month, required this.layer, required this.type});
   final DateTime month;
-  final bool wishMode;
+  final _Layer layer;
   final VenueType? type;
 
   @override
@@ -174,8 +186,21 @@ class _MonthGrid extends ConsumerWidget {
     final today = ref.watch(todayProvider);
     final p = Palette.of(context);
 
+    // Movie nights of every group, by day of this month: the clock mark on a cell, and the nights layer.
+    final nightsByDay = <int, List<Film>>{};
+    final nightCount = <int, int>{};
+    for (final e in ref.watch(nightsProvider)) {
+      for (final d in nightDays(e.night)) {
+        if (d.year != month.year || d.month != month.month) continue;
+        nightCount[d.day] = (nightCount[d.day] ?? 0) + 1;
+        if (e.night.film case final f?) (nightsByDay[d.day] ??= []).add(f);
+      }
+    }
+
     final byDay = <int, List<Film>>{};
-    if (wishMode) {
+    if (layer == _Layer.nights) {
+      byDay.addAll(nightsByDay);
+    } else if (layer == _Layer.wish) {
       for (final w in diary.wishes) {
         final d = w.planned;
         if (d == null || d.year != month.year || d.month != month.month) continue;
@@ -246,7 +271,12 @@ class _MonthGrid extends ConsumerWidget {
                     date: DateTime(month.year, month.month, i - lead + 1),
                     films: byDay[i - lead + 1] ?? const [],
                     isToday: DateUtils.isSameDay(DateTime(month.year, month.month, i - lead + 1), today),
-                    wishMode: wishMode,
+                    ring: switch (layer) {
+                      _Layer.stubs => null,
+                      _Layer.wish => paperColors[VenueType.ott],
+                      _Layer.nights => paperColors[VenueType.cinema],
+                    },
+                    nights: i >= lead && i - lead < days ? (nightCount[i - lead + 1] ?? 0) : 0,
                   ),
               ],
             ),
@@ -267,13 +297,20 @@ class _DayCell extends StatelessWidget {
     required this.date,
     required this.films,
     required this.isToday,
-    required this.wishMode,
+    required this.ring,
+    required this.nights,
   });
   final double width, height;
   final int day;
-  final bool inMonth, isToday, wishMode;
+  final bool inMonth, isToday;
   final DateTime date;
   final List<Film> films;
+
+  /// Colour of the frame round a day that has films on a planning layer, or null.
+  final Color? ring;
+
+  /// How many movie nights fall on this day.
+  final int nights;
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +330,9 @@ class _DayCell extends StatelessWidget {
         padding: const EdgeInsets.all(1.5),
         child: Semantics(
           button: inMonth,
-          label: '${fmtDay(context, date)}${films.isEmpty ? '' : ', ${films.map((f) => f.title).join(', ')}'}',
+          label:
+              '${fmtDay(context, date)}${films.isEmpty ? '' : ', ${films.map((f) => f.title).join(', ')}'}'
+              '${nights == 0 ? '' : ', ${context.l.nightTitle}'}',
           child: InkWell(
             onTap: inMonth ? () => _openDay(context) : null,
             borderRadius: BorderRadius.circular(3),
@@ -301,7 +340,7 @@ class _DayCell extends StatelessWidget {
               decoration: BoxDecoration(
                 color: inMonth ? p.surface : Colors.transparent,
                 borderRadius: BorderRadius.circular(3),
-                border: wishMode && films.isNotEmpty ? Border.all(color: paperColors[VenueType.ott]!, width: 2) : null,
+                border: ring != null && films.isNotEmpty ? Border.all(color: ring!, width: 2) : null,
               ),
               clipBehavior: Clip.antiAlias,
               child: Stack(
@@ -331,6 +370,15 @@ class _DayCell extends StatelessWidget {
                       child: Text('$shown', style: numStyle),
                     ),
                   ),
+                  // A movie night that day: the clock mark, on the poster's dark top edge or on the plain cell.
+                  if (nights > 0)
+                    Positioned(
+                      right: 4,
+                      top: 4,
+                      child: ExcludeSemantics(
+                        child: TkIcon(Tk.clock, size: 13, color: films.isEmpty ? p.accent : Colors.white),
+                      ),
+                    ),
                   if (films.length > 1)
                     Positioned(
                       right: 2,
@@ -354,13 +402,16 @@ class _DayCell extends StatelessWidget {
     context: context,
     showDragHandle: true,
     isScrollControlled: true,
-    builder: (_) => _DaySheet(date: date),
+    builder: (_) => _DaySheet(date: date, outer: context),
   );
 }
 
 class _DaySheet extends ConsumerWidget {
-  const _DaySheet({required this.date});
+  const _DaySheet({required this.date, required this.outer});
   final DateTime date;
+
+  /// The calendar's own context: the sheet's goes when it closes, and what opens next needs one that stays.
+  final BuildContext outer;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -371,6 +422,11 @@ class _DaySheet extends ConsumerWidget {
         diary.stubs.where((s) => s.precision == DatePrecision.day && DateUtils.isSameDay(s.date, date)).toList()
           ..sort(byWatchOrder);
     final wishes = diary.wishes.where((w) => DateUtils.isSameDay(w.planned, date)).toList();
+    final day = DateTime(date.year, date.month, date.day);
+    final nights = [
+      for (final e in ref.watch(nightsProvider))
+        if (nightDays(e.night).contains(day)) e,
+    ];
     return SafeArea(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.75),
@@ -382,7 +438,7 @@ class _DaySheet extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
               child: Text(fmtDay(context, date).toUpperCase(), style: disp(22, p.ink, spacing: 1)),
             ),
-            if (stubs.isEmpty && wishes.isEmpty)
+            if (stubs.isEmpty && wishes.isEmpty && nights.isEmpty)
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
                 child: Text(l.dayEmpty, style: TextStyle(color: p.inkSoft)),
@@ -408,6 +464,18 @@ class _DaySheet extends ConsumerWidget {
                   ),
                   onTap: () => openFilm(context, f),
                 ),
+            if (nights.isNotEmpty) ...[
+              SectionTitle(l.togetherNights),
+              for (final e in nights)
+                NightTicket(
+                  e,
+                  key: ValueKey('${e.crew.id}/${e.night.id}'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    openNight(outer, e.crew.id, e.night.id);
+                  },
+                ),
+            ],
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: InkButton(
@@ -416,6 +484,19 @@ class _DaySheet extends ConsumerWidget {
                 onPressed: () {
                   Navigator.pop(context);
                   startRecord(context, day: date);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: SlabButton(
+                key: const Key('cal-plan-night'),
+                label: l.nightPlanTitle,
+                icon: Tk.clock,
+                tone: SlabTone.velvet,
+                onPressed: () {
+                  Navigator.pop(context);
+                  planNight(outer, ref, day: date);
                 },
               ),
             ),

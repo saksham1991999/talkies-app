@@ -70,12 +70,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get next => 'അടുത്തത്';
 
   @override
-  String unitFilms(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: 'സിനിമകൾ', one: 'സിനിമ');
-    return '$_temp0';
-  }
-
-  @override
   String get thisYear => 'ഈ വർഷം';
 
   @override
@@ -92,11 +86,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get forYou => 'നിങ്ങൾക്കായി';
-
-  @override
-  String becauseYouLiked(String title) {
-    return '$title ഇഷ്ടപ്പെട്ടതിനാൽ';
-  }
 
   @override
   String get notInterested => 'താൽപ്പര്യമില്ല';
@@ -127,18 +116,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get splitLegend => 'ഈ വർഷം നിങ്ങൾ എവിടെ കണ്ടു';
-
-  @override
-  String ticketsCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ടിക്കറ്റുകൾ',
-      one: '1 ടിക്കറ്റ്',
-      zero: 'ടിക്കറ്റുകളില്ല',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get sortNewest => 'പുതിയത് ആദ്യം';
@@ -201,21 +178,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get resetFilters => 'ഫിൽട്ടറുകൾ നീക്കുക';
 
   @override
-  String starsAtLeast(int stars) {
-    return '$stars+ സ്റ്റാർ';
-  }
-
-  @override
-  String calWatched(int count) {
-    return '$count കണ്ടത്';
-  }
-
-  @override
-  String calPlanned(int count) {
-    return '$count പ്ലാൻ ചെയ്തത്';
-  }
-
-  @override
   String get showStubs => 'ടിക്കറ്റുകൾ';
 
   @override
@@ -267,12 +229,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get removedFromWatchlist => 'വാച്ച്‌ലിസ്റ്റിൽ നിന്ന് നീക്കി';
 
   @override
-  String watchCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count തവണ കണ്ടു', one: 'ഒരു തവണ കണ്ടു');
-    return '$_temp0';
-  }
-
-  @override
   String get searchHint => 'സിനിമ, സീരീസ്, നടൻ അല്ലെങ്കിൽ സംവിധായകൻ';
 
   @override
@@ -291,16 +247,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get catalogError => 'സിനിമ ലിസ്റ്റ് ലോഡ് ആയില്ല. ആപ്പ് വീണ്ടും തുറക്കുക.';
 
   @override
-  String searchPrompt(String count) {
-    return '$count ഇന്ത്യൻ, വിദേശ ടൈറ്റിലുകൾ തിരയുക. ഓഫ്‌ലൈനിലും പ്രവർത്തിക്കും.';
-  }
-
-  @override
-  String noResults(String query) {
-    return '“$query” എന്നതിന് ടൈറ്റിലുകളൊന്നും കിട്ടിയില്ല.';
-  }
-
-  @override
   String get director => 'സംവിധായകൻ';
 
   @override
@@ -311,12 +257,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get country => 'രാജ്യം';
-
-  @override
-  String seasons(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count സീസണുകൾ', one: '1 സീസൺ');
-    return '$_temp0';
-  }
 
   @override
   String get availableOn => 'ഇവിടെ കാണാം';
@@ -346,11 +286,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get inWatchlist => 'വാച്ച്‌ലിസ്റ്റിലുണ്ട്';
 
   @override
-  String plannedFor(String date) {
-    return '$date-ന് പ്ലാൻ ചെയ്തു';
-  }
-
-  @override
   String get setPlannedDate => 'തീയതി നിശ്ചയിക്കുക';
 
   @override
@@ -370,33 +305,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get yourOwnFilm => 'നിങ്ങൾ ചേർത്തത്';
-
-  @override
-  String watchNth(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n-ാം തവണ',
-      two: 'രണ്ടാം തവണ',
-      one: 'ആദ്യ തവണ',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String hoursMinutes(int h, int m) {
-    return '$h മ. $m മി.';
-  }
-
-  @override
-  String minutesOnly(int m) {
-    return '$m മിനിറ്റ്';
-  }
-
-  @override
-  String ticketNo(String no) {
-    return 'നമ്പർ $no';
-  }
 
   @override
   String get ticket => 'ടിക്കറ്റ്';
@@ -612,11 +520,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get required => 'നിർബന്ധം';
 
   @override
-  String yearInvalid(int max) {
-    return '1900 മുതൽ $max വരെയുള്ള ഒരു വർഷം നൽകുക';
-  }
-
-  @override
   String get statsTitle => 'കണക്കുകൾ';
 
   @override
@@ -636,11 +539,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get spent => 'ടിക്കറ്റിന് ചെലവായത്';
-
-  @override
-  String avgTicket(String amount) {
-    return 'ഒരു ടിക്കറ്റിന് ശരാശരി $amount';
-  }
 
   @override
   String get fdfsCount => 'FDFS';
@@ -703,20 +601,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get tapForDetail => 'സിനിമകൾ കാണാൻ ഒരു ബാറിൽ ടാപ്പ് ചെയ്യുക.';
 
   @override
-  String showMore(int count) {
-    return 'എല്ലാ $count എണ്ണവും കാണിക്കുക';
-  }
-
-  @override
   String get showLess => 'കുറച്ച് കാണിക്കുക';
 
   @override
   String get unrated => 'റേറ്റിംഗ് ഇല്ല';
-
-  @override
-  String decadeLabel(String decade) {
-    return '$decade-കൾ';
-  }
 
   @override
   String get shareTitle => 'ഇമേജ് ഷെയർ ചെയ്യുക';
@@ -735,11 +623,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get shareMonth => 'ഈ മാസം ഷെയർ ചെയ്യുക';
-
-  @override
-  String monthAtMovies(String month) {
-    return '$month-ലെ സിനിമകൾ';
-  }
 
   @override
   String get nothingToShare => 'ഈ മാസം ഇതുവരെ ടിക്കറ്റുകളില്ല.';
@@ -892,21 +775,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get refreshCatalog => 'സിനിമ ലിസ്റ്റ് പുതുക്കുക';
 
   @override
-  String refreshedOn(String date, String updated) {
-    return '$date-ന് തയ്യാറാക്കിയത്. $updated-ന് പുതുക്കി.';
-  }
-
-  @override
-  String builtOn(String date) {
-    return '$date-ന് തയ്യാറാക്കിയത്. ഇതുവരെ പുതുക്കിയിട്ടില്ല.';
-  }
-
-  @override
-  String refreshDone(int count) {
-    return '$count പുതിയതും വരാനിരിക്കുന്നതുമായ സിനിമകൾ പുതുക്കി';
-  }
-
-  @override
   String get refreshFailed => 'പുതുക്കാനായില്ല. ഇന്റർനെറ്റ് പരിശോധിക്കുക.';
 
   @override
@@ -915,11 +783,6 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get aboutBody =>
       'ഇന്ത്യൻ സിനിമാപ്രേമികൾക്കുള്ള ടിക്കറ്റ് ഡയറിയാണ് ടാക്കീസ്. നിങ്ങളുടെ ടിക്കറ്റുകൾ ഈ ഫോണിൽ മാത്രമേ ഉണ്ടാകൂ. സിനിമ വിവരങ്ങൾ Wikidata (CC0)-യിൽ നിന്നും പോസ്റ്ററുകൾ Wikipedia-യിൽ നിന്നുമാണ്.';
-
-  @override
-  String version(String v) {
-    return 'പതിപ്പ് $v';
-  }
 
   @override
   String get whatsNew => 'പുതിയതെന്ത്';
@@ -931,11 +794,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String get replaceQ => 'എല്ലാം ഈ ബാക്കപ്പ് കൊണ്ട് മാറ്റണോ?';
 
   @override
-  String replaceBody(int count) {
-    return 'നിങ്ങളുടെ ഇപ്പോഴത്തെ $count ടിക്കറ്റുകൾക്ക് പകരം ബാക്കപ്പ് വരും.';
-  }
-
-  @override
   String get replace => 'മാറ്റുക';
 
   @override
@@ -943,11 +801,6 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get restoreFailed => 'ഇതൊരു ടാക്കീസ് ബാക്കപ്പ് അല്ല.';
-
-  @override
-  String imported(int count, int matched, int custom) {
-    return '$count ടിക്കറ്റുകൾ ചേർത്തു. $matched എണ്ണം സിനിമ ലിസ്റ്റുമായി ഒത്തു, $custom എണ്ണം നിങ്ങളുടെ സ്വന്തം സിനിമകളായി ചേർത്തു.';
-  }
 
   @override
   String get importNothing => 'ഈ ഫയലിൽ വരികളൊന്നും കിട്ടിയില്ല.';
@@ -962,32 +815,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get renameTag => 'ടാഗിന്റെ പേര് മാറ്റുക';
 
   @override
-  String deleteTagQ(String tag, int count) {
-    return '#$tag ഇല്ലാതാക്കണോ? ഇത് $count ടിക്കറ്റുകളിൽ നിന്ന് നീക്കും.';
-  }
-
-  @override
   String get editVenue => 'സ്ഥലം എഡിറ്റ് ചെയ്യുക';
 
   @override
-  String deleteVenueQ(String name) {
-    return '$name ലിസ്റ്റിൽ നിന്ന് നീക്കണോ? ടിക്കറ്റുകളിൽ പേര് നിലനിൽക്കും.';
-  }
-
-  @override
   String get remove => 'നീക്കുക';
-
-  @override
-  String stubsUsing(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ടിക്കറ്റുകളിൽ ഉപയോഗിച്ചു',
-      one: '1 ടിക്കറ്റിൽ ഉപയോഗിച്ചു',
-      zero: 'ഉപയോഗിച്ചിട്ടില്ല',
-    );
-    return '$_temp0';
-  }
 
   @override
   String get batchTitle => 'ഒന്നിച്ച് ചേർക്കുക';
@@ -1002,25 +833,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get batchMatch => 'പേരുകൾ ഒത്തുനോക്കുക';
 
   @override
-  String batchAddAll(int count) {
-    return '$count ടിക്കറ്റുകൾ ചേർക്കുക';
-  }
-
-  @override
   String get batchOwn => 'ഒത്തില്ല. നിങ്ങളുടെ സ്വന്തം സിനിമയായി ചേർക്കും.';
 
   @override
   String get batchDefaults => 'എല്ലാ സിനിമകൾക്കും';
-
-  @override
-  String batchDone(int count) {
-    return '$count ടിക്കറ്റുകൾ ചേർത്തു';
-  }
-
-  @override
-  String whatsNewTitle(String v) {
-    return 'ടാക്കീസ് $v';
-  }
 
   @override
   String get whatsNew1 =>
@@ -1036,4 +852,1316 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get gotIt => 'ശരി';
+
+  @override
+  String get gateCantReach => 'Talkies ഇപ്പോൾ ലഭ്യമല്ല. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ സുരക്ഷിതം.';
+
+  @override
+  String get gateRetry => 'വീണ്ടും ശ്രമിക്കുക';
+
+  @override
+  String get tabTogether => 'ഒരുമിച്ച്';
+
+  @override
+  String get acctSection => 'അക്കൗണ്ട്';
+
+  @override
+  String get acctTitle => 'അക്കൗണ്ട്';
+
+  @override
+  String get acctSignIn => 'സൈൻ ഇൻ';
+
+  @override
+  String get acctSignInHint => 'ഡയറി സിങ്ക് ചെയ്യൂ; സുഹൃത്തുക്കളെ കണ്ടുമുട്ടൂ';
+
+  @override
+  String get acctIntro =>
+      'സൈൻ ഇൻ ചെയ്താൽ നിങ്ങളുടെ ഡയറി എല്ലാ ഫോനിലുമുണ്ടാകും; സുഹൃത്തുക്കളുമായി സിനിമകൾ പങ്കുവയ്ക്കാം. അക്കൗണ്ടില്ലാതെയും Talkies പ്രവർത്തിക്കും.';
+
+  @override
+  String get acctEmail => 'ഇമെയിൽ';
+
+  @override
+  String get acctEmailHint => 'you@example.com';
+
+  @override
+  String get acctSendCode => 'കോഡ് അയക്കുക';
+
+  @override
+  String get acctCode => '6 അക്കമുള്ള കോഡ്';
+
+  @override
+  String get acctResend => 'പുതിയ കോഡ് അയക്കുക';
+
+  @override
+  String get acctOtherEmail => 'മറ്റൊരു ഇമെയിൽ ഉപയോഗിക്കുക';
+
+  @override
+  String get acctOr => 'അല്ലെങ്കിൽ';
+
+  @override
+  String get acctGoogle => 'Google ഉപയോഗിച്ച് തുടരുക';
+
+  @override
+  String get acctApple => 'Apple ഉപയോഗിച്ച് സൈൻ ഇൻ';
+
+  @override
+  String get acctNoMethods => 'ഇപ്പോൾ ഒരു സൈൻ-ഇൻ വഴിയും ലഭ്യമല്ല.';
+
+  @override
+  String get acctBadCode => 'ഈ കോഡ് ശരിയല്ല. പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get acctBadRequest => 'ഇമെയിൽ വിലാസം പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get acctRateLimited => 'വളരെയധികം ശ്രമങ്ങൾ. കുറച്ചു മിനിറ്റിനു ശേഷം വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get acctDisabled => 'ഈ സൈൻ-ഇൻ വഴി ഇപ്പോൾ ലഭ്യമല്ല.';
+
+  @override
+  String get acctFailed => 'എന്തോ പാളി. വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get acctYou => 'നിങ്ങളുടെ അക്കൗണ്ട്';
+
+  @override
+  String get acctNoHandle => 'ഇതുവരെ ഹാൻഡിലില്ല';
+
+  @override
+  String get acctName => 'പേര്';
+
+  @override
+  String get acctHandle => 'ഹാൻഡിൽ';
+
+  @override
+  String get acctHandleHelp =>
+      'സുഹൃത്തുക്കൾ ഇതുപയോഗിച്ചാണ് നിങ്ങളെ കണ്ടെത്തുന്നത്. 3 മുതൽ 20 വരെ അക്ഷരം, അക്കം അല്ലെങ്കിൽ അണ്ടർസ്കോർ ഉപയോഗിക്കുക.';
+
+  @override
+  String get acctHandleInvalid => '3 മുതൽ 20 വരെ അക്ഷരം, അക്കം അല്ലെങ്കിൽ അണ്ടർസ്കോർ ഉപയോഗിക്കുക.';
+
+  @override
+  String get acctHandleTaken => 'ഈ ഹാൻഡിൽ മറ്റാരുടെയോ. വേറൊന്നു നോക്കൂ.';
+
+  @override
+  String get acctSaved => 'സേവ് ചെയ്തു';
+
+  @override
+  String get acctInk => 'നിങ്ങളുടെ സ്റ്റാമ്പ് മഷി';
+
+  @override
+  String get acctVisibility => 'നിങ്ങളുടെ സിനിമകൾ ആർക്കു കാണാം';
+
+  @override
+  String get acctVisPrivate => 'സ്വകാര്യം';
+
+  @override
+  String get acctVisFriends => 'സുഹൃത്തുക്കൾക്കു മാത്രം';
+
+  @override
+  String get acctVisPrivateNote => 'നിങ്ങളുടെ സിനിമകൾ നിങ്ങൾക്കു മാത്രം കാണാം.';
+
+  @override
+  String get acctVisFriendsNote => 'സുഹൃത്തുക്കൾക്കു നിങ്ങളുടെ സിനിമകളും വാച്ച്‌ലിസ്റ്റും കാണാം. ആരും തീയതി കാണില്ല.';
+
+  @override
+  String get acctShareRatings => 'എന്റെ റേറ്റിംഗ് സുഹൃത്തുക്കൾക്കു കാണിക്കുക';
+
+  @override
+  String get acctBlocked => 'തടഞ്ഞവർ';
+
+  @override
+  String get acctBlockedNone => 'നിങ്ങൾ ആരെയും തടഞ്ഞിട്ടില്ല.';
+
+  @override
+  String get acctUnblock => 'തടയൽ നീക്കുക';
+
+  @override
+  String get acctSyncIdle => 'നിങ്ങളുടെ ഡയറി സിങ്കിലാണ്.';
+
+  @override
+  String get acctSyncBusy => 'ഡയറി സിങ്ക് ചെയ്യപ്പെടുന്നു.';
+
+  @override
+  String get acctSyncFailed => 'സിങ്ക് പൂർത്തിയായില്ല. Talkies വീണ്ടും ശ്രമിക്കും.';
+
+  @override
+  String get acctSyncChoose => 'ഈ ഫോനിൽ മറ്റൊരു അക്കൗണ്ടിന്റെ ഡയറിയുണ്ട്.';
+
+  @override
+  String get acctChoose => 'തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get acctProfile => 'നിങ്ങളുടെ പ്രൊഫൈൽ';
+
+  @override
+  String get acctSignOut => 'സൈൻ ഔട്ട്';
+
+  @override
+  String get acctSignedOut => 'സൈൻ ഔട്ട് ആയി. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ തുടരുന്നു.';
+
+  @override
+  String get acctDelete => 'അക്കൗണ്ട് മായ്ക്കുക';
+
+  @override
+  String get acctDeleteQ => 'അക്കൗണ്ട് മായ്ക്കണോ?';
+
+  @override
+  String get acctDeleteBody =>
+      'ഇതോടെ നിങ്ങളുടെ അക്കൗണ്ടും എല്ലാ വിവരങ്ങളും Talkies സെർവറിൽ നിന്നു നീങ്ങും. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ നിൽക്കും. ഇതു തിരികെ കൊണ്ടുവരാനാവില്ല.';
+
+  @override
+  String get acctDeleted => 'നിങ്ങളുടെ അക്കൗണ്ട് മാഞ്ഞു. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ തുടരുന്നു.';
+
+  @override
+  String get acctDeleteFailed => 'അക്കൗണ്ട് മായ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get acctDown => 'നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ സുരക്ഷിതം. Talkies ഇപ്പോൾ ലഭ്യമല്ല.';
+
+  @override
+  String get acctRowSafe => 'നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ സുരക്ഷിതം';
+
+  @override
+  String get acctChoiceTitle => 'രണ്ട് ഡയറി';
+
+  @override
+  String get acctChoiceBody => 'ഈ ഫോനിൽ മറ്റൊരു അക്കൗണ്ടിന്റെ ഡയറിയുണ്ട്. എന്തു ചെയ്യണമെന്നു തീരുമാനിക്കുക.';
+
+  @override
+  String get acctChoiceMerge => 'ഒന്നിച്ചു ചേർക്കുക';
+
+  @override
+  String get acctChoiceMergeNote => 'ഈ ഫോനിലെ സിനിമകൾ ഈ അക്കൗണ്ടിൽ ചേരും.';
+
+  @override
+  String get acctChoiceSeparate => 'വേറിട്ടു വയ്ക്കുക';
+
+  @override
+  String get acctChoiceSeparateNote =>
+      'ഈ ഫോനിൽ ഈ അക്കൗണ്ടിന്റെ ഡയറി മാത്രമേ കാണൂ. ഈ ഫോനിലെ സിനിമകൾ അതിൽ നിന്നു നീക്കും.';
+
+  @override
+  String get privacyStubToggle => 'സ്വകാര്യം: ഈ ടിക്കറ്റ് എന്റെ പ്രൊഫൈലിൽ വേണ്ട';
+
+  @override
+  String get privacyStubLabel => 'സ്വകാര്യ ടിക്കറ്റ്';
+
+  @override
+  String get privacyTitle => 'സ്വകാര്യത';
+
+  @override
+  String get privacySheetTitle => 'സുഹൃത്തുക്കൾക്കു മാത്രമാക്കണോ?';
+
+  @override
+  String get privacySheetBody =>
+      'സുഹൃത്തുക്കൾക്കു നിങ്ങൾ കണ്ട സിനിമകളും വാച്ച്‌ലിസ്റ്റും കാണാം. നിങ്ങളുടെ റേറ്റിംഗ് അതു ഓണാക്കിയാൽ മാത്രം. ആരും തീയതി കാണില്ല. ഒരു ടിക്കറ്റു മറയ്ക്കാൻ അതു തുറന്നു സ്വകാര്യം ഓണാക്കൂ.';
+
+  @override
+  String get friendsTitle => 'സുഹൃത്തുക്കൾ';
+
+  @override
+  String get friendsUnnamed => 'ആരോ';
+
+  @override
+  String get friendsAdd => 'സുഹൃത്തിനെ ചേർക്കുക';
+
+  @override
+  String get friendsAddHint => 'സുഹൃത്തിന്റെ ഹാൻഡിൽ കൃത്യമായി എഴുതുക.';
+
+  @override
+  String get friendsHandleLabel => 'സുഹൃത്തിന്റെ ഹാൻഡിൽ';
+
+  @override
+  String get friendsHandleHint => 'ഉദാ: asha_k';
+
+  @override
+  String get friendsFind => 'തിരയുക';
+
+  @override
+  String get friendsSendRequest => 'അഭ്യർഥന അയക്കുക';
+
+  @override
+  String get friendsRequestSent => 'അഭ്യർഥന അയച്ചു.';
+
+  @override
+  String get friendsNowFriends => 'ഇനി നിങ്ങൾ സുഹൃത്തുക്കളാണ്.';
+
+  @override
+  String get friendsNotFound => 'ഈ ഹാൻഡിലില്ലാത്ത ആരുമില്ല. അക്ഷരത്തെറ്റു നോക്കൂ.';
+
+  @override
+  String get friendsPendingAlready => 'ഒരു അഭ്യർഥന ഇതിനകം കാത്തിരിക്കുന്നു.';
+
+  @override
+  String get friendsYourself => 'ഇതു നിങ്ങളുടെ സ്വന്തം ഹാൻഡിലാണ്.';
+
+  @override
+  String get friendsAlready => 'നിങ്ങൾ ഇതിനകം സുഹൃത്തുക്കളാണ്.';
+
+  @override
+  String get friendsNoHandle => 'സുഹൃത്തുക്കൾ ഹാൻഡിൽ വഴിയാണു നിങ്ങളെ കണ്ടെത്തുന്നത്. അക്കൗണ്ടിൽ ഒന്നു തിരഞ്ഞെടുക്കൂ.';
+
+  @override
+  String get friendsRequests => 'അഭ്യർഥനകൾ';
+
+  @override
+  String get friendsAccept => 'സമ്മതിക്കുക';
+
+  @override
+  String get friendsDecline => 'വേണ്ടെന്നു വയ്ക്കുക';
+
+  @override
+  String get friendsCancelRequest => 'അഭ്യർഥന റദ്ദാക്കുക';
+
+  @override
+  String get friendsWaiting => 'മറുപടിക്കായി കാത്തിരിക്കുന്നു';
+
+  @override
+  String get friendsWantsToBe => 'നിങ്ങളുടെ സുഹൃത്താകാൻ ആഗ്രഹിക്കുന്നു';
+
+  @override
+  String get friendsNoCommon => 'ചേരുന്ന സിനിമകളില്ല';
+
+  @override
+  String get friendsKeepsPrivate => 'സിനിമകൾ സ്വകാര്യമാക്കിയിരിക്കുന്നു';
+
+  @override
+  String get friendsEmpty => 'ഇതുവരെ സുഹൃത്തില്ല. അവർ എന്തു കാണുന്നുവെന്നറിയാൻ ഒരാളെ ചേർക്കൂ.';
+
+  @override
+  String get friendsAll => 'എല്ലാ സുഹൃത്തുക്കൾ';
+
+  @override
+  String get friendsMenu => 'ഐച്ഛികങ്ങൾ';
+
+  @override
+  String get friendsUnfriend => 'സുഹൃത്തിനെ നീക്കുക';
+
+  @override
+  String get friendsUnfriendBody => 'പിന്നെ വീണ്ടും ചേർക്കാം.';
+
+  @override
+  String get friendsBlock => 'തടയുക';
+
+  @override
+  String get friendsBlockBody => 'പരസ്പരം സിനിമകളും അഭ്യർഥനകളും സന്ദേശങ്ങളും കാണില്ല. അക്കൗണ്ടിൽ നിന്നു തടയൽ നീക്കാം.';
+
+  @override
+  String get friendsReport => 'റിപ്പോർട്ട്';
+
+  @override
+  String get friendsReasonSpam => 'സ്പാം';
+
+  @override
+  String get friendsReasonAbuse => 'നിന്ദാപദം';
+
+  @override
+  String get friendsReasonHarassment => 'ഉപദ്രവിക്കൽ';
+
+  @override
+  String get friendsReasonInappropriate => 'അനുചിതമായ ഉള്ളടക്കം';
+
+  @override
+  String get friendsReasonOther => 'മറ്റെന്തെങ്കിലും';
+
+  @override
+  String get friendsReported => 'റിപ്പോർട്ടയച്ചു. നന്ദി.';
+
+  @override
+  String get friendsWatchedThis => 'ഇതു കണ്ടവർ';
+
+  @override
+  String get friendsStripTitle => 'സുഹൃത്തുക്കൾ കാണുന്നത്';
+
+  @override
+  String get friendsShelf => 'കണ്ട സിനിമകൾ';
+
+  @override
+  String get friendsMore => 'കൂടുതൽ കാണിക്കുക';
+
+  @override
+  String get feedTitle => 'സുഹൃത്തുക്കൾ എന്തു കണ്ടു';
+
+  @override
+  String get feedRefresh => 'പുതുക്കുക';
+
+  @override
+  String get feedEmpty => 'ഇതുവരെ ഒന്നുമില്ല. സുഹൃത്തുക്കൾ സിനിമ രേഖപ്പെടുത്തിയാൽ ഇവിടെ കാണാം.';
+
+  @override
+  String get feedReactFire => 'തീ';
+
+  @override
+  String get feedReactLove => 'സ്നേഹം';
+
+  @override
+  String get feedReactLaugh => 'പൊട്ടിച്ചിരി';
+
+  @override
+  String get feedReactSad => 'ദുഃഖം';
+
+  @override
+  String get feedReactClap => 'കൈയടി';
+
+  @override
+  String get feedReactMind => 'തല കറങ്ങി';
+
+  @override
+  String get feedReactPopcorn => 'പോപ്കോൺ';
+
+  @override
+  String get feedReactEyes => 'കണ്ണുകൾ';
+
+  @override
+  String get feedReactFailed => 'പ്രതികരണം അയയ്ക്കാനായില്ല.';
+
+  @override
+  String get sendFilm => 'അയക്കുക';
+
+  @override
+  String get sendTitle => 'ഈ സിനിമ അയക്കുക';
+
+  @override
+  String get sendNote => 'കുറിപ്പ് (ഐച്ഛികം)';
+
+  @override
+  String get sendNoteHint => 'ഇതു കാണേണ്ടതിന്റെ കാരണം പറയൂ';
+
+  @override
+  String get sendToFriend => 'സുഹൃത്തിനു അയക്കുക';
+
+  @override
+  String get sendDone => 'അയച്ചു';
+
+  @override
+  String get sendNoFriends => 'സിനിമകൾ അയയ്ക്കാൻ സുഹൃത്തുക്കളെ ചേർക്കൂ.';
+
+  @override
+  String get sendFailed => 'അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get sendTooFast => 'വളരെ വേഗമായി അയക്കുന്നു. ഒന്നു നിർത്തൂ.';
+
+  @override
+  String get sendNotAllowed => 'ഈ വ്യക്തിക്കു നിങ്ങൾക്കയയ്ക്കാനാവില്ല.';
+
+  @override
+  String get sendOther => 'മറ്റു ആപ്പുകൾ';
+
+  @override
+  String get sendShareLine => 'Talkies-ൽ നിന്നു പങ്കുവച്ചത്, ടിക്കറ്റു പോലെയുള്ള സിനിമ ഡയറി.';
+
+  @override
+  String get nightTitle => 'മൂവി നൈറ്റ്';
+
+  @override
+  String get nightPollOpen => 'വോട്ടു തുറന്നു';
+
+  @override
+  String get nightPlanTitle => 'ഒരു നൈറ്റു തീരുമാനിക്കൂ';
+
+  @override
+  String get nightChooseGroup => 'ഏതു ഗ്രൂപ്പ്?';
+
+  @override
+  String get togetherGroups => 'ഗ്രൂപ്പുകൾ';
+
+  @override
+  String get togetherNights => 'നൈറ്റുകൾ';
+
+  @override
+  String get togetherFriends => 'സുഹൃത്തുക്കൾ';
+
+  @override
+  String get togetherProfile => 'നിങ്ങളുടെ പ്രൊഫൈൽ';
+
+  @override
+  String get togetherNewGroup => 'പുതിയ ഗ്രൂപ്പ്';
+
+  @override
+  String get togetherNoGroups =>
+      'ഇതുവരെ ഗ്രൂപ്പില്ല. സിനിമകളിൽ സ്വൈപ്പു ചെയ്യാനും നൈറ്റു തീരുമാനിക്കാനും ഒന്നുണ്ടാക്കൂ.';
+
+  @override
+  String get togetherNoNights => 'ഇതുവരെ നൈറ്റു തീരുമാനിച്ചിട്ടില്ല. ഒരു ഗ്രൂപ്പു തുറന്നു ഒന്നു തീരുമാനിക്കൂ.';
+
+  @override
+  String get togetherComingUp => 'വരുന്നവ';
+
+  @override
+  String get togetherEarlier => 'പഴയവ';
+
+  @override
+  String get togetherJoinWithCode => 'കോഡു വഴി ചേരൂ';
+
+  @override
+  String get togetherShared => 'പങ്കിട്ടത്';
+
+  @override
+  String get togetherYou => 'നിങ്ങൾ';
+
+  @override
+  String get togetherNextNight => 'അടുത്ത നൈറ്റ്';
+
+  @override
+  String get togetherNightPoll => 'വോട്ട്';
+
+  @override
+  String get togetherAddToGroup => 'ഗ്രൂപ്പിൽ ചേർക്കുക';
+
+  @override
+  String get togetherShareFilm => 'സിനിമ പങ്കുവയ്ക്കുക';
+
+  @override
+  String get togetherShareFilmLine => 'Talkies-ൽ സൂക്ഷിച്ചത്, സിനിമ ടിക്കറ്റ് ഡയറി.';
+
+  @override
+  String get togetherRefusalOffline => 'Talkies ഇപ്പോൾ ലഭ്യമല്ല. പിന്നെ ശ്രമിക്കുക.';
+
+  @override
+  String get togetherRefusalNameTaken => 'ഗ്രൂപ്പിൽ ഈ പേരു മറ്റൊരാൾക്കാണ്.';
+
+  @override
+  String get togetherRefusalGroupFull => 'ഗ്രൂപ്പു നിറഞ്ഞു. 30 പേർ വരും.';
+
+  @override
+  String get togetherRefusalListFull => 'പട്ടിക നിറഞ്ഞു. 200 സിനിമകൾ വരും.';
+
+  @override
+  String get togetherRefusalGroupLimit => 'Talkies അനുവദിക്കുന്നത്ര ഗ്രൂപ്പുകളിലാണു നിങ്ങൾ.';
+
+  @override
+  String get togetherRefusalInvalidCode => 'ഈ കോഡു പ്രവർത്തിക്കുന്നില്ല. നോക്കി വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get togetherRefusalRateLimited => 'വളരെയധികം ശ്രമം. ഒന്നു നിന്നു വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get togetherRefusalNotAllowed => 'അതു ഉടമയോ ഹോസ്റ്റോ മാത്രമേ ചെയ്യൂ.';
+
+  @override
+  String get togetherRefusalNotFound => 'ആ ഗ്രൂപ്പോ നൈറ്റോ ഇനിയില്ല.';
+
+  @override
+  String get togetherRefusalClosed => 'നിങ്ങൾക്കു മുമ്പേ മറ്റാരോ ഇതു മാറ്റി. ഇപ്പോൾ അതു പുതുമയുള്ളതാണ്.';
+
+  @override
+  String get togetherRefusalInvalid => 'വിവരങ്ങൾ പരിശോധിച്ചു വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get togetherRefusalOther => 'അതു നടന്നില്ല. വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get crewNewTitle => 'പുതിയ ഗ്രൂപ്പ്';
+
+  @override
+  String get crewNameLabel => 'ഗ്രൂപ്പിന്റെ പേര്';
+
+  @override
+  String get crewMyNameLabel => 'നിങ്ങളുടെ പേര്';
+
+  @override
+  String get crewSuggestTitle => 'നിങ്ങളുംകൂടെ കണ്ടവർ';
+
+  @override
+  String get crewSharedSwitch => 'ലിങ്കു വഴി സുഹൃത്തുക്കളെ ക്ഷണിക്കുക';
+
+  @override
+  String get crewSharedHint => 'സുഹൃത്തുക്കൾ കോഡു വഴി ചേരുന്നു; സ്വന്തം ഫോനിൽ സ്വൈപ്പു ചെയ്യുന്നു.';
+
+  @override
+  String get crewCreate => 'ഗ്രൂപ്പുണ്ടാക്കുക';
+
+  @override
+  String get crewCreateShared => 'പങ്കിട്ട ഗ്രൂപ്പുണ്ടാക്കുക';
+
+  @override
+  String get crewOwnFilmLocal => 'നിങ്ങളുടെ സ്വന്തം സിനിമകൾ ഈ ഫോനിൽ തന്നെ.';
+
+  @override
+  String get crewJoinTitle => 'ഗ്രൂപ്പിൽ ചേരുക';
+
+  @override
+  String get crewJoinCodeLabel => 'ക്ഷണ കോഡ്';
+
+  @override
+  String get crewJoinNote =>
+      'ചേരുമ്പോൾ നിങ്ങളുടെ ഇഷ്ടവും വാച്ച്‌ലിസ്റ്റും ഗ്രൂപ്പിന്റെ ഡെക്കിലേക്കു ചേരും. ആരാ എന്തു ചേർത്തു എന്നു സദസ്യർക്കറിയില്ല.';
+
+  @override
+  String get joinAction => 'ഗ്രൂപ്പിൽ ചേരുക';
+
+  @override
+  String get joinOpen => 'ഗ്രൂപ്പു തുറക്കുക';
+
+  @override
+  String get crewRename => 'ഗ്രൂപ്പിന്റെ പേരു മാറ്റുക';
+
+  @override
+  String get crewDelete => 'ഗ്രൂപ്പ് മായ്ക്കുക';
+
+  @override
+  String get crewDeleteLocal => 'ഗ്രൂപ്പും അതിന്റെ പട്ടികയും നൈറ്റുകളും ഈ ഫോനിൽ നിന്നു നീങ്ങും.';
+
+  @override
+  String get crewDeleteShared => 'ഗ്രൂപ്പ് എല്ലാവർക്കുമായി നീങ്ങും.';
+
+  @override
+  String get crewLeave => 'ഗ്രൂപ്പു വിടുക';
+
+  @override
+  String get crewLeaveBody => 'ഇതു ഈ ഫോനിൽ നിന്നു പോകും. കോഡു പിന്നെയും ചേരാം.';
+
+  @override
+  String get crewMembers => 'അംഗങ്ങൾ';
+
+  @override
+  String get crewAddName => 'പേരു ചേർക്കുക';
+
+  @override
+  String get crewAdd => 'ചേർക്കുക';
+
+  @override
+  String get crewOwner => 'ഉടമ';
+
+  @override
+  String get crewGuest => 'അതിഥി';
+
+  @override
+  String get crewShareInvite => 'ക്ഷണം പങ്കുവയ്ക്കുക';
+
+  @override
+  String get crewNewCode => 'പുതിയ കോഡ്';
+
+  @override
+  String get crewNewCodeQ => 'പുതിയ കോഡുണ്ടാക്കണോ?';
+
+  @override
+  String get crewNewCodeBody => 'പഴയ കോഡും ലിങ്കും പ്രവർത്തിക്കില്ല.';
+
+  @override
+  String get crewChat => 'ഗ്രൂപ്പ് ചാറ്റ്';
+
+  @override
+  String get crewList => 'ഗ്രൂപ്പ് പട്ടിക';
+
+  @override
+  String get crewListAdd => 'സിനിമ ചേർക്കുക';
+
+  @override
+  String get crewListEmpty => 'പട്ടിക ശൂന്യം. ഗ്രൂപ്പിനിഷ്ടപ്പെടാവുന്ന സിനിമകൾ ചേർക്കൂ.';
+
+  @override
+  String get crewListRemove => 'പട്ടികയിൽ നിന്നു നീക്കുക';
+
+  @override
+  String get crewOpenFilm => 'സിനിമ തുറക്കുക';
+
+  @override
+  String get crewSwipe => 'ചേരാൻ സ്വൈപ്പു ചെയ്യൂ';
+
+  @override
+  String get crewNights => 'നൈറ്റുകൾ';
+
+  @override
+  String get crewNoNights => 'ഇതുവരെ നൈറ്റില്ല.';
+
+  @override
+  String get crewRemoveBody => 'അവരുടെ സ്വൈപ്പും വോട്ടും മറുപടിയും പോകും.';
+
+  @override
+  String get togetherMore => 'കൂടുതൽ';
+
+  @override
+  String get profileTitle => 'നിങ്ങളുടെ പ്രൊഫൈൽ';
+
+  @override
+  String get profileTopGenres => 'മുൻനിര വിഭാഗങ്ങൾ';
+
+  @override
+  String get profileTopLangs => 'മുൻനിര ഭാഷകൾ';
+
+  @override
+  String get profileTopFilms => 'മുൻനിര സിനിമകൾ';
+
+  @override
+  String get profileWatchlist => 'വാച്ച്‌ലിസ്റ്റ്';
+
+  @override
+  String get profileEmpty => 'പ്രൊഫൈൽ കെട്ടാൻ ഒരു സിനിമ രേഖപ്പെടുത്തൂ.';
+
+  @override
+  String get profileSignInFoot => 'സുഹൃത്തുക്കളുമായി പങ്കുവയ്ക്കാൻ സൈൻ ഇൻ ചെയ്യൂ';
+
+  @override
+  String get profileShare => 'ചിത്രമായി പങ്കുവയ്ക്കുക';
+
+  @override
+  String get profileShareTitle => 'എന്റെ Talkies';
+
+  @override
+  String get deckWant => 'വേണം';
+
+  @override
+  String get deckSkip => 'വേണ്ട';
+
+  @override
+  String get deckSeen => 'കണ്ടു';
+
+  @override
+  String get deckSwipeHint =>
+      'വേണമെങ്കിൽ വലത്തോട്ട്, വേണ്ടെങ്കിൽ ഇടത്തോട്ട്, കണ്ടിട്ടുണ്ടെങ്കിൽ മുകളിലോട്ട് സ്വൈപ്പ് ചെയ്യുക.';
+
+  @override
+  String get deckBuilding => 'ഡെക്കൊരുക്കുന്നു.';
+
+  @override
+  String get deckEmpty => 'സ്വൈപ്പിക്കാൻ സിനിമയില്ല. ഗ്രൂപ്പ് പട്ടികയിൽ സിനിമകൾ ചേർത്തിട്ടു ഡെക്കു വീണ്ടുമുണ്ടാക്കൂ.';
+
+  @override
+  String get deckRebuild => 'ഡെക്കു വീണ്ടുമുണ്ടാക്കുക';
+
+  @override
+  String get deckAllSwiped => 'എല്ലാ കാർഡും കഴിഞ്ഞു.';
+
+  @override
+  String get deckNoMatch => 'ഈ ഫിൽട്ടറുകൾക്കു ചേരുന്ന കാർഡില്ല.';
+
+  @override
+  String get deckFilters => 'ഫിൽട്ടറുകൾ';
+
+  @override
+  String get deckHideSeen => 'ആരെങ്കിലും കണ്ട സിനിമകൾ മറയ്ക്കുക';
+
+  @override
+  String get deckSearchHint => 'ഡെക്കിൽ തിരയുക';
+
+  @override
+  String get deckResults => 'എല്ലാം കാണിക്കുക';
+
+  @override
+  String get deckResultsTitle => 'ഫലങ്ങൾ';
+
+  @override
+  String get deckTopMatch => 'ഏറ്റവും ചേരുന്നത്';
+
+  @override
+  String get deckSchedule => 'ഉറപ്പിക്കുക';
+
+  @override
+  String get deckTonight => 'ഇന്നത്തെ രാത്രിയുടെ തിരഞ്ഞെടുപ്പ്';
+
+  @override
+  String get deckTonightTitle => 'ഇന്നത്തെ സിനിമ';
+
+  @override
+  String get deckTonightNone => 'ഇതുവരെ ആരും വേണമെന്നു പറഞ്ഞിട്ടില്ല. ആദ്യം സ്വൈപ്പു ചെയ്യൂ.';
+
+  @override
+  String get deckPickAgain => 'വീണ്ടും തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get deckWho => 'ആരാ സ്വൈപ്പു ചെയ്യുന്നത്';
+
+  @override
+  String get deckHandTo => 'ഫോൺ ഇവർക്കു കൊടുക്കുക';
+
+  @override
+  String get deckHandBack => 'ഫോൺ തിരികെ കൊടുക്കുക';
+
+  @override
+  String get deckImBack => 'ഞാൻ വന്നു';
+
+  @override
+  String get deckHandNote => 'മുൻ ഇഷ്ടങ്ങൾ മറച്ചിരിക്കും.';
+
+  @override
+  String get deckDonePass => 'കഴിഞ്ഞു, അടുത്തയാൾക്കു കൊടുക്കൂ';
+
+  @override
+  String get nightFilms => 'സിനിമകൾ';
+
+  @override
+  String get nightFilmsHint => '1 മുതൽ 3 വരെ സിനിമകൾ തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String get nightAddFilm => 'സിനിമ ചേർക്കുക';
+
+  @override
+  String get nightFromList => 'ഗ്രൂപ്പ് പട്ടികയിൽ നിന്നു';
+
+  @override
+  String get nightSearchAll => 'എല്ലാ സിനിമകളും തിരയുക';
+
+  @override
+  String get nightTimes => 'സമയങ്ങൾ';
+
+  @override
+  String get nightTimesHint => '1 അല്ലെങ്കിൽ 2 സമയം തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String get nightPickTime => 'തീയതിയും സമയവും തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get nightAddTime => 'ഒരു സമയം കൂടി ചേർക്കുക';
+
+  @override
+  String get nightPlaceHint => 'വീട്, PVR ഫീനിക്സ്';
+
+  @override
+  String get nightPostPoll => 'വോട്ടിടുക';
+
+  @override
+  String get nightSetIt => 'ഉറപ്പിക്കൂ';
+
+  @override
+  String get nightNeedFilm => 'കുറഞ്ഞതൊരു സിനിമയെങ്കിലും തിരഞ്ഞെടുക്കൂ.';
+
+  @override
+  String get nightNeedTime => 'തീയതിയും സമയവും തിരഞ്ഞെടുക്കൂ.';
+
+  @override
+  String get nightPollNote => 'ഒന്നിലധികം സിനിമയോ സമയമോ ഉണ്ടെങ്കിൽ ആദ്യം ഗ്രൂപ്പു വോട്ടു ചെയ്യും.';
+
+  @override
+  String get nightSetNote => 'ഒരു സിനിമയും ഒരു സമയവുമാണെങ്കിൽ നൈറ്റു തന്നെ ഉറപ്പാകും.';
+
+  @override
+  String get nightVoteAs => 'വോട്ട് ആരുടെ പേരിൽ';
+
+  @override
+  String get nightClosePoll => 'വോട്ടടയ്ക്കുക';
+
+  @override
+  String get nightCloseNote => 'ഏറ്റവും വോട്ടു കിട്ടിയ സിനിമയും സമയവും ജയിക്കും. സമനിലയിൽ ആദ്യത്തേത്.';
+
+  @override
+  String get nightWaitNote => 'എല്ലാവരും വോട്ടു ചെയ്താൽ ഹോസ്റ്റോ ഉടമയോ വോട്ടടയ്ക്കും.';
+
+  @override
+  String get nightRsvp => 'ആരൊക്കും വരുന്നു';
+
+  @override
+  String get nightReplyFor => 'മറുപടി ആരുടെ പേരിൽ';
+
+  @override
+  String get nightYes => 'അതെ';
+
+  @override
+  String get nightMaybe => 'ഒരുപക്ഷേ';
+
+  @override
+  String get nightNo => 'വേണ്ട';
+
+  @override
+  String get nightNoReply => 'ഇതുവരെ മറുപടിയില്ല';
+
+  @override
+  String get nightRemind => 'ഓർമിപ്പിക്കൂ';
+
+  @override
+  String get nightRemindHint => 'ഒരു ദിവസം മുമ്പും രണ്ടു മണിക്കൂർ മുമ്പും.';
+
+  @override
+  String get nightRemindRefused =>
+      'Talkies-നു ഓർമപ്പുതുകൾ അയയ്ക്കാനാവുന്നില്ല. ഫോൺ സെറ്റിംഗിൽ Talkies-ന്റെ അറിയിപ്പുകൾ ഓണാക്കൂ.';
+
+  @override
+  String get nightAddCalendar => 'കലണ്ടറിൽ ചേർക്കുക';
+
+  @override
+  String get nightIcsFailed => 'കലണ്ടർ ഫയൽ പങ്കുവയ്ക്കാനായില്ല.';
+
+  @override
+  String get nightWrap => 'നൈറ്റ് അവസാന കുറിപ്പ്';
+
+  @override
+  String get nightWrapNote => 'വന്നവരെല്ലാർക്കും ഒരു ടിക്കറ്റെങ്കിലും ഉണ്ടാക്കൂ.';
+
+  @override
+  String get nightDelete => 'നൈറ്റു മായ്ക്കുക';
+
+  @override
+  String get nightDeleteQ => 'ഈ നൈറ്റു മായ്ക്കണോ?';
+
+  @override
+  String get nightDeleteBody => 'വോട്ടുകളും മറുപടികളും ഓർമപ്പുതുകളും നീങ്ങും.';
+
+  @override
+  String get nightGone => 'ഈ നൈറ്റ് ഇനിയില്ല.';
+
+  @override
+  String get chatTitle => 'ചാറ്റ്';
+
+  @override
+  String get chatHint => 'സന്ദേശമെഴുതുക';
+
+  @override
+  String get chatSend => 'സന്ദേശം അയക്കുക';
+
+  @override
+  String get chatAttach => 'സിനിമ ചേർക്കുക';
+
+  @override
+  String get chatRemoveFilm => 'സിനിമ നീക്കുക';
+
+  @override
+  String get chatEmpty => 'ഇതുവരെ സന്ദേശമില്ല. നമസ്കാരം പറയൂ.';
+
+  @override
+  String get chatOlder => 'പഴയ സന്ദേശങ്ങൾ';
+
+  @override
+  String get chatPollOpen => 'ഒരു നൈറ്റ് വോട്ട് തുറന്നിരിക്കുന്നു';
+
+  @override
+  String get chatNightSetPlain => 'ഒരു നൈറ്റ് ഉറപ്പായി';
+
+  @override
+  String get chatWrapped => 'നൈറ്റ് ശേഖരിച്ചു തീർത്തു';
+
+  @override
+  String get chatNight => 'മൂവി നൈറ്റ്';
+
+  @override
+  String get chatReport => 'സന്ദേശം പരാതിപ്പെടുക';
+
+  @override
+  String get chatReportTitle => 'ഈ സന്ദേശം എന്തിനാ റിപ്പോർട്ട് ചെയ്യുന്നത്?';
+
+  @override
+  String get deckMostWanted => 'ഏറ്റവും ആഗ്രഹിതം ആദ്യം';
+
+  @override
+  String unitFilms(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'സിനിമ', other: 'സിനിമകൾ');
+    return '$_temp0';
+  }
+
+  @override
+  String becauseYouLiked(String title) {
+    return '$title ഇഷ്ടപ്പെട്ടതിനാൽ';
+  }
+
+  @override
+  String ticketsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: 'ടിക്കറ്റുകളില്ല',
+      one: '1 ടിക്കറ്റ്',
+      other: '$count ടിക്കറ്റുകൾ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String starsAtLeast(int stars) {
+    return '$stars+ സ്റ്റാർ';
+  }
+
+  @override
+  String calWatched(int count) {
+    return '$count കണ്ടത്';
+  }
+
+  @override
+  String calPlanned(int count) {
+    return '$count പ്ലാൻ ചെയ്തത്';
+  }
+
+  @override
+  String watchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'ഒരു തവണ കണ്ടു', other: '$count തവണ കണ്ടു');
+    return '$_temp0';
+  }
+
+  @override
+  String searchPrompt(String count) {
+    return '$count ഇന്ത്യൻ, വിദേശ ടൈറ്റിലുകൾ തിരയുക. ഓഫ്‌ലൈനിലും പ്രവർത്തിക്കും.';
+  }
+
+  @override
+  String noResults(String query) {
+    return '“$query” എന്നതിന് ടൈറ്റിലുകളൊന്നും കിട്ടിയില്ല.';
+  }
+
+  @override
+  String seasons(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: '1 സീസൺ', other: '$count സീസണുകൾ');
+    return '$_temp0';
+  }
+
+  @override
+  String plannedFor(String date) {
+    return '$date-ന് പ്ലാൻ ചെയ്തു';
+  }
+
+  @override
+  String watchNth(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      one: 'ആദ്യ തവണ',
+      two: 'രണ്ടാം തവണ',
+      other: '$n-ാം തവണ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String hoursMinutes(int h, int m) {
+    return '$h മ. $m മി.';
+  }
+
+  @override
+  String minutesOnly(int m) {
+    return '$m മിനിറ്റ്';
+  }
+
+  @override
+  String ticketNo(String no) {
+    return 'നമ്പർ $no';
+  }
+
+  @override
+  String yearInvalid(int max) {
+    return '1900 മുതൽ $max വരെയുള്ള ഒരു വർഷം നൽകുക';
+  }
+
+  @override
+  String avgTicket(String amount) {
+    return 'ഒരു ടിക്കറ്റിന് ശരാശരി $amount';
+  }
+
+  @override
+  String showMore(int count) {
+    return 'എല്ലാ $count എണ്ണവും കാണിക്കുക';
+  }
+
+  @override
+  String decadeLabel(String decade) {
+    return '$decade-കൾ';
+  }
+
+  @override
+  String monthAtMovies(String month) {
+    return '$month-ലെ സിനിമകൾ';
+  }
+
+  @override
+  String refreshedOn(String date, String updated) {
+    return '$date-ന് തയ്യാറാക്കിയത്. $updated-ന് പുതുക്കി.';
+  }
+
+  @override
+  String builtOn(String date) {
+    return '$date-ന് തയ്യാറാക്കിയത്. ഇതുവരെ പുതുക്കിയിട്ടില്ല.';
+  }
+
+  @override
+  String refreshDone(int count) {
+    return '$count പുതിയതും വരാനിരിക്കുന്നതുമായ സിനിമകൾ പുതുക്കി';
+  }
+
+  @override
+  String version(String v) {
+    return 'പതിപ്പ് $v';
+  }
+
+  @override
+  String replaceBody(int count) {
+    return 'നിങ്ങളുടെ ഇപ്പോഴത്തെ $count ടിക്കറ്റുകൾക്ക് പകരം ബാക്കപ്പ് വരും.';
+  }
+
+  @override
+  String imported(int count, int matched, int custom) {
+    return '$count ടിക്കറ്റുകൾ ചേർത്തു. $matched എണ്ണം സിനിമ ലിസ്റ്റുമായി ഒത്തു, $custom എണ്ണം നിങ്ങളുടെ സ്വന്തം സിനിമകളായി ചേർത്തു.';
+  }
+
+  @override
+  String deleteTagQ(String tag, int count) {
+    return '#$tag ഇല്ലാതാക്കണോ? ഇത് $count ടിക്കറ്റുകളിൽ നിന്ന് നീക്കും.';
+  }
+
+  @override
+  String deleteVenueQ(String name) {
+    return '$name ലിസ്റ്റിൽ നിന്ന് നീക്കണോ? ടിക്കറ്റുകളിൽ പേര് നിലനിൽക്കും.';
+  }
+
+  @override
+  String stubsUsing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: 'ഉപയോഗിച്ചിട്ടില്ല',
+      one: '1 ടിക്കറ്റിൽ ഉപയോഗിച്ചു',
+      other: '$count ടിക്കറ്റുകളിൽ ഉപയോഗിച്ചു',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String batchAddAll(int count) {
+    return '$count ടിക്കറ്റുകൾ ചേർക്കുക';
+  }
+
+  @override
+  String batchDone(int count) {
+    return '$count ടിക്കറ്റുകൾ ചേർത്തു';
+  }
+
+  @override
+  String whatsNewTitle(String v) {
+    return 'ടാക്കീസ് $v';
+  }
+
+  @override
+  String acctCodeSent(String email) {
+    return '$email എന്ന ഇമെയിലിലേക്കു ഒരു കോഡയച്ചിട്ടുണ്ട്.';
+  }
+
+  @override
+  String friendsBoth(int count) {
+    return 'നിങ്ങൾ രണ്ടുപേരും $count കണ്ടു';
+  }
+
+  @override
+  String friendsMatchLabel(int pct) {
+    return '$pct ശതമാനം ചേർച്ച';
+  }
+
+  @override
+  String friendsUnfriendQ(String name) {
+    return '$name നെ സുഹൃത്തുക്കളിൽ നിന്നു നീക്കണോ?';
+  }
+
+  @override
+  String friendsUnfriended(String name) {
+    return '$name ഇനി നിങ്ങളുടെ സുഹൃത്തല്ല.';
+  }
+
+  @override
+  String friendsBlockQ(String name) {
+    return '$name തടയണോ?';
+  }
+
+  @override
+  String friendsBlocked(String name) {
+    return '$name തടഞ്ഞിരിക്കുന്നു.';
+  }
+
+  @override
+  String friendsReportTitle(String name) {
+    return '$name നെ എന്തിനാ റിപ്പോർട്ടു ചെയ്യുന്നത്?';
+  }
+
+  @override
+  String friendsPrivateLine(String name) {
+    return '$name സിനിമകൾ സ്വകാര്യമാക്കിയിരിക്കുന്നു.';
+  }
+
+  @override
+  String friendsHidden(String name) {
+    return '$name യുടെ സിനിമകൾ ഇപ്പോൾ നിങ്ങൾക്കു കാണാനാവില്ല. സ്വകാര്യമായിരിക്കാം.';
+  }
+
+  @override
+  String feedWatched(String name) {
+    return '$name കണ്ടു';
+  }
+
+  @override
+  String feedReacted(String name) {
+    return '$name നിങ്ങളുടെ സിനിമയിൽ പ്രതികരിച്ചു';
+  }
+
+  @override
+  String feedSent(String name) {
+    return '$name നിങ്ങൾക്കൊരു സിനിമയയച്ചു';
+  }
+
+  @override
+  String togetherFilmsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: 'ഇതുവരെ സിനിമയില്ല',
+      one: '1 സിനിമ',
+      other: '$count സിനിമകൾ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String togetherMembersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: '1 അംഗം', other: '$count അംഗങ്ങൾ');
+    return '$_temp0';
+  }
+
+  @override
+  String togetherNextNightShort(String date) {
+    return 'അടുത്തത്: $date';
+  }
+
+  @override
+  String togetherAddedTo(String group) {
+    return '$group ഗ്രൂപ്പിൽ ചേർത്തു';
+  }
+
+  @override
+  String joinJoined(String group) {
+    return 'നിങ്ങൾ $group ഗ്രൂപ്പിൽ ചേർന്നു';
+  }
+
+  @override
+  String crewDeleteQ(String group) {
+    return '$group മായ്ക്കണോ?';
+  }
+
+  @override
+  String crewLeaveQ(String group) {
+    return '$group വിടണോ?';
+  }
+
+  @override
+  String crewInviteText(String group, String link, String code) {
+    return 'Talkies-ൽ $group ഗ്രൂപ്പിൽ ചേരൂ. $link തുറന്നു നോക്കൂ അല്ലെങ്കിൽ $code കോഡു നൽകൂ.';
+  }
+
+  @override
+  String crewInviteSubject(String group) {
+    return 'Talkies-ൽ $group എന്ന ഗ്രൂപ്പിൽ ചേരൂ';
+  }
+
+  @override
+  String crewRemoveQ(String name) {
+    return '$name നീക്കണോ?';
+  }
+
+  @override
+  String profileViewings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'തവണ കണ്ടു', other: 'തവണ കണ്ടു');
+    return '$_temp0';
+  }
+
+  @override
+  String profileEmptyFriend(String name) {
+    return '$name ഇതുവരെ ഒരു സിനിമയും പങ്കുവച്ചിട്ടില്ല.';
+  }
+
+  @override
+  String profileVisibility(String value) {
+    return 'ആർക്കു കാണാം: $value';
+  }
+
+  @override
+  String deckCounter(int n, int total) {
+    return '$totalൽ $n';
+  }
+
+  @override
+  String deckSeenBy(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      one: '1 അംഗം കണ്ടു',
+      other: '$count അംഗങ്ങൾ കണ്ടു',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deckWantCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: 'ആർക്കും വേണ്ട',
+      one: 'ഒരാൾക്കു വേണം',
+      other: '$count പേർക്കു വേണം',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deckHandTitle(String name) {
+    return 'ഫോൺ $name നു കൊടുക്കൂ';
+  }
+
+  @override
+  String deckImName(String name) {
+    return 'ഞാൻ $name';
+  }
+
+  @override
+  String nightVotes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: 'വോട്ടില്ല',
+      one: '1 വോട്ട്',
+      other: '$count വോട്ട്',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nightReminderDay(String film, String group, String time) {
+    return 'നാളെ: $film, $group സംഘത്തോടെ, $time-നു.';
+  }
+
+  @override
+  String nightReminderHour(String film, String group) {
+    return 'രണ്ടു മണിക്കൂറിൽ: $film, $group സംഘത്തോടെ.';
+  }
+
+  @override
+  String nightWrapDone(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      zero: 'ടിക്കറ്റുകളൊന്നുമുണ്ടാക്കിയില്ല',
+      one: '1 ടിക്കറ്റുണ്ടാക്കി',
+      other: '$count ടിക്കറ്റുണ്ടാക്കി',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nightWrapExpect(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'അതെ എന്നു പറഞ്ഞവരുടെ കണക്കിൽ $count ടിക്കറ്റുകൾ പ്രതീക്ഷിച്ചിരുന്നു',
+      one: 'അതെ എന്നു പറഞ്ഞവരുടെ കണക്കിൽ 1 ടിക്കറ്റ് പ്രതീക്ഷിച്ചിരുന്നു',
+      zero: 'ഇതുവരെ ഒരു അതെയുമില്ല, അതിനാൽ ടിക്കറ്റുകളൊന്നും പ്രതീക്ഷിച്ചിരുന്നില്ല',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nightTimePast => 'ആ സമയം ഇതിനകം കഴിഞ്ഞു. പിന്നീടുള്ള സമയം തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String chatJoined(String name) {
+    return '$name ചേർന്നു';
+  }
+
+  @override
+  String chatLeft(String name) {
+    return '$name പോയി';
+  }
+
+  @override
+  String chatNightSet(String film) {
+    return 'ഒരു നൈറ്റ് ഉറപ്പായി: $film';
+  }
+
+  @override
+  String chatNightFilm(String film) {
+    return 'നൈറ്റ്: $film';
+  }
 }

@@ -227,12 +227,6 @@ abstract class AppLocalizations {
   /// **'Next'**
   String get next;
 
-  /// No description provided for @unitFilms.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{film} other{films}}'**
-  String unitFilms(int count);
-
   /// No description provided for @thisYear.
   ///
   /// In en, this message translates to:
@@ -268,12 +262,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'For you'**
   String get forYou;
-
-  /// No description provided for @becauseYouLiked.
-  ///
-  /// In en, this message translates to:
-  /// **'Because you liked {title}'**
-  String becauseYouLiked(String title);
 
   /// No description provided for @notInterested.
   ///
@@ -334,12 +322,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Where you watched this year'**
   String get splitLegend;
-
-  /// No description provided for @ticketsCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{No tickets} =1{1 ticket} other{{count} tickets}}'**
-  String ticketsCount(int count);
 
   /// No description provided for @sortNewest.
   ///
@@ -461,24 +443,6 @@ abstract class AppLocalizations {
   /// **'Reset filters'**
   String get resetFilters;
 
-  /// No description provided for @starsAtLeast.
-  ///
-  /// In en, this message translates to:
-  /// **'{stars}+ stars'**
-  String starsAtLeast(int stars);
-
-  /// No description provided for @calWatched.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} watched'**
-  String calWatched(int count);
-
-  /// No description provided for @calPlanned.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} planned'**
-  String calPlanned(int count);
-
   /// No description provided for @showStubs.
   ///
   /// In en, this message translates to:
@@ -581,12 +545,6 @@ abstract class AppLocalizations {
   /// **'Removed from watchlist'**
   String get removedFromWatchlist;
 
-  /// No description provided for @watchCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{Watched once} other{Watched {count} times}}'**
-  String watchCount(int count);
-
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:
@@ -623,18 +581,6 @@ abstract class AppLocalizations {
   /// **'The film list did not load. Restart the app.'**
   String get catalogError;
 
-  /// No description provided for @searchPrompt.
-  ///
-  /// In en, this message translates to:
-  /// **'Search {count} Indian and world titles. Works offline.'**
-  String searchPrompt(String count);
-
-  /// No description provided for @noResults.
-  ///
-  /// In en, this message translates to:
-  /// **'No title matches “{query}”.'**
-  String noResults(String query);
-
   /// No description provided for @director.
   ///
   /// In en, this message translates to:
@@ -658,12 +604,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Country'**
   String get country;
-
-  /// No description provided for @seasons.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 season} other{{count} seasons}}'**
-  String seasons(int count);
 
   /// No description provided for @availableOn.
   ///
@@ -719,12 +659,6 @@ abstract class AppLocalizations {
   /// **'In watchlist'**
   String get inWatchlist;
 
-  /// No description provided for @plannedFor.
-  ///
-  /// In en, this message translates to:
-  /// **'Planned for {date}'**
-  String plannedFor(String date);
-
   /// No description provided for @setPlannedDate.
   ///
   /// In en, this message translates to:
@@ -766,30 +700,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added by you'**
   String get yourOwnFilm;
-
-  /// No description provided for @watchNth.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{First watch} =2{Second watch} other{Watch no. {n}}}'**
-  String watchNth(int n);
-
-  /// No description provided for @hoursMinutes.
-  ///
-  /// In en, this message translates to:
-  /// **'{h}h {m}m'**
-  String hoursMinutes(int h, int m);
-
-  /// No description provided for @minutesOnly.
-  ///
-  /// In en, this message translates to:
-  /// **'{m} min'**
-  String minutesOnly(int m);
-
-  /// No description provided for @ticketNo.
-  ///
-  /// In en, this message translates to:
-  /// **'No. {no}'**
-  String ticketNo(String no);
 
   /// No description provided for @ticket.
   ///
@@ -1217,12 +1127,6 @@ abstract class AppLocalizations {
   /// **'Required'**
   String get required;
 
-  /// No description provided for @yearInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter a year from 1900 to {max}'**
-  String yearInvalid(int max);
-
   /// No description provided for @statsTitle.
   ///
   /// In en, this message translates to:
@@ -1264,12 +1168,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spent on tickets'**
   String get spent;
-
-  /// No description provided for @avgTicket.
-  ///
-  /// In en, this message translates to:
-  /// **'{amount} per ticket on average'**
-  String avgTicket(String amount);
 
   /// No description provided for @fdfsCount.
   ///
@@ -1391,12 +1289,6 @@ abstract class AppLocalizations {
   /// **'Tap a bar to see its films.'**
   String get tapForDetail;
 
-  /// No description provided for @showMore.
-  ///
-  /// In en, this message translates to:
-  /// **'Show all {count}'**
-  String showMore(int count);
-
   /// No description provided for @showLess.
   ///
   /// In en, this message translates to:
@@ -1408,12 +1300,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unrated'**
   String get unrated;
-
-  /// No description provided for @decadeLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'{decade}s'**
-  String decadeLabel(String decade);
 
   /// No description provided for @shareTitle.
   ///
@@ -1450,12 +1336,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share this month'**
   String get shareMonth;
-
-  /// No description provided for @monthAtMovies.
-  ///
-  /// In en, this message translates to:
-  /// **'{month} at the movies'**
-  String monthAtMovies(String month);
 
   /// No description provided for @nothingToShare.
   ///
@@ -1757,24 +1637,6 @@ abstract class AppLocalizations {
   /// **'Refresh film list'**
   String get refreshCatalog;
 
-  /// No description provided for @refreshedOn.
-  ///
-  /// In en, this message translates to:
-  /// **'Built {date}. Updated {updated}.'**
-  String refreshedOn(String date, String updated);
-
-  /// No description provided for @builtOn.
-  ///
-  /// In en, this message translates to:
-  /// **'Built {date}. Not refreshed yet.'**
-  String builtOn(String date);
-
-  /// No description provided for @refreshDone.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} recent and upcoming films updated'**
-  String refreshDone(int count);
-
   /// No description provided for @refreshFailed.
   ///
   /// In en, this message translates to:
@@ -1792,12 +1654,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Talkies is a ticket diary for Indian film lovers. Your stubs stay on this phone. Film details come from Wikidata (CC0) and posters from Wikipedia.'**
   String get aboutBody;
-
-  /// No description provided for @version.
-  ///
-  /// In en, this message translates to:
-  /// **'Version {v}'**
-  String version(String v);
 
   /// No description provided for @whatsNew.
   ///
@@ -1817,12 +1673,6 @@ abstract class AppLocalizations {
   /// **'Replace everything with this backup?'**
   String get replaceQ;
 
-  /// No description provided for @replaceBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Your current {count} stubs will be replaced by the backup.'**
-  String replaceBody(int count);
-
   /// No description provided for @replace.
   ///
   /// In en, this message translates to:
@@ -1840,12 +1690,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This file is not a Talkies backup.'**
   String get restoreFailed;
-
-  /// No description provided for @imported.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} stubs added. {matched} matched the film list, {custom} added as your own films.'**
-  String imported(int count, int matched, int custom);
 
   /// No description provided for @importNothing.
   ///
@@ -1871,35 +1715,17 @@ abstract class AppLocalizations {
   /// **'Rename tag'**
   String get renameTag;
 
-  /// No description provided for @deleteTagQ.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete #{tag}? It is removed from {count} stubs.'**
-  String deleteTagQ(String tag, int count);
-
   /// No description provided for @editVenue.
   ///
   /// In en, this message translates to:
   /// **'Edit place'**
   String get editVenue;
 
-  /// No description provided for @deleteVenueQ.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove {name} from the list? Stubs keep the name.'**
-  String deleteVenueQ(String name);
-
   /// No description provided for @remove.
   ///
   /// In en, this message translates to:
   /// **'Remove'**
   String get remove;
-
-  /// No description provided for @stubsUsing.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =0{Not used} =1{Used on 1 stub} other{Used on {count} stubs}}'**
-  String stubsUsing(int count);
 
   /// No description provided for @batchTitle.
   ///
@@ -1925,12 +1751,6 @@ abstract class AppLocalizations {
   /// **'Match titles'**
   String get batchMatch;
 
-  /// No description provided for @batchAddAll.
-  ///
-  /// In en, this message translates to:
-  /// **'Add {count} stubs'**
-  String batchAddAll(int count);
-
   /// No description provided for @batchOwn.
   ///
   /// In en, this message translates to:
@@ -1942,18 +1762,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'For every film'**
   String get batchDefaults;
-
-  /// No description provided for @batchDone.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} stubs added'**
-  String batchDone(int count);
-
-  /// No description provided for @whatsNewTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Talkies {v}'**
-  String whatsNewTitle(String v);
 
   /// No description provided for @whatsNew1.
   ///
@@ -1978,6 +1786,2190 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Got it'**
   String get gotIt;
+
+  /// No description provided for @gateCantReach.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach Talkies right now. Your diary is safe on this phone.'**
+  String get gateCantReach;
+
+  /// No description provided for @gateRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get gateRetry;
+
+  /// No description provided for @tabTogether.
+  ///
+  /// In en, this message translates to:
+  /// **'Together'**
+  String get tabTogether;
+
+  /// No description provided for @acctSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get acctSection;
+
+  /// No description provided for @acctTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get acctTitle;
+
+  /// No description provided for @acctSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get acctSignIn;
+
+  /// No description provided for @acctSignInHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your diary and meet friends'**
+  String get acctSignInHint;
+
+  /// No description provided for @acctIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to keep your diary on every phone and share films with friends. Talkies works without an account.'**
+  String get acctIntro;
+
+  /// No description provided for @acctEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get acctEmail;
+
+  /// No description provided for @acctEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get acctEmailHint;
+
+  /// No description provided for @acctSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get acctSendCode;
+
+  /// No description provided for @acctCode.
+  ///
+  /// In en, this message translates to:
+  /// **'6-digit code'**
+  String get acctCode;
+
+  /// No description provided for @acctResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a new code'**
+  String get acctResend;
+
+  /// No description provided for @acctOtherEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a different email'**
+  String get acctOtherEmail;
+
+  /// No description provided for @acctOr.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get acctOr;
+
+  /// No description provided for @acctGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get acctGoogle;
+
+  /// No description provided for @acctApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get acctApple;
+
+  /// No description provided for @acctNoMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'No sign-in method is available right now.'**
+  String get acctNoMethods;
+
+  /// No description provided for @acctBadCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That code is not right. Check it and try again.'**
+  String get acctBadCode;
+
+  /// No description provided for @acctBadRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the email address and try again.'**
+  String get acctBadRequest;
+
+  /// No description provided for @acctRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many tries. Wait a few minutes, then try again.'**
+  String get acctRateLimited;
+
+  /// No description provided for @acctDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in method is not available right now.'**
+  String get acctDisabled;
+
+  /// No description provided for @acctFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get acctFailed;
+
+  /// No description provided for @acctYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account'**
+  String get acctYou;
+
+  /// No description provided for @acctNoHandle.
+  ///
+  /// In en, this message translates to:
+  /// **'No handle yet'**
+  String get acctNoHandle;
+
+  /// No description provided for @acctName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get acctName;
+
+  /// No description provided for @acctHandle.
+  ///
+  /// In en, this message translates to:
+  /// **'Handle'**
+  String get acctHandle;
+
+  /// No description provided for @acctHandleHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends find you with this. Use 3 to 20 letters, numbers or underscores.'**
+  String get acctHandleHelp;
+
+  /// No description provided for @acctHandleInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 3 to 20 letters, numbers or underscores.'**
+  String get acctHandleInvalid;
+
+  /// No description provided for @acctHandleTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'That handle is taken. Try another.'**
+  String get acctHandleTaken;
+
+  /// No description provided for @acctSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get acctSaved;
+
+  /// No description provided for @acctInk.
+  ///
+  /// In en, this message translates to:
+  /// **'Your stamp ink'**
+  String get acctInk;
+
+  /// No description provided for @acctVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see your films'**
+  String get acctVisibility;
+
+  /// No description provided for @acctVisPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get acctVisPrivate;
+
+  /// No description provided for @acctVisFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends only'**
+  String get acctVisFriends;
+
+  /// No description provided for @acctVisPrivateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Only you can see your films.'**
+  String get acctVisPrivateNote;
+
+  /// No description provided for @acctVisFriendsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends can see your films and watchlist. Nobody sees a date.'**
+  String get acctVisFriendsNote;
+
+  /// No description provided for @acctShareRatings.
+  ///
+  /// In en, this message translates to:
+  /// **'Show my ratings to friends'**
+  String get acctShareRatings;
+
+  /// No description provided for @acctBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked people'**
+  String get acctBlocked;
+
+  /// No description provided for @acctBlockedNone.
+  ///
+  /// In en, this message translates to:
+  /// **'You have not blocked anyone.'**
+  String get acctBlockedNone;
+
+  /// No description provided for @acctUnblock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock'**
+  String get acctUnblock;
+
+  /// No description provided for @acctSyncIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your diary is in sync.'**
+  String get acctSyncIdle;
+
+  /// No description provided for @acctSyncBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing your diary.'**
+  String get acctSyncBusy;
+
+  /// No description provided for @acctSyncFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync did not finish. Talkies will try again.'**
+  String get acctSyncFailed;
+
+  /// No description provided for @acctSyncChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone has a diary from another account.'**
+  String get acctSyncChoose;
+
+  /// No description provided for @acctChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get acctChoose;
+
+  /// No description provided for @acctProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile'**
+  String get acctProfile;
+
+  /// No description provided for @acctSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get acctSignOut;
+
+  /// No description provided for @acctSignedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed out. Your diary stays on this phone.'**
+  String get acctSignedOut;
+
+  /// No description provided for @acctDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get acctDelete;
+
+  /// No description provided for @acctDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get acctDeleteQ;
+
+  /// No description provided for @acctDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes your account and all your data from the Talkies server. Your diary stays on this phone. You cannot undo this.'**
+  String get acctDeleteBody;
+
+  /// No description provided for @acctDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is deleted. Your diary stays on this phone.'**
+  String get acctDeleted;
+
+  /// No description provided for @acctDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not delete your account. Try again.'**
+  String get acctDeleteFailed;
+
+  /// No description provided for @acctDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Your diary is safe on this phone. Talkies cannot be reached right now.'**
+  String get acctDown;
+
+  /// No description provided for @acctRowSafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Your diary is safe on this phone'**
+  String get acctRowSafe;
+
+  /// No description provided for @acctChoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Two diaries'**
+  String get acctChoiceTitle;
+
+  /// No description provided for @acctChoiceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone has a diary from another account. Choose what to do with it.'**
+  String get acctChoiceBody;
+
+  /// No description provided for @acctChoiceMerge.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge'**
+  String get acctChoiceMerge;
+
+  /// No description provided for @acctChoiceMergeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the films on this phone to this account.'**
+  String get acctChoiceMergeNote;
+
+  /// No description provided for @acctChoiceSeparate.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep separate'**
+  String get acctChoiceSeparate;
+
+  /// No description provided for @acctChoiceSeparateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Show only this account\'s diary on this phone. The films on this phone are removed from it.'**
+  String get acctChoiceSeparateNote;
+
+  /// No description provided for @privacyStubToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Private: keep this stub off my profile'**
+  String get privacyStubToggle;
+
+  /// No description provided for @privacyStubLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Private stub'**
+  String get privacyStubLabel;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get privacyTitle;
+
+  /// No description provided for @privacySheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Friends only?'**
+  String get privacySheetTitle;
+
+  /// No description provided for @privacySheetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your friends will see the films you watched and your watchlist. They see your ratings only if you turn that on. Nobody sees a date. To hide one stub, open it and turn on Private.'**
+  String get privacySheetBody;
+
+  /// No description provided for @friendsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get friendsTitle;
+
+  /// No description provided for @friendsUnnamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone'**
+  String get friendsUnnamed;
+
+  /// No description provided for @friendsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a friend'**
+  String get friendsAdd;
+
+  /// No description provided for @friendsAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the exact handle of your friend.'**
+  String get friendsAddHint;
+
+  /// No description provided for @friendsHandleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend\'s handle'**
+  String get friendsHandleLabel;
+
+  /// No description provided for @friendsHandleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'for example asha_k'**
+  String get friendsHandleHint;
+
+  /// No description provided for @friendsFind.
+  ///
+  /// In en, this message translates to:
+  /// **'Find'**
+  String get friendsFind;
+
+  /// No description provided for @friendsSendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get friendsSendRequest;
+
+  /// No description provided for @friendsRequestSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent.'**
+  String get friendsRequestSent;
+
+  /// No description provided for @friendsNowFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'You are now friends.'**
+  String get friendsNowFriends;
+
+  /// No description provided for @friendsNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No one has that handle. Check the spelling.'**
+  String get friendsNotFound;
+
+  /// No description provided for @friendsPendingAlready.
+  ///
+  /// In en, this message translates to:
+  /// **'A request is already waiting.'**
+  String get friendsPendingAlready;
+
+  /// No description provided for @friendsYourself.
+  ///
+  /// In en, this message translates to:
+  /// **'That is your own handle.'**
+  String get friendsYourself;
+
+  /// No description provided for @friendsAlready.
+  ///
+  /// In en, this message translates to:
+  /// **'You are already friends.'**
+  String get friendsAlready;
+
+  /// No description provided for @friendsNoHandle.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends find you by your handle. Choose one in your account.'**
+  String get friendsNoHandle;
+
+  /// No description provided for @friendsRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get friendsRequests;
+
+  /// No description provided for @friendsAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get friendsAccept;
+
+  /// No description provided for @friendsDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get friendsDecline;
+
+  /// No description provided for @friendsCancelRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel request'**
+  String get friendsCancelRequest;
+
+  /// No description provided for @friendsWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a reply'**
+  String get friendsWaiting;
+
+  /// No description provided for @friendsWantsToBe.
+  ///
+  /// In en, this message translates to:
+  /// **'Wants to be your friend'**
+  String get friendsWantsToBe;
+
+  /// No description provided for @friendsNoCommon.
+  ///
+  /// In en, this message translates to:
+  /// **'No films in common yet'**
+  String get friendsNoCommon;
+
+  /// No description provided for @friendsKeepsPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps films private'**
+  String get friendsKeepsPrivate;
+
+  /// No description provided for @friendsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No friends yet. Add a friend to see what they watch.'**
+  String get friendsEmpty;
+
+  /// No description provided for @friendsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All friends'**
+  String get friendsAll;
+
+  /// No description provided for @friendsMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get friendsMenu;
+
+  /// No description provided for @friendsUnfriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove friend'**
+  String get friendsUnfriend;
+
+  /// No description provided for @friendsUnfriendBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add them again later.'**
+  String get friendsUnfriendBody;
+
+  /// No description provided for @friendsBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get friendsBlock;
+
+  /// No description provided for @friendsBlockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You will not see each other\'s films, requests or messages. You can unblock in Account.'**
+  String get friendsBlockBody;
+
+  /// No description provided for @friendsReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get friendsReport;
+
+  /// No description provided for @friendsReasonSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam'**
+  String get friendsReasonSpam;
+
+  /// No description provided for @friendsReasonAbuse.
+  ///
+  /// In en, this message translates to:
+  /// **'Abuse'**
+  String get friendsReasonAbuse;
+
+  /// No description provided for @friendsReasonHarassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment'**
+  String get friendsReasonHarassment;
+
+  /// No description provided for @friendsReasonInappropriate.
+  ///
+  /// In en, this message translates to:
+  /// **'Inappropriate content'**
+  String get friendsReasonInappropriate;
+
+  /// No description provided for @friendsReasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get friendsReasonOther;
+
+  /// No description provided for @friendsReported.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent. Thank you.'**
+  String get friendsReported;
+
+  /// No description provided for @friendsWatchedThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends who watched this'**
+  String get friendsWatchedThis;
+
+  /// No description provided for @friendsStripTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends are watching'**
+  String get friendsStripTitle;
+
+  /// No description provided for @friendsShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Films watched'**
+  String get friendsShelf;
+
+  /// No description provided for @friendsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get friendsMore;
+
+  /// No description provided for @feedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What friends watched'**
+  String get feedTitle;
+
+  /// No description provided for @feedRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get feedRefresh;
+
+  /// No description provided for @feedEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet. When friends record a film, it shows here.'**
+  String get feedEmpty;
+
+  /// No description provided for @feedReactFire.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire'**
+  String get feedReactFire;
+
+  /// No description provided for @feedReactLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Love'**
+  String get feedReactLove;
+
+  /// No description provided for @feedReactLaugh.
+  ///
+  /// In en, this message translates to:
+  /// **'Laugh'**
+  String get feedReactLaugh;
+
+  /// No description provided for @feedReactSad.
+  ///
+  /// In en, this message translates to:
+  /// **'Sad'**
+  String get feedReactSad;
+
+  /// No description provided for @feedReactClap.
+  ///
+  /// In en, this message translates to:
+  /// **'Clap'**
+  String get feedReactClap;
+
+  /// No description provided for @feedReactMind.
+  ///
+  /// In en, this message translates to:
+  /// **'Mind blown'**
+  String get feedReactMind;
+
+  /// No description provided for @feedReactPopcorn.
+  ///
+  /// In en, this message translates to:
+  /// **'Popcorn'**
+  String get feedReactPopcorn;
+
+  /// No description provided for @feedReactEyes.
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes'**
+  String get feedReactEyes;
+
+  /// No description provided for @feedReactFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send the reaction.'**
+  String get feedReactFailed;
+
+  /// No description provided for @sendFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get sendFilm;
+
+  /// No description provided for @sendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send this film'**
+  String get sendTitle;
+
+  /// No description provided for @sendNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get sendNote;
+
+  /// No description provided for @sendNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why they should watch it'**
+  String get sendNoteHint;
+
+  /// No description provided for @sendToFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to a friend'**
+  String get sendToFriend;
+
+  /// No description provided for @sendDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get sendDone;
+
+  /// No description provided for @sendNoFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Add friends to send films to them.'**
+  String get sendNoFriends;
+
+  /// No description provided for @sendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not send. Try again.'**
+  String get sendFailed;
+
+  /// No description provided for @sendTooFast.
+  ///
+  /// In en, this message translates to:
+  /// **'You are sending too fast. Wait a little.'**
+  String get sendTooFast;
+
+  /// No description provided for @sendNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot send to this person.'**
+  String get sendNotAllowed;
+
+  /// No description provided for @sendOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other apps'**
+  String get sendOther;
+
+  /// No description provided for @sendShareLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared from Talkies, a film diary that looks like ticket stubs.'**
+  String get sendShareLine;
+
+  /// No description provided for @nightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Movie night'**
+  String get nightTitle;
+
+  /// No description provided for @nightPollOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Poll open'**
+  String get nightPollOpen;
+
+  /// No description provided for @nightPlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a night'**
+  String get nightPlanTitle;
+
+  /// No description provided for @nightChooseGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Which group?'**
+  String get nightChooseGroup;
+
+  /// No description provided for @togetherGroups.
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get togetherGroups;
+
+  /// No description provided for @togetherNights.
+  ///
+  /// In en, this message translates to:
+  /// **'Nights'**
+  String get togetherNights;
+
+  /// No description provided for @togetherFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get togetherFriends;
+
+  /// No description provided for @togetherProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile'**
+  String get togetherProfile;
+
+  /// No description provided for @togetherNewGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get togetherNewGroup;
+
+  /// No description provided for @togetherNoGroups.
+  ///
+  /// In en, this message translates to:
+  /// **'No groups yet. Make one to swipe on films and plan a night.'**
+  String get togetherNoGroups;
+
+  /// No description provided for @togetherNoNights.
+  ///
+  /// In en, this message translates to:
+  /// **'No nights planned yet. Open a group and plan one.'**
+  String get togetherNoNights;
+
+  /// No description provided for @togetherComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get togetherComingUp;
+
+  /// No description provided for @togetherEarlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get togetherEarlier;
+
+  /// No description provided for @togetherJoinWithCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with code'**
+  String get togetherJoinWithCode;
+
+  /// No description provided for @togetherShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared'**
+  String get togetherShared;
+
+  /// No description provided for @togetherYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get togetherYou;
+
+  /// No description provided for @togetherNextNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Next night'**
+  String get togetherNextNight;
+
+  /// No description provided for @togetherNightPoll.
+  ///
+  /// In en, this message translates to:
+  /// **'Poll'**
+  String get togetherNightPoll;
+
+  /// No description provided for @togetherAddToGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to group'**
+  String get togetherAddToGroup;
+
+  /// No description provided for @togetherShareFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Share film'**
+  String get togetherShareFilm;
+
+  /// No description provided for @togetherShareFilmLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept in Talkies, a movie ticket diary.'**
+  String get togetherShareFilmLine;
+
+  /// No description provided for @togetherRefusalOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach Talkies right now. Try again later.'**
+  String get togetherRefusalOffline;
+
+  /// No description provided for @togetherRefusalNameTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone in the group already has that name.'**
+  String get togetherRefusalNameTaken;
+
+  /// No description provided for @togetherRefusalGroupFull.
+  ///
+  /// In en, this message translates to:
+  /// **'This group is full. It holds 30 people.'**
+  String get togetherRefusalGroupFull;
+
+  /// No description provided for @togetherRefusalListFull.
+  ///
+  /// In en, this message translates to:
+  /// **'The list is full. It holds 200 films.'**
+  String get togetherRefusalListFull;
+
+  /// No description provided for @togetherRefusalGroupLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You are in as many groups as Talkies allows.'**
+  String get togetherRefusalGroupLimit;
+
+  /// No description provided for @togetherRefusalInvalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That code does not work. Check it and try again.'**
+  String get togetherRefusalInvalidCode;
+
+  /// No description provided for @togetherRefusalRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many tries. Wait a little, then try again.'**
+  String get togetherRefusalRateLimited;
+
+  /// No description provided for @togetherRefusalNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the owner or host can do that.'**
+  String get togetherRefusalNotAllowed;
+
+  /// No description provided for @togetherRefusalNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'That group or night is gone.'**
+  String get togetherRefusalNotFound;
+
+  /// No description provided for @togetherRefusalClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone changed this before you. It is up to date now.'**
+  String get togetherRefusalClosed;
+
+  /// No description provided for @togetherRefusalInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the details and try again.'**
+  String get togetherRefusalInvalid;
+
+  /// No description provided for @togetherRefusalOther.
+  ///
+  /// In en, this message translates to:
+  /// **'That did not work. Try again.'**
+  String get togetherRefusalOther;
+
+  /// No description provided for @crewNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get crewNewTitle;
+
+  /// No description provided for @crewNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get crewNameLabel;
+
+  /// No description provided for @crewMyNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get crewMyNameLabel;
+
+  /// No description provided for @crewSuggestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'People you watched with'**
+  String get crewSuggestTitle;
+
+  /// No description provided for @crewSharedSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite friends with a link'**
+  String get crewSharedSwitch;
+
+  /// No description provided for @crewSharedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends join with a code and swipe on their own phones.'**
+  String get crewSharedHint;
+
+  /// No description provided for @crewCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get crewCreate;
+
+  /// No description provided for @crewCreateShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Create shared group'**
+  String get crewCreateShared;
+
+  /// No description provided for @crewOwnFilmLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own films stay on this phone.'**
+  String get crewOwnFilmLocal;
+
+  /// No description provided for @crewJoinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a group'**
+  String get crewJoinTitle;
+
+  /// No description provided for @crewJoinCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code'**
+  String get crewJoinCodeLabel;
+
+  /// No description provided for @crewJoinNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Joining shares your taste and watchlist with the group deck. Members cannot see who added what.'**
+  String get crewJoinNote;
+
+  /// No description provided for @joinAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Join group'**
+  String get joinAction;
+
+  /// No description provided for @joinOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open group'**
+  String get joinOpen;
+
+  /// No description provided for @crewRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename group'**
+  String get crewRename;
+
+  /// No description provided for @crewDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete group'**
+  String get crewDelete;
+
+  /// No description provided for @crewDeleteLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'The group, its list and its nights are removed from this phone.'**
+  String get crewDeleteLocal;
+
+  /// No description provided for @crewDeleteShared.
+  ///
+  /// In en, this message translates to:
+  /// **'The group is removed for everyone in it.'**
+  String get crewDeleteShared;
+
+  /// No description provided for @crewLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave group'**
+  String get crewLeave;
+
+  /// No description provided for @crewLeaveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It goes from this phone. You can join again with a code.'**
+  String get crewLeaveBody;
+
+  /// No description provided for @crewMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get crewMembers;
+
+  /// No description provided for @crewAddName.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a name'**
+  String get crewAddName;
+
+  /// No description provided for @crewAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get crewAdd;
+
+  /// No description provided for @crewOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get crewOwner;
+
+  /// No description provided for @crewGuest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get crewGuest;
+
+  /// No description provided for @crewShareInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Share invite'**
+  String get crewShareInvite;
+
+  /// No description provided for @crewNewCode.
+  ///
+  /// In en, this message translates to:
+  /// **'New code'**
+  String get crewNewCode;
+
+  /// No description provided for @crewNewCodeQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Make a new code?'**
+  String get crewNewCodeQ;
+
+  /// No description provided for @crewNewCodeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The old code and link stop working.'**
+  String get crewNewCodeBody;
+
+  /// No description provided for @crewChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Group chat'**
+  String get crewChat;
+
+  /// No description provided for @crewList.
+  ///
+  /// In en, this message translates to:
+  /// **'Group list'**
+  String get crewList;
+
+  /// No description provided for @crewListAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a film'**
+  String get crewListAdd;
+
+  /// No description provided for @crewListEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The list is empty. Add films the group might like.'**
+  String get crewListEmpty;
+
+  /// No description provided for @crewListRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from list'**
+  String get crewListRemove;
+
+  /// No description provided for @crewOpenFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Open film'**
+  String get crewOpenFilm;
+
+  /// No description provided for @crewSwipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to match'**
+  String get crewSwipe;
+
+  /// No description provided for @crewNights.
+  ///
+  /// In en, this message translates to:
+  /// **'Nights'**
+  String get crewNights;
+
+  /// No description provided for @crewNoNights.
+  ///
+  /// In en, this message translates to:
+  /// **'No nights yet.'**
+  String get crewNoNights;
+
+  /// No description provided for @crewRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Their swipes, votes and replies go too.'**
+  String get crewRemoveBody;
+
+  /// No description provided for @togetherMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get togetherMore;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileTopGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'Top genres'**
+  String get profileTopGenres;
+
+  /// No description provided for @profileTopLangs.
+  ///
+  /// In en, this message translates to:
+  /// **'Top languages'**
+  String get profileTopLangs;
+
+  /// No description provided for @profileTopFilms.
+  ///
+  /// In en, this message translates to:
+  /// **'Top films'**
+  String get profileTopFilms;
+
+  /// No description provided for @profileWatchlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Watchlist'**
+  String get profileWatchlist;
+
+  /// No description provided for @profileEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Record a film to build your profile.'**
+  String get profileEmpty;
+
+  /// No description provided for @profileSignInFoot.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to share this with friends'**
+  String get profileSignInFoot;
+
+  /// No description provided for @profileShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share as image'**
+  String get profileShare;
+
+  /// No description provided for @profileShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Talkies'**
+  String get profileShareTitle;
+
+  /// No description provided for @deckWant.
+  ///
+  /// In en, this message translates to:
+  /// **'Want'**
+  String get deckWant;
+
+  /// No description provided for @deckSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get deckSkip;
+
+  /// No description provided for @deckSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen'**
+  String get deckSeen;
+
+  /// No description provided for @deckSwipeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe right to want, left to skip, up if you have seen it.'**
+  String get deckSwipeHint;
+
+  /// No description provided for @deckBuilding.
+  ///
+  /// In en, this message translates to:
+  /// **'Building the deck.'**
+  String get deckBuilding;
+
+  /// No description provided for @deckEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No films to swipe yet. Add films to the group list, then rebuild the deck.'**
+  String get deckEmpty;
+
+  /// No description provided for @deckRebuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Rebuild deck'**
+  String get deckRebuild;
+
+  /// No description provided for @deckAllSwiped.
+  ///
+  /// In en, this message translates to:
+  /// **'That is every card.'**
+  String get deckAllSwiped;
+
+  /// No description provided for @deckNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No cards match these filters.'**
+  String get deckNoMatch;
+
+  /// No description provided for @deckFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get deckFilters;
+
+  /// No description provided for @deckHideSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide films anyone has seen'**
+  String get deckHideSeen;
+
+  /// No description provided for @deckSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the deck'**
+  String get deckSearchHint;
+
+  /// No description provided for @deckResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get deckResults;
+
+  /// No description provided for @deckResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Results'**
+  String get deckResultsTitle;
+
+  /// No description provided for @deckTopMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Top match'**
+  String get deckTopMatch;
+
+  /// No description provided for @deckSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule it'**
+  String get deckSchedule;
+
+  /// No description provided for @deckTonight.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight picker'**
+  String get deckTonight;
+
+  /// No description provided for @deckTonightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight\'s pick'**
+  String get deckTonightTitle;
+
+  /// No description provided for @deckTonightNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No one has said Want yet. Swipe first.'**
+  String get deckTonightNone;
+
+  /// No description provided for @deckPickAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick again'**
+  String get deckPickAgain;
+
+  /// No description provided for @deckWho.
+  ///
+  /// In en, this message translates to:
+  /// **'Who is swiping'**
+  String get deckWho;
+
+  /// No description provided for @deckHandTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand the phone to'**
+  String get deckHandTo;
+
+  /// No description provided for @deckHandBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand the phone back'**
+  String get deckHandBack;
+
+  /// No description provided for @deckImBack.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m back'**
+  String get deckImBack;
+
+  /// No description provided for @deckHandNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier picks stay hidden.'**
+  String get deckHandNote;
+
+  /// No description provided for @deckDonePass.
+  ///
+  /// In en, this message translates to:
+  /// **'Done, pass it on'**
+  String get deckDonePass;
+
+  /// No description provided for @nightFilms.
+  ///
+  /// In en, this message translates to:
+  /// **'Films'**
+  String get nightFilms;
+
+  /// No description provided for @nightFilmsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick 1 to 3 films.'**
+  String get nightFilmsHint;
+
+  /// No description provided for @nightAddFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a film'**
+  String get nightAddFilm;
+
+  /// No description provided for @nightFromList.
+  ///
+  /// In en, this message translates to:
+  /// **'From the group list'**
+  String get nightFromList;
+
+  /// No description provided for @nightSearchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Search all films'**
+  String get nightSearchAll;
+
+  /// No description provided for @nightTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Times'**
+  String get nightTimes;
+
+  /// No description provided for @nightTimesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick 1 or 2 times.'**
+  String get nightTimesHint;
+
+  /// No description provided for @nightPickTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date and time'**
+  String get nightPickTime;
+
+  /// No description provided for @nightAddTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another time'**
+  String get nightAddTime;
+
+  /// No description provided for @nightPlaceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Home, PVR Phoenix'**
+  String get nightPlaceHint;
+
+  /// No description provided for @nightPostPoll.
+  ///
+  /// In en, this message translates to:
+  /// **'Post poll'**
+  String get nightPostPoll;
+
+  /// No description provided for @nightSetIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Set it'**
+  String get nightSetIt;
+
+  /// No description provided for @nightNeedFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one film.'**
+  String get nightNeedFilm;
+
+  /// No description provided for @nightNeedTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date and time.'**
+  String get nightNeedTime;
+
+  /// No description provided for @nightPollNote.
+  ///
+  /// In en, this message translates to:
+  /// **'With more than one film or time, the group votes first.'**
+  String get nightPollNote;
+
+  /// No description provided for @nightSetNote.
+  ///
+  /// In en, this message translates to:
+  /// **'One film and one time make a night that is already set.'**
+  String get nightSetNote;
+
+  /// No description provided for @nightVoteAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Vote as'**
+  String get nightVoteAs;
+
+  /// No description provided for @nightClosePoll.
+  ///
+  /// In en, this message translates to:
+  /// **'Close poll'**
+  String get nightClosePoll;
+
+  /// No description provided for @nightCloseNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The most voted film and time win. A tie goes to the first one.'**
+  String get nightCloseNote;
+
+  /// No description provided for @nightWaitNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The host or owner closes the poll when everyone has voted.'**
+  String get nightWaitNote;
+
+  /// No description provided for @nightRsvp.
+  ///
+  /// In en, this message translates to:
+  /// **'Who is coming'**
+  String get nightRsvp;
+
+  /// No description provided for @nightReplyFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply for'**
+  String get nightReplyFor;
+
+  /// No description provided for @nightYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get nightYes;
+
+  /// No description provided for @nightMaybe.
+  ///
+  /// In en, this message translates to:
+  /// **'Maybe'**
+  String get nightMaybe;
+
+  /// No description provided for @nightNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get nightNo;
+
+  /// No description provided for @nightNoReply.
+  ///
+  /// In en, this message translates to:
+  /// **'No reply yet'**
+  String get nightNoReply;
+
+  /// No description provided for @nightRemind.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get nightRemind;
+
+  /// No description provided for @nightRemindHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A day before and two hours before.'**
+  String get nightRemindHint;
+
+  /// No description provided for @nightRemindRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'Talkies cannot send reminders. Turn on notifications for Talkies in your phone settings.'**
+  String get nightRemindRefused;
+
+  /// No description provided for @nightAddCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to calendar'**
+  String get nightAddCalendar;
+
+  /// No description provided for @nightIcsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not share the calendar file.'**
+  String get nightIcsFailed;
+
+  /// No description provided for @nightWrap.
+  ///
+  /// In en, this message translates to:
+  /// **'Night wrap-up'**
+  String get nightWrap;
+
+  /// No description provided for @nightWrapNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Make a stub for everyone who came.'**
+  String get nightWrapNote;
+
+  /// No description provided for @nightDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete night'**
+  String get nightDelete;
+
+  /// No description provided for @nightDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this night?'**
+  String get nightDeleteQ;
+
+  /// No description provided for @nightDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The poll, the replies and the reminders are removed.'**
+  String get nightDeleteBody;
+
+  /// No description provided for @nightGone.
+  ///
+  /// In en, this message translates to:
+  /// **'This night no longer exists.'**
+  String get nightGone;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get chatTitle;
+
+  /// No description provided for @chatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a message'**
+  String get chatHint;
+
+  /// No description provided for @chatSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send message'**
+  String get chatSend;
+
+  /// No description provided for @chatAttach.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach a film'**
+  String get chatAttach;
+
+  /// No description provided for @chatRemoveFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the film'**
+  String get chatRemoveFilm;
+
+  /// No description provided for @chatEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet. Say hello.'**
+  String get chatEmpty;
+
+  /// No description provided for @chatOlder.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier messages'**
+  String get chatOlder;
+
+  /// No description provided for @chatPollOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'A night poll is open'**
+  String get chatPollOpen;
+
+  /// No description provided for @chatNightSetPlain.
+  ///
+  /// In en, this message translates to:
+  /// **'A night is set'**
+  String get chatNightSetPlain;
+
+  /// No description provided for @chatWrapped.
+  ///
+  /// In en, this message translates to:
+  /// **'The night is wrapped up'**
+  String get chatWrapped;
+
+  /// No description provided for @chatNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Movie night'**
+  String get chatNight;
+
+  /// No description provided for @chatReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report message'**
+  String get chatReport;
+
+  /// No description provided for @chatReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why do you report this message?'**
+  String get chatReportTitle;
+
+  /// No description provided for @deckMostWanted.
+  ///
+  /// In en, this message translates to:
+  /// **'Most wanted first'**
+  String get deckMostWanted;
+
+  /// No description provided for @unitFilms.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{films}one{film}}'**
+  String unitFilms(int count);
+
+  /// No description provided for @becauseYouLiked.
+  ///
+  /// In en, this message translates to:
+  /// **'Because you liked {title}'**
+  String becauseYouLiked(String title);
+
+  /// No description provided for @ticketsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} tickets}one{1 ticket}zero{No tickets}}'**
+  String ticketsCount(int count);
+
+  /// No description provided for @starsAtLeast.
+  ///
+  /// In en, this message translates to:
+  /// **'{stars}+ stars'**
+  String starsAtLeast(int stars);
+
+  /// No description provided for @calWatched.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} watched'**
+  String calWatched(int count);
+
+  /// No description provided for @calPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} planned'**
+  String calPlanned(int count);
+
+  /// No description provided for @watchCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Watched {count} times}one{Watched once}}'**
+  String watchCount(int count);
+
+  /// No description provided for @searchPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Search {count} Indian and world titles. Works offline.'**
+  String searchPrompt(String count);
+
+  /// No description provided for @noResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No title matches “{query}”.'**
+  String noResults(String query);
+
+  /// No description provided for @seasons.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} seasons}one{1 season}}'**
+  String seasons(int count);
+
+  /// No description provided for @plannedFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned for {date}'**
+  String plannedFor(String date);
+
+  /// No description provided for @watchNth.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, other{Watch no. {n}}two{Second watch}one{First watch}}'**
+  String watchNth(int n);
+
+  /// No description provided for @hoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{h}h {m}m'**
+  String hoursMinutes(int h, int m);
+
+  /// No description provided for @minutesOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{m} min'**
+  String minutesOnly(int m);
+
+  /// No description provided for @ticketNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No. {no}'**
+  String ticketNo(String no);
+
+  /// No description provided for @yearInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a year from 1900 to {max}'**
+  String yearInvalid(int max);
+
+  /// No description provided for @avgTicket.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} per ticket on average'**
+  String avgTicket(String amount);
+
+  /// No description provided for @showMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all {count}'**
+  String showMore(int count);
+
+  /// No description provided for @decadeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{decade}s'**
+  String decadeLabel(String decade);
+
+  /// No description provided for @monthAtMovies.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} at the movies'**
+  String monthAtMovies(String month);
+
+  /// No description provided for @refreshedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Built {date}. Updated {updated}.'**
+  String refreshedOn(String date, String updated);
+
+  /// No description provided for @builtOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Built {date}. Not refreshed yet.'**
+  String builtOn(String date);
+
+  /// No description provided for @refreshDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} recent and upcoming films updated'**
+  String refreshDone(int count);
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {v}'**
+  String version(String v);
+
+  /// No description provided for @replaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your current {count} stubs will be replaced by the backup.'**
+  String replaceBody(int count);
+
+  /// No description provided for @imported.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} stubs added. {matched} matched the film list, {custom} added as your own films.'**
+  String imported(int count, int matched, int custom);
+
+  /// No description provided for @deleteTagQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete #{tag}? It is removed from {count} stubs.'**
+  String deleteTagQ(String tag, int count);
+
+  /// No description provided for @deleteVenueQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from the list? Stubs keep the name.'**
+  String deleteVenueQ(String name);
+
+  /// No description provided for @stubsUsing.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Used on {count} stubs}one{Used on 1 stub}zero{Not used}}'**
+  String stubsUsing(int count);
+
+  /// No description provided for @batchAddAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {count} stubs'**
+  String batchAddAll(int count);
+
+  /// No description provided for @batchDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} stubs added'**
+  String batchDone(int count);
+
+  /// No description provided for @whatsNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Talkies {v}'**
+  String whatsNewTitle(String v);
+
+  /// No description provided for @acctCodeSent.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a code to {email}.'**
+  String acctCodeSent(String email);
+
+  /// No description provided for @friendsBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'You both watched {count}'**
+  String friendsBoth(int count);
+
+  /// No description provided for @friendsMatchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct} percent match'**
+  String friendsMatchLabel(int pct);
+
+  /// No description provided for @friendsUnfriendQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from your friends?'**
+  String friendsUnfriendQ(String name);
+
+  /// No description provided for @friendsUnfriended.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is not your friend any more.'**
+  String friendsUnfriended(String name);
+
+  /// No description provided for @friendsBlockQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Block {name}?'**
+  String friendsBlockQ(String name);
+
+  /// No description provided for @friendsBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is blocked.'**
+  String friendsBlocked(String name);
+
+  /// No description provided for @friendsReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why do you report {name}?'**
+  String friendsReportTitle(String name);
+
+  /// No description provided for @friendsPrivateLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} keeps their films private.'**
+  String friendsPrivateLine(String name);
+
+  /// No description provided for @friendsHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot see the films of {name} right now. They may be private.'**
+  String friendsHidden(String name);
+
+  /// No description provided for @feedWatched.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} watched'**
+  String feedWatched(String name);
+
+  /// No description provided for @feedReacted.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} reacted to your film'**
+  String feedReacted(String name);
+
+  /// No description provided for @feedSent.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} sent you a film'**
+  String feedSent(String name);
+
+  /// No description provided for @togetherFilmsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} films}one{1 film}zero{No films yet}}'**
+  String togetherFilmsCount(int count);
+
+  /// No description provided for @togetherMembersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} members}one{1 member}}'**
+  String togetherMembersCount(int count);
+
+  /// No description provided for @togetherNextNightShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {date}'**
+  String togetherNextNightShort(String date);
+
+  /// No description provided for @togetherAddedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to {group}'**
+  String togetherAddedTo(String group);
+
+  /// No description provided for @joinJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'You joined {group}'**
+  String joinJoined(String group);
+
+  /// No description provided for @crewDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {group}?'**
+  String crewDeleteQ(String group);
+
+  /// No description provided for @crewLeaveQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave {group}?'**
+  String crewLeaveQ(String group);
+
+  /// No description provided for @crewInviteText.
+  ///
+  /// In en, this message translates to:
+  /// **'Join {group} on Talkies. Open {link} or enter the code {code}.'**
+  String crewInviteText(String group, String link, String code);
+
+  /// No description provided for @crewInviteSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Join {group} on Talkies'**
+  String crewInviteSubject(String group);
+
+  /// No description provided for @crewRemoveQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String crewRemoveQ(String name);
+
+  /// No description provided for @profileViewings.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{viewings}one{viewing}}'**
+  String profileViewings(int count);
+
+  /// No description provided for @profileEmptyFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has not shared any films yet.'**
+  String profileEmptyFriend(String name);
+
+  /// No description provided for @profileVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility: {value}'**
+  String profileVisibility(String value);
+
+  /// No description provided for @deckCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {total}'**
+  String deckCounter(int n, int total);
+
+  /// No description provided for @deckSeenBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{Seen by {count} members}one{Seen by 1 member}}'**
+  String deckSeenBy(int count);
+
+  /// No description provided for @deckWantCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} want it}one{1 wants it}zero{No one wants it}}'**
+  String deckWantCount(int count);
+
+  /// No description provided for @deckHandTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand the phone to {name}'**
+  String deckHandTitle(String name);
+
+  /// No description provided for @deckImName.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m {name}'**
+  String deckImName(String name);
+
+  /// No description provided for @nightVotes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} votes}one{1 vote}zero{No votes}}'**
+  String nightVotes(int count);
+
+  /// No description provided for @nightReminderDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow: {film} with {group} at {time}.'**
+  String nightReminderDay(String film, String group, String time);
+
+  /// No description provided for @nightReminderHour.
+  ///
+  /// In en, this message translates to:
+  /// **'In two hours: {film} with {group}.'**
+  String nightReminderHour(String film, String group);
+
+  /// No description provided for @nightWrapDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, other{{count} stubs made}one{1 stub made}zero{No stubs made}}'**
+  String nightWrapDone(int count);
+
+  /// No description provided for @nightWrapExpect.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No yes replies yet, so no stubs were expected} =1{1 stub was expected, from the yes replies} other{{count} stubs were expected, from the yes replies}}'**
+  String nightWrapExpect(num count);
+
+  /// No description provided for @nightTimePast.
+  ///
+  /// In en, this message translates to:
+  /// **'That time has already passed. Pick a later one.'**
+  String get nightTimePast;
+
+  /// No description provided for @chatJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} joined'**
+  String chatJoined(String name);
+
+  /// No description provided for @chatLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} left'**
+  String chatLeft(String name);
+
+  /// No description provided for @chatNightSet.
+  ///
+  /// In en, this message translates to:
+  /// **'A night is set: {film}'**
+  String chatNightSet(String film);
+
+  /// No description provided for @chatNightFilm.
+  ///
+  /// In en, this message translates to:
+  /// **'Night: {film}'**
+  String chatNightFilm(String film);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

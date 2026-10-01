@@ -3,11 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models.dart';
+import '../../state/crews.dart';
 import '../../state/providers.dart';
 import '../common.dart';
 import '../format.dart';
 import '../icons.dart';
+import '../online_widgets.dart';
 import '../theme.dart';
+import '../together_widgets.dart';
 import '../widgets.dart';
 import 'settings_screen.dart';
 
@@ -29,6 +32,7 @@ class HomeScreen extends ConsumerWidget {
     final fresh = catalog?.newReleases(today, worldwide: worldwide).take(12).toList() ?? const <Film>[];
     final soon = catalog?.upcoming(today, worldwide: worldwide).take(12).toList() ?? const <Film>[];
     final recs = ref.watch(recsProvider);
+    final nextNight = ref.watch(nextNightProvider);
     void hide(Film f) => _hide(context, ref, f);
 
     return Scaffold(
@@ -53,6 +57,14 @@ class HomeScreen extends ConsumerWidget {
                 _VenueSplit(stubs: thisYear, diary: diary),
               ],
             ),
+            if (nextNight != null) ...[
+              SectionTitle(l.togetherNextNight),
+              NightTicket(
+                nextNight,
+                compact: true,
+                onTap: () => openNight(context, nextNight.crew.id, nextNight.night.id),
+              ),
+            ],
             SectionTitle(
               l.recent,
               action: recent.isEmpty ? null : l.allStubs,
@@ -62,6 +74,8 @@ class HomeScreen extends ConsumerWidget {
               EmptyNote(l.emptyHome, action: l.recordFilm, onAction: () => startRecord(context))
             else
               for (final s in recent.take(4)) StubRow(s, key: ValueKey(s.id)),
+            // Draws nothing unless the server is up and the user is signed in.
+            const FriendsStrip(),
             if (recs.forYou.isNotEmpty) ...[
               SectionTitle(l.forYou),
               _PosterStrip(films: recs.forYou, strip: _year, onHide: hide),

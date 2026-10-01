@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/catalog.dart';
 import '../../data/models.dart';
 import '../../l10n/labels.dart';
+import '../../state/online.dart';
 import '../../state/providers.dart';
 import '../common.dart';
 import '../format.dart';
@@ -90,6 +91,34 @@ class StubScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
+                // Local data, so it shows for a signed-in user whether or not the server answers.
+                if (ref.watch(signedInProvider)) ...[
+                  const SizedBox(height: 6),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      switchTheme: SwitchThemeData(
+                        thumbColor: WidgetStateProperty.resolveWith(
+                          (s) => s.contains(WidgetState.selected) ? paperInk : p.onVelvet,
+                        ),
+                        trackColor: WidgetStateProperty.resolveWith(
+                          (s) => s.contains(WidgetState.selected) ? paperColors[VenueType.ott] : Colors.transparent,
+                        ),
+                        trackOutlineColor: WidgetStateProperty.all(p.onVelvet.withValues(alpha: 0.6)),
+                      ),
+                    ),
+                    child: SwitchListTile(
+                      key: const Key('private-stub'),
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        l.privacyStubToggle,
+                        style: TextStyle(color: p.onVelvet, fontWeight: FontWeight.w600),
+                      ),
+                      secondary: TkIcon(Tk.lock, color: p.onVelvet),
+                      value: stub.private,
+                      onChanged: (v) => ref.read(diaryProvider.notifier).setPrivate(stub.id, v),
+                    ),
+                  ),
+                ],
               ],
             ),
     );
@@ -362,11 +391,21 @@ class TicketCard extends ConsumerWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        l.watchNth(viewing),
-                        style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: paperInkSoft),
+                      Flexible(
+                        child: Text(
+                          l.watchNth(viewing),
+                          style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: paperInkSoft),
+                        ),
                       ),
                       const Spacer(),
+                      // Not on the share image: the lock is for the owner.
+                      if (stub.private && interactive) ...[
+                        Semantics(
+                          label: l.privacyStubLabel,
+                          child: const TkIcon(Tk.lock, size: 20, color: paperInkSoft),
+                        ),
+                        const SizedBox(width: 8),
+                      ],
                       Text('No. ', style: disp(14, paperInkSoft, spacing: 1)),
                       Text(ticketNo(stub.no), style: disp(26, serialRed, spacing: 1.5)),
                     ],

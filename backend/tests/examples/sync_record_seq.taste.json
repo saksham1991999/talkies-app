@@ -1,0 +1,28 @@
+{
+  "kind": "taste",
+  "id": "taste",
+  "updated_at": "2026-09-30T20:10:00.000Z",
+  "deleted": false,
+  "film": null,
+  "data": {
+    "v": 1,
+    "traits": {
+      "g:drama": 82,
+      "l:kn": 64,
+      "dir:Q9876": 50
+    },
+    "langs": [
+      "kn",
+      "hi"
+    ],
+    "eras": [
+      "2020s",
+      "2010s"
+    ],
+    "services": [
+      "Netflix",
+      "Prime Video"
+    ]
+  },
+  "seq": 44
+}

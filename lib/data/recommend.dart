@@ -101,28 +101,98 @@ void _traits(Film f, String? stem, void Function(String t, double w) visit) {
   if (stem != null) visit(stem, _stemW);
 }
 
-Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
-  final signal = _signals(d, today);
-  if (!signal.values.any((w) => w > 0)) return Recs.none;
-  final n = c.items.length;
-  double idf(String t) => math.log(1 + n / (c.df[t] ?? 1));
-  Map<String, double> vector(Film f, String? stem) {
-    final v = <String, double>{};
-    _traits(f, stem, (t, w) => v[t] = (v[t] ?? 0) + w * idf(t));
-    return v;
+double _idf(Catalog c, String t) => math.log(1 + c.items.length / (c.df[t] ?? 1));
+
+/// What the diary says about one viewer, in the terms [scoreFor] needs: weights
+/// of traits (people, genres, franchises), languages, eras, kinds and services.
+/// It holds no film, so a group can share it as [toJson].
+class Taste {
+  Taste({required this.traits, required this.lang, required this.era, required this.kind, required this.services})
+    : langMax = lang.values.fold(0.0, math.max),
+      eraMax = era.values.fold(0.0, math.max),
+      kindMax = math.max(kind[0], kind[1]);
+
+  /// Trait to weight (idf included). Below 0 for traits of disliked films.
+  final Map<String, double> traits;
+  final Map<String, double> lang;
+
+  /// Decade (`year ~/ 10`) to weight, each smoothed with its neighbours.
+  final Map<int, double> era;
+
+  /// Film weight, series weight.
+  final List<double> kind;
+  final Set<String> services;
+  final double langMax, eraMax, kindMax;
+
+  static const _version = 1;
+
+  static int _q(double w) => (w * 10).round();
+
+  static List<MapEntry<K, double>> _top<K>(Map<K, double> m, int n) {
+    final e = m.entries.toList()
+      ..sort((a, b) {
+        final c = b.value.abs().compareTo(a.value.abs());
+        return c != 0 ? c : '${a.key}'.compareTo('${b.key}');
+      });
+    return e.take(n).toList();
   }
 
-  final day = today.difference(DateTime(2000)).inDays;
+  /// The strongest traits, weights in tenths: a few KB however big the diary.
+  Map<String, dynamic> toJson({int maxTraits = 150}) => {
+    'v': _version,
+    't': {
+      for (final e in _top(traits, maxTraits))
+        if (_q(e.value) != 0) e.key: _q(e.value),
+    },
+    'l': {
+      for (final e in _top(lang, 8))
+        if (_q(e.value) != 0) e.key: _q(e.value),
+    },
+    'e': {
+      for (final e in _top(era, 12))
+        if (_q(e.value) != 0) '${e.key}': _q(e.value),
+    },
+    'k': [_q(kind[0]), _q(kind[1])],
+    's': (services.toList()..sort()).take(10).toList(),
+  };
 
-  // Taste profile.
-  final taste = <String, double>{};
+  /// Null for anything that is not a Taste: one bad upload must not break a deck.
+  static Taste? tryFromJson(Object? j) {
+    try {
+      if (j is! Map || j['v'] != _version) return null;
+      Map<String, double> weights(Object? o) => {
+        for (final e in (o as Map).entries) e.key as String: (e.value as num) / 10,
+      };
+      final k = [for (final x in j['k'] as List) (x as num) / 10];
+      if (k.length != 2) return null;
+      return Taste(
+        traits: weights(j['t']),
+        lang: weights(j['l']),
+        era: {for (final e in (j['e'] as Map).entries) int.parse(e.key as String): (e.value as num) / 10},
+        kind: k,
+        services: {for (final x in j['s'] as List) x as String},
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+/// The viewer's taste, or null when the diary holds no liked film.
+Taste? buildTaste(Catalog c, Diary d, DateTime today) {
+  final signal = _signals(d, today);
+  return signal.values.any((w) => w > 0) ? _taste(c, d, today, signal) : null;
+}
+
+Taste _taste(Catalog c, Diary d, DateTime today, Map<String, double> signal) {
+  final traits = <String, double>{};
   final lang = <String, double>{};
   final decade = <int, double>{};
   final kind = [0.0, 0.0]; // film, series
   for (final MapEntry(key: id, value: w) in signal.entries) {
     final f = c.byId[id] ?? d.films[id];
     if (f == null) continue;
-    _traits(f, titleStem(f.title), (t, tw) => taste[t] = (taste[t] ?? 0) + w * tw * idf(t));
+    _traits(f, titleStem(f.title), (t, tw) => traits[t] = (traits[t] ?? 0) + w * tw * _idf(c, t));
     if (w <= 0) continue;
     if (f.mainLang case final l?) lang[l] = (lang[l] ?? 0) + w;
     if (f.year case final y?) decade[y ~/ 10] = (decade[y ~/ 10] ?? 0) + w;
@@ -136,16 +206,55 @@ Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
     for (final k in decade.keys.expand((k) => [k - 1, k, k + 1]))
       k: (decade[k] ?? 0) + 0.5 * ((decade[k - 1] ?? 0) + (decade[k + 1] ?? 0)),
   };
-  final langMax = lang.values.fold(0.0, math.max);
-  final eraMax = era.values.fold(0.0, math.max);
-  final kindMax = math.max(kind[0], kind[1]);
 
   final yearAgo = today.subtract(const Duration(days: 365));
   final places = {
     for (final s in d.stubs)
       if (s.place != null && (s.date ?? s.created).isAfter(yearAgo)) s.place!,
   };
-  final services = {for (final p in places) ?serviceKey(p)};
+  return Taste(traits: traits, lang: lang, era: era, kind: kind, services: {for (final p in places) ?serviceKey(p)});
+}
+
+typedef _Fit = ({double rel, double damp, double base, double score});
+
+/// One film against one taste. [visit] sees each trait of the film with its
+/// idf-weighted value. A null [day] leaves out the daily jitter.
+_Fit? _fit(Catalog c, Film f, String? stem, Taste t, int? day, [void Function(String trait, double x)? visit]) {
+  var rel = 0.0, len = 0.0;
+  _traits(f, stem, (tr, w) {
+    final x = w * _idf(c, tr);
+    len += x * x;
+    rel += x * (t.traits[tr] ?? 0);
+    visit?.call(tr, x);
+  });
+  if (len == 0) return null;
+  final damp = math.pow(len, 0.25); // |c|^0.5
+  final base = _langF(f, t.lang, t.langMax) * _quality(f) * (day == null ? 1.0 : _jitter(f.id, day));
+  final era = t.eraMax == 0 || f.year == null ? 1.0 : 0.7 + 0.3 * (t.era[f.year! ~/ 10] ?? 0) / t.eraMax;
+  final kind = t.kindMax == 0 ? 1.0 : 0.3 + 0.7 * t.kind[f.series ? 1 : 0] / t.kindMax;
+  final service = f.ott.any(t.services.contains) ? _serviceBoost : 1.0;
+  return (rel: rel, damp: damp.toDouble(), base: base, score: rel / damp * base * era * kind * service);
+}
+
+/// How well [f] fits [t]: higher is better, null when it shares no liked trait.
+/// Scores only compare within one taste. Release, region and "already seen"
+/// are the caller's business.
+double? scoreFor(Catalog c, Film f, Taste t) {
+  final fit = _fit(c, f, c.stemOf(f), t, null);
+  return fit == null || fit.rel <= 0 ? null : fit.score;
+}
+
+Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
+  final signal = _signals(d, today);
+  if (!signal.values.any((w) => w > 0)) return Recs.none;
+  final taste = _taste(c, d, today, signal);
+  Map<String, double> vector(Film f, String? stem) {
+    final v = <String, double>{};
+    _traits(f, stem, (t, w) => v[t] = (v[t] ?? 0) + w * _idf(c, t));
+    return v;
+  }
+
+  final day = today.difference(DateTime(2000)).inDays;
 
   // Up to 2 anchors from the top 5 liked catalog films, rotating by day.
   // Watched only: a watchlist film is not one the user "liked".
@@ -167,35 +276,24 @@ Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
     // No year, or this year with no date, is mostly an announced film.
     if (f.year == null || (f.date == null && f.year! >= today.year)) continue;
     if (signal.containsKey(f.id) || unreleased(f, t0) || !(worldwide || isIndian(f))) continue;
-    var rel = 0.0, len = 0.0;
     final ar = List.filled(anchors.length, 0.0);
-    _traits(f, c.stems[i], (t, w) {
-      final x = w * idf(t);
-      len += x * x;
-      rel += x * (taste[t] ?? 0);
+    final fit = _fit(c, f, c.stems[i], taste, day, (t, x) {
       for (var k = 0; k < ar.length; k++) {
         ar[k] += x * (anchorTraits[k][t] ?? 0);
       }
     });
-    if (len == 0) continue;
-    final damp = math.pow(len, 0.25); // |c|^0.5
-    final base = _langF(f, lang, langMax) * _quality(f) * _jitter(f.id, day);
-    if (rel > 0) {
-      final era0 = eraMax == 0 ? 1.0 : 0.7 + 0.3 * (era[f.year! ~/ 10] ?? 0) / eraMax;
-      final kind0 = kindMax == 0 ? 1.0 : 0.3 + 0.7 * kind[f.series ? 1 : 0] / kindMax;
-      final service = f.ott.any(services.contains) ? _serviceBoost : 1.0;
-      forYouPool.add((rel / damp * base * era0 * kind0 * service, i));
-    }
+    if (fit == null) continue;
+    if (fit.rel > 0) forYouPool.add((fit.score, i));
     for (var k = 0; k < ar.length; k++) {
-      if (ar[k] > 0 && rel > 0) rowPools[k].add((ar[k] / damp * base, i));
+      if (ar[k] > 0 && fit.rel > 0) rowPools[k].add((ar[k] / fit.damp * fit.base, i));
     }
   }
 
   final taken = <int>{};
-  final forYou = _diverse(c, forYouPool, _forYouSize, taken);
+  final forYou = diverse(c, forYouPool, _forYouSize, taken);
   final because = <(Film, List<Film>)>[];
   for (var k = 0; k < anchors.length; k++) {
-    final row = _diverse(c, rowPools[k], _rowSize, taken);
+    final row = diverse(c, rowPools[k], _rowSize, taken);
     if (row.length >= _rowMin) because.add((anchors[k], [for (final i in row) c.items[i]]));
   }
   return Recs(forYou: [for (final i in forYou) c.items[i]], because: because);
@@ -262,8 +360,9 @@ double _jitter(String id, int day) {
 
 /// Best [n] of [scored] (catalog index), not in [taken], each one scored down
 /// by [_sameness] per earlier pick with the same director, franchise or lead.
-/// Adds the picks to [taken].
-List<int> _diverse(Catalog c, List<(double, int)> scored, int n, Set<int> taken) {
+/// Adds the picks to [taken]. Sorts [scored] in place; equal scores keep no
+/// promised order, so callers that need one give each film a distinct score.
+List<int> diverse(Catalog c, List<(double, int)> scored, int n, Set<int> taken) {
   scored.sort((a, b) => b.$1.compareTo(a.$1));
   final pool = [
     for (final e in scored.take(_pool + taken.length))
@@ -276,7 +375,7 @@ List<int> _diverse(Catalog c, List<(double, int)> scored, int n, Set<int> taken)
     for (var j = 0; j < pool.length; j++) {
       final (s, i) = pool[j];
       if (s <= bs) break; // sorted, and the factor is at most 1
-      final p = s * math.pow(_sameness, _overlap(c, i, picked));
+      final p = s * math.pow(_sameness, overlap(c, i, picked));
       if (p > bs) (bs, bj) = (p.toDouble(), j);
     }
     picked.add(pool.removeAt(bj).$2);
@@ -285,7 +384,7 @@ List<int> _diverse(Catalog c, List<(double, int)> scored, int n, Set<int> taken)
   return picked;
 }
 
-int _overlap(Catalog c, int i, List<int> picked) {
+int overlap(Catalog c, int i, List<int> picked) {
   final f = c.items[i], stem = c.stems[i];
   var n = 0;
   for (final j in picked) {

@@ -1,0 +1,14 @@
+{
+  "id": 1041,
+  "kind": "system",
+  "sender": null,
+  "body": null,
+  "code": "joined",
+  "args": {
+    "name": "Ravi Kumar"
+  },
+  "film_id": null,
+  "film": null,
+  "night_id": null,
+  "created_at": "2026-10-01T12:00:00.000Z"
+}
