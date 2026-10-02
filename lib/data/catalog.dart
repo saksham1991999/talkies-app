@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 
 import 'models.dart';
+import 'recommend.dart';
 
 /// Wikimedia asks API clients for contact details in the User-Agent. The app
 /// store page is the default; builds can set their own:
@@ -35,9 +36,26 @@ String norm(String s) {
 
 bool isIndian(Film f) => f.countries.contains('IN') || f.langs.any(indianLangs.contains);
 
+/// Release date after [today] (`YYYY-MM-DD`). Month-only and year-only dates
+/// count by their period. No date counts as released.
+bool unreleased(Film f, String today) {
+  final d = f.date;
+  if (d == null) return false;
+  return switch (d.length) {
+    10 => d.compareTo(today) > 0,
+    7 => d.compareTo(today.substring(0, 7)) > 0,
+    _ => d.compareTo(today.substring(0, 4)) > 0,
+  };
+}
+
 class Catalog {
-  Catalog(this.items, this.built)
-    : byId = {for (final f in items) f.id: f},
+  Catalog(List<Film> items, String built) : this._(items, built, stemsOf(items));
+
+  // Runs inside the loadCatalog isolate, so the recommender's trait counts
+  // cost the UI thread nothing.
+  Catalog._(this.items, this.built, this.stems)
+    : df = traitCounts(items, stems),
+      byId = {for (final f in items) f.id: f},
       _t = [for (final f in items) norm(f.title)],
       _o = [for (final f in items) f.original == null ? '' : norm(f.original!)],
       _p = [
@@ -47,7 +65,21 @@ class Catalog {
   final List<Film> items;
   final Map<String, Film> byId;
   final String built;
+
+  /// Shared title stem of each film in [items], for sequels. See [titleStem].
+  final List<String?> stems;
+
+  /// Films per trait, for the recommender's IDF. See [traitCounts].
+  final Map<String, int> df;
   final List<String> _t, _o, _p;
+
+  late final Map<String, int> _index = {for (var i = 0; i < items.length; i++) items[i].id: i};
+
+  /// Sequel stem of [f]: the shared one for a catalog film, else the plain title stem.
+  String? stemOf(Film f) {
+    final i = _index[f.id];
+    return i == null ? titleStem(f.title) : stems[i];
+  }
 
   /// Normalized title (and original title) to films, most popular first.
   late final Map<String, List<Film>> _exact = () {
@@ -156,16 +188,8 @@ class Catalog {
   /// Films dated after today. Month-only and year-only dates count by their period.
   List<Film> upcoming(DateTime today, {bool worldwide = false, String? lang}) {
     final t = ymd(today);
-    return items.where((f) {
-      final d = f.date;
-      if (f.series || d == null) return false;
-      final after = switch (d.length) {
-        10 => d.compareTo(t) > 0,
-        7 => d.compareTo(t.substring(0, 7)) > 0,
-        _ => d.compareTo(t.substring(0, 4)) > 0,
-      };
-      return after && _region(f, worldwide, lang);
-    }).toList()..sort((a, b) => a.releaseSortKey.compareTo(b.releaseSortKey));
+    return items.where((f) => !f.series && unreleased(f, t) && _region(f, worldwide, lang)).toList()
+      ..sort((a, b) => a.releaseSortKey.compareTo(b.releaseSortKey));
   }
 
   /// Best catalog match for an imported title and optional year.
@@ -686,6 +710,15 @@ const _serviceNames = {
   'chaupal': ['Chaupal'],
   'planetmarathi': ['Planet Marathi'],
 };
+
+/// Service key for a venue name, such as `prime` for "Prime Video".
+String? serviceKey(String venue) {
+  final v = norm(venue);
+  for (final MapEntry(key: k, value: names) in _serviceNames.entries) {
+    if (k == v || names.any((n) => norm(n) == v)) return k;
+  }
+  return null;
+}
 
 final _serviceRx = {
   for (final e in _serviceNames.entries)

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../data/models.dart';
 import '../../l10n/labels.dart';
+import '../../state/online.dart';
 import '../../state/providers.dart';
 import '../format.dart';
 import '../icons.dart';
@@ -30,6 +31,9 @@ class _RecordScreenState extends ConsumerState<RecordScreen> {
   double? _rating;
   String? _place, _show, _format, _class, _lang;
   bool _fdfs = false;
+
+  /// See [Stub.private]. The switch shows only for a signed-in user; a stub that is private stays private on edit.
+  bool _private = false;
   late List<String> _tags;
   final _seat = TextEditingController();
   final _price = TextEditingController();
@@ -53,6 +57,7 @@ class _RecordScreenState extends ConsumerState<RecordScreen> {
       _class = e.seatClass;
       _lang = e.lang;
       _fdfs = e.fdfs;
+      _private = e.private;
       _tags = [...e.tags];
       _seat.text = e.seat ?? '';
       _price.text = e.price == null ? '' : _num(e.price!);
@@ -102,6 +107,7 @@ class _RecordScreenState extends ConsumerState<RecordScreen> {
     fdfs: _cinema && _fdfs,
     lang: _lang,
     company: _with.text,
+    private: _private,
   );
 
   bool get _cinema => ref.read(diaryProvider).venueType(_place) == VenueType.cinema;
@@ -286,6 +292,18 @@ class _RecordScreenState extends ConsumerState<RecordScreen> {
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(hintText: l.memoHint),
                     ),
+                    // Local data, so it shows for a signed-in user whether or not the server answers.
+                    if (ref.watch(signedInProvider)) ...[
+                      _Label(l.privacyTitle),
+                      SwitchListTile(
+                        key: const Key('private-stub'),
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(l.privacyStubToggle, style: const TextStyle(fontWeight: FontWeight.w600)),
+                        secondary: TkIcon(Tk.lock, color: _private ? p.ink : p.inkSoft),
+                        value: _private,
+                        onChanged: (v) => _set(() => _private = v),
+                      ),
+                    ],
                   ],
                 ),
               ),

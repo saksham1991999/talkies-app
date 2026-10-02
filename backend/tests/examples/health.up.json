@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "api": 1,
+  "auth": [
+    "email",
+    "google",
+    "apple"
+  ]
+}

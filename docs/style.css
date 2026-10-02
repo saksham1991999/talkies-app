@@ -129,8 +129,8 @@ main { max-width: 720px; margin: 0 auto; padding: 28px 20px 56px; }
 .stub-body { padding: 30px 36px 36px; }
 .stub-body h2 { font-size: 19px; margin: 30px 0 6px; }
 .stub-body h2:first-child { margin-top: 0; }
-.stub-body p, .stub-body ul { margin: 0 0 12px; }
-.stub-body ul { padding-left: 22px; }
+.stub-body p, .stub-body ul, .stub-body ol { margin: 0 0 12px; }
+.stub-body ul, .stub-body ol { padding-left: 22px; }
 .stub-body li { margin-bottom: 6px; }
 .lead { font-size: 19px; }
 

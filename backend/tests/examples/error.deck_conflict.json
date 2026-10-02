@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "deck_conflict",
+    "message": "The deck changed",
+    "detail": {
+      "current_version": 5
+    }
+  }
+}

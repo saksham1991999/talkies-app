@@ -7,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/catalog.dart';
 import '../data/json_file.dart';
 import '../data/models.dart';
+import '../data/recommend.dart';
+import '../data/wire.dart';
 
 /// App documents directory. Overridden in main() and in tests.
 final docsDirProvider = Provider<Directory>((ref) => throw UnimplementedError('override docsDirProvider'));
@@ -14,9 +16,33 @@ final docsDirProvider = Provider<Directory>((ref) => throw UnimplementedError('o
 /// Today as a date. Overridden in tests so release lists are stable.
 final todayProvider = Provider<DateTime>((ref) => dateOnly(DateTime.now()));
 
+/// The clock. Overridden in tests, so timers and stamps are deterministic.
+final nowProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+
 final catalogProvider = FutureProvider<Catalog>((ref) async {
   final raw = await rootBundle.loadString('assets/catalog/catalog.json', cache: false);
   return loadCatalog(raw, File('${ref.watch(docsDirProvider).path}/catalog_delta.json'));
+});
+
+/// Home recommendations. Recomputed when viewings, hidden films, the catalog,
+/// the day or the region change. Not on watchlist changes: a film added from a
+/// row stays there with its tick, and leaves on the next recompute.
+// ponytail: one scan of the catalog on the UI thread; move into Isolate.run behind a FutureProvider if Home janks
+final recsProvider = Provider<Recs>((ref) {
+  final catalog = ref.watch(catalogProvider).value;
+  if (catalog == null) return Recs.none;
+  ref.watch(diaryProvider.select((d) => (d.stubs, d.hidden)));
+  final diary = ref.read(diaryProvider);
+  // The public view: a private stub is left out of taste, like anywhere else
+  // the diary is read for someone else (see [Stub.private]). It is still a film
+  // I have seen, so `seen` keeps it out of the rows as well, as the deck does.
+  return recommend(
+    catalog,
+    diary.publicView(),
+    ref.watch(todayProvider),
+    worldwide: ref.watch(settingsProvider.select((s) => s.worldwide)),
+    seen: {for (final s in diary.stubs) s.filmId},
+  );
 });
 
 // ---------------------------------------------------------------------------
@@ -149,6 +175,7 @@ class StubDraft {
     this.fdfs = false,
     this.lang,
     this.company,
+    this.private = false,
   });
 
   factory StubDraft.of(Stub s) => StubDraft(
@@ -166,6 +193,7 @@ class StubDraft {
     fdfs: s.fdfs,
     lang: s.lang,
     company: s.company,
+    private: s.private,
   );
 
   final DateTime? date;
@@ -178,6 +206,9 @@ class StubDraft {
   final double? price;
   final bool fdfs;
   final String? lang, company;
+
+  /// See [Stub.private].
+  final bool private;
 
   Stub toStub({required String id, required int no, required String filmId, required DateTime created}) => Stub(
     id: id,
@@ -204,6 +235,7 @@ class StubDraft {
     fdfs: fdfs,
     lang: lang,
     company: (company ?? '').trim().isEmpty ? null : company!.trim(),
+    private: private,
   );
 }
 
@@ -290,6 +322,12 @@ class DiaryNotifier extends Notifier<Diary> {
         ),
       );
     }
+  }
+
+  /// "Not interested": the film leaves recommendations and counts as a mild dislike.
+  void setHidden(String filmId, bool on) {
+    final rest = state.hidden.where((id) => id != filmId);
+    _commit(state.copyWith(hidden: [...rest, if (on) filmId]));
   }
 
   void setPlanned(String filmId, DateTime? planned) {
@@ -408,6 +446,97 @@ class DiaryNotifier extends Notifier<Diary> {
   void deleteVenue(String name) => _commit(state.copyWith(venues: state.venues.where((v) => v.name != name).toList()));
 
   Stub _replace(Stub s, {required String place}) => Stub.fromJson(s.toJson()..['place'] = place);
+
+  /// Marks a stub private or public. The change syncs like any edit.
+  void setPrivate(String stubId, bool on) {
+    Stub flip(Stub s) {
+      final j = s.toJson();
+      if (on) {
+        j['priv'] = true;
+      } else {
+        j.remove('priv');
+      }
+      return Stub.fromJson(j);
+    }
+
+    if (!state.stubs.any((s) => s.id == stubId && s.private != on)) return;
+    _commit(state.copyWith(stubs: [for (final s in state.stubs) s.id == stubId ? flip(s) : s]));
+  }
+
+  // Sync --------------------------------------------------------------------
+
+  /// Applies what the sync engine pulled, in one commit. It never stamps: the
+  /// engine's own records say these changes came from the server. A stub that
+  /// arrives with `no: 0` (a night wrap-up) gets the next local ticket number,
+  /// and `nextNo` moves above every ticket number that arrives.
+  void applyRemote(RemoteChanges c) {
+    if (c.isEmpty) return;
+    final d = state;
+    var nextNo = d.nextNo;
+    for (final s in c.stubs) {
+      if (s.no >= nextNo) nextNo = s.no + 1;
+    }
+    final incoming = {for (final s in c.stubs) s.id: s};
+    final local = {for (final s in d.stubs) s.id: s};
+
+    // Oldest first, so every phone numbers the same arrivals in the same order.
+    final order = incoming.values.toList()
+      ..sort((a, b) {
+        final t = a.created.compareTo(b.created);
+        return t != 0 ? t : a.id.compareTo(b.id);
+      });
+    final arrived = <String, Stub>{};
+    for (final s in order) {
+      if (s.no != 0) {
+        arrived[s.id] = s;
+        continue;
+      }
+      // Keep the number this phone already gave; otherwise take the next one.
+      final no = local[s.id]?.no ?? 0;
+      arrived[s.id] = Stub.fromJson(s.toJson()..['no'] = no != 0 ? no : nextNo++);
+    }
+    final stubs = [
+      for (final s in d.stubs)
+        if (!c.deletedStubs.contains(s.id)) arrived[s.id] ?? s,
+      for (final s in arrived.values)
+        if (!local.containsKey(s.id)) s,
+    ];
+
+    final wishIn = {for (final w in c.wishes) w.filmId: w};
+    final wishes = [
+      for (final w in d.wishes)
+        if (!c.deletedWishes.contains(w.filmId)) wishIn[w.filmId] ?? w,
+      for (final w in wishIn.values)
+        if (d.wishFor(w.filmId) == null) w,
+    ];
+
+    // A catalog film keeps this phone's snapshot (a newer catalog may have filled it). A custom film
+    // comes from the phone that edited it, but keeps the photo that only this phone has.
+    final films = {...d.films};
+    for (final e in c.films.entries) {
+      final f = e.value, cur = films[e.key];
+      if (!f.isCustom) {
+        films.putIfAbsent(e.key, () => f);
+      } else {
+        films[e.key] = cur?.posterFile != null && f.poster == null ? f.copyWith(poster: cur!.poster) : f;
+      }
+    }
+    final used = {...stubs.map((s) => s.filmId), ...wishes.map((w) => w.filmId)};
+    films.removeWhere((id, _) => !used.contains(id));
+
+    final m = c.meta;
+    _commit(
+      d.copyWith(
+        films: films,
+        stubs: stubs,
+        wishes: wishes,
+        tags: m?.tags,
+        venues: m?.venues,
+        hidden: m == null ? null : [...m.hidden, ...d.hidden.where((id) => id.startsWith('my:'))],
+        nextNo: nextNo,
+      ),
+    );
+  }
 
   // Backup ------------------------------------------------------------------
 

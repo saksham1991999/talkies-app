@@ -334,6 +334,17 @@ void main() {
     expect(const Period(StatsScope.month, 2026, 1).shift(-1), const Period(StatsScope.month, 2025, 12));
   });
 
+  test('stats: a snapshot that repeats a genre counts it once per viewing', () {
+    const dup = Film(id: 'D', title: 'Dup', genres: ['action', 'action'], langs: ['hi', 'hi']);
+    final d = Diary(
+      films: const {'D': dup},
+      stubs: [Stub(id: '1', no: 1, filmId: 'D', created: DateTime(2026), date: DateTime(2026, 1, 1))],
+    );
+    final s = computeStats(d, const Period(StatsScope.all, 2026));
+    expect(s.genres.single.key, 'action');
+    expect(s.genres.single.count, 1);
+  });
+
   test('stubs query: sort and filter', () {
     final d = Diary(
       films: {for (final f in cat.items) f.id: f},

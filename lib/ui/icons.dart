@@ -32,6 +32,16 @@ enum Tk {
   info,
   refresh,
   again,
+  person,
+  people,
+  chat,
+  send,
+  clock,
+  lock,
+  up,
+  bell,
+  link,
+  more, //
 }
 
 class TkIcon extends StatelessWidget {
@@ -185,11 +195,128 @@ class _TkPainter extends CustomPainter {
         canvas.drawArc(Rect.fromCircle(center: c, radius: 7), -math.pi * 0.35, math.pi * 1.55, false, s);
         final end = c + Offset.fromDirection(-math.pi * 0.35, 7);
         canvas.drawPath(poly([end.dx - 4.2, end.dy - 0.8, end.dx, end.dy, end.dx + 0.6, end.dy - 4.2]), s);
+      case Tk.person:
+        canvas.drawCircle(const Offset(12, 7.8), 3.4, s);
+        canvas.drawPath(_bust(5, 19, 20.2, 6.6, 1.6), s);
+      case Tk.people:
+        canvas.drawCircle(const Offset(9.2, 8.4), 3.1, s);
+        canvas.drawPath(_bust(3.4, 15, 20, 5.4, 1.4), s);
+        canvas.drawPath(
+          Path()
+            ..moveTo(14.6, 5.4)
+            ..arcToPoint(const Offset(14.6, 11.2), radius: const Radius.circular(2.9)),
+          s,
+        );
+        canvas.drawPath(
+          Path()
+            ..moveTo(17.4, 14.2)
+            ..arcToPoint(const Offset(20.8, 20), radius: const Radius.elliptical(3.4, 5.8)),
+          s,
+        );
+      case Tk.chat:
+        canvas.drawPath(
+          Path()
+            ..moveTo(6, 4.5)
+            ..lineTo(18, 4.5)
+            ..arcToPoint(const Offset(20.5, 7), radius: const Radius.circular(2.5))
+            ..lineTo(20.5, 14)
+            ..arcToPoint(const Offset(18, 16.5), radius: const Radius.circular(2.5))
+            ..lineTo(11.5, 16.5)
+            ..lineTo(7, 20.2)
+            ..lineTo(7, 16.5)
+            ..lineTo(6, 16.5)
+            ..arcToPoint(const Offset(3.5, 14), radius: const Radius.circular(2.5))
+            ..lineTo(3.5, 7)
+            ..arcToPoint(const Offset(6, 4.5), radius: const Radius.circular(2.5))
+            ..close(),
+          s,
+        );
+        l(8, 9.2, 16, 9.2);
+        l(8, 12.2, 13, 12.2);
+      case Tk.send:
+        canvas.drawPath(_ticket(3, 7.5, 13.5, 16.5, 1.6, 1.5), s);
+        l(14.6, 12, 21, 12);
+        canvas.drawPath(poly([17.6, 8.6, 21, 12, 17.6, 15.4]), s);
+      case Tk.clock:
+        canvas.drawCircle(const Offset(12, 12), 8.6, s);
+        l(12, 7.2, 12, 12);
+        l(12, 12, 15.6, 14.2);
+      case Tk.lock:
+        canvas.drawPath(_ticket(5.5, 10.5, 18.5, 20.5, 2.2, 1.6), s);
+        canvas.drawPath(
+          Path()
+            ..moveTo(8.6, 10.5)
+            ..lineTo(8.6, 8)
+            ..arcToPoint(const Offset(15.4, 8), radius: const Radius.circular(3.4))
+            ..lineTo(15.4, 10.5),
+          s,
+        );
+        canvas.drawCircle(const Offset(12, 14.4), 1.2, fill);
+        l(12, 15, 12, 17.2);
+      case Tk.up:
+        canvas.drawPath(poly([6, 15, 12, 9, 18, 15]), s);
+      case Tk.bell:
+        canvas.drawPath(
+          Path()
+            ..moveTo(6, 16.5)
+            ..lineTo(6, 11)
+            ..arcToPoint(const Offset(18, 11), radius: const Radius.circular(6))
+            ..lineTo(18, 16.5)
+            ..lineTo(19.5, 18)
+            ..lineTo(4.5, 18)
+            ..close(),
+          s,
+        );
+        l(12, 3.6, 12, 5);
+        canvas.drawPath(
+          Path()
+            ..moveTo(10, 20.6)
+            ..arcToPoint(const Offset(14, 20.6), radius: const Radius.circular(2), clockwise: false),
+          s,
+        );
+      case Tk.link:
+        canvas.save();
+        canvas.translate(12, 12);
+        canvas.rotate(-math.pi / 4);
+        canvas.drawPath(
+          Path()
+            ..moveTo(-2, -3.5)
+            ..lineTo(-5.7, -3.5)
+            ..arcToPoint(const Offset(-5.7, 3.5), radius: const Radius.circular(3.5), clockwise: false)
+            ..lineTo(-2, 3.5),
+          s,
+        );
+        canvas.drawPath(
+          Path()
+            ..moveTo(2, -3.5)
+            ..lineTo(5.7, -3.5)
+            ..arcToPoint(const Offset(5.7, 3.5), radius: const Radius.circular(3.5))
+            ..lineTo(2, 3.5),
+          s,
+        );
+        canvas.drawLine(const Offset(-3.6, 0), const Offset(3.6, 0), s);
+        canvas.restore();
+      case Tk.more:
+        for (final x in [5.5, 12.0, 18.5]) {
+          canvas.drawCircle(Offset(x, 12), 1.7, fill);
+        }
     }
   }
 
   @override
   bool shouldRepaint(_TkPainter old) => old.icon != icon || old.color != color;
+}
+
+/// Head-and-shoulders outline standing on a flat base with a small notch in it,
+/// like the bite in a ticket's counterfoil. [ry] is the height of the shoulders.
+Path _bust(double l, double r, double base, double ry, double notch) {
+  final mid = (l + r) / 2;
+  return Path()
+    ..moveTo(l, base)
+    ..arcToPoint(Offset(r, base), radius: Radius.elliptical((r - l) / 2, ry))
+    ..lineTo(mid + notch, base)
+    ..arcToPoint(Offset(mid - notch, base), radius: Radius.circular(notch), clockwise: false)
+    ..close();
 }
 
 /// Ticket outline with semicircle notches on the left and right edges.

@@ -162,7 +162,9 @@ Stats computeStats(Diary d, Period p) {
     if (first[s.filmId]!.id != s.id) rewatches++;
     if (f == null) continue;
     if (!f.series) minutes += f.runtime ?? 0;
-    for (final g in f.genres) {
+    // One viewing counts once per distinct genre: a synced snapshot may repeat
+    // a value in its `g` list.
+    for (final g in f.genres.toSet()) {
       _add(genres, g, s);
     }
     for (final c in f.countries) {
