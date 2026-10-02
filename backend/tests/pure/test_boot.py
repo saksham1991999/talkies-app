@@ -9,7 +9,15 @@ import pytest
 
 from app.db import Db
 from app.errors import DbUnavailable
-from tests.helpers import FakeClock, auth, client_for, make_app, make_settings, make_token
+from tests.helpers import (
+    FakeClock,
+    account_db,
+    auth,
+    client_for,
+    make_app,
+    make_settings,
+    make_token,
+)
 
 CODE = "K7M2QX9P"
 
@@ -102,6 +110,44 @@ async def test_pool_is_not_created_until_needed(monkeypatch):
     with pytest.raises(DbUnavailable):
         await db.pool()
     assert len(calls) == 2
+
+
+async def test_a_pool_that_lost_its_database_is_dropped_and_cooled_down(monkeypatch):
+    """A pool that was fine at boot still has to back off once the database goes away."""
+    made = []
+
+    class DeadPool:
+        closed = False
+
+        async def acquire(self, timeout=None):  # noqa: ASYNC109 - asyncpg's own signature
+            raise asyncpg.ConnectionDoesNotExistError("server closed the connection")
+
+        async def close(self):
+            self.closed = True
+
+    async def fake_create_pool(*args, **kwargs):
+        pool = DeadPool()
+        made.append(pool)
+        return pool
+
+    monkeypatch.setattr(asyncpg, "create_pool", fake_create_pool)
+    clock = FakeClock()
+    db = Db("postgres://u:p@localhost/db", clock=clock)
+    with pytest.raises(DbUnavailable):
+        async with db.conn():
+            pass
+    assert made[0].closed  # the broken pool does not stay in service
+    assert db._pool is None
+    # The next request inside the cooldown does not even try to connect again.
+    with pytest.raises(DbUnavailable):
+        async with db.conn():
+            pass
+    assert len(made) == 1
+    clock.advance(2.5)
+    with pytest.raises(DbUnavailable):
+        async with db.conn():
+            pass
+    assert len(made) == 2  # the cooldown expired, so it tried once more
 
 
 # --- the invite page --------------------------------------------------------
@@ -217,7 +263,9 @@ async def test_bodies_over_2_mb_are_413_with_or_without_a_length():
 
 
 async def test_a_body_just_under_the_limit_reaches_the_route():
-    async with client_for(make_app()) as client:
+    # The account check needs a database; this test is about the body, so stub
+    # that one query and let the route reach its own validation.
+    async with client_for(make_app(db=account_db())) as client:
         body = b'{"records":[],"pad":"' + b"x" * (2 * 1024 * 1024 - 100) + b'"}'
         reply = await client.post("/v1/sync/push", content=body, headers=auth(make_token()))
     assert reply.status_code == 422  # unknown key `pad`: it was read and checked, not cut off

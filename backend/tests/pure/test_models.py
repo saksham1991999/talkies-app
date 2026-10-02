@@ -64,6 +64,11 @@ def test_email_and_code():
     bad(OtpRequest, email="no-at-sign")
     bad(OtpRequest, email="a b@c.test")
     bad(OtpRequest, email="a@" + "b" * 260)
+    # NUL and other control characters are not `@` or whitespace, so the pattern
+    # alone would let them through to Supabase Auth.
+    bad(OtpRequest, email="a\x00b@c.test")
+    bad(OtpRequest, email="a\tb@c.test")
+    bad(OtpRequest, email="a\x7fb@c.test")
     assert VerifyRequest(email="a@b.test", code=" 123456 ").code == "123456"
     bad(VerifyRequest, email="a@b.test", code="12a456")
     bad(VerifyRequest, email="a@b.test", code="123")

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talkies/data/recommend.dart';
 import 'package:talkies/data/social.dart';
 import 'package:talkies/data/wire.dart';
 
@@ -197,6 +198,25 @@ void main() {
         model == 'sync_push' ||
         model == 'sync_push_result' ||
         model == 'sync_pull') {
+      test('$name: a taste record holds a taste document', () {
+        // The `data` of a taste record is the phone's own taste JSON
+        // (`Taste.toJson`), not an arbitrary map: the app reads it back with
+        // `Taste.tryFromJson`, which needs `v`, `t`, `l`, `e`, `k` and `s`.
+        final wire = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+        final data = wire['kind'] == 'taste'
+            ? wire['data'] as Map<String, dynamic>
+            : wire['records'] is List && (wire['records'] as List).isNotEmpty
+            ? (wire['records'] as List)
+                  .map((r) => r as Map<String, dynamic>)
+                  .firstWhere((r) => r['kind'] == 'taste', orElse: () => const {})['data']
+                  as Map<String, dynamic>?
+            : null;
+        if (data == null) return; // this example carries no taste record
+        final taste = Taste.tryFromJson(data);
+        expect(taste, isNotNull, reason: 'data is not a v1 taste document');
+        expect(taste!.toJson().keys.toSet(), data.keys.toSet());
+      });
+
       test('$name: times are UTC with Z, and seq is where it belongs', () {
         final wire = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
         switch (model) {

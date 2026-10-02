@@ -90,6 +90,30 @@ def routes(owner):
     ]
 
 
+def _expected(actor: str, owner, path: str) -> int:
+    """The status each actor must get. Anything else fails the sweep.
+
+    The profile and its shelf answer 404 to a stranger and to a blocked user,
+    the same as for a missing profile. The lookup hides a block behind that 404
+    too (its 30/hour limit is per actor and untouched). The watcher list and the
+    feed answer 200 with an empty list instead of leaking by status.
+    """
+    if path == f"/v1/users/{owner.id}/films":
+        # Your own shelf is not served: the phone builds it from the diary.
+        return 404 if actor == "olive" else _profile_status(actor)
+    if path == f"/v1/users/{owner.id}":
+        return _profile_status(actor)
+    if path == "/v1/users/lookup":
+        # Nobody finds themselves by handle, and a block reads as "no such handle".
+        return 404 if actor in ("olive", "bob") else 200
+    return 200
+
+
+def _profile_status(actor: str) -> int:
+    """A friend sees the profile; a stranger and a blocked user get a 404."""
+    return 200 if actor in ("olive", "fred") else 404
+
+
 def all_keys(value) -> set[str]:
     if isinstance(value, dict):
         return set(value) | {k for v in value.values() for k in all_keys(v)}
@@ -99,6 +123,7 @@ def all_keys(value) -> set[str]:
 
 
 async def sweep(client, owner) -> dict[str, tuple[int, str]]:
+    """Every route another person can reach, with the status it must answer."""
     found = {}
     for path, params in routes(owner):
         reply = await client.get(path, **params)
@@ -114,9 +139,11 @@ async def test_canary_dates_and_memos_never_reach_another_person(world):
     await olive.ok(
         "put", f"/v1/groups/{gid}/swipes", {"swipes": [{"film_id": "Q2", "vote": "seen"}]}
     )
-    for actor in (fred, sam, bob):
+    for actor in (olive, fred, sam, bob):
         seen = await sweep(actor, olive)
         for path, (status, text) in seen.items():
+            # A route that broke (500) is a failure whether or not it leaks.
+            assert status == _expected(actor.name, olive, path), (actor.name, path, text[:200])
             for canary in CANARIES:
                 assert canary not in text, f"{actor.name} got {canary!r} from {path}"
             if status == 200:
@@ -157,6 +184,25 @@ async def test_what_a_friend_sees(world):
     watchers = await fred.ok("get", "/v1/films/Q949228/friends")
     assert [(w["user"]["handle"], w["rating"]) for w in watchers["items"]] == [("olive", 4.5)]
     assert (await fred.ok("get", "/v1/films/Q30/friends"))["items"] == []
+
+
+async def test_a_trait_a_film_lists_twice_counts_once(world):
+    olive = await world.user("olive", visibility="friends", share_ratings=True)
+    fred = await world.user("fred", visibility="friends")
+    await world.friends(olive, fred)
+    first = stub("one", "Q949228", date=today())  # action, drama
+    twice = stub("two", "Q2", date=today())
+    twice["film"] = {**film("Q2"), "g": ["action", "action"], "l": ["kn", "kn"]}
+    third = stub("three", "Q3", date=today())
+    third["film"] = {**film("Q3"), "g": ["drama"], "l": ["hi"]}
+    await olive.push(first, twice, third)
+    profile = await fred.ok("get", f"/v1/users/{olive.id}")
+    stats = profile["stats"]
+    # Once per film, not once per entry: action and drama are level at two films,
+    # and the duplicate "action" must not push drama out of the top three.
+    assert (stats["films"], stats["viewings"]) == (3, 3)
+    assert stats["top_genres"] == ["action", "drama"]
+    assert stats["top_langs"] == ["hi", "kn"]
 
 
 async def test_a_private_stub_is_nowhere(world):

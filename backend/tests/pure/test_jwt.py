@@ -246,6 +246,9 @@ async def test_the_secret_and_jwks_paths_never_mix(jwks, ec_key):
         await make_verifier(no_keys).verify(es_token)
 
 
-async def test_an_hs512_header_is_refused_even_with_a_secret(jwks):
+async def test_an_hs512_header_is_refused_even_without_a_secret(jwks):
+    # `test_other_algorithms_are_refused` covers the same token with the shared
+    # secret configured: the alg allowlist refuses it either way.
+    token = make_token(alg="HS512", key=JWT_SECRET * 2)
     with pytest.raises(Unauthorized):
-        await make_verifier(jwks).verify(make_token(alg="HS512", key=JWT_SECRET * 2))
+        await make_verifier(jwks, supabase_jwt_secret="").verify(token)

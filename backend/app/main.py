@@ -57,8 +57,8 @@ class BodyLimit:
         if declared.isdigit() and int(declared) > self.limit:
             await self._refuse(scope, receive, send)
             return
-        body = await self._read(receive)
-        if body is None:
+        partial, cut_off = await self._read(receive)
+        if partial is None:
             await self._refuse(scope, receive, send)
             return
         sent = False
@@ -68,24 +68,29 @@ class BodyLimit:
             if sent:
                 return await receive()
             sent = True
-            return {"type": "http.request", "body": body, "more_body": False}
+            # A client that left mid-body must not look like one that finished:
+            # the frame says "more to come" and the next call reports the
+            # disconnect, so a route never parses (or stores) a truncated JSON
+            # body that happened to hold a valid prefix.
+            return {"type": "http.request", "body": partial, "more_body": cut_off}
 
         await self.app(scope, replay, send)
 
-    async def _read(self, receive: Receive) -> bytes | None:
+    async def _read(self, receive: Receive) -> tuple[bytes | None, bool]:
+        """The body read so far, and whether the client cut the request short."""
         chunks: list[bytes] = []
         size = 0
         while True:
             message = await receive()
             if message["type"] != "http.request":
-                return b"".join(chunks)  # the client left: the app sees a short body
+                return b"".join(chunks), True  # the client left: a partial body
             chunk = message.get("body", b"")
             size += len(chunk)
             if size > self.limit:
-                return None
+                return None, False
             chunks.append(chunk)
             if not message.get("more_body", False):
-                return b"".join(chunks)
+                return b"".join(chunks), False
 
     async def _refuse(self, scope: Scope, receive: Receive, send: Send) -> None:
         response = JSONResponse(

@@ -8,6 +8,7 @@ import pytest
 
 from app.auth.gotrue import GoTrue
 from app.errors import ApiError, BadRequest, NotFound, RateLimited, Upstream
+from app.ratelimit import RULES
 from tests.helpers import SUPABASE_URL, client_for, make_app, make_settings
 
 USER = str(uuid4())
@@ -161,6 +162,25 @@ async def test_a_session_we_cannot_read_is_502():
         await auth.verify("a@b.test", "123456")
 
 
+@pytest.mark.parametrize(
+    "body",
+    [
+        {**SESSION, "access_token": None},
+        {**SESSION, "refresh_token": None},
+        {**SESSION, "access_token": 12345},
+        {**SESSION, "refresh_token": ""},
+        {**SESSION, "user": {"id": None}},
+        {**SESSION, "user": {"id": "not-a-uuid"}},
+    ],
+)
+async def test_a_malformed_session_is_502_not_a_broken_token(body):
+    # str() used to turn a null or a number into a token string and hand it to
+    # the phone as a session.
+    auth, _ = gotrue(httpx.Response(200, json=body))
+    with pytest.raises(Upstream):
+        await auth.verify("a@b.test", "123456")
+
+
 async def test_not_set_up_is_502_and_makes_no_call():
     auth, up = gotrue(supabase_url="")
     with pytest.raises(Upstream):
@@ -196,6 +216,15 @@ async def test_delete_user_failure_is_502():
         await auth.delete_user(uuid4())
     auth, _ = gotrue(supabase_service_role_key="")
     with pytest.raises(ApiError):
+        await auth.delete_user(uuid4())
+
+
+@pytest.mark.parametrize("status", [301, 302, 307, 308])
+async def test_a_redirected_delete_is_not_a_success(status):
+    # A 3xx from a misconfigured or proxied endpoint used to count as done, so
+    # the local profile was deleted while the Supabase user survived.
+    auth, _ = gotrue(httpx.Response(status, headers={"location": "https://elsewhere.test"}))
+    with pytest.raises(Upstream):
         await auth.delete_user(uuid4())
 
 
@@ -244,3 +273,21 @@ async def test_verify_route_returns_a_session():
         "expires_at": 1800000000,
         "user": {"id": USER},
     }
+
+
+async def test_the_id_token_route_is_rate_limited_per_ip():
+    # It is unauthenticated like the other sign-in routes, so a burst must not
+    # reach Supabase: the limit is 30 per hour per address (RULES["id_token_ip"]).
+    limit, _ = RULES["id_token_ip"]
+    up = Replies(*[httpx.Response(200, json=SESSION)] * limit)
+    async with client_for(make_app(handler=up)) as client:
+        for _ in range(limit):
+            reply = await client.post(
+                "/v1/auth/id-token", json={"provider": "google", "id_token": "t"}
+            )
+            assert reply.status_code == 200, reply.text
+        reply = await client.post("/v1/auth/id-token", json={"provider": "google", "id_token": "t"})
+    assert reply.status_code == 429
+    assert int(reply.headers["retry-after"]) >= 1
+    assert reply.json()["error"]["code"] == "rate_limited"
+    assert len(up.requests) == limit  # the refused call never went upstream

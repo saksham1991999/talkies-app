@@ -329,7 +329,8 @@ async def test_close_takes_the_most_approved_and_the_host_may_override():
 async def test_close_needs_the_host_or_the_owner_and_a_poll():
     other_host = {**NIGHT_OF[1], "host_id": OTHER}
     app, conn = app_for(
-        ("for update", other_host), ("from group_members m join groups g", MEMBER_SEAT)
+        ("for update", other_host),
+        ("from group_members m join groups g", MEMBER_SEAT),
     )
     async with client_for(app) as client:
         assert (
@@ -476,14 +477,18 @@ async def test_post_a_message():
 
 async def test_send_a_film():
     app, conn = app_for(
-        ("from friendships where user_id", 1), ("insert into sent_films", "INSERT 0 1")
+        ("pg_advisory_xact_lock", None),  # the pair lock, shared with the block mutation
+        ("from friendships where user_id", 1),
+        ("insert into sent_films", "INSERT 0 1"),
     )
     body = {"user_id": str(OTHER), "film_id": "Q10", "film": FILM, "note": None}
     async with client_for(app) as client:
         reply = await client.post("/v1/films/send", json=body, headers=HEADERS)
     assert (reply.status_code, reply.json()) == (201, {})
     assert conn.args_of("insert into sent_films") == (USER, OTHER, "Q10", FILM, None)
-    app, conn = app_for(("from friendships where user_id", None))
+    app, conn = app_for(
+        ("pg_advisory_xact_lock", None), ("from friendships where user_id", None)
+    )
     async with client_for(app) as client:
         assert (
             await client.post("/v1/films/send", json={**body, "note": "hi"}, headers=HEADERS)
@@ -503,17 +508,27 @@ WENT = [
     {"id": M_GUEST, "user_id": None, "name": "Dad"},
 ]
 EVENT = {"tz_offset_min": 330, "place": "PVR", "film_id": "Q10", "film": FILM, "starts_at": SLOT_1}
-SET_NIGHT = ("for update", {**NIGHT_OF[1], "status": "set"})
+# The wrap-up reads the night's group first (to lock its users before the row),
+# then locks the row itself.
+KNOWN_NIGHT = ("select group_id, status from nights", {**NIGHT_OF[1], "status": "set"})
+GROUP_MEMBERS = ("select user_id from group_members", [{"user_id": USER}, {"user_id": OTHER}])
+GROUP_MEMBERS_ONE = ("select user_id from group_members", [{"user_id": USER}])
+# One advisory lock per account member the group lists, in that order.
+LOCK_USERS = [("pg_advisory_xact_lock", None), ("pg_advisory_xact_lock", None)]
+def NIGHT_GROUP_OF(night: dict) -> tuple[str, dict]:
+    """The first read of a wrap-up: the night row the caller wants to wrap."""
+    return ("select group_id, status from nights", night)
 
 
 async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
     app, conn = app_for(
-        SET_NIGHT,
+        KNOWN_NIGHT,
+        GROUP_MEMBERS,
+        *LOCK_USERS,
+        ("for update", {**NIGHT_OF[1], "status": "set"}),
         ("from group_members m join groups g", OWNER_SEAT),
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT),
-        ("pg_advisory_xact_lock", None),
-        ("pg_advisory_xact_lock", None),
         ("insert into stubs", 1),
         ("insert into stubs", None),  # the second user deleted this stub earlier: it stays deleted
         ("update nights set status = 'done'", "UPDATE 1"),
@@ -524,7 +539,7 @@ async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
         reply = await client.post(f"/v1/nights/{NID}/wrapup", json=body, headers=HEADERS)
     assert (reply.status_code, reply.json()) == (200, {"created": 1, "skipped": 1}), reply.text
     locks = [args for _, sql, args in conn.calls if "pg_advisory_xact_lock" in sql]
-    assert locks == [(str(u),) for u in sorted([USER, OTHER], key=str)]  # a fixed order
+    assert locks == [(str(USER),), (str(OTHER),)]  # one per account member, fixed order
     stubs = [args for _, sql, args in conn.calls if "insert into stubs" in sql]
     first, second = stubs
     assert (first[0], first[1], first[2], first[4]) == (USER, f"night-{NID}", "Q10", FILM)
@@ -554,12 +569,13 @@ async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
 async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
     done = ("for update", {**NIGHT_OF[1], "status": "done"})
     app, conn = app_for(
+        NIGHT_GROUP_OF({**NIGHT_OF[1], "status": "done"}),
+        GROUP_MEMBERS,
+        *LOCK_USERS,
         done,
         ("from group_members m join groups g", OWNER_SEAT),
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT[:2]),
-        ("pg_advisory_xact_lock", None),
-        ("pg_advisory_xact_lock", None),
         ("insert into stubs", None),
         ("insert into stubs", None),
     )
@@ -568,11 +584,14 @@ async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
     assert reply.json() == {"created": 0, "skipped": 2}
     conn.finished()
     app, conn = app_for(
-        SET_NIGHT,
+        KNOWN_NIGHT,
+        GROUP_MEMBERS,
+        ("pg_advisory_xact_lock", None),
+        ("pg_advisory_xact_lock", None),
+        ("for update", {**NIGHT_OF[1], "status": "set"}),
         ("from group_members m join groups g", OWNER_SEAT),
         ("from nights n join night_options f", EVENT),
         ("m.id = any($2::uuid[])", [WENT[1], WENT[2]]),
-        ("pg_advisory_xact_lock", None),
         ("insert into stubs", 1),
         ("update nights set status = 'done'", "UPDATE 1"),
         ("insert into messages", "INSERT 0 1"),
@@ -589,20 +608,28 @@ async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
 
 async def test_wrapup_of_a_poll_and_by_a_stranger():
     app, conn = app_for(
-        ("for update", NIGHT_OF[1]), ("from group_members m join groups g", OWNER_SEAT)
+        NIGHT_GROUP_OF(NIGHT_OF[1]),
+        GROUP_MEMBERS_ONE,
+        ("pg_advisory_xact_lock", None),
+        ("for update", NIGHT_OF[1]),
+        ("from group_members m join groups g", OWNER_SEAT),
     )
     async with client_for(app) as client:
         reply = await client.post(f"/v1/nights/{NID}/wrapup", json={}, headers=HEADERS)
     assert reply.status_code == 409 and reply.json()["error"]["code"] == "not_set"
     other_host = {**NIGHT_OF[1], "status": "set", "host_id": OTHER}
     app, conn = app_for(
-        ("for update", other_host), ("from group_members m join groups g", MEMBER_SEAT)
+        NIGHT_GROUP_OF(other_host),
+        GROUP_MEMBERS_ONE,
+        ("pg_advisory_xact_lock", None),
+        ("for update", other_host),
+        ("from group_members m join groups g", MEMBER_SEAT),
     )
     async with client_for(app) as client:
         assert (
             await client.post(f"/v1/nights/{NID}/wrapup", json={}, headers=HEADERS)
         ).status_code == 403
-    app, conn = app_for(("for update", None))
+    app, conn = app_for(("select group_id, status from nights", None))
     async with client_for(app) as client:
         assert (
             await client.post(f"/v1/nights/{NID}/wrapup", json={}, headers=HEADERS)

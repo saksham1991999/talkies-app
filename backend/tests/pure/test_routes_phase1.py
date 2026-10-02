@@ -118,6 +118,16 @@ async def test_patch_me_refuses_null_for_fields_that_cannot_be_null_and_unknown_
     conn.finished()
 
 
+async def test_patch_me_reports_a_deletion_that_landed_mid_request():
+    # ensure_profile ran, then a concurrent DELETE /v1/me took the row: the
+    # update returns nothing and the reply must not be a 500.
+    app, conn = app_for(("insert into profiles", "INSERT 0 1"), ("update profiles set", None))
+    async with client_for(app) as client:
+        reply = await client.patch("/v1/me", json={"display_name": "Asha"}, headers=HEADERS)
+    assert reply.status_code == 401 and reply.json()["error"]["code"] == "account_deleted"
+    conn.finished()
+
+
 async def test_push_a_new_stub():
     app, conn = app_for(
         ("pg_advisory_xact_lock", None),
@@ -320,12 +330,19 @@ async def test_delete_me_calls_supabase_first_then_deletes_the_data():
             order.append(("db", sql.strip()[:30]))
             return await super().execute(sql, *args)
 
-    conn = Tracking(("from profiles where id = $1", None), ("select delete_account($1)", None))
+    conn = Tracking(
+        ("pg_advisory_xact_lock", None),
+        ("from profiles where id = $1", None),
+        ("select delete_account($1)", None),
+    )
     app = make_app(handler=handler, db=ScriptedDb(conn))
     async with client_for(app) as client:
         reply = await client.delete("/v1/me", headers=HEADERS)
     assert reply.status_code == 204
     assert order == [
+        # The user lock is taken before the auth user goes, so a sync push that
+        # is in flight cannot land between the two steps.
+        ("db", "select pg_advisory_xact_lock(h"),
         ("auth", "DELETE", f"/auth/v1/admin/users/{USER}"),
         ("db", "select delete_account($1)"),
     ]

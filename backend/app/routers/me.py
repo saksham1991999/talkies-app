@@ -6,8 +6,8 @@ from fastapi import APIRouter, Request, Response
 from app.auth.apple import revoke_or_log
 from app.auth.deps import UserDep
 from app.common import ensure_profile
-from app.db import DbDep
-from app.errors import Conflict
+from app.db import DbDep, lock_user
+from app.errors import ApiError, Conflict
 from app.schemas.phase1 import Me, MePatch
 
 router = APIRouter(prefix="/v1", tags=["me"])
@@ -62,24 +62,32 @@ async def patch_me(body: MePatch, user: UserDep, db: DbDep):
             )
         except asyncpg.UniqueViolationError as exc:
             raise Conflict("handle_taken", "That handle is taken") from exc
+        if row is None:
+            # The account was deleted between the profile check and this update.
+            # The row cannot come back, so say what happened instead of a 500.
+            raise ApiError(401, "account_deleted", "This account was deleted")
     return dict(row)
 
 
 @router.delete("/me", status_code=204)
 async def delete_me(request: Request, user: UserDep, db: DbDep):
     # The auth user goes FIRST. Once GoTrue is gone, every surviving access token
-    # dies in ensure_profile with a foreign-key error (401 account_deleted), so a
-    # database failure after this point cannot resurrect the account; the next
-    # call to DELETE /v1/me finishes the job (a 404 from GoTrue counts as done).
-    # delete_account() takes the same advisory lock as a sync push.
-    # Read the Apple refresh token before the profile is gone, so the grant can
-    # be revoked after deletion (App Store rule 4.8).
-    async with db.conn() as c:
+    # is refused with 401 account_deleted, so a database failure after this point
+    # cannot resurrect the account; the next call to DELETE /v1/me finishes the
+    # job (a 404 from GoTrue counts as done).
+    #
+    # The user lock is taken before the GoTrue call and held through the cleanup:
+    # delete_account() takes the same advisory lock, so a sync push in flight
+    # either lands entirely before the deletion or waits and then fails on the
+    # missing profile, and can never interleave with the cascade.
+    async with db.tx() as c:
+        await lock_user(c, user)
+        # Read the Apple refresh token before the profile is gone, so the grant
+        # can be revoked after deletion (App Store rule 4.8).
         apple_refresh = await c.fetchval(
             "select apple_refresh_token from profiles where id = $1", user
         )
-    await request.app.state.gotrue.delete_user(user)
-    async with db.tx() as c:
+        await request.app.state.gotrue.delete_user(user)
         await c.execute("select delete_account($1)", user)
     # Best effort: a revoke failure is logged and never blocks the deletion.
     await revoke_or_log(request.app.state.apple, apple_refresh)

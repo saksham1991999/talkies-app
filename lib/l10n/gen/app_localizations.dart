@@ -3939,7 +3939,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =0{No yes replies yet, so no stubs were expected} =1{1 stub was expected, from the yes replies} other{{count} stubs were expected, from the yes replies}}'**
-  String nightWrapExpect(num count);
+  String nightWrapExpect(int count);
 
   /// No description provided for @nightTimePast.
   ///

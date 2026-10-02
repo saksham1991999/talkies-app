@@ -6,9 +6,11 @@ The Flutter tests parse the same example files with the client models.
 import json
 import re
 from pathlib import Path
+from uuid import UUID
 
 import pytest
 
+from app.common import user_color
 from app.schemas import MODELS
 
 BACKEND = Path(__file__).resolve().parents[2]
@@ -99,6 +101,13 @@ def test_example_uses_the_shared_film_snapshot(path: Path):
 
     for film in films(json.loads(path.read_text())):
         assert film == KANTARA
+
+
+def test_the_new_user_example_holds_the_color_the_server_would_set():
+    # `GET /v1/me` is the first call for a fresh account, so this example pins
+    # the untouched defaults. `ensure_profile` inserts user_id.int % 11.
+    wire = json.loads((EXAMPLES / "me.new_user.json").read_text())
+    assert wire["avatar_color"] == user_color(UUID(wire["id"]))
 
 
 def test_examples_follow_the_text_rules():

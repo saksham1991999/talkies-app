@@ -12,7 +12,7 @@ from fastapi import APIRouter
 
 from app.auth.deps import UserDep
 from app.db import DbDep, lock_user
-from app.errors import Conflict
+from app.errors import Conflict, NotFound
 from app.logic.validate import format_time, is_fresh
 from app.logic.wrapup import Attendee, StubPlan, plan_wrapup
 from app.members import post_system
@@ -46,6 +46,16 @@ left join profiles p on p.id = m.user_id
 where m.group_id = $1 and m.id = any($2::uuid[])
 order by m.joined_at, m.id
 """
+# Account members of a group, in a fixed order. A wrap-up locks every one of
+# them before it touches the night row, so a lock held for account deletion can
+# never wait on a night that holds a user lock (account deletion takes the user
+# lock first, then deletes the nights).
+GROUP_USERS = """
+select user_id from group_members
+where group_id = $1 and user_id is not null
+order by user_id
+"""
+NIGHT_GROUP = "select group_id, status from nights where id = $1"
 # A stub the user deleted stays deleted (the tombstone row blocks the insert).
 INSERT_STUB = """
 insert into stubs
@@ -80,6 +90,14 @@ def _stub_data(plan: StubPlan, film_id: str, place: str | None, now: datetime) -
 async def wrap_up(nid: UUID, body: WrapupPost, user: UserDep, db: DbDep):
     now = datetime.now(UTC)
     async with db.tx() as c:
+        # One lock order for the whole app: user locks, then the night row.
+        # Account deletion locks the user and then deletes its nights, so taking
+        # the night row first here could deadlock with it.
+        known = await c.fetchrow(NIGHT_GROUP, nid)
+        if known is None:
+            raise NotFound()
+        for row in await c.fetch(GROUP_USERS, known["group_id"]):
+            await lock_user(c, row["user_id"])
         night, seat = await night_and_seat(c, nid, user, lock=True)
         require_host(night, seat, user)
         event = await c.fetchrow(EVENT, nid) if night["status"] in ("set", "done") else None
@@ -99,9 +117,6 @@ async def wrap_up(nid: UUID, body: WrapupPost, user: UserDep, db: DbDep):
             body.seat_row,
             body.first_seat,
         )
-        # Lock every user we write for, in a fixed order, so two wrap-ups cannot deadlock.
-        for owner in sorted({p.user_id for p in plans}, key=str):
-            await lock_user(c, owner)
         created = 0
         for plan in plans:
             data = _stub_data(plan, event["film_id"], event["place"], now)
@@ -118,7 +133,9 @@ async def wrap_up(nid: UUID, body: WrapupPost, user: UserDep, db: DbDep):
             )
             if await c.fetchval(INSERT_STUB, *args) is not None:
                 created += 1
-        if plans and night["status"] == "set":
+        # Done even when nobody gets a stub: a guest-only or empty wrap-up still
+        # closes the night, or it would stay `set` and could be wrapped again.
+        if night["status"] == "set":
             await c.execute("update nights set status = 'done' where id = $1", nid)
             await post_system(c, night["group_id"], "wrapped", {"night_id": str(nid)}, nid)
     return {"created": created, "skipped": len(plans) - created}

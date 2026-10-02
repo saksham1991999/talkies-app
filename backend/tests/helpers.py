@@ -8,6 +8,8 @@ import httpx
 import jwt
 from fastapi import FastAPI
 
+from app.auth.deps import ACCOUNT_EXISTS
+from app.db import Db
 from app.main import create_app
 from app.ratelimit import Limiter
 from app.settings import Settings
@@ -58,6 +60,24 @@ def _no_network(request: httpx.Request) -> httpx.Response:
 def client_for(app: FastAPI, **kwargs: Any) -> httpx.AsyncClient:
     transport = httpx.ASGITransport(app=app)
     return httpx.AsyncClient(transport=transport, base_url="http://testserver", **kwargs)
+
+
+class AccountStub(Db):
+    """A database that answers only the signed-in account check.
+
+    Every request with a token asks `current_user` whether the account still
+    exists. Tests that are about something else (the body limit, the error
+    envelope) pass this so that check passes and their own route runs.
+    """
+
+    async def fetchrow(self, sql: str, *args: Any):
+        if " ".join(sql.split()) == ACCOUNT_EXISTS:
+            return {"?column?": 1}
+        raise AssertionError(f"unexpected query: {sql.strip()[:120]}")
+
+
+def account_db() -> AccountStub:
+    return AccountStub("")
 
 
 def make_token(

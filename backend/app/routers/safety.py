@@ -6,7 +6,7 @@ from fastapi import APIRouter, Response
 
 from app.auth.deps import UserDep
 from app.common import card
-from app.db import DbDep
+from app.db import DbDep, lock_pair
 from app.errors import Invalid, NotFound
 from app.ratelimit import LimiterDep
 from app.schemas.phase2 import BlockList, BlockPost, ReactionPut, ReportPost, ReportResult
@@ -53,11 +53,14 @@ insert into reports (reporter_id, target_user_id, kind, target_id, reason, note,
 values ($1, $2, $3, $4, $5, $6, $7)
 returning id
 """
-# A user I may report: someone in my audience (a friend, or myself), or a member
+# A user I may report: a friend (whatever their profile visibility), or a member
 # of a group I am in. This keeps the endpoint from probing arbitrary uuids.
+# `friendships` rather than `v_audience`: the contract allows reporting any
+# friend, and that view hides friends whose profile is private.
 AUDIENCE = """
 select not exists (
-  select 1 from v_audience where viewer_id = $1 and owner_id = $2
+  select 1 from friendships
+  where user_id = $1 and friend_id = $2 and not blocked_either($1, $2)
 ) and not exists (
   select 1
   from group_members a join group_members b on a.group_id = b.group_id
@@ -92,6 +95,10 @@ async def block(body: BlockPost, user: UserDep, db: DbDep):
     if other == user:
         raise Invalid()
     async with db.tx() as c:
+        # The same pair lock the friend routes take, so a friend request or an
+        # accept that is in flight cannot land after this delete and leave a
+        # pending request between two people who have blocked each other.
+        await lock_pair(c, user, other)
         if await c.fetchval("select 1 from profiles where id = $1", other) is None:
             raise NotFound()
         await c.execute(

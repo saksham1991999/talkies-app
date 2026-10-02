@@ -318,7 +318,8 @@ async def test_deck_versions_conflicts_and_the_write_limit(world):
     assert (soon.status_code, soon.json()) == (200, {"version": 2})
     assert (await put(ravi, 2, deck)).status_code == 429
     assert (await put(asha, 1, deck)).status_code == 429  # Asha's own window is still full
-    assert (await put(asha, 2, deck, other["id"])).status_code == 200
+    # The window is per member per group, so a fresh group is a fresh budget.
+    assert (await put(asha, 0, deck, other["id"])).status_code == 200
     world.clock.advance(11)
     stale = await put(ravi, 0, deck[:1])
     assert stale.status_code == 409

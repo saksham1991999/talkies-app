@@ -103,10 +103,10 @@ async def test_only_the_owner_may_rename_rotate_delete_or_add_a_guest():
         ("post", f"/v1/groups/{GID}/invite/rotate", None),
         ("post", f"/v1/groups/{GID}/guests", {"name": "Dad"}),
     ):
-        steps = [("from group_members m join groups g", MEMBER_SEAT)]
-        if path.endswith("guests"):
-            steps.insert(0, ("for update", OTHER))  # the group row is locked first
-        app, conn = app_for(*steps)
+        app, conn = app_for(
+            ("for update", OTHER),  # the group row is locked before the owner check
+            ("from group_members m join groups g", MEMBER_SEAT),
+        )
         async with client_for(app) as client:
             reply = await client.request(method.upper(), path, json=body, headers=HEADERS)
         assert reply.status_code == 403, path
@@ -389,7 +389,7 @@ async def test_deck_inputs():
         ("from group_members m join groups g", MEMBER_SEAT),
         ("from v_group_tastes", [{"taste": taste}]),
         (
-            "select film_id from ( select film_id from swipes",
+            "select s.film_id from swipes s join group_members gm",
             [{"film_id": "Q1"}, {"film_id": "Q2"}],
         ),
         ("from v_group_wishes", [{"film_id": "Q10", "film": FILM, "n": 3}]),
@@ -401,7 +401,7 @@ async def test_deck_inputs():
         "seen": ["Q1", "Q2"],
         "wanted": [{"film_id": "Q10", "film": FILM, "n": 3}],
     }
-    assert conn.args_of("select film_id from ( select film_id from swipes") == (GID, USER)
+    assert conn.args_of("select s.film_id from swipes s join group_members gm") == (GID, USER)
     conn.finished()
 
 
@@ -456,7 +456,7 @@ async def test_tallies():
     ]
     app, conn = app_for(
         ("from group_members m join groups g", MEMBER_SEAT),
-        ("group by film_id, vote", counts),
+        ("join group_members gm on gm.id = s.member_id", counts),
         ("where member_id = $1", [{"film_id": "Q1", "vote": "want"}]),
     )
     async with client_for(app) as client:

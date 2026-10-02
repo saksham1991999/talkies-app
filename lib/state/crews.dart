@@ -278,6 +278,7 @@ class LocalCrewRepo implements CrewRepo {
           for (final e in m.entries)
             if (e.value == Vote.seen) e.key,
       },
+      mySeen: env.mySeen,
       today: env.today,
       worldwide: env.worldwide,
     );
@@ -882,7 +883,9 @@ class CrewController extends Notifier<CrewState> {
       catalog: catalog,
       today: today,
       worldwide: worldwide,
-      myTaste: buildTaste(catalog, diary, today),
+      // A private stub stays out of the taste, like every other shared view of
+      // the diary; it still counts as a film I have seen below.
+      myTaste: buildTaste(catalog, diary.publicView(), today),
       myWishes: [for (final w in diary.wishes) ?(diary.films[w.filmId] ?? catalog.byId[w.filmId])],
       mySeen: {for (final s in diary.stubs) s.filmId},
     );

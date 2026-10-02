@@ -120,9 +120,10 @@ async def test_a_blocked_users_messages_are_hidden_both_ways(world):
     assert await bodies(olive) == ["from olive", "from meena"]
     assert await bodies(fred) == ["from fred", "from meena"]
     assert await bodies(meena) == ["from olive", "from fred", "from meena"]
-    # System messages have no sender, so they stay.
+    # A "joined" notice has no sender, but it is about the person who joined, so
+    # olive no longer sees fred's. Meena's stays.
     listed = await olive.ok("get", f"/v1/groups/{gid}/messages")
-    assert [m["code"] for m in listed["items"] if m["kind"] == "system"] == ["joined", "joined"]
+    assert [m["code"] for m in listed["items"] if m["kind"] == "system"] == ["joined"]
 
 
 async def test_system_messages_for_joins_leaves_and_nights(world):

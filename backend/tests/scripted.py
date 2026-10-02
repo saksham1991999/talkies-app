@@ -10,6 +10,7 @@ tests/db when a database is available.
 from contextlib import asynccontextmanager
 from typing import Any
 
+from app.auth.deps import ACCOUNT_EXISTS
 from app.db import Db
 
 
@@ -66,6 +67,14 @@ class ScriptedDb(Db):
     def __init__(self, conn: ScriptedConn):
         super().__init__("")
         self.scripted = conn
+
+    async def fetchrow(self, sql: str, *args: Any):
+        # Every signed-in request checks that the account still exists. These
+        # tests are about the route's own SQL, so answer that one call here
+        # instead of making every script start with it.
+        if " ".join(sql.split()) == ACCOUNT_EXISTS:
+            return {"?column?": 1}
+        return await super().fetchrow(sql, *args)
 
     @asynccontextmanager
     async def conn(self):

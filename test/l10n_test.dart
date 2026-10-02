@@ -15,15 +15,61 @@ Map<String, String> strings(String lang) {
   };
 }
 
-final _branch = RegExp(r'(?:=\d+|zero|one|two|few|many|other)\s*$');
+final _arg = RegExp(r'\{\s*(\w+)\s*(?:,\s*(plural|select)\b)?');
+final _label = RegExp(r'(?:=\w+|\w+)\s*\{');
+
+/// Index of the `}` closing the `{` at [i], or -1 when the braces do not balance.
+int _blockEnd(String text, int i) {
+  var depth = 0;
+  for (var j = i; j < text.length; j++) {
+    if (text[j] == '{') depth++;
+    if (text[j] == '}') {
+      depth--;
+      if (depth == 0) return j;
+    }
+  }
+  return -1;
+}
+
+void _scan(String text, int i, int stop, Set<String> names) {
+  while (i < stop) {
+    final m = text[i] == '{' ? _arg.matchAsPrefix(text, i) : null;
+    if (m == null) {
+      i++;
+      continue;
+    }
+    final close = _blockEnd(text, i);
+    if (close < 0) {
+      i++;
+      continue;
+    }
+    names.add(m.group(1)!);
+    if (m.group(2) != null) {
+      // `{count, plural, =1{1 ticket} other{films}}`: the case labels and their
+      // bodies hold text, so only the block argument is a name. Branch labels
+      // are recognised only inside such a block, which is why plain copy
+      // ending in "one" or "other" keeps its `{name}`.
+      var j = m.end;
+      while (j < close) {
+        final label = _label.matchAsPrefix(text, j);
+        final body = label == null ? -1 : label.end - 1;
+        final end = label == null ? -1 : _blockEnd(text, body);
+        if (end < 0 || end > close) {
+          j++;
+        } else {
+          _scan(text, body + 1, end, names);
+          j = end + 1;
+        }
+      }
+    }
+    i = close + 1;
+  }
+}
 
 /// Argument names in an ICU message. A one-word plural branch body, like `other{films}`, is text.
 Set<String> holes(String text) {
   final out = <String>{};
-  for (final m in RegExp(r'\{\s*(\w+)\s*(\}|,\s*(?:plural|select))').allMatches(text)) {
-    if (m.group(2) == '}' && _branch.hasMatch(text.substring(0, m.start))) continue;
-    out.add(m.group(1)!);
-  }
+  _scan(text, 0, text.length, out);
   return out;
 }
 
@@ -40,6 +86,21 @@ void main() {
       }
     });
   }
+
+  test('placeholders are read the same way tool/merge_arb.py reads them', () {
+    // A branch label only counts inside a real plural or select block, so copy
+    // that happens to end in "one" or "other" still carries its argument.
+    expect(holes('Only one {count}'), {'count'});
+    expect(holes('You are the other {name} here'), {'name'});
+    expect(holes('{count, plural, =1{1 ticket} other{{count} tickets}}'), {'count'});
+    expect(holes('{count, plural, other{films}}'), {'count'});
+    expect(holes('{count, plural, zero{no tickets} one{one ticket} other{{count} tickets}}'), {
+      'count',
+    });
+    expect(holes('{gender, select, other{{name} joined}}'), {'gender', 'name'});
+    expect(holes('{n, plural, other{{count, plural, other{{n} of {count}}}}}'), {'n', 'count'});
+    expect(holes('no placeholders at all'), <String>{});
+  });
 
   test('no string holds an em dash', () {
     for (final lang in ['en', ...langs]) {

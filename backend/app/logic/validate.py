@@ -15,7 +15,10 @@ QID_RE = re.compile(r"^Q[0-9]{1,12}$")
 WIRE_FILM_RE = re.compile(r"^(Q[0-9]{1,12}|my:[A-Za-z0-9_.-]{1,40})$")
 HANDLE_RE = re.compile(r"^[a-z0-9_]{3,20}$")
 INVITE_RE = re.compile(r"^[A-HJ-KM-NP-Z2-9]{8}$")
-_TIME_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?Z$")
+# Exactly three fraction digits: the wire format is millisecond precision, and
+# a finer value would come back truncated, so a sync record could never
+# round-trip and a retry would look like a conflict.
+_TIME_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$")
 _DAY_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 FILM_MAX = 4096
@@ -245,7 +248,9 @@ def _stub_row(rid: str, updated: datetime, film: Any, data: dict, now: datetime)
         rid,
         updated,
         False,
-        clean_film(film),
+        # The snapshot must be the film the record names, not whatever the
+        # client sent alongside it.
+        clean_film(film, film_id),
         data,
         film_id=film_id,
         rating=_rating(data.get("rating")),
@@ -300,7 +305,8 @@ def validate_record(
     if kind == "wish":
         if data.get("film", rid) != rid:
             raise RecordError()
-        return Row(kind, rid, updated, False, clean_film(film), data, film_id=rid)
+        # A wish is keyed by its film id, so the snapshot must be that film.
+        return Row(kind, rid, updated, False, clean_film(film, rid), data, film_id=rid)
     if kind == "meta":
         _meta_ok(data)
     elif not isinstance(data.get("v"), int):

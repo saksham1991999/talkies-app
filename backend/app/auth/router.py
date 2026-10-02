@@ -49,7 +49,10 @@ async def refresh(body: RefreshRequest, request: Request, limiter: LimiterDep, a
 
 
 @router.post("/id-token", response_model=Session)
-async def id_token(body: IdTokenRequest, request: Request, auth: GoTrueDep):
+async def id_token(
+    body: IdTokenRequest, request: Request, limiter: LimiterDep, auth: GoTrueDep
+):
+    limiter.check("id_token_ip", client_ip(request))
     if body.provider not in request.app.state.settings.providers:
         raise NotFound("provider_disabled", "This sign-in method is off")
     session = await auth.id_token(body.provider, body.id_token, body.access_token, body.nonce)

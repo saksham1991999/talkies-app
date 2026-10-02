@@ -294,7 +294,13 @@ Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
   final because = <(Film, List<Film>)>[];
   for (var k = 0; k < anchors.length; k++) {
     final row = diverse(c, rowPools[k], _rowSize, taken);
-    if (row.length >= _rowMin) because.add((anchors[k], [for (final i in row) c.items[i]]));
+    if (row.length >= _rowMin) {
+      because.add((anchors[k], [for (final i in row) c.items[i]]));
+    } else {
+      // A dropped row must not reserve its films: a later anchor may fill the
+      // row with them.
+      taken.removeAll(row);
+    }
   }
   return Recs(forYou: [for (final i in forYou) c.items[i]], because: because);
 }
@@ -317,7 +323,14 @@ Map<String, double> _signals(Diary d, DateTime today) {
   if (best.length >= 3) {
     mean = best.values.reduce((a, b) => a + b) / best.length;
     final v = best.values.map((r) => (r - mean) * (r - mean)).reduce((a, b) => a + b) / best.length;
-    spread = math.max(0.5, math.sqrt(v));
+    // Every film rated the same: the diary has no scale of its own, so centering
+    // would make every rating 0 and leave the diary with no taste at all. Read
+    // the ratings against the app's own 0.1-5 scale instead.
+    if (v < 1e-9) {
+      mean = 3.0;
+    } else {
+      spread = math.max(0.5, math.sqrt(v));
+    }
   }
   double recency(DateTime t) =>
       math.pow(0.5, today.difference(t).inDays / _halfLifeDays).toDouble().clamp(_minRecency, 1.0);

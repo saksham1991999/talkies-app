@@ -8,6 +8,7 @@ import base64
 import binascii
 
 _URL_TO_STANDARD = str.maketrans("-_", "+/")
+_MAX_DIGITS = 18  # the same limit decode_cursor enforces
 
 
 class BadCursor(ValueError):
@@ -15,6 +16,9 @@ class BadCursor(ValueError):
 
 
 def encode_cursor(number: int) -> str:
+    """A cursor the server can decode. Raise BadCursor for a value it cannot."""
+    if number < 0 or len(str(number)) > _MAX_DIGITS:
+        raise BadCursor(number)
     return base64.urlsafe_b64encode(str(number).encode("ascii")).decode("ascii").rstrip("=")
 
 
@@ -27,6 +31,6 @@ def decode_cursor(text: str | None) -> int | None:
         raw = base64.b64decode(padded, validate=True)  # validate: no stray characters
     except (binascii.Error, ValueError) as exc:
         raise BadCursor() from exc
-    if not raw.isdigit() or len(raw) > 18:
+    if not raw.isdigit() or len(raw) > _MAX_DIGITS:
         raise BadCursor()
     return int(raw)

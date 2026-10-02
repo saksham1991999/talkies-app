@@ -163,6 +163,10 @@ async def get_group(gid: UUID, user: UserDep, db: DbDep):
 @router.patch("/{gid}", response_model=Group)
 async def rename_group(gid: UUID, body: GroupPatch, user: UserDep, db: DbDep):
     async with db.tx() as c:
+        # The group row first, as remove_member does: an ownership handover that
+        # is in flight cannot land between the owner check and the update.
+        if await c.fetchval(LOCK_GROUP, gid) is None:
+            raise NotFound()
         require_owner(await seat_of(c, gid, user))
         await c.execute("update groups set name = $2 where id = $1", gid, body.name)
         row = await c.fetchrow(GROUP, gid)
@@ -172,6 +176,8 @@ async def rename_group(gid: UUID, body: GroupPatch, user: UserDep, db: DbDep):
 @router.delete("/{gid}", status_code=204)
 async def delete_group(gid: UUID, user: UserDep, db: DbDep):
     async with db.tx() as c:
+        if await c.fetchval(LOCK_GROUP, gid) is None:
+            raise NotFound()
         require_owner(await seat_of(c, gid, user))
         await c.execute("delete from groups where id = $1", gid)
     return Response(status_code=204)
@@ -180,6 +186,8 @@ async def delete_group(gid: UUID, user: UserDep, db: DbDep):
 @router.post("/{gid}/invite/rotate", response_model=InviteCode)
 async def rotate_invite(gid: UUID, user: UserDep, db: DbDep):
     async with db.tx() as c:
+        if await c.fetchval(LOCK_GROUP, gid) is None:
+            raise NotFound()
         require_owner(await seat_of(c, gid, user))
         for _ in range(8):
             code = await c.fetchval(

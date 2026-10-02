@@ -30,7 +30,8 @@ error             {error: {code, message, detail: any|null}}
 otp_request       {email}
 verify_request    {email, code}
 refresh_request   {refresh_token}
-id_token_request  {provider: "google"|"apple", id_token, access_token: str|null, nonce: str|null}
+id_token_request  {provider: "google"|"apple", id_token, access_token: str|null, nonce: str|null,
+                   authorization_code: str|null (Apple only: buys the refresh token for grant revocation)}
 
 me                {id, handle: str|null, display_name: str|null, avatar_color: int, visibility: "private"|"friends", share_ratings: bool}
 me_patch          any of {handle, display_name, avatar_color, visibility, share_ratings}
@@ -119,7 +120,7 @@ send_film         {user_id, film_id, film, note: str|null}
 | `POST /v1/sync/push` | U | `sync_push` | `sync_push_result` | 413 |
 | `GET /v1/sync/pull?after=0&limit=200` | U | | `sync_pull` | |
 
-Auth proxy: the server forwards to Supabase Auth and whitelists the body fields. `otp` forces `create_user: true`. `verify` forces `type: "email"`. `id-token` forwards `provider`, `id_token`, `access_token`, `nonce`. `expires_at` is computed when Supabase omits it.
+Auth proxy: the server forwards to Supabase Auth and whitelists the body fields. `otp` forces `create_user: true`. `verify` forces `type: "email"`. `id-token` forwards `provider`, `id_token`, `access_token`, `nonce`. An `apple` call with `authorization_code` also trades that code for an Apple refresh token and keeps it, so `DELETE /v1/me` can revoke the grant; a failure there never fails the sign-in. `expires_at` is computed when Supabase omits it.
 
 `GET /v1/me` creates the profile row with `visibility: "private"`, `share_ratings: false`, `avatar_color` from the user id.
 

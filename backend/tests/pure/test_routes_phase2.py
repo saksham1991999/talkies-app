@@ -353,6 +353,7 @@ async def test_reaction_put_and_clear():
 
 async def test_block_removes_the_friendship_and_requests():
     app, conn = app_for(
+        ("pg_advisory_xact_lock", None),  # the pair lock, shared with the friend routes
         ("select 1 from profiles", 1),
         ("insert into blocks", "INSERT 0 1"),
         ("delete from friendships", "DELETE 2"),

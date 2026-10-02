@@ -6,20 +6,24 @@
   "film": null,
   "data": {
     "v": 1,
-    "traits": {
+    "t": {
       "g:drama": 82,
       "l:kn": 64,
       "dir:Q9876": 50
     },
-    "langs": [
-      "kn",
-      "hi"
+    "l": {
+      "kn": 64,
+      "hi": 31
+    },
+    "e": {
+      "202": 70,
+      "201": 42
+    },
+    "k": [
+      88,
+      12
     ],
-    "eras": [
-      "2020s",
-      "2010s"
-    ],
-    "services": [
+    "s": [
       "Netflix",
       "Prime Video"
     ]

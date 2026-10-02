@@ -1933,7 +1933,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String friendsMatchLabel(int pct) {
-    return '$pct ಶತಮಾನ ಹೊಂದಾಣಿಕೆ';
+    return '$pct ಶೇಕಡಾ ಹೊಂದಾಣಿಕೆ';
   }
 
   @override
@@ -2133,7 +2133,7 @@ class AppLocalizationsKn extends AppLocalizations {
   }
 
   @override
-  String nightWrapExpect(num count) {
+  String nightWrapExpect(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,

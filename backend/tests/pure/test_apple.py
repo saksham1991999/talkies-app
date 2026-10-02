@@ -122,7 +122,11 @@ async def test_delete_revokes_the_stored_apple_grant():
     up = Replies()
     app, conn = app_for(
         up,
-        [("from profiles where id = $1", "apple-refresh"), ("select delete_account($1)", None)],
+        [
+            ("pg_advisory_xact_lock", None),
+            ("from profiles where id = $1", "apple-refresh"),
+            ("select delete_account($1)", None),
+        ],
         apple_settings(),
     )
     async with client_for(app) as client:
@@ -139,7 +143,11 @@ async def test_delete_without_a_stored_token_skips_the_revoke():
     up = Replies()
     app, conn = app_for(
         up,
-        [("from profiles where id = $1", None), ("select delete_account($1)", None)],
+        [
+            ("pg_advisory_xact_lock", None),
+            ("from profiles where id = $1", None),
+            ("select delete_account($1)", None),
+        ],
         apple_settings(),
     )
     async with client_for(app) as client:
@@ -153,7 +161,11 @@ async def test_delete_without_apple_configured_skips_the_revoke():
     up = Replies()
     app, conn = app_for(
         up,
-        [("from profiles where id = $1", "apple-refresh"), ("select delete_account($1)", None)],
+        [
+            ("pg_advisory_xact_lock", None),
+            ("from profiles where id = $1", "apple-refresh"),
+            ("select delete_account($1)", None),
+        ],
         apple_settings(apple_client_id="", apple_client_secret=""),
     )
     async with client_for(app) as client:
@@ -167,7 +179,11 @@ async def test_delete_proceeds_when_apple_refuses_to_revoke():
     up = Replies(revoke_status=500)
     app, conn = app_for(
         up,
-        [("from profiles where id = $1", "apple-refresh"), ("select delete_account($1)", None)],
+        [
+            ("pg_advisory_xact_lock", None),
+            ("from profiles where id = $1", "apple-refresh"),
+            ("select delete_account($1)", None),
+        ],
         apple_settings(),
     )
     async with client_for(app) as client:

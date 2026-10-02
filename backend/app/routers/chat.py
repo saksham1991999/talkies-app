@@ -7,7 +7,7 @@ from fastapi import APIRouter, Query
 
 from app.auth.deps import UserDep
 from app.common import film_or_error
-from app.db import DbDep
+from app.db import DbDep, lock_pair
 from app.errors import Invalid, NotFound
 from app.members import seat_of
 from app.ratelimit import LimiterDep
@@ -134,6 +134,10 @@ async def send_film(body: SendFilm, user: UserDep, db: DbDep, limiter: LimiterDe
     limiter.check("send_film", str(user))
     film = film_or_error(body.film, body.film_id)
     async with db.tx() as c:
+        # The same pair lock the block mutation takes: without it a block can
+        # commit between this check and the insert, and the film reappears in
+        # the list after an unblock.
+        await lock_pair(c, user, body.user_id)
         if await c.fetchval(CAN_SEND, user, body.user_id) is None:
             raise NotFound()  # not a friend, or blocked either way
         await c.execute(SEND, user, body.user_id, body.film_id, film, body.note or None)

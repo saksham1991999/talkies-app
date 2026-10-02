@@ -32,7 +32,10 @@ async def test_every_table_has_rls_on_and_there_is_no_policy(world):
     )
     assert len(tables) >= 20
     assert [t["relname"] for t in tables if not t["relrowsecurity"]] == []
-    assert await world.value("select count(*) from pg_policies") == 0
+    # Only `public`: a policy another schema carries (a Supabase default, say)
+    # is not this migration's business, and this test must not fail over it.
+    policies = await world.value("select count(*) from pg_policies where schemaname = 'public'")
+    assert policies == 0
 
 
 @pytest.mark.parametrize("role", ["anon", "authenticated"])

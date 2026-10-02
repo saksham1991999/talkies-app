@@ -49,24 +49,46 @@ async def test_a_block_filters_the_counterpart_from_shared_groups(world):
     ravi = await world.user("ravi", visibility="friends")
     group = await world.group(asha, "Crew", ravi)
     gid = group["id"]
-    deck = [{"film_id": "Q10", "film": film("Q10")}]
+    deck = [
+        {"film_id": "Q10", "film": film("Q10")},
+        {"film_id": "Q11", "film": film("Q11")},
+    ]
     await asha.ok("put", f"/v1/groups/{gid}/deck", {"base_version": 0, "items": deck})
+    # Q10 is a film only Ravi saw: it makes `seen_by` and the tallies prove that
+    # his contributions are filtered, not just absent. Q11 is his "want".
     await ravi.ok(
-        "put", f"/v1/groups/{gid}/swipes", {"swipes": [{"film_id": "Q10", "vote": "want"}]}
+        "put",
+        f"/v1/groups/{gid}/swipes",
+        {
+            "swipes": [
+                {"film_id": "Q10", "vote": "seen"},
+                {"film_id": "Q11", "vote": "want"},
+            ]
+        },
     )
     await ravi.ok("post", f"/v1/groups/{gid}/messages", {"body": "hello from ravi"}, status=201)
+
+    before = await asha.ok("get", f"/v1/groups/{gid}/deck")
+    assert [i["seen_by"] for i in before["items"]] == [1, 0]
+    assert await asha.ok("get", f"/v1/groups/{gid}/tallies") == {
+        "tallies": {
+            "Q10": {"want": 0, "skip": 0, "seen": 1},
+            "Q11": {"want": 1, "skip": 0, "seen": 0},
+        },
+        "mine": {},
+    }
 
     await asha.ok("post", "/v1/blocks", {"user_id": str(ravi.id)}, status=204)
     # Ravi stays a member, but his contributions vanish from Asha's view.
     assert (await asha.ok("get", f"/v1/groups/{gid}"))["member_count"] == 2
     shown = await asha.ok("get", f"/v1/groups/{gid}/deck")
-    assert shown["items"][0]["seen_by"] == 0
+    assert [i["seen_by"] for i in shown["items"]] == [0, 0]
     tallies = await asha.ok("get", f"/v1/groups/{gid}/tallies")
     assert tallies["tallies"] == {}
     messages = await asha.ok("get", f"/v1/groups/{gid}/messages")
     assert messages["items"] == []
     # Ravi's view of his own swipes is untouched, and he still sees the deck.
-    assert (await ravi.ok("get", f"/v1/groups/{gid}/tallies"))["tallies"]["Q10"]["want"] == 1
+    assert (await ravi.ok("get", f"/v1/groups/{gid}/tallies"))["tallies"]["Q11"]["want"] == 1
 
 
 async def test_a_user_report_needs_a_relationship(world):

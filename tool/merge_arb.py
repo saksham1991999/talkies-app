@@ -36,16 +36,56 @@ LANGS = ['hi', 'ta', 'te', 'bn', 'mr', 'kn', 'ml']
 FORCE = False
 KEY = re.compile(r'^[a-z][A-Za-z0-9]*$')
 PH_TYPES = {'String', 'int', 'double', 'num'}
-BRANCH = re.compile(r'(?:=\d+|zero|one|two|few|many|other)\s*$')
+ARG = re.compile(r'\{\s*(\w+)\s*(?:,\s*(plural|select)\b)?')
+LABEL = re.compile(r'(?:=\w+|\w+)\s*\{')
+
+
+def block_end(text: str, i: int) -> int:
+    """Index of the `}` closing the `{` at `i`, or -1 when the braces do not balance."""
+    depth = 0
+    for j in range(i, len(text)):
+        if text[j] == '{':
+            depth += 1
+        elif text[j] == '}':
+            depth -= 1
+            if depth == 0:
+                return j
+    return -1
+
+
+def scan_names(text: str, i: int, stop: int, names: set[str]) -> None:
+    while i < stop:
+        m = ARG.match(text, i) if text[i] == '{' else None
+        if m is None:
+            i += 1
+            continue
+        close = block_end(text, i)
+        if close < 0:
+            i += 1
+            continue
+        names.add(m.group(1))
+        if m.group(2) is not None:
+            # `{count, plural, =1{1 ticket} other{films}}`: the case labels and
+            # their bodies hold text, so only the block argument is a name here.
+            # Branch labels are recognised only inside such a block, which is
+            # why plain copy ending in "one" or "other" keeps its `{name}`.
+            j = m.end()
+            while j < close:
+                label = LABEL.match(text, j)
+                body = label.end() - 1 if label else -1
+                end = block_end(text, body) if label else -1
+                if end < 0 or end > close:
+                    j += 1
+                else:
+                    scan_names(text, body + 1, end, names)
+                    j = end + 1
+        i = close + 1
 
 
 def placeholders(text: str) -> set[str]:
     """Argument names in an ICU message. A one-word plural branch body, like `other{films}`, is text."""
-    names = set()
-    for m in re.finditer(r'\{\s*(\w+)\s*(\}|,\s*(?:plural|select))', text):
-        if m.group(2) == '}' and BRANCH.search(text[: m.start()]):
-            continue
-        names.add(m.group(1))
+    names: set[str] = set()
+    scan_names(text, 0, len(text), names)
     return names
 
 
@@ -237,11 +277,14 @@ def cmd_draft() -> int:
 
 @locked
 def cmd_translate() -> int:
-    staged = load_staged_en()
     drafted = drafted_keys()
     if not drafted:
         print('no drafts to translate')
         return 0
+    # The staged English files are usually deleted by the time translations
+    # arrive, so the English text that actually landed in app_en.arb is what the
+    # translations are checked against.
+    english = json.loads(arb_path('en').read_text(encoding='utf-8'))
     errors: list[str] = []
     translations: dict[str, dict[str, str]] = {}
     for lang in LANGS:
@@ -257,7 +300,9 @@ def cmd_translate() -> int:
             errors.append(f'{lang}: extra {k}')
         for k in drafted & set(t):
             errors += problems_in(t[k], f'{lang}.{k}')
-            if k in staged and placeholders(t[k]) != placeholders(staged[k]['text']):
+            if k not in english:
+                errors.append(f'{lang}.{k}: not a key in app_en.arb')
+            elif placeholders(t[k]) != placeholders(english[k]):
                 errors.append(f'{lang}.{k}: placeholders differ from English')
     if errors:
         print('\n'.join(errors[:80]) + f'\n{len(errors)} problem(s)')

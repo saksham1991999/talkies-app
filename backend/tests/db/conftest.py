@@ -169,7 +169,10 @@ class Client:
         return await self.http.patch(path, json=json, headers=self.headers)
 
     async def delete(self, path: str, json: Any = None) -> httpx.Response:
-        return await self.http.delete(path, headers=self.headers)
+        # httpx.delete() has no `json` argument, so build the request to keep a
+        # body the caller passed instead of dropping it.
+        request = self.http.build_request("DELETE", path, json=json, headers=self.headers)
+        return await self.http.send(request)
 
     async def ok(self, method: str, path: str, json: Any = None, status: int = 200, **params: Any):
         """Call, assert the status, and return the JSON body (None for 204)."""

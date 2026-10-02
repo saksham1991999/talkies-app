@@ -704,6 +704,7 @@
   "@nightReminderHour": {"placeholders": {"film": {"type": "String"}, "group": {"type": "String"}}},
   "nightWrapDone": "{count, plural, other{{count} stubs made}one{1 stub made}zero{No stubs made}}",
   "nightWrapExpect": "{count, plural, =0{No yes replies yet, so no stubs were expected} =1{1 stub was expected, from the yes replies} other{{count} stubs were expected, from the yes replies}}",
+  "@nightWrapExpect": {"placeholders": {"count": {"type": "int"}}},
   "nightTimePast": "That time has already passed. Pick a later one.",
   "@nightWrapDone": {"placeholders": {"count": {"type": "int"}}},
   "chatJoined": "{name} joined",

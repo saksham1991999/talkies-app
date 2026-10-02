@@ -29,4 +29,6 @@ def match_score(
     coverage = len(common) / (min(n_mine, n_theirs) + K)
     d = [abs(a - b) / 4.9 for a, b in common if use_ratings and a is not None and b is not None]
     harmony = 1 - 0.6 * sum(d) / (len(d) + 2)
-    return Match(len(common), round(100 * coverage * harmony))
+    # The phone prints `pct` as a percentage and promises 0 to 99: two large
+    # shelves with the same films reach 100 without the clamp.
+    return Match(len(common), min(99, round(100 * coverage * harmony)))

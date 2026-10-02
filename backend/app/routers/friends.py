@@ -171,10 +171,14 @@ def _wire(match: Match) -> dict:
 
 @router.delete("/friends/{uid}", status_code=204)
 async def unfriend(uid: UUID, user: UserDep, db: DbDep):
-    await db.execute(
-        "delete from friendships "
-        "where (user_id = $1 and friend_id = $2) or (user_id = $2 and friend_id = $1)",
-        user,
-        uid,
-    )
+    # The pair lock keeps an accept that is in flight from re-making the
+    # friendship right after this delete.
+    async with db.tx() as c:
+        await lock_pair(c, user, uid)
+        await c.execute(
+            "delete from friendships "
+            "where (user_id = $1 and friend_id = $2) or (user_id = $2 and friend_id = $1)",
+            user,
+            uid,
+        )
     return Response(status_code=204)

@@ -67,4 +67,7 @@ Email = Annotated[
         max_length=254,
         pattern=r"^[^@\s]+@[^@\s]+$",
     ),
+    # The pattern only rules out `@` and whitespace, so NUL and other control
+    # characters would pass through to Supabase Auth.
+    AfterValidator(_line),
 ]

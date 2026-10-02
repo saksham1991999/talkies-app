@@ -149,7 +149,10 @@ class GoTrue:
         reply = await self._send("DELETE", f"/admin/users/{user_id}", self._service)
         if reply.status_code == 404:
             return
-        if reply.status_code >= 400:
+        # Only 2xx means the user is gone. A 3xx (a redirect from a misconfigured
+        # or proxied endpoint) would otherwise let the local profile be deleted
+        # while the Supabase user survives.
+        if not 200 <= reply.status_code < 300:
             log.warning("auth user delete answered %s", reply.status_code)
             raise Upstream("The account could not be removed from the sign-in service")
 
@@ -159,11 +162,19 @@ class GoTrue:
             expires_at = body.get("expires_at") or int(self._clock()) + int(
                 body.get("expires_in", 3600)
             )
+            # str() would happily turn a null or a number into a token string.
+            # Malformed upstream replies become 502, never a broken session.
+            access = body["access_token"]
+            refresh = body["refresh_token"]
+            if not isinstance(access, str) or not access:
+                raise ValueError("bad access_token")
+            if not isinstance(refresh, str) or not refresh:
+                raise ValueError("bad refresh_token")
             return {
-                "access_token": str(body["access_token"]),
-                "refresh_token": str(body["refresh_token"]),
+                "access_token": access,
+                "refresh_token": refresh,
                 "expires_at": int(expires_at),
-                "user": {"id": str(body["user"]["id"])},
+                "user": {"id": str(UUID(str(body["user"]["id"])))},
             }
         except (ValueError, KeyError, TypeError, AttributeError) as exc:
             log.warning("auth service sent a session we cannot read")

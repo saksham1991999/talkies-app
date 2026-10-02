@@ -34,11 +34,15 @@ DECK = "select version, items from group_decks where group_id = $1"
 # pairs, so a member who counts twice still counts once. A member either of us
 # blocked does not count (guests have no user and always count). Membership
 # stays; only the blocked counterpart's contributions are hidden.
+#
+# `swipes.member_id` is a `group_members.id`, not a profile id, so every block
+# check has to go through `group_members.user_id`.
 SEEN_BY = """
 select film_id, count(*) as n from (
-  select film_id, member_id from swipes
-  where group_id = $1 and vote = 'seen' and film_id = any($3::text[])
-    and (member_id is null or not blocked_either($2, member_id))
+  select s.film_id, s.member_id from swipes s
+  join group_members gm on gm.id = s.member_id
+  where s.group_id = $1 and s.vote = 'seen' and s.film_id = any($3::text[])
+    and (gm.user_id is null or not blocked_either($2, gm.user_id))
   union
   select v.film_id, m.id from group_members m
   join v_my_stubs v on v.user_id = m.user_id
@@ -54,8 +58,10 @@ group by film_id
 
 SEEN_ALL = """
 select film_id from (
-  select film_id from swipes where group_id = $1 and vote = 'seen'
-    and (member_id is null or not blocked_either($2, member_id))
+  select s.film_id from swipes s
+  join group_members gm on gm.id = s.member_id
+  where s.group_id = $1 and s.vote = 'seen'
+    and (gm.user_id is null or not blocked_either($2, gm.user_id))
   union
   select film_id from v_my_stubs where user_id = $2
   union
@@ -91,9 +97,10 @@ on conflict (member_id, film_id) do update set vote = excluded.vote
 
 # $2 = caller: a member either of us blocked does not count (guests always do).
 TALLIES = """
-select film_id, vote, count(*) as n from swipes
-where group_id = $1 and (member_id is null or not blocked_either($2, member_id))
-group by film_id, vote
+select s.film_id, s.vote, count(*) as n from swipes s
+join group_members gm on gm.id = s.member_id
+where s.group_id = $1 and (gm.user_id is null or not blocked_either($2, gm.user_id))
+group by s.film_id, s.vote
 """
 MINE = "select film_id, vote from swipes where member_id = $1"
 

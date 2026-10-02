@@ -75,7 +75,7 @@ Build flags (`--dart-define=NAME=value`):
 flutter run --dart-define=TALKIES_API_URL=https://<your-api-host>
 ```
 
-For local development, point `TALKIES_API_URL` at a local server. Debug Android builds allow plain HTTP. Use HTTPS in release builds.
+For local development, point `TALKIES_API_URL` at a local server. The address must be HTTPS in every build: `_uri()` in `lib/net/api.dart` refuses an `http://` address with `ApiOffline('TALKIES_API_URL must be https')` before it sends anything, so a plain-HTTP local server works only if that check is relaxed. (Android debug builds do permit cleartext at the platform level: `android/app/src/debug/AndroidManifest.xml` sets `usesCleartextTraffic`.) Use HTTPS in release builds.
 
 The Supabase provider settings (Google, Apple, the email code template, SMTP) are in `backend/README.md`. For Google on iOS, add the reversed Google client ID to `ios/Runner/Info.plist` as a URL scheme.
 

@@ -30,6 +30,8 @@ Copy `.env.example` to `.env` for local runs. On a host, set real environment va
 | `DATABASE_URL` | The transaction pooler string. A `?pgbouncer=true` suffix is removed. |
 | `PUBLIC_BASE_URL` | The public address of this server. It goes into link previews of invite links. |
 | `AUTH_PROVIDERS` | Comma list of sign-in methods: `email`, `google`, `apple`. Default `email`. |
+| `APPLE_CLIENT_ID` | The Apple client ID, which is the app bundle ID. With the secret, turns on Apple grant revocation. |
+| `APPLE_CLIENT_SECRET` | The ES256 client-secret JWT minted from the Apple team key. |
 | `DB_POOL_MAX` | Most database connections in this process. Default 10. |
 
 The server starts with none of these set. Sign-in routes answer 502 while Supabase is not set up. Other routes answer 401 without a valid token and 503 while the database is not set or not reachable. `GET /healthz` answers 503 while the database is not reachable.
@@ -65,8 +67,8 @@ The server starts with none of these set. Sign-in routes answer 502 while Supaba
 
    The reply is `{"ok":true,"api":1,"auth":["email"]}`.
 
-6. Build the app with the address of the server:
-   `flutter run --dart-define=TALKIES_API_URL=http://10.0.2.2:8000` (Android emulator) or `http://localhost:8000` (iOS simulator).
+6. Build the app with the address of the server. The address must be HTTPS: the app refuses an `http://` one (`_uri()` in `lib/net/api.dart`), so a plain local server needs TLS in front of it, or that check relaxed in a scratch build:
+   `flutter run --dart-define=TALKIES_API_URL=https://10.0.2.2:8000` (Android emulator) or `https://localhost:8000` (iOS simulator).
 
 ## Set up Supabase
 
@@ -86,7 +88,7 @@ The server starts with none of these set. Sign-in routes answer 502 while Supaba
    - **Anonymous sign-ins.** Keep them off.
    - **Passwords.** The app has no password screen and the server calls no password endpoint. Keep the anon key on the server only. Never put it in the app.
    - **Google.** Turn the provider on. Add the web and iOS client IDs to the authorized client IDs. Turn on "Skip nonce checks" for the iOS client, because the Google iOS SDK does not give the app the raw nonce.
-   - **Apple.** Turn the provider on. Use the app bundle ID as the client ID. The app sends the raw nonce and Supabase checks its hash inside the Apple token.
+   - **Apple.** Turn the provider on. Use the app bundle ID as the client ID. The app sends the raw nonce and Supabase checks its hash inside the Apple token. Set `APPLE_CLIENT_ID` (the bundle ID) and `APPLE_CLIENT_SECRET` (the ES256 client-secret JWT minted from the Apple team key) on the backend too. With both set, the server exchanges the authorization code of an Apple sign-in for a refresh token and stores it on the profile, so `DELETE /v1/me` can revoke the grant (App Store rule 4.8). Without them, or when the exchange fails, the sign-in and the deletion still work and the revoke is skipped with a log line.
 4. Database user. Use the pooler string of the `postgres` user. That user owns the tables, so RLS (which has no policy) does not hide rows from it. Any other role would see no rows.
 5. Set `AUTH_PROVIDERS` to the methods you switched on, for example `email,google,apple`. `GET /healthz` lists them and the app shows only those.
 6. Token keys. A new project signs tokens with asymmetric keys. The server reads the public keys from `<SUPABASE_URL>/auth/v1/.well-known/jwks.json`. Set `SUPABASE_JWT_SECRET` only if the project still uses the shared secret.
@@ -138,7 +140,7 @@ What the checks cover:
 - Film snapshots are cut down to the known keys when they arrive, so a snapshot cannot carry diary text.
 - A new profile is private. Friends see nothing until the owner chooses "friends".
 - A blocked user disappears for both people: lookup, profile, feed, roster, and chat.
-- `DELETE /v1/me` runs `delete_account`, which deletes the profile. Every table cascades from it. Groups that the user owns pass to the earliest member, or go when nobody else is in them. The server then deletes the Supabase user.
+- `DELETE /v1/me` runs `delete_account`, which deletes the profile. Every table cascades from it. Groups that the user owns pass to the earliest member, or go when nobody else is in them. Before a report row goes, `archive_report()` copies its kind, target id, reason, note and date to `reports_archive`, which carries no name, email or message text. The server then deletes the Supabase user.
 - Logs hold no request bodies, no emails, and no codes.
 
 ## Limits
@@ -163,7 +165,7 @@ What the checks cover:
 | Messages | 30 per minute per user |
 | Sent films | 30 per hour per user |
 | Reports | 20 per hour per user |
-| Deck writes | 1 per 10 seconds per group |
+| Deck writes | 1 per 10 seconds per member per group |
 
 ## Where `API.md` is silent
 
@@ -181,7 +183,7 @@ The code makes these choices:
 
 ## Known gaps
 
-- Apple requires token revocation when a Sign in with Apple account is deleted. It needs Apple credentials and is not built.
+- Apple revocation covers the sign-ins that happened while `APPLE_CLIENT_ID` and `APPLE_CLIENT_SECRET` were set. An account that signed in with Apple before them stored no refresh token, so deleting it logs the skip and cannot revoke that grant. The person can still stop the app in the Apple ID settings.
 - Supabase backups can hold data for some time after an account is deleted.
 - The rate limiter is per process.
 - A token key that Supabase revokes stays trusted until the server fetches the key list again. That happens when a token with an unknown key id arrives, at most once per minute. Tokens last one hour.

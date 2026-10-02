@@ -12,7 +12,10 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project
+# The cache goes in the same layer as the sync, so the image does not carry a
+# second copy of every wheel. (The uv binary itself stays; removing it needs a
+# multi-stage build.)
+RUN uv sync --frozen --no-dev --no-install-project && rm -rf /root/.cache/uv
 
 COPY app ./app
 

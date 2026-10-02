@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:talkies/data/catalog.dart';
 import 'package:talkies/data/crews.dart';
 import 'package:talkies/net/api.dart';
 import 'package:talkies/state/crews.dart';
@@ -27,13 +28,14 @@ ProviderContainer make({
   bool online = false,
   DateTime? at,
   Future<void> Function()? sync,
+  Catalog? cat,
 }) => ProviderContainer.test(
   overrides: [
     docsDirProvider.overrideWithValue(dir),
     nowProvider.overrideWithValue(() => at ?? now),
     todayProvider.overrideWithValue(DateTime(2026, 10, 1)),
     remindersProvider.overrideWithValue(reminders ?? FakeReminders()),
-    catalogProvider.overrideWith((ref) async => catalog),
+    catalogProvider.overrideWith((ref) async => cat ?? catalog),
     if (api != null) apiProvider.overrideWithValue(api),
     onlineProvider.overrideWithValue(online),
     if (sync != null) wrapupSyncProvider.overrideWithValue(sync),
@@ -103,6 +105,52 @@ void main() {
       expect(back.votes[ben], {cards[0]: Vote.want, cards[1]: Vote.skip, cards[2]: Vote.seen});
       expect(back.tallies[cards[0]]!.want, 3, reason: 'tallies are derived on load');
       expect(jsonEncode(back.toJson()), jsonEncode(s().crew.toJson()));
+    });
+
+    test('a film only another member swiped seen shows as seen by one, not two', () async {
+      final c = make();
+      final crew = await localCrew(c);
+      final ctrl = c.read(crewProvider(crew.id).notifier);
+      await ctrl.ensureDeck();
+      final first = c.read(crewProvider(crew.id)).crew.deck!.cards.first;
+      // Asha puts the film on the shared list and swipes seen; my diary stays empty.
+      await ctrl.addFilm(first.film);
+      await ctrl.swipe(idOf(crew, 'Asha'), first.id, Vote.seen);
+      await ctrl.rebuildDeck();
+      final st = c.read(crewProvider(crew.id));
+      final card = st.crew.deck!.cards.firstWhere((x) => x.id == first.id);
+      expect(card.seenBy, 0, reason: 'the marker counts my diary, not a seen swipe');
+      expect(st.seenBy(card), 1, reason: 'one member has seen it');
+
+      // My own diary does count, once, beside Asha's swipe.
+      c.read(diaryProvider.notifier).addStub(first.film, const StubDraft(rating: 4), now: now);
+      await ctrl.rebuildDeck();
+      final st2 = c.read(crewProvider(crew.id));
+      final card2 = st2.crew.deck!.cards.firstWhere((x) => x.id == first.id);
+      expect(card2.seenBy, 1, reason: 'my diary marks the card');
+      expect(st2.seenBy(card2), 2, reason: 'Asha and I have seen it');
+    });
+
+    test('a private stub stays out of the local deck taste', () async {
+      final cat = catalogOf([
+        film('watched', dir: ['Hid'], pop: 5),
+        film('mate', dir: ['Hid'], pop: 1),
+        film('other', dir: ['Else'], pop: 99),
+      ]);
+      final c = make(cat: cat);
+      c.read(diaryProvider.notifier).addStub(
+        cat.byId['watched']!,
+        const StubDraft(rating: 5, private: true),
+        now: now,
+      );
+      final crew = await localCrew(c);
+      final ctrl = c.read(crewProvider(crew.id).notifier);
+      await ctrl.ensureDeck();
+      // The private rating is no taste at all, so the films are ordered by
+      // popularity and nothing sharing its director is scored up. It still
+      // counts as a film I have seen.
+      final deck = c.read(crewProvider(crew.id)).crew.deck!.cards;
+      expect(deck.map((x) => x.id), ['other', 'mate']);
     });
 
     test('wrap-up writes my stub with the people who came, and cancels the reminders', () async {

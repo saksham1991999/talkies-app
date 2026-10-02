@@ -90,8 +90,30 @@ class Db:
     @asynccontextmanager
     async def conn(self) -> AsyncIterator[asyncpg.Connection]:
         pool = await self.pool()
-        async with pool.acquire(timeout=5) as connection:
+        try:
+            connection = await pool.acquire(timeout=5)
+        except Exception as exc:
+            # An established pool loses its connections when the database goes
+            # away. Drop it and start the same cooldown as a failed connect, or
+            # every request waits out the acquire timeout against a dead pool.
+            await self._discard(pool, exc)
+            raise DbUnavailable() from exc
+        try:
             yield connection
+        finally:
+            await pool.release(connection)
+
+    async def _discard(self, pool: asyncpg.Pool, exc: Exception) -> None:
+        async with self._lock:
+            if self._pool is not pool:
+                return  # another request already replaced it
+            self._pool = None
+            self._failed_at = self._clock()
+        log.warning("database connection lost: %s", type(exc).__name__)
+        try:
+            await pool.close()
+        except Exception:  # closing a broken pool is best effort
+            log.info("closing the broken pool failed")
 
     @asynccontextmanager
     async def tx(self) -> AsyncIterator[asyncpg.Connection]:

@@ -53,27 +53,26 @@ where viewer_id = $1 and owner_id = $2
 """
 
 # Genres and languages of the distinct films, counted per film. The film column
-# holds the app's own snapshot, so a bad shape is guarded, not trusted.
+# holds the app's own snapshot, so a bad shape is guarded, not trusted. A value
+# a film lists twice counts once for that film.
 TRAITS = """
 with f as (
   select distinct on (film_id) film
   from v_visible_stubs
   where viewer_id = $1 and owner_id = $2
   order by film_id, recency
+), pairs as (
+  select 'g' as kind, x.value as name from f
+  cross join lateral jsonb_array_elements_text(
+    case when jsonb_typeof(f.film -> 'g') = 'array' then f.film -> 'g' else '[]'::jsonb end
+  ) as x(value)
+  union
+  select 'l', x.value from f
+  cross join lateral jsonb_array_elements_text(
+    case when jsonb_typeof(f.film -> 'l') = 'array' then f.film -> 'l' else '[]'::jsonb end
+  ) as x(value)
 )
-select 'g' as kind, x.value as name, count(*) as n
-from f
-cross join lateral jsonb_array_elements_text(
-  case when jsonb_typeof(f.film -> 'g') = 'array' then f.film -> 'g' else '[]'::jsonb end
-) as x(value)
-group by x.value
-union all
-select 'l', x.value, count(*)
-from f
-cross join lateral jsonb_array_elements_text(
-  case when jsonb_typeof(f.film -> 'l') = 'array' then f.film -> 'l' else '[]'::jsonb end
-) as x(value)
-group by x.value
+select kind, name, count(*) as n from pairs group by kind, name
 """
 
 # Ratings shared: best rating first. Not shared: most viewings first. Ties: the

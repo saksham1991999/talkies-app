@@ -15,7 +15,7 @@ class Card(Base):
     id: UUID
     handle: str | None
     display_name: str | None
-    avatar_color: int
+    avatar_color: int = Field(ge=0, le=10)
 
 
 class SessionUser(Base):

@@ -36,6 +36,7 @@ List<DeckCard> build(
   int? members,
   List<Wanted> wanted = const [],
   Set<String> seen = const {},
+  Set<String> mySeen = const {},
   bool worldwide = false,
 }) => buildDeck(
   catalog: catalog ?? catalogOf(films()),
@@ -43,6 +44,7 @@ List<DeckCard> build(
   members: members ?? max(1, tastes.length),
   wanted: wanted,
   seen: seen,
+  mySeen: mySeen,
   today: today,
   worldwide: worldwide,
 );
@@ -87,7 +89,7 @@ void main() {
         (film: films().firstWhere((f) => f.id == 'a1'), n: 2),
         (film: film('x9', dir: ['Nobody']), n: 1),
       ];
-      final deck = build([tasteA], members: 2, wanted: wanted, seen: {'a1', 'x9'});
+      final deck = build([tasteA], members: 2, wanted: wanted, seen: {'a1', 'x9'}, mySeen: {'a1'});
       final byId = {for (final c in deck) c.id: c};
       for (final w in wanted) {
         expect(byId.keys, contains(w.film.id), reason: w.film.id);
@@ -95,6 +97,7 @@ void main() {
       }
       expect(deck.map((c) => c.id).toSet(), hasLength(deck.length), reason: 'no film twice');
       expect(byId['a1']!.seenBy, 1, reason: 'a seen film stays when someone wants it');
+      expect(byId['x9']!.seenBy, 0, reason: 'a film only others saw is not marked as mine');
       expect(byId['my:1']!.seenBy, 0);
     });
 

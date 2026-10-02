@@ -5,8 +5,12 @@ import random
 from datetime import UTC, date, datetime, timedelta
 from uuid import UUID
 
+import httpx
 import pytest
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from starlette.requests import Request
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from app.errors import RateLimited
 from app.logic.cursor import BadCursor, decode_cursor, encode_cursor
@@ -112,6 +116,13 @@ def test_more_shared_films_never_lower_coverage():
     assert scores == sorted(scores)
 
 
+def test_a_perfect_match_still_reads_as_99():
+    # Two big shelves holding the same films score 100 before the clamp, and the
+    # phone prints `pct` straight as a percentage.
+    assert match_score(700, 700, [(4.0, 4.0)] * 700, True) == Match(700, 99)
+    assert match_score(700, 700, [(None, None)] * 700, False).pct == 99
+
+
 # --- wrap-up ----------------------------------------------------------------
 
 NIGHT = UUID("11111111-1111-1111-1111-111111111111")
@@ -184,6 +195,15 @@ def test_no_cursor():
     assert decode_cursor("") is None
 
 
+def test_encode_refuses_a_number_the_server_cannot_decode():
+    # Anything outside 0..10**18-1 would come back as BadCursor from our own
+    # decoder, so callers must not be handed it in the first place.
+    for number in (-1, -(10**12), 10**18):
+        with pytest.raises(BadCursor):
+            encode_cursor(number)
+    assert decode_cursor(encode_cursor(10**18 - 1)) == 10**18 - 1
+
+
 # --- times and text ---------------------------------------------------------
 
 
@@ -205,6 +225,17 @@ def test_times_need_a_zone_and_come_out_in_utc_with_ms():
             parse_time(bad)
     with pytest.raises(ValueError):
         parse_time(datetime(2026, 10, 1, 12, 0))
+    # Exactly three fraction digits. A finer value would serialize truncated, so
+    # a sync record could never round-trip and a retry would look like a conflict.
+    for bad in (
+        "2026-10-01T12:00:00.1Z",
+        "2026-10-01T12:00:00.12Z",
+        "2026-10-01T12:00:00.1234Z",
+        "2026-10-01T12:00:00.123456Z",
+    ):
+        with pytest.raises(ValueError):
+            parse_time(bad)
+    assert parse_time("2026-10-01T12:00:00.100Z").microsecond == 100_000
 
 
 def test_text_checks():
@@ -350,6 +381,19 @@ def test_stub_needs_a_film_snapshot_and_a_sane_id():
             check(rid=rid, data={**STUB, "id": rid})
 
 
+def test_a_record_snapshot_must_be_the_film_the_record_names():
+    # `film_id = Q1` with a Q2 snapshot would store one film's data under
+    # another film's id, and the profile views read that snapshot.
+    row = check(film={**KANTARA, "id": "Q949228"})
+    assert (row.film_id, row.film["id"]) == ("Q949228", "Q949228")
+    with pytest.raises(RecordError):
+        check(data={**STUB, "film": "Q2"})
+    with pytest.raises(RecordError):
+        check("wish", "Q949228", data={"film": "Q949228"}, film={**KANTARA, "id": "Q2"})
+    with pytest.raises(RecordError):
+        check("wish", "my:dev1.2", data={"film": "my:dev1.2"}, film={"id": "Q2", "t": "Other"})
+
+
 def test_stub_too_large():
     with pytest.raises(RecordError) as caught:
         check(data={**STUB, "memo": "m" * 17000})
@@ -487,3 +531,25 @@ def test_client_ip_fails_closed_on_an_untrusted_forwarded_header(caplog):
     # A trusted proxy address, or no forwarded header at all, is fine.
     assert client_ip(_request("127.0.0.1", {"x-forwarded-for": "1.2.3.4"})) == "127.0.0.1"
     assert client_ip(_request("203.0.0.9", {"user-agent": "x"})) == "203.0.0.9"
+    # This is what a request looks like after uvicorn --proxy-headers rewrote it:
+    # the header is still on the request, but the socket now holds the client.
+    assert client_ip(_request("1.2.3.4", {"x-forwarded-for": "1.2.3.4"})) == "1.2.3.4"
+    assert client_ip(_request("1.2.3.4", {"x-forwarded-for": " 1.2.3.4 "})) == "1.2.3.4"
+
+
+async def test_a_proxied_request_is_accepted_and_keyed_by_the_forwarded_address():
+    """The deployment the Dockerfile defines: uvicorn --proxy-headers, then this app."""
+    inner = FastAPI()
+
+    async def endpoint(request: Request):
+        return JSONResponse({"ip": client_ip(request)})
+
+    inner.get("/who")(endpoint)
+    proxied = ProxyHeadersMiddleware(inner, trusted_hosts="*")  # --forwarded-allow-ips='*'
+    transport = httpx.ASGITransport(app=proxied, client=("172.17.0.1", 5000))
+    async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+        reply = await client.get("/who", headers={"x-forwarded-for": "203.0.113.7"})
+    # Before this was fixed the route answered 429: the rewrite had happened, so
+    # the old socket-address check refused every proxied request.
+    assert reply.status_code == 200
+    assert reply.json() == {"ip": "203.0.113.7"}

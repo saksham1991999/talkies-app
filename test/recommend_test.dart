@@ -124,6 +124,46 @@ void main() {
     }
   });
 
+  test('a dropped "because" row does not reserve the films a later anchor needs', () {
+    // B is the second liked film, so today's rotation makes it the first anchor.
+    // Only p1 and p2 share its director: that row is too short and is dropped.
+    // They also share a director with A, whose row needs them to reach the four.
+    final c = Catalog([
+      film('A', dir: ['Y1', 'Y2', 'Y3'], cast: ['S1', 'S2'], g: ['g1', 'g2']),
+      film('B', dir: ['X']),
+      for (var i = 1; i <= 12; i++) film('F$i', dir: ['Y1', 'Y2', 'Y3'], cast: ['S1', 'S2'], g: ['g1', 'g2']),
+      film('p1', dir: ['X', 'Y1']),
+      film('p2', dir: ['X', 'Y1']),
+      film('p3', dir: ['Y1']),
+      film('p4', dir: ['Y1']),
+    ], '');
+    final r = recommend(c, Diary(stubs: [stub('A', 5), stub('B', 4)]), today);
+    expect(ids(r.forYou).toSet(), {for (var i = 1; i <= 12; i++) 'F$i'}, reason: 'the row of fillers is full');
+    expect(r.because, hasLength(1), reason: 'the short row is dropped, the other one fills from the released films');
+    expect(r.because.single.$1.id, 'A');
+    expect(ids(r.because.single.$2), containsAll(['p1', 'p2', 'p3', 'p4']));
+  });
+
+  test('a diary of one repeated rating still has a taste', () {
+    final c = Catalog([
+      film('A', dir: ['X']),
+      film('B', dir: ['Y']),
+      film('C', dir: ['Z']),
+      for (var i = 1; i <= 3; i++) film('X$i', dir: ['X'], pop: 10 * i),
+    ], '');
+    // Three films rated the same: the diary has no scale of its own, so the
+    // ratings are read against the app's own scale. 5 is a like, 1 is not.
+    final five = Diary(stubs: [stub('A', 5), stub('B', 5), stub('C', 5)]);
+    expect(buildTaste(c, five, today), isNotNull);
+    expect(ids(recommend(c, five, today).forYou), containsAll(['X1', 'X2', 'X3']));
+    final four = Diary(stubs: [stub('A', 4), stub('B', 4), stub('C', 4)]);
+    expect(ids(recommend(c, four, today).forYou), containsAll(['X1', 'X2', 'X3']));
+    // A uniform dislike stays a dislike: no taste, no rows.
+    final one = Diary(stubs: [stub('A', 1), stub('B', 1), stub('C', 1)]);
+    expect(buildTaste(c, one, today), isNull);
+    expect(recommend(c, one, today).forYou, isEmpty);
+  });
+
   test('a viewing outranks an older "Not interested"; watchlist films are never anchors', () {
     final c = Catalog([
       film('A', dir: ['X']),
@@ -180,6 +220,34 @@ void main() {
     expect(ids(pc.read(recsProvider).forYou), ['X1']);
     n.setHidden('X2', false);
     expect(ids(pc.read(recsProvider).forYou), ['X2', 'X1']);
+  });
+
+  test('provider: a private stub shapes nothing on Home', () async {
+    final c = Catalog([
+      film('Hid', dir: ['X']),
+      film('Pub', dir: ['Y']),
+      for (var i = 1; i <= 3; i++) film('X$i', dir: ['X'], pop: 10 * i),
+      for (var i = 1; i <= 3; i++) film('Y$i', dir: ['Y'], pop: 10 * i),
+    ], '');
+    final dir = Directory.systemTemp.createTempSync('talkies_recs');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final pc = ProviderContainer.test(
+      overrides: [
+        docsDirProvider.overrideWithValue(dir),
+        catalogProvider.overrideWith((ref) async => c),
+        todayProvider.overrideWithValue(today),
+      ],
+    );
+    await pc.read(catalogProvider.future);
+    pc.listen(recsProvider, (_, _) {});
+    final n = pc.read(diaryProvider.notifier);
+    n.addStub(c.byId['Pub']!, const StubDraft(rating: 5), now: DateTime(2026, 9));
+    n.addStub(c.byId['Hid']!, const StubDraft(rating: 5, private: true), now: DateTime(2026, 9));
+    // The private rating is left out of taste, so only Y shares the liked trait.
+    expect(ids(pc.read(recsProvider).forYou), ['Y3', 'Y2', 'Y1']);
+    // Deleting the private stub changes nothing: it never reached the taste.
+    n.deleteStub(pc.read(diaryProvider).stubs.last.id);
+    expect(ids(pc.read(recsProvider).forYou), ['Y3', 'Y2', 'Y1']);
   });
 
   test('bundled catalog: a K.G.F fan gets Chapter 2', () {

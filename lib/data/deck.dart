@@ -79,6 +79,11 @@ typedef _Row = ({DeckCard card, double score, bool rec});
 /// not in [seen]. When fewer than [deckRecs] films have a score, the most
 /// popular ones fill the rest.
 ///
+/// [seen] holds every film someone has seen; [mySeen] is the part of it this
+/// phone's own diary holds. Only [mySeen] marks a wanted card as seen by me: a
+/// film another member swiped "seen" on is in [seen] but not in [mySeen], since
+/// their swipe is already counted in the tallies.
+///
 /// [tastes] holds the members that have one; [members] is the head count. A
 /// film's score is the blend (half the mean, half the minimum) of the members'
 /// scores, each divided by that member's 95th percentile and clamped to 0..1, so
@@ -95,6 +100,7 @@ List<DeckCard> buildDeck({
   required Set<String> seen,
   required DateTime today,
   required bool worldwide,
+  Set<String> mySeen = const {},
 }) {
   final want = <String, Wanted>{};
   for (final w in wanted) {
@@ -155,7 +161,7 @@ List<DeckCard> buildDeck({
   for (final w in want.values) {
     final share = min(1.0, w.n / heads);
     rows.add((
-      card: DeckCard(film: w.film, seenBy: seen.contains(w.film.id) ? 1 : 0, wishers: w.n),
+      card: DeckCard(film: w.film, seenBy: mySeen.contains(w.film.id) ? 1 : 0, wishers: w.n),
       score: blend[k++] + _wishW * share,
       rec: false,
     ));

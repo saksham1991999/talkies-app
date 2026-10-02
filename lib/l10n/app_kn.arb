@@ -604,7 +604,7 @@
   "whatsNewTitle": "ಟಾಕೀಸ್ {v}",
   "acctCodeSent": "{email} ಗೆ ನಾವು ಕೋಡ್ ಕಳುಹಿಸಿದ್ದೇವೆ.",
   "friendsBoth": "ನೀವಿಬ್ಬರೂ {count} ನೋಡಿದ್ದೀರಿ",
-  "friendsMatchLabel": "{pct} ಶತಮಾನ ಹೊಂದಾಣಿಕೆ",
+  "friendsMatchLabel": "{pct} ಶೇಕಡಾ ಹೊಂದಾಣಿಕೆ",
   "friendsUnfriendQ": "{name} ರನ್ನು ಸ್ನೇಹಿತರಿಂದ ತೆಗೆಯಬೇಕೆ?",
   "friendsUnfriended": "{name} ಇನ್ನು ನಿಮ್ಮ ಸ್ನೇಹಿತರಲ್ಲ.",
   "friendsBlockQ": "{name} ತಡೆಹಿಡಿಯಬೇಕೆ?",

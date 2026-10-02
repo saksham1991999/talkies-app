@@ -457,8 +457,8 @@ class ProfileView {
 
   /// The offline "Your profile" preview: what a friend would see, built from the
   /// local diary with the same rules as the server (no private stubs, catalog
-  /// films only, at most 10 top films and 50 watchlist films, no dates). Ratings
-  /// show when [ratings] is true.
+  /// films only, each distinct film counted once, at most 10 top films and 50
+  /// watchlist films, no dates). Ratings show when [ratings] is true.
   factory ProfileView.fromDiary(Diary diary, Catalog catalog, {UserCard? card, bool ratings = true}) {
     final d = diary.publicView();
     final stubs = [
@@ -477,17 +477,38 @@ class ProfileView {
       final t = s.date ?? s.created;
       if (!(last[s.filmId]?.isAfter(t) ?? false)) last[s.filmId] = t;
     }
-    // Highest rating first when ratings show, else most viewings. The last watch only breaks ties.
+    // Highest rating first when ratings show, else most viewings, then the last
+    // watch, then the film id. Rewatches do not break a rating tie: the server
+    // reads a film's rating, not how often it was watched.
     final ids = [
       for (final id in views.keys)
         if (filmOf(id) != null) id,
     ];
     ids.sort((a, b) {
-      var c = ratings ? (best[b] ?? -1).compareTo(best[a] ?? -1) : 0;
-      if (c == 0) c = views[b]!.compareTo(views[a]!);
+      var c = ratings ? (best[b] ?? -1).compareTo(best[a] ?? -1) : views[b]!.compareTo(views[a]!);
       if (c == 0) c = last[b]!.compareTo(last[a]!);
       return c != 0 ? c : a.compareTo(b);
     });
+
+    // Genres and languages of the distinct films, each counted once: the server
+    // counts a film once however often it was watched, so a rewatch cannot move
+    // a genre or a language into the top three.
+    final genres = <String, int>{}, langs = <String, int>{};
+    for (final id in ids) {
+      final f = filmOf(id)!;
+      for (final g in f.genres) {
+        genres[g] = (genres[g] ?? 0) + 1;
+      }
+      for (final l in f.langs) {
+        langs[l] = (langs[l] ?? 0) + 1;
+      }
+    }
+    // Count down, then key up: the server's order.
+    List<String> top(Map<String, int> counts) {
+      final e = counts.entries.toList()
+        ..sort((a, b) => b.value != a.value ? b.value.compareTo(a.value) : a.key.compareTo(b.key));
+      return [for (final x in e.take(3)) x.key];
+    }
 
     final wished = [
       for (final w in d.wishes)
@@ -502,8 +523,8 @@ class ProfileView {
         films: views.length,
         viewings: stubs.length,
         avgRating: ratings ? st.avgRating : null,
-        topGenres: [for (final b in st.genres.take(3)) b.key],
-        topLangs: [for (final b in st.languages.take(3)) b.key],
+        topGenres: top(genres),
+        topLangs: top(langs),
       ),
       topFilms: [for (final id in ids.take(10)) TopFilm.of(filmOf(id)!, ratings ? best[id] : null)],
       watchlist: [for (final w in wished.take(50)) WatchItem.of(filmOf(w.filmId)!)],

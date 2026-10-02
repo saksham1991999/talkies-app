@@ -1,8 +1,10 @@
 """Settings from environment variables (and a local .env file)."""
 
 from functools import lru_cache
+from typing import Annotated
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 KNOWN_PROVIDERS = ("email", "google", "apple")
@@ -29,7 +31,9 @@ class Settings(BaseSettings):
     # for the backend to exchange sign-in codes and revoke on account deletion.
     apple_client_id: str = ""
     apple_client_secret: str = ""
-    db_pool_max: int = 10
+    # asyncpg rejects a pool size below 1, which would leave every database
+    # request unavailable after boot, so a bad value fails at startup instead.
+    db_pool_max: Annotated[int, Field(ge=1)] = 10
 
     @property
     def base_url(self) -> str:

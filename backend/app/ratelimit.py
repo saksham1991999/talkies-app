@@ -26,6 +26,9 @@ RULES: dict[str, tuple[int, float]] = {
     "otp_ip": (30, 3600),
     "otp_email": (10, 3600),
     "verify_ip": (30, 3600),
+    # Sign in with Google or Apple: unauthenticated, so it needs its own bucket
+    # like the other sign-in routes. 30 per hour matches otp_ip.
+    "id_token_ip": (30, 3600),
     "lookup": (30, 3600),
     "join": (10, 3600),
     "friend_request": (30, 3600),
@@ -82,19 +85,22 @@ def client_ip(request: Request) -> str:
     """The address the limit is counted against. It fails closed.
 
     The server runs behind a proxy (see the Dockerfile: uvicorn --proxy-headers),
-    so uvicorn rewrites `request.client` from X-Forwarded-For. If a request still
-    carries that header while its socket address is not a trusted proxy, the
-    proxy-header pass did not run and every client would share one bucket: deny
-    the request and say so loudly instead of silently grouping everyone.
+    so uvicorn rewrites `request.client` from X-Forwarded-For when the socket
+    peer is trusted. Uvicorn leaves the header on the request, so its presence
+    alone proves nothing: the rewrite is what makes the header and the socket
+    agree. When they disagree the header came from an untrusted peer, the
+    proxy-header pass did not run, and every client would share one bucket:
+    deny the request and say so loudly instead of silently grouping everyone.
     """
     host = request.client.host if request.client else None
-    forwarded = "x-forwarded-for" in request.headers
-    if forwarded and (host is None or host not in _TRUSTED_PROXIES):
-        log.error(
-            "x-forwarded-for on a request from %s: start uvicorn with "
-            "--proxy-headers --forwarded-allow-ips, or the rate limiter cannot "
-            "tell clients apart; refusing the request",
-            host,
-        )
-        raise RateLimited(60)
-    return host or "unknown"
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded is None or host in _TRUSTED_PROXIES or host == forwarded.strip():
+        return host or "unknown"
+    log.error(
+        "x-forwarded-for %r on a request from %s: start uvicorn with "
+        "--proxy-headers --forwarded-allow-ips, or the rate limiter cannot "
+        "tell clients apart; refusing the request",
+        forwarded,
+        host,
+    )
+    raise RateLimited(60)

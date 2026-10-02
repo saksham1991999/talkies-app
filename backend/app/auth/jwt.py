@@ -81,10 +81,6 @@ class Verifier:
         return _subject(claims)
 
     async def _key(self, alg: str, kid: Any) -> Any:
-        if alg == "HS256":
-            if not self._secret:
-                raise Unauthorized()
-            return self._secret
         if alg not in _KEY_TYPES or not isinstance(kid, str):
             raise Unauthorized()
         entry = self._keys.get(kid)

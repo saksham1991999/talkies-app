@@ -189,6 +189,8 @@ async def get_night(nid: UUID, user: UserDep, db: DbDep, member_id: UUID | None 
         night, seat = await night_and_seat(c, nid, user)
         member = await acting_member(c, night["group_id"], seat, member_id)
         found = await load_nights(c, [nid], member)
+    if not found:  # deleted between the check and the load: the documented 404
+        raise NotFound()
     return found[0]
 
 

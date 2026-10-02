@@ -4,6 +4,9 @@ import ast
 import re
 from pathlib import Path
 
+import pytest
+from pydantic import ValidationError
+
 from app.settings import Settings, clean_dsn
 
 APP = Path(__file__).resolve().parents[2] / "app"
@@ -36,6 +39,15 @@ def test_defaults_boot_with_nothing_set(monkeypatch):
         monkeypatch.delenv(name, raising=False)
     settings = Settings(_env_file=None)
     assert (settings.dsn, settings.providers, settings.db_pool_max) == ("", ["email"], 10)
+
+
+def test_a_pool_size_below_one_is_refused_at_configuration_time():
+    # asyncpg rejects it, so accepting the value would leave every database
+    # request unavailable after a clean boot.
+    assert Settings(_env_file=None, db_pool_max=1).db_pool_max == 1
+    for bad in (0, -1, -100, "many"):
+        with pytest.raises(ValidationError):
+            Settings(_env_file=None, db_pool_max=bad)
 
 
 def test_nothing_the_pooler_breaks():

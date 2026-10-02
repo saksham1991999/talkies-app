@@ -205,16 +205,48 @@ async def test_the_deleted_user_cannot_come_back_with_the_old_token(world):
     assert await world.value("select count(*) from auth.users where id = $1", alice.id) == 0
 
 
+async def test_a_token_dies_as_soon_as_the_auth_user_is_gone(world):
+    """The auth delete commits before the local cleanup, so this window is real.
+
+    A token is signed, not looked up, so nothing about it changes when Supabase
+    forgets the account. Every route has to notice the missing account itself.
+    """
+    alice, bob, *_ = await seed_everything(world)
+    # Exactly what a half-finished deletion looks like: Supabase is done, the
+    # profile row (and everything the cascade owns) is still here. The FK to
+    # auth.users cascades, so build the orphan with the triggers off.
+    await world.pg.execute("set session_replication_role = replica")
+    try:
+        # The delete did not cascade (replica mode skips the FK), so the orphan
+        # profile from a half-finished deletion is exactly what is left.
+        await world.pg.execute("delete from auth.users where id = $1", alice.id)
+    finally:
+        await world.pg.execute("set session_replication_role = origin")
+    assert await world.value("select count(*) from profiles where id = $1", alice.id) == 1
+    assert await world.value("select count(*) from auth.users where id = $1", alice.id) == 0
+
+    replies = [
+        await alice.get("/v1/me"),
+        await alice.post("/v1/sync/push", {"records": [stub("x1")]}),
+        await alice.get("/v1/friends"),
+        await alice.patch("/v1/me", {"display_name": "Alice Again"}),
+    ]
+    for reply in replies:
+        assert reply.status_code == 401 and reply.json()["error"]["code"] == "account_deleted"
+    # The token did not resurrect or change anything on the way out.
+    assert await world.value("select count(*) from profiles where id = $1", alice.id) == 1
+    assert await world.value("select count(*) from stubs where id = 'x1'") == 0
+
+
 async def test_a_failed_auth_delete_is_502_and_a_retry_finishes_the_job(world):
     alice, bob, *_ = await seed_everything(world)
     world.auth_status = 500
     reply = await alice.delete("/v1/me")
     assert reply.status_code == 502 and reply.json()["error"]["code"] == "upstream_unavailable"
-    # The auth user goes first, so nothing was deleted yet and the profile cannot
-    # be resurrected by a surviving token: it now fails on the missing auth user.
+    # The auth delete failed, so nothing was deleted and the account still works.
     assert await world.value("select count(*) from profiles where id = $1", alice.id) == 1
     assert await world.value("select count(*) from auth.users where id = $1", alice.id) == 1
-    assert (await alice.get("/v1/me")).status_code == 401
+    assert (await alice.get("/v1/me")).status_code == 200
     world.auth_status = 404  # Supabase says the user is gone: that counts as done
     assert (await alice.delete("/v1/me")).status_code == 204
     assert await world.value("select count(*) from profiles where id = $1", alice.id) == 0

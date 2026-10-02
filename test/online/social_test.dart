@@ -565,6 +565,50 @@ void main() {
       expect(v.stats!.avgRating, isNull);
     });
 
+    test('rewatches do not break a rating tie: the most recent watch wins', () {
+      // Q2 has more viewings, but its last watch is older than Q1's: with
+      // ratings shown the server reads the rating, then the last watch.
+      final d = diary(
+        stubs: [st('a', 'Q1', rating: 5, day: 5), st('b', 'Q2', rating: 5, day: 2), st('c', 'Q2', rating: 4, day: 1)],
+      );
+      expect(ProfileView.fromDiary(d, cat).topFilms.map((f) => f.filmId), ['Q1', 'Q2']);
+      // Without ratings the viewings still decide.
+      expect(ProfileView.fromDiary(d, cat, ratings: false).topFilms.map((f) => f.filmId), ['Q2', 'Q1']);
+    });
+
+    test('genres and languages count each film once, not each viewing', () {
+      // Three viewings of a romance cannot outrank two action films.
+      final romance = ProfileView.fromDiary(
+        diary(
+          stubs: [
+            st('a', 'Q1'),
+            st('b', 'Q3'),
+            st('c', 'Q4'),
+            st('d', 'Q2'),
+            st('e', 'Q2', day: 3),
+            st('f', 'Q2', day: 4),
+          ],
+        ),
+        cat,
+      );
+      expect(romance.stats!.topGenres, ['action', 'drama', 'romance']);
+      // ... nor can three viewings of a Kannada film outrank two Hindi films.
+      final kannada = ProfileView.fromDiary(
+        diary(
+          stubs: [
+            st('a', 'Q1'),
+            st('b', 'Q2'),
+            st('c', 'Q3'),
+            st('d', 'Q3', day: 3),
+            st('e', 'Q3', day: 4),
+            st('f', 'Q4'),
+          ],
+        ),
+        cat,
+      );
+      expect(kannada.stats!.topLangs, ['hi', 'kn']);
+    });
+
     test('private stubs and custom films count for nothing', () {
       final d = diary(
         stubs: [st('a', 'Q1', rating: 4), st('b', 'Q3', rating: 5, private: true), st('c', 'my:1', rating: 5)],
