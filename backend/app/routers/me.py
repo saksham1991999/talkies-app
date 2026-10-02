@@ -4,10 +4,10 @@ import asyncpg
 from fastapi import APIRouter, Request, Response
 
 from app.auth.apple import revoke_or_log
-from app.auth.deps import UserDep
+from app.auth.deps import DeletingUserDep, UserDep
 from app.common import ensure_profile
 from app.db import DbDep, lock_user
-from app.errors import ApiError, Conflict
+from app.errors import Conflict, Unauthorized
 from app.schemas.phase1 import Me, MePatch
 
 router = APIRouter(prefix="/v1", tags=["me"])
@@ -65,21 +65,26 @@ async def patch_me(body: MePatch, user: UserDep, db: DbDep):
         if row is None:
             # The account was deleted between the profile check and this update.
             # The row cannot come back, so say what happened instead of a 500.
-            raise ApiError(401, "account_deleted", "This account was deleted")
+            # The same 401 shape as every other route: a bearer challenge.
+            raise Unauthorized("account_deleted", "This account was deleted")
     return dict(row)
 
 
 @router.delete("/me", status_code=204)
-async def delete_me(request: Request, user: UserDep, db: DbDep):
+async def delete_me(request: Request, user: DeletingUserDep, db: DbDep):
     # The auth user goes FIRST. Once GoTrue is gone, every surviving access token
     # is refused with 401 account_deleted, so a database failure after this point
     # cannot resurrect the account; the next call to DELETE /v1/me finishes the
-    # job (a 404 from GoTrue counts as done).
+    # job (a 404 from GoTrue counts as done). That retry is why this route takes
+    # the token-only dependency: after a half-finished delete the account row is
+    # already gone, and the retry still has to be let through to clean it up.
     #
-    # The user lock is taken before the GoTrue call and held through the cleanup:
-    # delete_account() takes the same advisory lock, so a sync push in flight
-    # either lands entirely before the deletion or waits and then fails on the
-    # missing profile, and can never interleave with the cascade.
+    # The user lock is taken in both transactions and never held across the
+    # GoTrue call. delete_account() takes the same advisory lock, so a sync push
+    # in flight either lands entirely before the deletion or waits and then
+    # fails on the missing profile, and can never interleave with the cascade.
+    # Releasing the connection for the upstream call matters: it can take eight
+    # seconds, and ten of those would pin every connection in the pool.
     async with db.tx() as c:
         await lock_user(c, user)
         # Read the Apple refresh token before the profile is gone, so the grant
@@ -87,7 +92,9 @@ async def delete_me(request: Request, user: UserDep, db: DbDep):
         apple_refresh = await c.fetchval(
             "select apple_refresh_token from profiles where id = $1", user
         )
-        await request.app.state.gotrue.delete_user(user)
+    await request.app.state.gotrue.delete_user(user)
+    async with db.tx() as c:
+        await lock_user(c, user)
         await c.execute("select delete_account($1)", user)
     # Best effort: a revoke failure is logged and never blocks the deletion.
     await revoke_or_log(request.app.state.apple, apple_refresh)

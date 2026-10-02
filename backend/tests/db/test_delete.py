@@ -236,6 +236,11 @@ async def test_a_token_dies_as_soon_as_the_auth_user_is_gone(world):
     # The token did not resurrect or change anything on the way out.
     assert await world.value("select count(*) from profiles where id = $1", alice.id) == 1
     assert await world.value("select count(*) from stubs where id = 'x1'") == 0
+    # The delete itself is the one route that still gets through: it is the retry
+    # that finishes this half-done cleanup, so it must not answer 401 while the
+    # orphan is still there.
+    await alice.ok("delete", "/v1/me", status=204)
+    assert await world.value("select count(*) from profiles where id = $1", alice.id) == 0
 
 
 async def test_a_failed_auth_delete_is_502_and_a_retry_finishes_the_job(world):

@@ -195,14 +195,17 @@ async def test_a_trait_a_film_lists_twice_counts_once(world):
     twice["film"] = {**film("Q2"), "g": ["action", "action"], "l": ["kn", "kn"]}
     third = stub("three", "Q3", date=today())
     third["film"] = {**film("Q3"), "g": ["drama"], "l": ["hi"]}
-    await olive.push(first, twice, third)
+    fourth = stub("four", "Q5", date=today())
+    fourth["film"] = {**film("Q5"), "g": ["comedy"], "l": ["te"]}
+    await olive.push(first, twice, third, fourth)
     profile = await fred.ok("get", f"/v1/users/{olive.id}")
     stats = profile["stats"]
-    # Once per film, not once per entry: action and drama are level at two films,
-    # and the duplicate "action" must not push drama out of the top three.
-    assert (stats["films"], stats["viewings"]) == (3, 3)
-    assert stats["top_genres"] == ["action", "drama"]
-    assert stats["top_langs"] == ["hi", "kn"]
+    # Once per film, not once per entry: action and drama sit in two films each,
+    # a duplicate "action" counts once, and a trait in one film (comedy, hi, te)
+    # ranks below a trait in two instead of winning on the alphabet.
+    assert (stats["films"], stats["viewings"]) == (4, 4)
+    assert stats["top_genres"] == ["action", "drama", "comedy"]
+    assert stats["top_langs"] == ["kn", "hi", "te"]
 
 
 async def test_a_private_stub_is_nowhere(world):

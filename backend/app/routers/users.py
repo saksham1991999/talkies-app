@@ -54,20 +54,22 @@ where viewer_id = $1 and owner_id = $2
 
 # Genres and languages of the distinct films, counted per film. The film column
 # holds the app's own snapshot, so a bad shape is guarded, not trusted. A value
-# a film lists twice counts once for that film.
+# a film lists twice counts once for that film. The film id rides in pairs so
+# UNION drops a repeat of one film's own value, not a second film's row: the
+# outer count then adds up films, never rows.
 TRAITS = """
 with f as (
-  select distinct on (film_id) film
+  select distinct on (film_id) film_id, film
   from v_visible_stubs
   where viewer_id = $1 and owner_id = $2
   order by film_id, recency
 ), pairs as (
-  select 'g' as kind, x.value as name from f
+  select f.film_id, 'g' as kind, x.value as name from f
   cross join lateral jsonb_array_elements_text(
     case when jsonb_typeof(f.film -> 'g') = 'array' then f.film -> 'g' else '[]'::jsonb end
   ) as x(value)
   union
-  select 'l', x.value from f
+  select f.film_id, 'l', x.value from f
   cross join lateral jsonb_array_elements_text(
     case when jsonb_typeof(f.film -> 'l') = 'array' then f.film -> 'l' else '[]'::jsonb end
   ) as x(value)

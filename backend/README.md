@@ -67,8 +67,7 @@ The server starts with none of these set. Sign-in routes answer 502 while Supaba
 
    The reply is `{"ok":true,"api":1,"auth":["email"]}`.
 
-6. Build the app with the address of the server. The address must be HTTPS: the app refuses an `http://` one (`_uri()` in `lib/net/api.dart`), so a plain local server needs TLS in front of it, or that check relaxed in a scratch build:
-   `flutter run --dart-define=TALKIES_API_URL=https://10.0.2.2:8000` (Android emulator) or `https://localhost:8000` (iOS simulator).
+6. Build the app with the address of the server. The address must be HTTPS: the app refuses an `http://` one (`_uri()` in `lib/net/api.dart`). Uvicorn in step 4 serves plain HTTP, so put a TLS proxy in front of it and point the app at that proxy: `flutter run --dart-define=TALKIES_API_URL=https://<your host>` (an Android emulator reaches the host as `10.0.2.2`, an iOS simulator as `localhost`). For a scratch build only, relax the HTTPS check and use the plain address instead: `--dart-define=TALKIES_API_URL=http://10.0.2.2:8000` or `http://localhost:8000`.
 
 ## Set up Supabase
 
@@ -123,7 +122,7 @@ The database tests run against a real Postgres. Locally they are skipped without
 TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/talkies_test uv run pytest tests/db
 ```
 
-The tests drop and rebuild the `public` and `auth` schemas of that database. They add a small stand-in for Supabase (`tests/db/00_supabase_stub.sql`) and apply every migration.
+The tests drop and rebuild the `public` and `auth` schemas of that database. They add a small stand-in for Supabase (`tests/db/00_supabase_stub.sql`) and apply every migration. The connection has to be a superuser, not just the owner of the tables: the stand-in creates the `anon`, `authenticated` and `service_role` roles, and one deletion test builds the half-deleted window with `set session_replication_role = replica`, which is superuser-only. The `postgres` user of the `postgres:17` service container in CI is one.
 
 What the checks cover:
 

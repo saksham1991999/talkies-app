@@ -32,5 +32,16 @@ async def current_user(
     return user
 
 
+async def deleting_user(request: Request, token: Annotated[str, Depends(bearer_token)]) -> UUID:
+    """The signed-in user without the account check, for DELETE /v1/me only.
+
+    Deletion removes the auth user first, so a delete whose local cleanup failed
+    leaves a token that outlives its account. That retry has to be let through:
+    the account row it is about to finish removing is already gone.
+    """
+    return await request.app.state.verifier.verify(token)
+
+
 Token = Annotated[str, Depends(bearer_token)]
 UserDep = Annotated[UUID, Depends(current_user)]
+DeletingUserDep = Annotated[UUID, Depends(deleting_user)]

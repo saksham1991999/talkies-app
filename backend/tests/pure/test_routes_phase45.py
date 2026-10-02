@@ -508,25 +508,38 @@ WENT = [
     {"id": M_GUEST, "user_id": None, "name": "Dad"},
 ]
 EVENT = {"tz_offset_min": 330, "place": "PVR", "film_id": "Q10", "film": FILM, "starts_at": SLOT_1}
-# The wrap-up reads the night's group first (to lock its users before the row),
-# then locks the row itself.
-KNOWN_NIGHT = ("select group_id, status from nights", {**NIGHT_OF[1], "status": "set"})
+SET_NIGHT = {**NIGHT_OF[1], "status": "set"}
+# A wrap-up authorizes on an unlocked read of the night, takes one user lock per
+# account member, then reads the night again under its row lock.
+def NIGHT_OF_ROW(night: dict | None) -> tuple[str, dict | None]:
+    """The unlocked read a wrap-up starts with: the night the caller wants."""
+    return ("select group_id, host_id, status from nights", night)
+
+
+def LOCKED_NIGHT(night: dict) -> tuple[str, dict]:
+    """The same read under `for update`, after the user locks are held."""
+    return ("for update", night)
+
+
+SEAT_OWNER = ("from group_members m join groups g", OWNER_SEAT)
 GROUP_MEMBERS = ("select user_id from group_members", [{"user_id": USER}, {"user_id": OTHER}])
 GROUP_MEMBERS_ONE = ("select user_id from group_members", [{"user_id": USER}])
 # One advisory lock per account member the group lists, in that order.
 LOCK_USERS = [("pg_advisory_xact_lock", None), ("pg_advisory_xact_lock", None)]
-def NIGHT_GROUP_OF(night: dict) -> tuple[str, dict]:
-    """The first read of a wrap-up: the night row the caller wants to wrap."""
-    return ("select group_id, status from nights", night)
+
+
+def locks_taken(conn: ScriptedConn) -> list[tuple]:
+    return [args for _, sql, args in conn.calls if "pg_advisory_xact_lock" in sql]
 
 
 async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
     app, conn = app_for(
-        KNOWN_NIGHT,
+        NIGHT_OF_ROW(SET_NIGHT),
+        SEAT_OWNER,
         GROUP_MEMBERS,
         *LOCK_USERS,
-        ("for update", {**NIGHT_OF[1], "status": "set"}),
-        ("from group_members m join groups g", OWNER_SEAT),
+        LOCKED_NIGHT(SET_NIGHT),
+        SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT),
         ("insert into stubs", 1),
@@ -538,8 +551,7 @@ async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
     async with client_for(app) as client:
         reply = await client.post(f"/v1/nights/{NID}/wrapup", json=body, headers=HEADERS)
     assert (reply.status_code, reply.json()) == (200, {"created": 1, "skipped": 1}), reply.text
-    locks = [args for _, sql, args in conn.calls if "pg_advisory_xact_lock" in sql]
-    assert locks == [(str(USER),), (str(OTHER),)]  # one per account member, fixed order
+    assert locks_taken(conn) == [(str(USER),), (str(OTHER),)]  # one per account member, fixed order
     stubs = [args for _, sql, args in conn.calls if "insert into stubs" in sql]
     first, second = stubs
     assert (first[0], first[1], first[2], first[4]) == (USER, f"night-{NID}", "Q10", FILM)
@@ -567,13 +579,14 @@ async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
 
 
 async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
-    done = ("for update", {**NIGHT_OF[1], "status": "done"})
+    done = {**NIGHT_OF[1], "status": "done"}
     app, conn = app_for(
-        NIGHT_GROUP_OF({**NIGHT_OF[1], "status": "done"}),
+        NIGHT_OF_ROW(done),
+        SEAT_OWNER,
         GROUP_MEMBERS,
         *LOCK_USERS,
-        done,
-        ("from group_members m join groups g", OWNER_SEAT),
+        LOCKED_NIGHT(done),
+        SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT[:2]),
         ("insert into stubs", None),
@@ -584,12 +597,12 @@ async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
     assert reply.json() == {"created": 0, "skipped": 2}
     conn.finished()
     app, conn = app_for(
-        KNOWN_NIGHT,
+        NIGHT_OF_ROW(SET_NIGHT),
+        SEAT_OWNER,
         GROUP_MEMBERS,
-        ("pg_advisory_xact_lock", None),
-        ("pg_advisory_xact_lock", None),
-        ("for update", {**NIGHT_OF[1], "status": "set"}),
-        ("from group_members m join groups g", OWNER_SEAT),
+        *LOCK_USERS,
+        LOCKED_NIGHT(SET_NIGHT),
+        SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("m.id = any($2::uuid[])", [WENT[1], WENT[2]]),
         ("insert into stubs", 1),
@@ -606,31 +619,72 @@ async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
     conn.finished()
 
 
-async def test_wrapup_of_a_poll_and_by_a_stranger():
+async def test_a_member_who_joins_mid_wrapup_is_locked_before_getting_a_stub():
+    # The first attempt locks the members the snapshot held, but the attendee
+    # read already sees a member who joined since. That plan is thrown away and
+    # made again, so no stub lands in a diary whose user lock is not held.
     app, conn = app_for(
-        NIGHT_GROUP_OF(NIGHT_OF[1]),
+        NIGHT_OF_ROW(SET_NIGHT),
+        SEAT_OWNER,
         GROUP_MEMBERS_ONE,
         ("pg_advisory_xact_lock", None),
-        ("for update", NIGHT_OF[1]),
-        ("from group_members m join groups g", OWNER_SEAT),
+        LOCKED_NIGHT(SET_NIGHT),
+        SEAT_OWNER,
+        ("from nights n join night_options f", EVENT),
+        ("join night_rsvps r", WENT),  # holds OTHER, who joined after the snapshot
+        NIGHT_OF_ROW(SET_NIGHT),
+        SEAT_OWNER,
+        GROUP_MEMBERS,  # the new member is in the snapshot now
+        *LOCK_USERS,
+        LOCKED_NIGHT(SET_NIGHT),
+        SEAT_OWNER,
+        ("from nights n join night_options f", EVENT),
+        ("join night_rsvps r", WENT),
+        ("insert into stubs", 1),
+        ("insert into stubs", None),
+        ("update nights set status = 'done'", "UPDATE 1"),
+        ("insert into messages", "INSERT 0 1"),
+    )
+    body = {"seat_row": "F", "first_seat": 7, "member_ids": None}
+    async with client_for(app) as client:
+        reply = await client.post(f"/v1/nights/{NID}/wrapup", json=body, headers=HEADERS)
+    assert (reply.status_code, reply.json()) == (200, {"created": 1, "skipped": 1}), reply.text
+    assert locks_taken(conn) == [
+        (str(USER),),
+        (str(USER),),
+        (str(OTHER),),
+    ]
+    conn.finished()
+
+
+async def test_wrapup_of_a_poll_and_by_a_stranger():
+    app, conn = app_for(
+        NIGHT_OF_ROW(NIGHT_OF[1]),
+        SEAT_OWNER,
+        GROUP_MEMBERS_ONE,
+        ("pg_advisory_xact_lock", None),
+        LOCKED_NIGHT(NIGHT_OF[1]),
+        SEAT_OWNER,
     )
     async with client_for(app) as client:
         reply = await client.post(f"/v1/nights/{NID}/wrapup", json={}, headers=HEADERS)
     assert reply.status_code == 409 and reply.json()["error"]["code"] == "not_set"
+    # A member who may not wrap the night is refused before any lock is taken:
+    # otherwise anyone who knows a night id could stall the group's sync pushes.
     other_host = {**NIGHT_OF[1], "status": "set", "host_id": OTHER}
     app, conn = app_for(
-        NIGHT_GROUP_OF(other_host),
-        GROUP_MEMBERS_ONE,
-        ("pg_advisory_xact_lock", None),
-        ("for update", other_host),
+        NIGHT_OF_ROW(other_host),
         ("from group_members m join groups g", MEMBER_SEAT),
     )
     async with client_for(app) as client:
         assert (
             await client.post(f"/v1/nights/{NID}/wrapup", json={}, headers=HEADERS)
         ).status_code == 403
-    app, conn = app_for(("select group_id, status from nights", None))
+    assert locks_taken(conn) == []
+    conn.finished()
+    app, conn = app_for(("select group_id, host_id, status from nights", None))
     async with client_for(app) as client:
         assert (
             await client.post(f"/v1/nights/{NID}/wrapup", json={}, headers=HEADERS)
         ).status_code == 404
+    conn.finished()

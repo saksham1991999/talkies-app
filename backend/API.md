@@ -124,7 +124,7 @@ Auth proxy: the server forwards to Supabase Auth and whitelists the body fields.
 
 `GET /v1/me` creates the profile row with `visibility: "private"`, `share_ratings: false`, `avatar_color` from the user id.
 
-`DELETE /v1/me` deletes the Supabase user FIRST (with the service key; a 404 counts as done), then runs `delete_account`. Until the second half runs, every surviving access token gets 401 `account_deleted` from every route, so a crash in between cannot resurrect the profile and cannot be exploited; repeating `DELETE /v1/me` finishes the job.
+`DELETE /v1/me` deletes the Supabase user FIRST (with the service key; a 404 counts as done), then runs `delete_account`. Until the second half runs, every surviving access token gets 401 `account_deleted` from every other route, so a crash in between cannot resurrect the profile and cannot be exploited. `DELETE /v1/me` itself is the exception: it takes the signed token alone, with no account check, because that is the call that finishes the job and the row it has to remove is already gone by then. The user lock is held for each half and released for the upstream call, so a sync push in flight still lands before the deletion or fails on the missing profile.
 
 Sync:
 - `data` by kind:

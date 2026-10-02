@@ -244,9 +244,14 @@ double? scoreFor(Catalog c, Film f, Taste t) {
   return fit == null || fit.rel <= 0 ? null : fit.score;
 }
 
-Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
+/// [seen] holds film ids that must never come back as candidates. It defaults
+/// to the film ids of [d] (already in the signal); a caller that passes [d] as a
+/// public view, to keep private stubs out of the taste, passes the full diary's
+/// film ids here so a privately watched film stays out of the rows too.
+Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false, Set<String>? seen}) {
   final signal = _signals(d, today);
   if (!signal.values.any((w) => w > 0)) return Recs.none;
+  final excluded = {for (final s in d.stubs) s.filmId, ...?seen};
   final taste = _taste(c, d, today, signal);
   Map<String, double> vector(Film f, String? stem) {
     final v = <String, double>{};
@@ -275,7 +280,9 @@ Recs recommend(Catalog c, Diary d, DateTime today, {bool worldwide = false}) {
     final f = c.items[i];
     // No year, or this year with no date, is mostly an announced film.
     if (f.year == null || (f.date == null && f.year! >= today.year)) continue;
-    if (signal.containsKey(f.id) || unreleased(f, t0) || !(worldwide || isIndian(f))) continue;
+    if (signal.containsKey(f.id) || excluded.contains(f.id) || unreleased(f, t0) || !(worldwide || isIndian(f))) {
+      continue;
+    }
     final ar = List.filled(anchors.length, 0.0);
     final fit = _fit(c, f, c.stems[i], taste, day, (t, x) {
       for (var k = 0; k < ar.length; k++) {

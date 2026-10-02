@@ -5,7 +5,7 @@ from pathlib import Path
 
 from fastapi.routing import APIRoute
 
-from app.auth.deps import current_user
+from app.auth.deps import current_user, deleting_user
 from tests.helpers import make_app
 
 API = Path(__file__).resolve().parents[2] / "API.md"
@@ -68,8 +68,16 @@ def test_the_app_has_exactly_the_routes_of_api_md():
 
 def test_every_route_needs_a_signed_in_user_except_the_public_ones():
     for key, route in app_routes().items():
-        needs_user = current_user in dependencies(route)
+        deps = dependencies(route)
+        # DELETE /v1/me takes the token-only dependency on purpose: deletion
+        # removes the auth user first, so the retry that finishes a half-done
+        # cleanup has a valid token and no account row left to check.
+        needs_user = current_user in deps or deleting_user in deps
         assert needs_user != (key in PUBLIC), key
+    for key, route in app_routes().items():
+        if key not in PUBLIC and key != ("DELETE", "/v1/me"):
+            # Every other signed-in route also proves the account still exists.
+            assert current_user in dependencies(route), key
 
 
 def test_every_json_route_declares_its_response_model():

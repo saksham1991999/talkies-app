@@ -609,6 +609,27 @@ void main() {
       expect(kannada.stats!.topLangs, ['hi', 'kn']);
     });
 
+    test('a snapshot that repeats a genre or a language counts it once', () {
+      // A synced snapshot may hold duplicates in `g` / `l`. The server counts a
+      // film once per distinct value, and so must the local profile: counted
+      // twice, romance and kn would lead the top three and push drama and ta out.
+      Film f(String id, List<String> g, List<String> l) => Film(id: id, title: id, genres: g, langs: l);
+      final d = Diary(
+        films: {
+          'D1': f('D1', ['romance', 'romance'], ['kn', 'kn']),
+          'D2': f('D2', ['action'], ['hi']),
+          'D3': f('D3', ['comedy'], ['ta']),
+          'D4': f('D4', ['drama'], ['te']),
+        },
+        stubs: [
+          for (final id in ['D1', 'D2', 'D3', 'D4']) st(id, id),
+        ],
+      );
+      final v = ProfileView.fromDiary(d, cat);
+      expect(v.stats!.topGenres, ['action', 'comedy', 'drama']);
+      expect(v.stats!.topLangs, ['hi', 'kn', 'ta']);
+    });
+
     test('private stubs and custom films count for nothing', () {
       final d = diary(
         stubs: [st('a', 'Q1', rating: 4), st('b', 'Q3', rating: 5, private: true), st('c', 'my:1', rating: 5)],

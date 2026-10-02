@@ -125,6 +125,7 @@ async def test_delete_revokes_the_stored_apple_grant():
         [
             ("pg_advisory_xact_lock", None),
             ("from profiles where id = $1", "apple-refresh"),
+            ("pg_advisory_xact_lock", None),  # the delete re-locks after GoTrue
             ("select delete_account($1)", None),
         ],
         apple_settings(),
@@ -146,6 +147,7 @@ async def test_delete_without_a_stored_token_skips_the_revoke():
         [
             ("pg_advisory_xact_lock", None),
             ("from profiles where id = $1", None),
+            ("pg_advisory_xact_lock", None),  # the delete re-locks after GoTrue
             ("select delete_account($1)", None),
         ],
         apple_settings(),
@@ -164,6 +166,7 @@ async def test_delete_without_apple_configured_skips_the_revoke():
         [
             ("pg_advisory_xact_lock", None),
             ("from profiles where id = $1", "apple-refresh"),
+            ("pg_advisory_xact_lock", None),  # the delete re-locks after GoTrue
             ("select delete_account($1)", None),
         ],
         apple_settings(apple_client_id="", apple_client_secret=""),
@@ -182,6 +185,7 @@ async def test_delete_proceeds_when_apple_refuses_to_revoke():
         [
             ("pg_advisory_xact_lock", None),
             ("from profiles where id = $1", "apple-refresh"),
+            ("pg_advisory_xact_lock", None),  # the delete re-locks after GoTrue
             ("select delete_account($1)", None),
         ],
         apple_settings(),

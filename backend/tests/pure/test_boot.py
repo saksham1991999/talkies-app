@@ -1,14 +1,17 @@
 """The app boots with no database, and the error envelope holds everywhere."""
 
+import logging
 import re
 from collections.abc import AsyncIterator
 
 import asyncpg
 import httpx
 import pytest
+from starlette.requests import ClientDisconnect, Request
 
 from app.db import Db
 from app.errors import DbUnavailable
+from app.main import BodyLimit
 from tests.helpers import (
     FakeClock,
     account_db,
@@ -150,6 +153,40 @@ async def test_a_pool_that_lost_its_database_is_dropped_and_cooled_down(monkeypa
     assert len(made) == 2  # the cooldown expired, so it tried once more
 
 
+async def test_a_busy_pool_is_kept_and_only_a_broken_one_is_dropped(monkeypatch):
+    """Every connection checked out is load, not an outage: do not discard."""
+    made = []
+
+    class BusyPool:
+        closed = False
+
+        async def acquire(self, timeout=None):  # noqa: ASYNC109 - asyncpg's own signature
+            raise TimeoutError()
+
+        async def close(self):
+            self.closed = True
+
+    async def fake_create_pool(*args, **kwargs):
+        pool = BusyPool()
+        made.append(pool)
+        return pool
+
+    monkeypatch.setattr(asyncpg, "create_pool", fake_create_pool)
+    clock = FakeClock()
+    db = Db("postgres://u:p@localhost/db", clock=clock)
+    with pytest.raises(DbUnavailable):
+        async with db.conn():
+            pass
+    assert not made[0].closed  # the pool is still in service
+    assert db._pool is made[0]
+    # And no cooldown either: the next request asks the same pool again instead
+    # of answering 503 for two seconds because a load spike filled it.
+    with pytest.raises(DbUnavailable):
+        async with db.conn():
+            pass
+    assert len(made) == 1 and not made[0].closed
+
+
 # --- the invite page --------------------------------------------------------
 
 
@@ -269,6 +306,109 @@ async def test_a_body_just_under_the_limit_reaches_the_route():
         body = b'{"records":[],"pad":"' + b"x" * (2 * 1024 * 1024 - 100) + b'"}'
         reply = await client.post("/v1/sync/push", content=body, headers=auth(make_token()))
     assert reply.status_code == 422  # unknown key `pad`: it was read and checked, not cut off
+
+
+def _scope(path: str = "/v1/sync/push") -> dict:
+    """The ASGI scope uvicorn hands a request, without the network."""
+    return {
+        "type": "http",
+        "asgi": {"version": "3.0", "spec_version": "2.3"},
+        "http_version": "1.1",
+        "method": "POST",
+        "scheme": "http",
+        "path": path,
+        "raw_path": path.encode(),
+        "query_string": b"",
+        "root_path": "",
+        # A valid token: the point of the tests below is the body, and with the
+        # old replay the request got past authentication and into the route.
+        "headers": [
+            (b"content-type", b"application/json"),
+            (b"authorization", f"Bearer {make_token()}".encode()),
+        ],
+        "client": ("1.2.3.4", 1234),
+        "server": ("testserver", 80),
+    }
+
+
+def _cut_short(frames: list[dict]):
+    """A receive that serves `frames` and then reports the disconnect."""
+
+    async def receive():
+        return frames.pop(0) if frames else {"type": "http.disconnect"}
+
+    return receive
+
+
+async def test_a_body_cut_short_by_a_disconnect_is_never_read_as_complete():
+    """The inner app reads the body itself and must see the truncation."""
+    seen: dict = {}
+
+    async def inner(scope, receive, send):
+        try:
+            seen["body"] = await Request(scope, receive).body()
+        except ClientDisconnect:
+            seen["disconnect"] = True
+
+    frames = [
+        {"type": "http.request", "body": b'{"records":[{"id":"a1"', "more_body": True},
+        {"type": "http.disconnect"},
+    ]
+
+    async def send(message):  # the inner app never answers here
+        raise AssertionError(f"nothing may be sent: {message}")
+
+    await BodyLimit(inner)(_scope(), _cut_short(frames), send)
+    # The replay says "more to come" and then reports the disconnect, so the
+    # route sees the truncation instead of a complete body.
+    assert seen == {"disconnect": True}
+
+
+async def test_a_valid_json_prefix_cut_short_is_refused_not_parsed(caplog):
+    """`{"records":[]}` is valid JSON, but the client never finished sending it.
+
+    The old replay said the body was complete, so a route parsed that prefix and
+    ran as if the client had sent it. Now the frame says "more to come" and the
+    next read reports the disconnect, so the request is refused instead.
+    """
+    app = make_app(db=account_db())
+    frames = [
+        {"type": "http.request", "body": b'{"records":[]}', "more_body": True},
+        {"type": "http.disconnect"},
+    ]
+    sent: list[dict] = []
+
+    async def send(message):
+        sent.append(message)
+
+    with caplog.at_level(logging.ERROR, logger="talkies"):
+        await app(_scope(), _cut_short(frames), send)
+    assert [m["status"] for m in sent if m["type"] == "http.response.start"] == [400]
+    assert "unhandled" not in caplog.text
+
+
+async def test_a_route_that_reads_the_stream_itself_gets_499_not_a_500(caplog):
+    """FastAPI's body parsing turns the disconnect into a 400 on its own; a
+    route that reads the stream itself must not fall through to the catch-all."""
+    app = make_app(db=account_db())
+
+    @app.post("/raw")
+    async def raw(request: Request):
+        return {"read": len(await request.body())}
+
+    frames = [
+        {"type": "http.request", "body": b"half a body", "more_body": True},
+        {"type": "http.disconnect"},
+    ]
+    sent: list[dict] = []
+
+    async def send(message):
+        sent.append(message)
+
+    with caplog.at_level(logging.ERROR, logger="talkies"):
+        await app(_scope("/raw"), _cut_short(frames), send)
+    assert [m["status"] for m in sent if m["type"] == "http.response.start"] == [499]
+    assert "unhandled" not in caplog.text
 
 
 async def test_database_errors_map_to_the_envelope():

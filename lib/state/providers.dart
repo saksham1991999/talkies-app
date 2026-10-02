@@ -32,13 +32,16 @@ final recsProvider = Provider<Recs>((ref) {
   final catalog = ref.watch(catalogProvider).value;
   if (catalog == null) return Recs.none;
   ref.watch(diaryProvider.select((d) => (d.stubs, d.hidden)));
+  final diary = ref.read(diaryProvider);
   // The public view: a private stub is left out of taste, like anywhere else
-  // the diary is read for someone else (see [Stub.private]).
+  // the diary is read for someone else (see [Stub.private]). It is still a film
+  // I have seen, so `seen` keeps it out of the rows as well, as the deck does.
   return recommend(
     catalog,
-    ref.read(diaryProvider).publicView(),
+    diary.publicView(),
     ref.watch(todayProvider),
     worldwide: ref.watch(settingsProvider.select((s) => s.worldwide)),
+    seen: {for (final s in diary.stubs) s.filmId},
   );
 });
 

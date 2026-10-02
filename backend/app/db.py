@@ -92,10 +92,16 @@ class Db:
         pool = await self.pool()
         try:
             connection = await pool.acquire(timeout=5)
+        except TimeoutError as exc:
+            # Every connection is checked out: the pool is healthy, just busy.
+            # Dropping it here would answer 503 for the whole cooldown under a
+            # load spike, when the database never went away.
+            raise DbUnavailable() from exc
         except Exception as exc:
-            # An established pool loses its connections when the database goes
-            # away. Drop it and start the same cooldown as a failed connect, or
-            # every request waits out the acquire timeout against a dead pool.
+            # A connection-level failure means the database went away. An
+            # established pool loses its connections when that happens, so drop
+            # it and start the same cooldown as a failed connect, or every
+            # request waits out the acquire timeout against a dead pool.
             await self._discard(pool, exc)
             raise DbUnavailable() from exc
         try:

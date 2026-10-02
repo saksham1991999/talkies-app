@@ -73,6 +73,38 @@ Set<String> holes(String text) {
   return out;
 }
 
+/// The messages the two copies of the scanner are compared on. `tool/merge_arb.py`
+/// validates the same rule before it writes an ARB, so both must read them alike.
+const _fixtures = [
+  'Only one {count}',
+  'You are the other {name} here',
+  '{count, plural, =1{1 ticket} other{{count} tickets}}',
+  '{count, plural, other{films}}',
+  '{count, plural, zero{no tickets} one{one ticket} other{{count} tickets}}',
+  '{gender, select, other{{name} joined}}',
+  '{n, plural, other{{count, plural, other{{n} of {count}}}}}',
+  'no placeholders at all',
+];
+
+/// Runs `placeholders()` from tool/merge_arb.py over [texts]: one set of names
+/// per text. That Python copy is the reference the l10n tooling validates with.
+List<Set<String>> pythonHoles(List<String> texts) {
+  const scanner =
+      'import json, sys\n'
+      'sys.path.insert(0, sys.argv[2])\n'
+      'import merge_arb\n'
+      'print(json.dumps([sorted(merge_arb.placeholders(t)) for t in json.loads(sys.argv[1])]))\n';
+  final tool = Directory('tool').absolute.path;
+  final run = Process.runSync(
+    'python3',
+    ['-c', scanner, jsonEncode(texts), tool],
+    stdoutEncoding: utf8,
+    stderrEncoding: utf8,
+  );
+  if (run.exitCode != 0) fail('python3 could not run tool/merge_arb.py: ${run.stderr}');
+  return [for (final names in jsonDecode(run.stdout as String) as List) (names as List).cast<String>().toSet()];
+}
+
 void main() {
   final en = strings('en');
 
@@ -87,19 +119,23 @@ void main() {
     });
   }
 
-  test('placeholders are read the same way tool/merge_arb.py reads them', () {
-    // A branch label only counts inside a real plural or select block, so copy
-    // that happens to end in "one" or "other" still carries its argument.
-    expect(holes('Only one {count}'), {'count'});
-    expect(holes('You are the other {name} here'), {'name'});
-    expect(holes('{count, plural, =1{1 ticket} other{{count} tickets}}'), {'count'});
-    expect(holes('{count, plural, other{films}}'), {'count'});
-    expect(holes('{count, plural, zero{no tickets} one{one ticket} other{{count} tickets}}'), {
-      'count',
-    });
-    expect(holes('{gender, select, other{{name} joined}}'), {'gender', 'name'});
-    expect(holes('{n, plural, other{{count, plural, other{{n} of {count}}}}}'), {'n', 'count'});
-    expect(holes('no placeholders at all'), <String>{});
+  test('branch labels count as arguments only inside a plural/select block', () {
+    // Copy that happens to end in "one" or "other" still carries its argument.
+    expect(holes(_fixtures[0]), {'count'});
+    expect(holes(_fixtures[1]), {'name'});
+    expect(holes(_fixtures[2]), {'count'});
+    expect(holes(_fixtures[3]), {'count'});
+    expect(holes(_fixtures[4]), {'count'});
+    expect(holes(_fixtures[5]), {'gender', 'name'});
+    expect(holes(_fixtures[6]), {'n', 'count'});
+    expect(holes(_fixtures[7]), <String>{});
+  });
+
+  test('the Dart scanner agrees with tool/merge_arb.py on the same messages', () {
+    // The rule lives in two places: `holes()` here and `placeholders()` in the
+    // Python tool that validates the ARBs. Run the Python one and compare, so a
+    // drift in either copy fails here instead of shipping as a bad translation.
+    expect(pythonHoles(_fixtures), [for (final text in _fixtures) holes(text)]);
   });
 
   test('no string holds an em dash', () {

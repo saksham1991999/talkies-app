@@ -11,6 +11,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.requests import ClientDisconnect
 
 log = logging.getLogger("talkies")
 
@@ -158,10 +159,19 @@ async def _unhandled(_: Request, exc: Exception) -> JSONResponse:
     return reply(500, "internal", "Internal error")
 
 
+async def _client_gone(_: Request, exc: ClientDisconnect) -> JSONResponse:
+    # The client hung up while its body was still arriving. That is a routine
+    # mobile condition, not an application fault, and no response can reach it:
+    # answer 499 and log nothing, rather than the ERROR traceback the catch-all
+    # would write for every flaky upload.
+    return reply(499, "client_closed_request", "The client closed the request")
+
+
 def install_handlers(app: FastAPI) -> None:
     app.add_exception_handler(ApiError, _api_error)
     app.add_exception_handler(RequestValidationError, _validation)
     app.add_exception_handler(StarletteHTTPException, _http)
+    app.add_exception_handler(ClientDisconnect, _client_gone)
     for kind in DB_DOWN:
         app.add_exception_handler(kind, _db_down)
     app.add_exception_handler(asyncpg.ForeignKeyViolationError, _not_found_row)

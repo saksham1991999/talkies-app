@@ -364,6 +364,8 @@ async def test_block_removes_the_friendship_and_requests():
     async with client_for(app) as client:
         reply = await client.post("/v1/blocks", json={"user_id": str(OTHER)}, headers=HEADERS)
     assert reply.status_code == 204
+    # The pair lock, with both ids sorted: the same key the friend routes take.
+    assert conn.args_of("pg_advisory_xact_lock") == tuple(sorted((str(USER), str(OTHER))))
     assert conn.args_of("insert into blocks") == (USER, OTHER)
     conn.finished()
 

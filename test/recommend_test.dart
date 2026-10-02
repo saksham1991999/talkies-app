@@ -32,8 +32,15 @@ Film film(
   pop: pop,
 );
 
-Stub stub(String filmId, double? rating) =>
-    Stub(id: filmId, no: 1, filmId: filmId, created: DateTime(2026, 9), date: DateTime(2026, 9, 1), rating: rating);
+Stub stub(String filmId, double? rating, {bool private = false}) => Stub(
+  id: filmId,
+  no: 1,
+  filmId: filmId,
+  created: DateTime(2026, 9),
+  date: DateTime(2026, 9, 1),
+  rating: rating,
+  private: private,
+);
 
 List<String> ids(List<Film> films) => [for (final f in films) f.id];
 
@@ -191,6 +198,21 @@ void main() {
     expect(serviceKey('PVR'), isNull);
   });
 
+  test('seen keeps a privately watched film out of the rows', () {
+    final c = Catalog([
+      film('Pub', dir: ['X']),
+      film('Hid', dir: ['X']),
+      for (var i = 1; i <= 3; i++) film('X$i', dir: ['X'], pop: 10 * i),
+    ], '');
+    final full = Diary(stubs: [stub('Pub', 5), stub('Hid', 5, private: true)]);
+    // Home reads the public view for taste, but the full diary's stubs stay
+    // "seen", so the privately watched film cannot come back as a candidate.
+    final r = recommend(c, full.publicView(), today, seen: {for (final s in full.stubs) s.filmId});
+    expect(ids(r.forYou), ['X3', 'X2', 'X1']);
+    // The public view alone does not know about it: this is the bug pinned.
+    expect(ids(recommend(c, full.publicView(), today).forYou), contains('Hid'));
+  });
+
   test('provider: a watchlist tap keeps the row; a new viewing or hide recomputes it', () async {
     final c = Catalog([
       film('A', dir: ['X']),
@@ -247,6 +269,30 @@ void main() {
     expect(ids(pc.read(recsProvider).forYou), ['Y3', 'Y2', 'Y1']);
     // Deleting the private stub changes nothing: it never reached the taste.
     n.deleteStub(pc.read(diaryProvider).stubs.last.id);
+    expect(ids(pc.read(recsProvider).forYou), ['Y3', 'Y2', 'Y1']);
+  });
+
+  test('provider: a privately watched film is not recommended back on Home', () async {
+    final c = Catalog([
+      film('Pub', dir: ['Y']),
+      film('Hid', dir: ['Y']),
+      for (var i = 1; i <= 3; i++) film('Y$i', dir: ['Y'], pop: 10 * i),
+    ], '');
+    final dir = Directory.systemTemp.createTempSync('talkies_recs');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final pc = ProviderContainer.test(
+      overrides: [
+        docsDirProvider.overrideWithValue(dir),
+        catalogProvider.overrideWith((ref) async => c),
+        todayProvider.overrideWithValue(today),
+      ],
+    );
+    await pc.read(catalogProvider.future);
+    pc.listen(recsProvider, (_, _) {});
+    final n = pc.read(diaryProvider.notifier);
+    n.addStub(c.byId['Pub']!, const StubDraft(rating: 5), now: DateTime(2026, 9));
+    n.addStub(c.byId['Hid']!, const StubDraft(rating: 5, private: true), now: DateTime(2026, 9));
+    // Hid shares the liked director, so only the seen set keeps it off Home.
     expect(ids(pc.read(recsProvider).forYou), ['Y3', 'Y2', 'Y1']);
   });
 

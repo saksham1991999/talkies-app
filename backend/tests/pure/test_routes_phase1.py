@@ -5,6 +5,7 @@ from uuid import uuid4
 
 import asyncpg
 
+from app.auth.deps import ACCOUNT_EXISTS
 from tests.helpers import auth, client_for, make_app, make_token
 from tests.scripted import ScriptedConn, ScriptedDb
 
@@ -125,6 +126,8 @@ async def test_patch_me_reports_a_deletion_that_landed_mid_request():
     async with client_for(app) as client:
         reply = await client.patch("/v1/me", json={"display_name": "Asha"}, headers=HEADERS)
     assert reply.status_code == 401 and reply.json()["error"]["code"] == "account_deleted"
+    # The same bearer challenge every other 401 carries.
+    assert reply.headers["www-authenticate"] == "Bearer"
     conn.finished()
 
 
@@ -333,6 +336,7 @@ async def test_delete_me_calls_supabase_first_then_deletes_the_data():
     conn = Tracking(
         ("pg_advisory_xact_lock", None),
         ("from profiles where id = $1", None),
+        ("pg_advisory_xact_lock", None),
         ("select delete_account($1)", None),
     )
     app = make_app(handler=handler, db=ScriptedDb(conn))
@@ -341,9 +345,47 @@ async def test_delete_me_calls_supabase_first_then_deletes_the_data():
     assert reply.status_code == 204
     assert order == [
         # The user lock is taken before the auth user goes, so a sync push that
-        # is in flight cannot land between the two steps.
+        # is in flight cannot land between the two steps. It is released again
+        # for the upstream call, so the pool connection is not pinned for the
+        # eight seconds GoTrue may take, and taken again around the cleanup.
         ("db", "select pg_advisory_xact_lock(h"),
         ("auth", "DELETE", f"/auth/v1/admin/users/{USER}"),
+        ("db", "select pg_advisory_xact_lock(h"),
         ("db", "select delete_account($1)"),
     ]
+    conn.finished()
+
+
+async def test_delete_me_finishes_a_half_done_delete_without_the_account_row():
+    """Supabase deleted the user but the local cleanup failed.
+
+    The retry still holds a valid token, and the account row it has to remove is
+    the orphaned profile. It must not be refused with 401 before it can run.
+    """
+
+    class AuthGone(ScriptedDb):
+        async def fetchrow(self, sql, *args):
+            if " ".join(sql.split()) == ACCOUNT_EXISTS:
+                return None  # Supabase is already done with this account
+            return await super().fetchrow(sql, *args)
+
+    conn = ScriptedConn(
+        ("pg_advisory_xact_lock", None),
+        ("from profiles where id = $1", "apple-refresh"),
+        ("pg_advisory_xact_lock", None),
+        ("select delete_account($1)", None),
+    )
+
+    def handler(request):
+        import httpx
+
+        return httpx.Response(404, json={})  # GoTrue already forgot the user
+
+    app = make_app(handler=handler, db=AuthGone(conn))
+    async with client_for(app) as client:
+        reply = await client.delete("/v1/me", headers=HEADERS)
+        # Every other route still says the account is gone.
+        gone = await client.get("/v1/me", headers=HEADERS)
+    assert reply.status_code == 204
+    assert gone.status_code == 401 and gone.json()["error"]["code"] == "account_deleted"
     conn.finished()

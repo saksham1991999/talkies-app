@@ -11,8 +11,8 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from app.auth.deps import UserDep
-from app.db import DbDep, lock_user
-from app.errors import Conflict, NotFound
+from app.db import Db, DbDep, lock_user
+from app.errors import Conflict
 from app.logic.validate import format_time, is_fresh
 from app.logic.wrapup import Attendee, StubPlan, plan_wrapup
 from app.members import post_system
@@ -55,7 +55,6 @@ select user_id from group_members
 where group_id = $1 and user_id is not null
 order by user_id
 """
-NIGHT_GROUP = "select group_id, status from nights where id = $1"
 # A stub the user deleted stays deleted (the tombstone row blocks the insert).
 INSERT_STUB = """
 insert into stubs
@@ -66,6 +65,14 @@ values
 on conflict (user_id, id) do nothing
 returning seq
 """
+
+# How often a wrap-up rebuilds its plan when a member joins while it waits for
+# the user locks. Three attempts is far past what a real group produces.
+_MEMBERSHIP_RETRIES = 3
+
+
+class _MembershipChanged(Exception):
+    """A member joined after the lock snapshot: the plan has to be made again."""
 
 
 def _stub_data(plan: StubPlan, film_id: str, place: str | None, now: datetime) -> dict:
@@ -88,16 +95,35 @@ def _stub_data(plan: StubPlan, film_id: str, place: str | None, now: datetime) -
 
 @router.post("/nights/{nid}/wrapup", response_model=WrapupResult)
 async def wrap_up(nid: UUID, body: WrapupPost, user: UserDep, db: DbDep):
+    # A member can join while the wrap-up is planning. Their diary would then
+    # get a stub without the user lock this transaction holds, which is the lock
+    # account deletion and sync push wait on. The plan is thrown away and made
+    # again with the new member in the snapshot instead.
+    for _ in range(_MEMBERSHIP_RETRIES):
+        try:
+            return await _wrap_up_once(nid, body, user, db)
+        except _MembershipChanged:
+            continue
+    raise Conflict("group_changed", "The group changed while wrapping up; try again")
+
+
+async def _wrap_up_once(nid: UUID, body: WrapupPost, user: UUID, db: Db) -> dict:
     now = datetime.now(UTC)
     async with db.tx() as c:
+        # The authorization check comes before any lock. A non-host member (or
+        # a former member) must not be able to take the exclusive user locks of
+        # every account in the group just by asking for a wrap-up.
+        night, seat = await night_and_seat(c, nid, user)
+        require_host(night, seat, user)
         # One lock order for the whole app: user locks, then the night row.
         # Account deletion locks the user and then deletes its nights, so taking
         # the night row first here could deadlock with it.
-        known = await c.fetchrow(NIGHT_GROUP, nid)
-        if known is None:
-            raise NotFound()
-        for row in await c.fetch(GROUP_USERS, known["group_id"]):
+        locked: set[UUID] = set()
+        for row in await c.fetch(GROUP_USERS, night["group_id"]):
             await lock_user(c, row["user_id"])
+            locked.add(row["user_id"])
+        # Read the night again under its row lock: the host may have changed
+        # while this transaction waited for the user locks.
         night, seat = await night_and_seat(c, nid, user, lock=True)
         require_host(night, seat, user)
         event = await c.fetchrow(EVENT, nid) if night["status"] in ("set", "done") else None
@@ -108,6 +134,8 @@ async def wrap_up(nid: UUID, body: WrapupPost, user: UserDep, db: DbDep):
         else:
             rows = await c.fetch(NAMED, night["group_id"], body.member_ids)
         attendees = [Attendee(r["name"], r["user_id"]) for r in rows]
+        if any(a.user_id is not None and a.user_id not in locked for a in attendees):
+            raise _MembershipChanged()
         plans = plan_wrapup(
             nid,
             event["starts_at"],

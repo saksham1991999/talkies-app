@@ -3,6 +3,12 @@
 They need a real Postgres. Set TEST_DATABASE_URL to an EMPTY database whose name
 contains "test". The tests drop and rebuild its `public` and `auth` schemas.
 Without the variable every test in this folder is skipped.
+
+The connection must be a superuser, not just the owner of the tables: the
+Supabase stand-in creates the `anon`, `authenticated` and `service_role` roles,
+and `test_delete.py` builds the half-deleted window with
+`set session_replication_role = replica`, which is superuser-only. The
+`postgres:17` service that CI runs is one.
 """
 
 import asyncio

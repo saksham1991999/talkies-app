@@ -491,15 +491,16 @@ class ProfileView {
     });
 
     // Genres and languages of the distinct films, each counted once: the server
-    // counts a film once however often it was watched, so a rewatch cannot move
-    // a genre or a language into the top three.
+    // counts a film once however often it was watched and once per distinct
+    // value, so neither a rewatch nor a synced snapshot that repeats a genre or
+    // a language can move one into the top three.
     final genres = <String, int>{}, langs = <String, int>{};
     for (final id in ids) {
       final f = filmOf(id)!;
-      for (final g in f.genres) {
+      for (final g in f.genres.toSet()) {
         genres[g] = (genres[g] ?? 0) + 1;
       }
-      for (final l in f.langs) {
+      for (final l in f.langs.toSet()) {
         langs[l] = (langs[l] ?? 0) + 1;
       }
     }
