@@ -8,6 +8,12 @@ Talkies is a movie diary for Indian film goers. Every feature is free.
 - Works offline. The app bundles 34,000+ titles (Indian films in 15+ languages, Indian web and TV series, major world films).
 - Your data stays on the phone, in one JSON file, unless you sign in to the optional account. Android Auto Backup and iOS device backup include the file.
 
+## The 75-second tour
+
+[![Watch the Talkies explainer](docs/img/talkies-explainer-poster.jpg)](docs/img/talkies-explainer.mp4)
+
+The whole app in one film: the stub, the diary, search, streaming, stats, friends and movie nights.
+
 ## Repository layout
 
 This repo holds the app, its optional backend and its website.

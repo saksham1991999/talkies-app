@@ -268,3 +268,35 @@ html:has(body.landing) { background: #3a1519; }
 .guide .stores { margin: 18px 0 4px; }
 .android-soon { font-size: 15px; color: var(--ink-soft); margin: 14px 0 0; }
 .admit .fine { margin-top: 10px; }
+
+/* The 75-second tour: the explainer film, framed like a screen. */
+.screening {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 3vh 20px 6vh;
+  text-align: center;
+}
+.screening h2 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 54px);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: var(--paper);
+}
+.screening p {
+  margin: 12px 0 22px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--on-velvet-soft);
+  text-wrap: balance;
+}
+.screening video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  background: #2a0e11;
+  outline: 1px solid rgba(239, 223, 214, 0.14);
+  outline-offset: -1px;
+}
