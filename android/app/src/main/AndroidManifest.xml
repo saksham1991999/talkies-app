@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Night reminders are local notifications. Android 13 asks at the first reminder. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- Lets the notification plugin schedule reminders again after a reboot. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:label="Talkies"
         android:name="${applicationName}"
@@ -21,7 +25,33 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- app_links reads the invite link (talkies://join?code=...); Flutter's own deep linking is off. -->
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
+            <!-- Invite links use a custom scheme, which cannot be verified: any
+                 installed app may claim it and read a code. That is safe here
+                 because the code is a shareable group invite (the /j/ page shows it
+                 publicly and the owner can replace it), not a per-user credential,
+                 and a link never joins by itself: it pre-fills the join sheet and
+                 the join happens on an explicit tap in the app. A verified App Link
+                 would need a server-hosted assetlinks.json for a domain this repo
+                 does not control, so it is not used. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="talkies" android:host="join"/>
+            </intent-filter>
         </activity>
+        <!-- Scheduled night reminders (flutter_local_notifications). -->
+        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
         <!-- Launcher icon variants. MainActivity.kt enables exactly one. -->
         <activity-alias
             android:name=".IconDefault"

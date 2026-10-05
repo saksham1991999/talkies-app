@@ -226,4 +226,77 @@ html:has(body.landing) { background: #3a1519; }
   .admit .stub-body { padding: 22px 24px 26px; }
   .admit .stub-body p { font-size: 17px; }
   .stores img { height: 44px; }
+  .guide { padding: 2vh 16px 6vh; gap: 20px; }
+}
+
+/* Tagline under the wordmark: gives the H1 its topic in plain text. */
+.tagline {
+  margin: 12px 0 0;
+  padding: 0 16px;
+  text-align: center;
+  font-size: clamp(17px, 2.6vw, 22px);
+  letter-spacing: 0.02em;
+  color: var(--on-velvet-soft);
+}
+
+/* ADMIT ONE is decorative type, not a heading, so it is a styled paragraph. */
+.admit .stub-head .admit-title {
+  margin: 0;
+  font-size: clamp(34px, 7vw, 50px);
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+/* Guide: the quotable copy for search and answer engines, set as tickets. */
+.guide {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3vh 20px 7vh;
+  display: grid;
+  gap: 26px;
+}
+.guide .detail .stub-head h2 {
+  margin: 0;
+  font-size: clamp(24px, 4.6vw, 34px);
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+.guide .stub-body > :first-child { margin-top: 0; }
+.guide .stub-body h3 { font-size: 17px; margin: 22px 0 4px; }
+.guide .stub-body p { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.guide .stub-body .lead { font-size: 19px; }
+.guide .stores { margin: 18px 0 4px; }
+.android-soon { font-size: 15px; color: var(--ink-soft); margin: 14px 0 0; }
+.admit .fine { margin-top: 10px; }
+
+/* The 75-second tour: the explainer film, framed like a screen. */
+.screening {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 3vh 20px 6vh;
+  text-align: center;
+}
+.screening h2 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 54px);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: var(--paper);
+}
+.screening p {
+  margin: 12px 0 22px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--on-velvet-soft);
+  text-wrap: balance;
+}
+.screening video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  background: #2a0e11;
+  outline: 1px solid rgba(239, 223, 214, 0.14);
+  outline-offset: -1px;
 }

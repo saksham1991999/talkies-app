@@ -73,7 +73,7 @@ void main() {
           .read(settingsProvider.notifier)
           .set((s) => s.copyWith(locale: () => code, themeMode: code == 'ta' ? ThemeMode.dark : ThemeMode.light));
       await t.pumpAndSettle();
-      for (var tab = 0; tab < 5; tab++) {
+      for (var tab = 0; tab < 6; tab++) {
         c.read(tabProvider.notifier).go(tab);
         await shot(t, '${tag}_$tab');
       }

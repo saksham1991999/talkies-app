@@ -142,11 +142,23 @@ class StubRow extends ConsumerWidget {
 /// Poster in a grid, with a bookmark ribbon for the watchlist and a strip
 /// showing the release date or how many times you have watched it.
 class PosterTile extends ConsumerWidget {
-  const PosterTile(this.film, {super.key, required this.width, this.strip, this.onTap});
+  const PosterTile(
+    this.film, {
+    super.key,
+    required this.width,
+    this.strip,
+    this.onTap,
+    this.onLongPress,
+    this.longPressHint,
+  });
   final Film film;
   final double width;
   final String? strip;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+
+  /// What [onLongPress] does, for screen readers.
+  final String? longPressHint;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -165,8 +177,10 @@ class PosterTile extends ConsumerWidget {
               Semantics(
                 button: true,
                 label: film.title,
+                onLongPressHint: longPressHint,
                 child: GestureDetector(
                   onTap: onTap ?? () => openFilm(context, film),
+                  onLongPress: onLongPress,
                   child: Poster(film, width: width),
                 ),
               ),

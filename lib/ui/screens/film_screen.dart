@@ -9,7 +9,10 @@ import '../../l10n/labels.dart';
 import '../../state/providers.dart';
 import '../common.dart';
 import '../format.dart';
+import '../group_sheets.dart';
 import '../icons.dart';
+import '../online_widgets.dart';
+import '../sharer.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -162,6 +165,36 @@ class FilmScreen extends ConsumerWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Wrap(
+              children: [
+                TextButton.icon(
+                  key: const Key('add-to-group'),
+                  onPressed: () => _addToGroup(context, film),
+                  icon: TkIcon(Tk.people, size: 20, color: p.ink),
+                  label: Text(
+                    l.togetherAddToGroup,
+                    style: TextStyle(color: p.ink, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                Builder(
+                  builder: (anchor) => TextButton.icon(
+                    key: const Key('share-film'),
+                    onPressed: () => _share(anchor, ref, film),
+                    icon: TkIcon(Tk.share, size: 20, color: p.ink),
+                    label: Text(
+                      l.togetherShareFilm,
+                      style: TextStyle(color: p.ink, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Online only: each draws nothing while the server is not up, or for a film the phone made itself.
+          SendFilmButton(film: film),
+          FriendsWhoWatched(film: film),
           if (services.isNotEmpty) ...[
             SectionTitle(l.availableOn),
             Padding(
@@ -206,6 +239,31 @@ class FilmScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  /// The share sheet with the title, the year, the Wikipedia page when the film has one and a line about
+  /// Talkies. Nothing is fetched.
+  Future<void> _share(BuildContext anchor, WidgetRef ref, Film film) async {
+    final line = anchor.l.togetherShareFilmLine;
+    final wiki = film.wiki == null || film.isCustom
+        ? null
+        : 'https://en.wikipedia.org/wiki/${Uri.encodeComponent(film.wiki!.replaceAll(' ', '_'))}';
+    final text = [film.year == null ? film.title : '${film.title} (${film.year})', ?wiki, '', line].join('\n');
+    final origin = shareOrigin(anchor);
+    try {
+      await ref.read(sharerProvider).text(text, subject: film.title, origin: origin);
+    } catch (_) {
+      // A phone with no share sheet has nothing to show; the film stays where it is.
+    }
+  }
+
+  /// A sheet of the groups: the film goes to the one the person taps. A new group can be made on the spot.
+  Future<void> _addToGroup(BuildContext context, Film film) async {
+    final group = await showAddToGroupSheet(context, film);
+    if (group == null || !context.mounted) return;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(context.l.togetherAddedTo(group))));
   }
 
   Future<void> _plan(BuildContext context, WidgetRef ref, Wish wish) async {

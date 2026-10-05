@@ -1,15 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/models.dart';
+import '../state/crews.dart';
+import '../state/crews_remote.dart' show pendingJoinProvider;
+import '../state/links.dart';
+import '../state/online.dart';
 import '../state/providers.dart';
+import '../state/together.dart';
+import 'common.dart';
 import 'format.dart';
 import 'icons.dart';
 import 'screens/calendar_screen.dart';
 import 'screens/films_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/settings_screen.dart';
 import 'screens/stats_screen.dart';
 import 'screens/stubs_screen.dart';
+import 'screens/together_screen.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -38,6 +48,10 @@ class _ShellState extends ConsumerState<Shell> {
       if (!mounted) return;
       if (ref.read(settingsProvider).seenVersion != appVersion) _whatsNew();
       ref.read(catalogRefreshProvider.notifier).runIfDue();
+      // Nothing online runs before the first frame. Both calls do nothing without a server in the build
+      // and in tests that turn background work off.
+      startOnline(ref);
+      startLinks(ref);
     });
   }
 
@@ -45,6 +59,21 @@ class _ShellState extends ConsumerState<Shell> {
     await showWhatsNew(context);
     if (!mounted) return;
     ref.read(settingsProvider.notifier).set((s) => s.copyWith(seenVersion: appVersion));
+  }
+
+  /// An invite code arrived (link or typing). Online: the Together tab opens its join sheet. Signed out
+  /// with a server in the build: Settings opens, the one place that may ask the server and offer sign-in;
+  /// the code waits. Without a server the link does nothing.
+  void _routeJoin(String? code) {
+    if (code == null || !mounted) return;
+    if (ref.read(onlineProvider)) {
+      ref.read(togetherSegmentProvider.notifier).go(TogetherSegment.groups);
+      ref.read(tabProvider.notifier).go(togetherTab);
+    } else if (!ref.read(signedInProvider) &&
+        ref.read(backendProvider) != Backend.none &&
+        ref.read(settingsOpenProvider) == 0) {
+      push(context, const SettingsScreen());
+    }
   }
 
   @override
@@ -63,12 +92,21 @@ class _ShellState extends ConsumerState<Shell> {
         ]);
       }
     });
+    // Signing out or deleting the account drops the shared groups, and their reminders with them.
+    ref.listen(signedInProvider, (was, now) {
+      if (was == true && !now) unawaited(ref.read(crewsProvider.notifier).dropShared());
+    });
+    ref.listen(pendingJoinProvider, (_, code) => _routeJoin(code));
+    ref.listen(onlineProvider, (_, on) {
+      if (on) _routeJoin(ref.read(pendingJoinProvider));
+    });
     final tab = ref.watch(tabProvider);
     final l = context.l;
     return Scaffold(
       body: IndexedStack(
         index: tab,
-        children: const [HomeScreen(), StubsScreen(), CalendarScreen(), FilmsScreen(), StatsScreen()],
+        // Together is appended: the tab numbers go(1) and go(3) stay valid.
+        children: const [HomeScreen(), StubsScreen(), CalendarScreen(), FilmsScreen(), StatsScreen(), TogetherScreen()],
       ),
       bottomNavigationBar: TicketNav(
         index: tab,
@@ -79,6 +117,7 @@ class _ShellState extends ConsumerState<Shell> {
           (Tk.calendar, l.tabCalendar),
           (Tk.films, l.tabFilms),
           (Tk.stats, l.tabStats),
+          (Tk.people, l.tabTogether),
         ],
       ),
     );
@@ -143,7 +182,15 @@ class TicketNav extends StatelessWidget {
                             child: InkResponse(
                               onTap: () => onTap(i),
                               radius: 40,
-                              child: _NavItem(icon: items[i].$1, label: items[i].$2, active: i == index, p: p),
+                              child: _NavItem(
+                                icon: items[i].$1,
+                                label: items[i].$2,
+                                active: i == index,
+                                p: p,
+                                // Six tabs on a 320 dp phone leave 53 dp each: a little less side padding keeps
+                                // the label near full size instead of shrinking it to fit.
+                                dense: items.length > 5,
+                              ),
                             ),
                           ),
                         ),
@@ -160,11 +207,12 @@ class TicketNav extends StatelessWidget {
 }
 
 class _NavItem extends StatelessWidget {
-  const _NavItem({required this.icon, required this.label, required this.active, required this.p});
+  const _NavItem({required this.icon, required this.label, required this.active, required this.p, this.dense = false});
   final Tk icon;
   final String label;
   final bool active;
   final Palette p;
+  final bool dense;
 
   @override
   Widget build(BuildContext context) {
@@ -176,10 +224,11 @@ class _NavItem extends StatelessWidget {
         const SizedBox(height: 3),
         // Long labels (Tamil, Malayalam) shrink to fit instead of being cut.
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          // The active label is dark ink: it must stay on the paper, which is 5 dp in from each cell edge.
+          padding: EdgeInsets.symmetric(horizontal: dense ? 6 : 8),
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(label.toUpperCase(), maxLines: 1, style: disp(11.5, color, spacing: 0.9)),
+            child: Text(label.toUpperCase(), maxLines: 1, style: disp(11.5, color, spacing: dense ? 0.5 : 0.9)),
           ),
         ),
       ],
