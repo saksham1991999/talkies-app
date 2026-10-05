@@ -81,6 +81,28 @@ class _HoldClient extends http.BaseClient {
   }
 }
 
+/// An http client that holds the next pull on the wire, so the test can act
+/// (sign out, sign in as someone else) while a sync run is in flight.
+class _PullGate extends http.BaseClient {
+  _PullGate(this.inner);
+  final http.Client inner;
+  Completer<void>? _gate;
+  final hit = Completer<void>();
+
+  void arm() => _gate = Completer<void>();
+  void open() => _gate?.complete();
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final g = _gate;
+    if (g != null && request.url.path == '/v1/sync/pull' && !hit.isCompleted) {
+      hit.complete();
+      await g.future;
+    }
+    return inner.send(request);
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -890,6 +912,47 @@ void main() {
       await a.sync();
       expect(w.server.rowsOf(user).where((r) => r['kind'] == 'stub'), hasLength(1));
       expect(a.c.read(sessionProvider)!.me, isNotNull);
+    });
+
+    test('a run in flight across an account switch writes nothing of the old account', () async {
+      final w = World();
+      // Account two already holds a stub on the server, at a low seq.
+      final b = await w.phone(email: 'two@example.test');
+      b.watch('Q2');
+      await b.sync();
+      w.tick(const Duration(minutes: 1));
+      // Account one holds a stub too, from another phone, so the pull below
+      // has rows to apply (and a cursor to write).
+      final a2 = await w.phone(email: 'one@example.test');
+      a2.watch('Q3');
+      await a2.sync();
+      w.tick(const Duration(minutes: 1));
+
+      // This phone never synced: its stub is pending, its cursor is zero.
+      final gate = _PullGate(w.server.client);
+      final a = Device(w.server, client: gate);
+      w.phones.add(a);
+      await a.signIn('one@example.test');
+      a.watch('Q1');
+
+      // Hold the pull on the wire, switch accounts, then let it land.
+      gate.arm();
+      final run = a.engine.run();
+      await gate.hit.future;
+      await a.session.signOut();
+      await a.signIn('two@example.test');
+      gate.open();
+      await run;
+      await a.sync();
+
+      // Two's rows sit below one's old high-water mark: a stale cursor would
+      // skip them forever, and one's rows would leak into this diary instead.
+      expect(a.diary.stubs.map((s) => s.filmId).toSet(), {'Q1', 'Q2'});
+      expect(
+        w.server.rowsOf(w.user(a)).where((r) => r['kind'] == 'stub').map((r) => (r['data'] as Map)['film']).toSet(),
+        {'Q1', 'Q2'},
+      );
+      expect(a.syncState, SyncState.idle);
     });
   });
 

@@ -89,6 +89,27 @@ void main() {
     expect(find.text('4 of 8'), findsOneWidget);
   });
 
+  testWidgets('arrow keys in the search field move the caret instead of voting', (t) async {
+    phoneSize(t);
+    final r = rig();
+    final id = await makeCrew(r);
+    await _open(t, r, id);
+
+    await t.tap(find.byTooltip('Search'));
+    await t.pumpAndSettle();
+    await t.enterText(find.byKey(const Key('deck-search')), 'film');
+    await t.pumpAndSettle();
+    await t.sendKeyEvent(LogicalKeyboardKey.arrowRight);
+    await t.pumpAndSettle();
+    expect(_votes(r, id, 'Me'), isEmpty, reason: 'no card was voted');
+    expect(find.text('1 of 8'), findsOneWidget, reason: 'the top card did not move');
+    expect(
+      t.widget<TextField>(find.byKey(const Key('deck-search'))).controller?.text,
+      'film',
+      reason: 'the field kept its text',
+    );
+  });
+
   testWidgets('a swipe on the card itself votes too', (t) async {
     phoneSize(t);
     final r = rig();

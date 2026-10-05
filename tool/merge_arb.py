@@ -110,8 +110,50 @@ def key_line(key: str) -> re.Pattern:
     return re.compile(rf'^(\s*{re.escape(json.dumps(key))}:\s*)(.*?)(,?)[ \t]*$', re.M)
 
 
-def meta_line(key: str) -> re.Pattern:
-    return re.compile(rf'^[ \t]*{re.escape(json.dumps("@" + key))}:.*\n', re.M)
+def _meta_span(text: str, key: str) -> tuple[int, int] | None:
+    """The (start, end) of the `@key` metadata entry, or None when absent.
+
+    The value is one JSON object (`{"placeholders": ...}`) that may span
+    lines; a single-line regex would leave orphan lines behind and the file
+    would stop being valid JSON.
+    """
+    head = re.compile(rf'^[ \t]*{re.escape(json.dumps("@" + key))}:\s*', re.M).search(text)
+    if head is None:
+        return None
+    i = head.end()
+    if i >= len(text) or text[i] != '{':
+        # Not an object value; remove just the one line.
+        end = text.find('\n', i)
+        return (head.start(), len(text) if end == -1 else end + 1)
+    depth = 0
+    instr = False
+    esc = False
+    while i < len(text):
+        ch = text[i]
+        if instr:
+            if esc:
+                esc = False
+            elif ch == '\\':
+                esc = True
+            elif ch == '"':
+                instr = False
+        elif ch == '"':
+            instr = True
+        elif ch == '{':
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0:
+                i += 1
+                break
+        i += 1
+    # Swallow the trailing comma and the rest of the line.
+    while i < len(text) and text[i] in ' \t':
+        i += 1
+    if i < len(text) and text[i] == ',':
+        i += 1
+    end = text.find('\n', i)
+    return (head.start(), len(text) if end == -1 else end + 1)
 
 
 def has_key(text: str, key: str) -> bool:
@@ -192,9 +234,11 @@ def set_value(path: Path, key: str, value: str) -> None:
 
 
 def set_meta(path: Path, key: str, meta: str | None) -> None:
-    """Replace, insert, or remove the one-line @key block of an English key."""
+    """Replace, insert, or remove the @key block of an English key."""
     text = path.read_text(encoding='utf-8')
-    text = meta_line(key).sub('', text, count=1)
+    span = _meta_span(text, key)
+    if span is not None:
+        text = text[:span[0]] + text[span[1]:]
     if meta is not None:
         pat = key_line(key)
         m = pat.search(text)

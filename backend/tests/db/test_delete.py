@@ -122,8 +122,8 @@ async def mentions_of(world, user_id: UUID) -> list[str]:
     """Every column of every table that still holds the user's id, as a uuid or as text.
 
     `reports_archive` is exempt: it keeps only minimal report fields after the
-    account is gone (its `target_id` is the reported object's id, which for a
-    user report is that uuid by design; see test_the_report_archive_survives).
+    account is gone (a user report keeps no account id; see
+    test_the_report_archive_survives).
     """
     found = []
     columns = await world.rows(
@@ -268,8 +268,9 @@ async def test_the_report_archive_survives_a_deleted_account(world):
     assert len(rows) >= 3
     assert {r["reason"] for r in rows} == {"spam"}
     assert {r["kind"] for r in rows} == {"user", "message"}
-    assert all(r["target_id"] for r in rows)
-    assert all("@" not in r["target_id"] for r in rows)
+    assert all(r["target_id"] is None for r in rows if r["kind"] == "user")
+    assert all(r["target_id"] for r in rows if r["kind"] != "user")
+    assert all("@" not in (r["target_id"] or "") for r in rows)
 
 
 async def test_the_delete_waits_for_a_sync_push_in_flight(world):

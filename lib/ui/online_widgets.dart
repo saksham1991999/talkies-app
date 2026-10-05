@@ -137,6 +137,9 @@ class SendFilmButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // A `my:` id names a film only this phone knows: the server's sent_films
+    // check allows catalog ids alone, so there is nothing to offer.
+    if (film.isCustom) return const SizedBox.shrink();
     final p = Palette.of(context);
     return TextButton.icon(
       key: const Key('send-film'),

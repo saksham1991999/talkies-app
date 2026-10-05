@@ -269,11 +269,24 @@ class SyncEngine extends Notifier<SyncState> {
     state = SyncState.syncing;
     try {
       if (!_checkAccount(user)) return false;
+      // The store may be reset under this run (sign-out, account switch, or
+      // the answer to needsAccountChoice). The rows below belong to this
+      // account only: stop before writing anything when that happens, and
+      // loop once more so the new account still gets its first run.
+      final gen = _store.generation;
+      bool stale() {
+        if (_store.generation == gen) return false;
+        _again = true;
+        return true;
+      }
       // The server makes the profile row on the first GET /v1/me, and records need it.
       if (!await ref.read(sessionProvider.notifier).ensureMe()) throw const ApiOffline('profile unavailable');
       scan();
       final (:records, :cursor) = await _pull();
       if (!ref.mounted) return false;
+      // True so the loop takes one fresh pass (a signed-out phone exits it
+      // at once); the new account still gets its first run.
+      if (stale()) return true;
       final (:changes, :unreadable) = _merge(records);
       _apply(changes);
       // The cursor does not pass a record this build cannot read: the next run refetches it, and an
@@ -281,8 +294,9 @@ class SyncEngine extends Notifier<SyncState> {
       if (unreadable.isEmpty) _store.cursor = cursor;
       _poison += unreadable.length;
       _store.save();
-      await _push();
+      await _push(gen);
       if (!ref.mounted) return false;
+      if (stale()) return true;
       // An acknowledged tombstone needs no memory: the server keeps the row that beats older edits.
       _store.meta.removeWhere((_, e) => e.x == 1 && e.s == 1);
       _store.save();
@@ -467,7 +481,7 @@ class SyncEngine extends Notifier<SyncState> {
 
   /// Sends every pending record in batches of 200. The server answers with the rows that kept their place
   /// (applied here) and the records it refused (not retried until they change).
-  Future<void> _push() async {
+  Future<void> _push(int gen) async {
     final api = ref.read(apiProvider);
     final tried = <String>{};
     while (true) {
@@ -494,7 +508,7 @@ class SyncEngine extends Notifier<SyncState> {
 
       final reply = await api.post('/v1/sync/push', body: SyncPush(records).toJson());
       final res = SyncPushResult.fromJson(reply as Map<String, dynamic>);
-      if (!ref.mounted) return;
+      if (!ref.mounted || _store.generation != gen) return;
       _learnSkew(res.serverMs);
 
       final lost = {for (final c in res.conflicts) ?_key(c.kind, c.id): c};

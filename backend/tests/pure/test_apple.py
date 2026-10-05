@@ -5,6 +5,7 @@ from uuid import uuid4
 import httpx
 
 from app.auth.apple import Apple
+from app.common import user_color
 from tests.helpers import auth, client_for, make_app, make_settings, make_token
 from tests.scripted import ScriptedConn, ScriptedDb
 
@@ -78,7 +79,7 @@ async def test_sign_in_exchanges_the_code_and_stores_the_refresh_token():
     assert form["grant_type"] == "authorization_code"
     assert form["code"] == "apple-code"
     assert form["client_id"] == "in.talkies.talkies"
-    assert conn.args_of("insert into profiles") == (USER, "apple-refresh")
+    assert conn.args_of("insert into profiles") == (USER, "apple-refresh", user_color(USER))
     conn.finished()
 
 

@@ -139,7 +139,7 @@ What the checks cover:
 - Film snapshots are cut down to the known keys when they arrive, so a snapshot cannot carry diary text.
 - A new profile is private. Friends see nothing until the owner chooses "friends".
 - A blocked user disappears for both people: lookup, profile, feed, roster, and chat.
-- `DELETE /v1/me` runs `delete_account`, which deletes the profile. Every table cascades from it. Groups that the user owns pass to the earliest member, or go when nobody else is in them. Before a report row goes, `archive_report()` copies its kind, target id, reason, note and date to `reports_archive`, which carries no name, email or message text. The server then deletes the Supabase user.
+- `DELETE /v1/me` runs `delete_account`, which deletes the profile. Every table cascades from it. Groups that the user owns pass to the earliest member, or go when nobody else is in them. Before a report row goes, `archive_report()` copies its kind, target id (null for a report about a user), reason, note and date to `reports_archive`, which carries no name, email, account id or message text. The server then deletes the Supabase user.
 - Logs hold no request bodies, no emails, and no codes.
 
 ## Limits

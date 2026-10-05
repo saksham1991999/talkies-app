@@ -329,17 +329,21 @@ async def test_feed_items_ids_and_cursor():
 
 
 async def test_reaction_put_and_clear():
-    app, conn = app_for(("from v_visible_stubs", FILM), ("insert into reactions", "INSERT 0 1"))
+    app, conn = app_for(
+        ("pg_advisory_xact_lock", None),  # the pair lock, shared with block()
+        ("from v_visible_stubs", FILM),
+        ("insert into reactions", "INSERT 0 1"),
+    )
     body = {"user_id": str(OTHER), "film_id": "Q949228", "reaction": 3}
     async with client_for(app) as client:
         reply = await client.put("/v1/reactions", json=body, headers=HEADERS)
     assert reply.status_code == 204
     assert conn.args_of("insert into reactions") == (USER, OTHER, "Q949228", FILM, 3)
-    app, conn = app_for(("delete from reactions", "DELETE 1"))
+    app, conn = app_for(("pg_advisory_xact_lock", None), ("delete from reactions", "DELETE 1"))
     async with client_for(app) as client:
         reply = await client.put("/v1/reactions", json={**body, "reaction": None}, headers=HEADERS)
     assert reply.status_code == 204
-    app, conn = app_for(("from v_visible_stubs", None))
+    app, conn = app_for(("pg_advisory_xact_lock", None), ("from v_visible_stubs", None))
     async with client_for(app) as client:
         assert (await client.put("/v1/reactions", json=body, headers=HEADERS)).status_code == 404
         assert (

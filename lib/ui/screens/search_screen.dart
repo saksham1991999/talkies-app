@@ -14,7 +14,7 @@ import 'custom_film_screen.dart';
 import 'record_screen.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
-  const SearchScreen({super.key, this.forRecord = false, this.recordDay, this.onPick});
+  const SearchScreen({super.key, this.forRecord = false, this.recordDay, this.onPick, this.includeCustom = true});
 
   /// Tapping a result opens the stub form instead of the film page.
   final bool forRecord;
@@ -23,6 +23,11 @@ class SearchScreen extends ConsumerStatefulWidget {
   /// Pick mode, for choosing a film for something else (a group list, a night): tapping a result
   /// hands the film over and closes the screen. The bookmark button and "add it yourself" are not shown.
   final ValueChanged<Film>? onPick;
+
+  /// False hides the phone's own films from the results. Pickers whose target
+  /// lives on the server (a chat message, a film sent to a friend) cannot take
+  /// them: a `my:` id names a film only this phone knows.
+  final bool includeCustom;
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();
@@ -64,9 +69,11 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     List<Film> results = const [];
     if (catalog.value != null && q.isNotEmpty) {
       final nq = norm(q);
-      final own = diary.films.values
-          .where((f) => f.isCustom && (_series == null || f.series == _series) && norm(f.title).contains(nq))
-          .toList();
+      final own = widget.includeCustom
+          ? diary.films.values
+                .where((f) => f.isCustom && (_series == null || f.series == _series) && norm(f.title).contains(nq))
+                .toList()
+          : const <Film>[];
       results = [...own, ...catalog.value!.search(q, series: _series)];
     }
 

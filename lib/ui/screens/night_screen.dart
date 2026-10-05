@@ -362,6 +362,11 @@ class _NightScreenState extends ConsumerState<NightScreen> {
   List<Widget> _reminder(Crew crew, Night night) {
     final p = Palette.of(context);
     final l = context.l;
+    // No date, or a night starting within two hours, has no reminder time
+    // left, now or ever: offering the switch would schedule nothing. The
+    // hint under it already says when reminders go out.
+    final start = night.event?.startsAt;
+    if (start == null || reminderTimes(start, ref.watch(nowProvider)()).isEmpty) return [];
     final on = ref.watch(reminderOnProvider(night.id));
     return [
       Padding(

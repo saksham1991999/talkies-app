@@ -91,10 +91,19 @@ def client_ip(request: Request) -> str:
     agree. When they disagree the header came from an untrusted peer, the
     proxy-header pass did not run, and every client would share one bucket:
     deny the request and say so loudly instead of silently grouping everyone.
+
+    Uvicorn --proxy-headers with --forwarded-allow-ips='*' (the Dockerfile's
+    flags) rewrites `request.client` to the FIRST entry of the chain, while
+    the header itself keeps every hop a proxy appended
+    ($proxy_add_x_forwarded_for) or a CDN added in front. Compare against
+    that first entry so a legitimate multi-hop chain is not refused; when
+    the rewrite did not run `host` is the socket peer, which is never the
+    first entry of an appended chain, so the check still fails closed.
     """
     host = request.client.host if request.client else None
     forwarded = request.headers.get("x-forwarded-for")
-    if forwarded is None or host in _TRUSTED_PROXIES or host == forwarded.strip():
+    first = forwarded.split(",")[0].strip() if forwarded is not None else None
+    if forwarded is None or host in _TRUSTED_PROXIES or host == first:
         return host or "unknown"
     log.error(
         "x-forwarded-for %r on a request from %s: start uvicorn with "

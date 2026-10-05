@@ -338,6 +338,11 @@ class SyncStore {
   /// True once the first meta merge (a union on a filled phone) is done.
   bool metaUnited = false;
 
+  /// Bumped by [reset], never saved. A sync run that started before the bump
+  /// must not write into the store afterwards: the rows belong to another
+  /// account (or none).
+  int generation = 0;
+
   Map<String, dynamic> toJson() => {
     'deviceId': deviceId,
     if (cursor != 0) 'cursor': cursor,
@@ -363,6 +368,7 @@ class SyncStore {
     skew = 0;
     skewKnown = false;
     metaUnited = false;
+    generation++;
     save();
   }
 }

@@ -7,9 +7,10 @@
   "data": {
     "v": 1,
     "t": {
-      "g:drama": 82,
-      "l:kn": 64,
-      "dir:Q9876": 50
+      "Anurag Kashyap": 82,
+      "Nawazuddin Siddiqui": 64,
+      "Crime": 50,
+      "#gunda": 41
     },
     "l": {
       "kn": 64,
@@ -24,8 +25,8 @@
       12
     ],
     "s": [
-      "Netflix",
-      "Prime Video"
+      "netflix",
+      "prime"
     ]
   },
   "seq": 44

@@ -168,7 +168,7 @@ Rules:
 - `shelf`: most recently watched first (ordering column never returned), ties by film id. The cursor is an offset.
 - Reaction numbers 0 to 7 map to a fixed emoji set in the app.
 - Match: see `backend/app/logic/match.py`. `both` counts the viewer's own films (private included) that also appear in the friend's public films. A friend who hides ratings never contributes ratings.
-- Report `kind` and `target_id`: `user` and `group` take a uuid, `message` takes the message id as a string. A `user` report needs a relationship: the target must be a friend or share a group with the reporter (404 otherwise, so the endpoint cannot probe arbitrary ids). When an account is deleted, its reports move to an internal `reports_archive` table (kind, target id, reason, note, date), so the moderation trail survives without keeping any user id.
+- Report `kind` and `target_id`: `user` and `group` take a uuid, `message` takes the message id as a string. A `user` report needs a relationship: the target must be a friend or share a group with the reporter (404 otherwise, so the endpoint cannot probe arbitrary ids). When an account is deleted, its reports move to an internal `reports_archive` table (kind, target id, reason, note, date), so the moderation trail survives without keeping any user id: a report about a user keeps no target id.
 
 ### Phase 3: groups, shared list, deck, swipes
 

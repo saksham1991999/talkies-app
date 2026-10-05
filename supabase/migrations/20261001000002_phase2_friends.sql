@@ -87,7 +87,9 @@ create index reports_target_user on reports (target_user_id);
 create table reports_archive (
   id uuid primary key,  -- the report's own id, not a user's
   kind text not null,
-  target_id text not null,
+  -- Null for a report about a user: their account id must not survive the
+  -- deletion. Message and group ids stay, so the trail keeps its context.
+  target_id text,
   reason text not null,
   note text,
   reported_at timestamptz not null
@@ -98,7 +100,9 @@ language plpgsql
 as $$
 begin
   insert into reports_archive (id, kind, target_id, reason, note, reported_at)
-  values (old.id, old.kind, old.target_id, old.reason, old.note, old.created_at)
+  values (old.id, old.kind,
+          case when old.kind = 'user' then null else old.target_id end,
+          old.reason, old.note, old.created_at)
   on conflict (id) do nothing;
   return old;
 end

@@ -17,7 +17,7 @@ router = APIRouter(tags=["invite"])
 
 APP_STORE = "https://apps.apple.com/app/id6817738462"
 PLAY_STORE = "https://play.google.com/store/apps/details?id=in.talkies.talkies"
-OG_IMAGE = "https://saksham1991999.github.io/talkies-app/img/og.png"
+OG_IMAGE = "https://saksham1991999.github.io/talkies-app/img/og.jpg"
 
 _HEADERS = {
     "X-Robots-Tag": "noindex",

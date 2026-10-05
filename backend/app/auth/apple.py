@@ -16,6 +16,7 @@ from uuid import UUID
 
 import httpx
 
+from app.common import user_color
 from app.settings import Settings
 
 log = logging.getLogger("talkies")
@@ -90,13 +91,13 @@ async def save_refresh_token(apple: Apple, db, code: str, user: UUID) -> None:
         if token is None:
             return
         async with db.tx() as c:
-            await c.execute(SAVE, user, token)
+            await c.execute(SAVE, user, token, user_color(user))
     except Exception as exc:
         log.warning("storing the apple refresh token failed: %s", type(exc).__name__)
 
 
 SAVE = """
-insert into profiles (id, apple_refresh_token) values ($1, $2)
+insert into profiles (id, apple_refresh_token, avatar_color) values ($1, $2, $3)
 on conflict (id) do update set apple_refresh_token = excluded.apple_refresh_token
 """
 

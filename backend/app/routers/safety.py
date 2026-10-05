@@ -74,6 +74,9 @@ async def put_reaction(body: ReactionPut, user: UserDep, db: DbDep):
     if body.user_id == user:
         raise Invalid()
     async with db.tx() as c:
+        # The same pair lock block() takes: without it a reaction can commit
+        # after the block's delete has run and resurface on unblock.
+        await lock_pair(c, user, body.user_id)
         if body.reaction is None:
             await c.execute(CLEAR, user, body.user_id, body.film_id)
         else:

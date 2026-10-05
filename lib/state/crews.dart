@@ -1024,7 +1024,8 @@ class CrewController extends Notifier<CrewState> {
 
   /// Turns reminders for a set night on or off: one a day before, one two hours
   /// before, past ones skipped. The caller writes the texts (localized). Asks for
-  /// permission at the first use. False when the night has no date, or the user said no.
+  /// permission at the first use. False when the night has no date, when every
+  /// reminder time is already past, or the user said no.
   Future<bool> setReminder(
     String nightId,
     bool on, {
@@ -1041,6 +1042,9 @@ class CrewController extends Notifier<CrewState> {
     if (start == null) return false;
     final reminders = ref.read(remindersProvider);
     final times = reminderTimes(start, ref.read(nowProvider)());
+    // Nothing to schedule (the night starts within two hours): say so instead
+    // of recording a reminder that will never ring.
+    if (times.isEmpty) return false;
     try {
       if (!await reminders.ensurePermission()) return false;
       for (final t in times) {

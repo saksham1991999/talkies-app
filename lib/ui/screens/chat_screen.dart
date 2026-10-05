@@ -110,6 +110,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
   Future<void> _attach() => push(
     context,
     SearchScreen(
+      // A chat message carries a catalog id: the phone's own films cannot go.
+      includeCustom: false,
       onPick: (f) {
         if (mounted) setState(() => _film = f);
       },

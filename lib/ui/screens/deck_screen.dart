@@ -204,8 +204,12 @@ class _DeckScreenState extends ConsumerState<DeckScreen> {
 
   KeyEventResult _key(KeyEvent e, DeckCard? top) {
     if (e is! KeyDownEvent || top == null) return KeyEventResult.ignored;
-    // Arrow keys belong to the search field while someone types in it.
-    if (FocusManager.instance.primaryFocus?.context?.widget is EditableText) return KeyEventResult.ignored;
+    // Arrow keys belong to the search field while someone types in it. The
+    // focused context is the inner Focus widget EditableText builds, never the
+    // EditableText itself, so look for its state up the tree instead.
+    if (FocusManager.instance.primaryFocus?.context?.findAncestorStateOfType<EditableTextState>() != null) {
+      return KeyEventResult.ignored;
+    }
     final vote = switch (e.logicalKey) {
       LogicalKeyboardKey.arrowRight => Vote.want,
       LogicalKeyboardKey.arrowLeft => Vote.skip,

@@ -91,6 +91,8 @@ class RemoteCrewRepo implements CrewRepo {
     final me = head.me?.id;
     final reply = TalliesReply.fromJson(_map(mine));
     final d = Deck.fromJson(_map(deck));
+    // Night votes this phone already knows (a guest's included), by night id.
+    final oldVotes = {for (final n in crew.nights) n.id: n.votes};
     return head.copyWith(
       films: WatchItem.listFromJson(films),
       deck: d,
@@ -98,7 +100,12 @@ class RemoteCrewRepo implements CrewRepo {
       // Keep the votes of guests read earlier; mine are fresh.
       votes: {...crew.votes, ?me: reply.mine},
       tallies: reply.tallies,
-      nights: Night.listFromJson(nights, mineFor: me),
+      // The list carries only mine; keep each night's known guest votes, as
+      // [_take] does for a single night read.
+      nights: [
+        for (final n in Night.listFromJson(nights, mineFor: me))
+          n.copyWith(votes: {...?oldVotes[n.id], ...n.votes}),
+      ],
     );
   });
 

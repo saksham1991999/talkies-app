@@ -6,7 +6,12 @@ from uuid import uuid4
 
 from tests.db.conftest import Client, film, iso, stub, today, wish
 
-NOW = datetime.now(UTC)
+
+def now() -> datetime:
+    # Read the clock at call time, not at import time: this module runs last
+    # in the db suite, and a stale timestamp makes the server-time wall and
+    # the tombstone ordering below flake on slow machines.
+    return datetime.now(UTC)
 
 
 def parse(text: str) -> datetime:
@@ -18,7 +23,7 @@ async def test_push_then_pull_round_trip(world):
     record = stub("s1", date=today(), rating=4.5, memo="loved it", seat="F14")
     result = await asha.push(record)
     assert result["conflicts"] == [] and result["rejected"] == []
-    assert parse(result["server_time"]) - NOW < timedelta(minutes=1)
+    assert parse(result["server_time"]) - now() < timedelta(minutes=1)
     pulled = await asha.pull()
     assert pulled["more"] is False
     (got,) = pulled["records"]
@@ -42,7 +47,7 @@ async def test_the_film_snapshot_keeps_only_known_keys(world):
 
 async def test_last_write_wins_and_a_tie_keeps_the_server_row(world):
     asha = await world.user("asha")
-    base = NOW - timedelta(hours=1)
+    base = now() - timedelta(hours=1)
     first = stub("s1", memo="first", at=base)
     await asha.push(first)
 
@@ -64,14 +69,14 @@ async def test_last_write_wins_and_a_tie_keeps_the_server_row(world):
 
 async def test_updated_at_is_clamped_to_five_minutes_ahead(world):
     asha = await world.user("asha")
-    await asha.push(stub("s1", at=NOW + timedelta(days=30)))
+    await asha.push(stub("s1", at=now() + timedelta(days=30)))
     (got,) = (await asha.pull())["records"]
     assert parse(got["updated_at"]) <= datetime.now(UTC) + timedelta(minutes=5, seconds=2)
 
 
 async def test_a_tombstone_beats_an_older_create_and_loses_to_a_newer_one(world):
     asha = await world.user("asha")
-    t0 = NOW - timedelta(hours=1)
+    t0 = now() - timedelta(hours=1)
     tombstone = {
         "kind": "stub",
         "id": "s1",
@@ -96,7 +101,7 @@ async def test_a_tombstone_beats_an_older_create_and_loses_to_a_newer_one(world)
 
 async def test_a_tombstone_drops_the_data(world):
     asha = await world.user("asha")
-    await asha.push(stub("s1", memo="secret", at=NOW - timedelta(hours=1)))
+    await asha.push(stub("s1", memo="secret", at=now() - timedelta(hours=1)))
     tombstone = {**stub("s1", memo="still secret"), "deleted": True}
     await asha.push(tombstone)
     (got,) = (await asha.pull())["records"]
@@ -138,7 +143,7 @@ async def test_a_batch_over_200_is_413_and_200_is_fine(world):
 async def test_the_stub_limit(world, monkeypatch):
     monkeypatch.setattr("app.routers.sync.MAX_ROWS", 3)
     asha = await world.user("asha")
-    base = NOW - timedelta(hours=1)
+    base = now() - timedelta(hours=1)
     await asha.push(*[stub(f"s{i}", at=base) for i in range(3)])
     result = await asha.push(stub("s3"), stub("s0", memo="edit", at=base + timedelta(minutes=1)))
     assert result["rejected"] == [{"kind": "stub", "id": "s3", "code": "limit_reached"}]
@@ -167,8 +172,8 @@ async def test_pull_pages(world):
 
 async def test_feed_seq_rules(world):
     asha = await world.user("asha")
-    old = (NOW - timedelta(days=30)).date().isoformat()
-    base = NOW - timedelta(hours=1)
+    old = (now() - timedelta(days=30)).date().isoformat()
+    base = now() - timedelta(hours=1)
     await asha.push(
         stub("fresh", date=today(), at=base),
         stub("old", date=old, at=base),
@@ -207,7 +212,7 @@ async def test_two_pushes_at_once_do_not_interleave(world):
 
 async def test_two_phones_pushing_the_same_stub_at_once_leave_one_winner(world):
     asha = await world.user("asha")
-    base = NOW - timedelta(hours=1)
+    base = now() - timedelta(hours=1)
     pushes = [
         asha.push(stub("s1", memo=f"phone {i}", at=base + timedelta(seconds=i))) for i in range(8)
     ]
@@ -221,7 +226,7 @@ async def test_wishes_meta_and_taste(world):
     meta = {
         "kind": "meta",
         "id": "meta",
-        "updated_at": iso(NOW),
+        "updated_at": iso(now()),
         "deleted": False,
         "film": None,
         "data": {"tags": ["a"], "venues": [{"name": "Home", "type": "home"}], "hidden": ["Q1"]},
@@ -237,7 +242,7 @@ async def test_wishes_meta_and_taste(world):
     assert set(records) == {"Q5", "meta", "taste"}
     assert records["meta"]["film"] is None and records["taste"]["data"]["v"] == 1
     assert records["Q5"]["data"]["planned"] == "2026-12-01"
-    gone = {**wish("Q5", at=NOW + timedelta(minutes=1)), "deleted": True, "film": None, "data": {}}
+    gone = {**wish("Q5", at=now() + timedelta(minutes=1)), "deleted": True, "film": None, "data": {}}
     await asha.push(gone)
     records = {r["id"]: r for r in (await asha.pull())["records"]}
     assert records["Q5"]["deleted"] is True and records["Q5"]["film"] is None
