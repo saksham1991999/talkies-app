@@ -7,7 +7,7 @@ import '../l10n/gen/app_localizations.dart';
 /// Version shown in Settings and used to gate the "what's new" sheet: bumping it
 /// is what makes an update show the sheet again, so it must match the
 /// `version:` line in pubspec.yaml. `test/l10n_format_test.dart` enforces that.
-const appVersion = '1.1.0';
+const appVersion = '1.1.1';
 const privacyUrl = 'https://saksham1991999.github.io/talkies-app/privacy.html';
 
 extension L10nX on BuildContext {

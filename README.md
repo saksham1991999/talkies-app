@@ -178,7 +178,8 @@ lib/
 backend/      optional FastAPI service (Supabase Auth and Postgres): app/, tests/, API.md
 supabase/     config.toml and SQL migrations
 docs/         website: landing, privacy, support, account deletion
-store/        metadata/<locale>.json for all 50 App Store languages, screenshots, listing validator
+store/        metadata/<locale>.json for all 50 App Store languages, whatsnew/<version>.json,
+              screenshots, listing validator
 tool/         catalog builder, recent-release baker, icon generator, label generator, ARB tools,
               the translation pipeline, tool/asc.py for App Store Connect
 ```
@@ -213,6 +214,24 @@ python3 tool/asc.py events --apply      # in-app event shells
 
 `asc.py` reads the key in `~/.appstoreconnect`. It never deletes anything and
 never prints the key. Re-running is safe.
+
+A version's release notes live in `store/whatsnew/<version>.json`, one string per
+App Store locale. They are kept out of `store/metadata/` on purpose: that folder
+is what is live, and pushing next version's notes through it would rewrite the
+notes of the version already in review.
+
+```bash
+python3 tool/whatsnew_check.py          # the version in pubspec.yaml, all 50 locales
+python3 tool/whatsnew_check.py 1.1.1    # one version
+```
+
+It fails when a locale was never written, a dash or a placeholder slipped in, or
+the file and `pubspec.yaml` disagree on the version. An English word left inside
+a translation is printed as a note for a person to judge.
+
+When the next version is created in App Store Connect, copy its notes into
+`store/metadata/<locale>.json` under `whatsNew` and run `python3 tool/asc.py
+push --apply`.
 
 ## Licences
 

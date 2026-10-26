@@ -54,3 +54,17 @@ jobs:
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test
+
+  # The listing is 50 storefronts of hand-edited JSON, and the release notes are
+  # written once per version for all 50. Neither shows up in a Dart test, so both
+  # are checked here, on plain python3 with no dependencies.
+  store:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Listing text
+        run: python3 store/listing_data.py --quiet
+      - name: Release notes
+        run: python3 tool/whatsnew_check.py
+      - name: Right-to-left layout
+        run: python3 tool/rtl_audit.py
