@@ -246,7 +246,8 @@ async def test_wishes_meta_and_taste(world):
     assert set(records) == {"Q5", "meta", "taste"}
     assert records["meta"]["film"] is None and records["taste"]["data"]["v"] == 1
     assert records["Q5"]["data"]["planned"] == "2026-12-01"
-    gone = {**wish("Q5", at=now() + timedelta(minutes=1)), "deleted": True, "film": None, "data": {}}
+    gone = {**wish("Q5", at=now() + timedelta(minutes=1)), "deleted": True, "film": None,
+            "data": {}}
     await asha.push(gone)
     records = {r["id"]: r for r in (await asha.pull())["records"]}
     assert records["Q5"]["deleted"] is True and records["Q5"]["film"] is None
