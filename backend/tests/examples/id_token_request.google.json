@@ -1,0 +1,7 @@
+{
+  "provider": "google",
+  "id_token": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjMifQ.c2ln",
+  "access_token": null,
+  "nonce": null,
+  "authorization_code": null
+}

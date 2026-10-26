@@ -1,0 +1,70 @@
+{
+  "server_time": "2026-10-01T12:00:00.000Z",
+  "records": [
+    {
+      "kind": "stub",
+      "id": "s-1727726700000",
+      "updated_at": "2026-09-30T20:06:10.000Z",
+      "deleted": false,
+      "film": {
+        "id": "Q949228",
+        "t": "Kantara",
+        "y": 2022,
+        "d": "2022-09-30",
+        "g": [
+          "action",
+          "drama"
+        ],
+        "l": [
+          "kn"
+        ],
+        "c": [
+          "IN"
+        ],
+        "dir": [
+          "Rishab Shetty"
+        ],
+        "cast": [
+          "Rishab Shetty",
+          "Sapthami Gowda"
+        ],
+        "p": "en/a/a5/Kantara_film_poster.jpg",
+        "pop": 61
+      },
+      "data": {
+        "id": "s-1727726700000",
+        "no": 12,
+        "film": "Q949228",
+        "created": "2026-09-30T20:05:00.000",
+        "date": "2026-09-30",
+        "prec": "day",
+        "rating": 4.5,
+        "place": "PVR Phoenix",
+        "memo": "Loved the climax",
+        "tags": [
+          "friends"
+        ],
+        "show": "night",
+        "format": "imax",
+        "class": "Recliner",
+        "seat": "F14",
+        "price": 450.0,
+        "fdfs": true,
+        "lang": "hi",
+        "with": "Ravi, Meena"
+      },
+      "seq": 41
+    },
+    {
+      "kind": "stub",
+      "id": "s-1727000000000",
+      "updated_at": "2026-09-30T21:00:00.000Z",
+      "deleted": true,
+      "film": null,
+      "data": {},
+      "seq": 45
+    }
+  ],
+  "cursor": 45,
+  "more": false
+}

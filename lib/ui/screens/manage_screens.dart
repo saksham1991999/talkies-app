@@ -92,7 +92,7 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
           if (d.tags.isEmpty) EmptyNote(l.tagsEmpty),
           for (final t in d.tags)
             ListTile(
-              contentPadding: const EdgeInsets.only(left: 20, right: 8),
+              contentPadding: const EdgeInsetsDirectional.only(start: 20, end: 8),
               title: Text('#$t', style: const TextStyle(fontWeight: FontWeight.w700)),
               subtitle: Text(
                 l.stubsUsing(d.stubs.where((s) => s.tags.contains(t)).length),
@@ -141,7 +141,7 @@ class VenuesScreen extends ConsumerWidget {
         children: [
           for (final v in d.venues)
             ListTile(
-              contentPadding: const EdgeInsets.only(left: 20, right: 8),
+              contentPadding: const EdgeInsetsDirectional.only(start: 20, end: 8),
               leading: Container(
                 width: 14,
                 height: 22,

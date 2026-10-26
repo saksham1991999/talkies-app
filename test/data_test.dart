@@ -214,6 +214,7 @@ void main() {
             fdfs: true,
             lang: 'hi',
             company: 'Dadi',
+            private: true,
           ),
           Stub(
             id: 'b',
@@ -243,6 +244,7 @@ void main() {
         [s1.show, s1.format, s1.seatClass, s1.seat, s1.price, s1.fdfs, s1.lang, s1.company],
         ['matinee', '2d', 'Balcony', 'H12', 120.0, true, 'hi', 'Dadi'],
       );
+      expect(s1.private, isTrue, reason: 'a restore must not publish a private stub');
       final (f2, s2) = r.rows[0];
       expect(f2.title, 'Home Video, "Part 1"');
       expect(f2.isCustom, isTrue);
@@ -332,6 +334,17 @@ void main() {
     expect(all.count, 5);
     expect(all.timeline.map((b) => b.key), ['2025', '2026']);
     expect(const Period(StatsScope.month, 2026, 1).shift(-1), const Period(StatsScope.month, 2025, 12));
+  });
+
+  test('stats: a snapshot that repeats a genre counts it once per viewing', () {
+    const dup = Film(id: 'D', title: 'Dup', genres: ['action', 'action'], langs: ['hi', 'hi']);
+    final d = Diary(
+      films: const {'D': dup},
+      stubs: [Stub(id: '1', no: 1, filmId: 'D', created: DateTime(2026), date: DateTime(2026, 1, 1))],
+    );
+    final s = computeStats(d, const Period(StatsScope.all, 2026));
+    expect(s.genres.single.key, 'action');
+    expect(s.genres.single.count, 1);
   });
 
   test('stubs query: sort and filter', () {

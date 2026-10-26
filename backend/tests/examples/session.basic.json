@@ -1,0 +1,8 @@
+{
+  "access_token": "eyJhbGciOiJFUzI1NiIsImtpZCI6ImVjMSIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZjJiOGMxZSJ9.c2lnbmF0dXJl",
+  "refresh_token": "7hq2nd5wbvxl",
+  "expires_at": 1790856000,
+  "user": {
+    "id": "3f2b8c1e-5d4a-4e0b-9a7c-1b2d3e4f5a6b"
+  }
+}

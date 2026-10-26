@@ -9,6 +9,7 @@ import '../format.dart';
 import '../icons.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'calendar_screen.dart';
 
 enum StubSort { newest, oldest, ratingHigh, ratingLow }
 
@@ -74,6 +75,7 @@ class StubsScreen extends ConsumerStatefulWidget {
 class _StubsScreenState extends ConsumerState<StubsScreen> {
   var _sort = StubSort.newest;
   var _filter = const StubFilter();
+  var _cal = false;
   final _q = TextEditingController();
 
   @override
@@ -102,105 +104,126 @@ class _StubsScreenState extends ConsumerState<StubsScreen> {
       floatingActionButton: RecordFab(onPressed: () => startRecord(context), tooltip: l.recordFilm),
       body: SafeArea(
         bottom: false,
-        child: CustomScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          slivers: [
-            SliverToBoxAdapter(
-              child: ScreenHeader(
-                l.tabStubs,
-                sub: Text(
-                  l.ticketsCount(diary.stubs.length),
-                  style: TextStyle(color: p.inkSoft, fontWeight: FontWeight.w600),
+        child: Column(
+          children: [
+            ScreenHeader(
+              l.tabStubs,
+              sub: Text(
+                l.ticketsCount(diary.stubs.length),
+                style: TextStyle(color: p.inkSoft, fontWeight: FontWeight.w600),
+              ),
+              actions: [
+                TkButton(
+                  grid ? Tk.list : Tk.grid,
+                  tooltip: grid ? l.listView : l.gridView,
+                  onPressed: () => ref.read(settingsProvider.notifier).set((s) => s.copyWith(recordsGrid: !grid)),
                 ),
-                actions: [
-                  TkButton(
-                    grid ? Tk.list : Tk.grid,
-                    tooltip: grid ? l.listView : l.gridView,
-                    onPressed: () => ref.read(settingsProvider.notifier).set((s) => s.copyWith(recordsGrid: !grid)),
-                  ),
-                  PopupMenuButton<StubSort>(
-                    tooltip: l.sort,
-                    icon: const TkIcon(Tk.sort),
-                    initialValue: _sort,
-                    onSelected: (s) => setState(() => _sort = s),
-                    itemBuilder: (_) => [
-                      for (final s in StubSort.values)
-                        CheckedPopupMenuItem(value: s, checked: s == _sort, child: Text(_sortName(s))),
-                    ],
-                  ),
-                  Badge(
-                    isLabelVisible: !_filter.isEmpty,
-                    smallSize: 8,
-                    backgroundColor: p.accent,
-                    child: TkButton(Tk.filter, tooltip: l.filter, onPressed: _openFilter),
-                  ),
+                PopupMenuButton<StubSort>(
+                  tooltip: l.sort,
+                  icon: const TkIcon(Tk.sort),
+                  initialValue: _sort,
+                  onSelected: (s) => setState(() => _sort = s),
+                  itemBuilder: (_) => [
+                    for (final s in StubSort.values)
+                      CheckedPopupMenuItem(value: s, checked: s == _sort, child: Text(_sortName(s))),
+                  ],
+                ),
+                Badge(
+                  isLabelVisible: !_filter.isEmpty,
+                  smallSize: 8,
+                  backgroundColor: p.accent,
+                  child: TkButton(Tk.filter, tooltip: l.filter, onPressed: _openFilter),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 2, 16, 8),
+              child: Row(
+                children: [
+                  OptionBox(label: l.tabStubs, selected: !_cal, onTap: () => setState(() => _cal = false)),
+                  const SizedBox(width: 8),
+                  OptionBox(label: l.tabCalendar, selected: _cal, onTap: () => setState(() => _cal = true)),
                 ],
               ),
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: TextField(
-                  controller: _q,
-                  onChanged: (_) => setState(() {}),
-                  textInputAction: TextInputAction.search,
-                  decoration: InputDecoration(
-                    hintText: l.searchStubs,
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: TkIcon(Tk.search, size: 20, color: p.inkSoft),
-                    ),
-                    suffixIcon: _q.text.isEmpty
-                        ? null
-                        : TkButton(Tk.close, tooltip: l.clear, size: 18, onPressed: () => setState(_q.clear)),
-                  ),
-                ),
-              ),
-            ),
-            if (diary.stubs.isEmpty)
-              SliverToBoxAdapter(
-                child: EmptyNote(l.noStubs, action: l.recordFilm, onAction: () => startRecord(context)),
-              )
-            else if (list.isEmpty)
-              SliverToBoxAdapter(
-                child: EmptyNote(
-                  l.noMatch,
-                  action: l.resetFilters,
-                  onAction: () {
-                    _q.clear();
-                    setState(() => _filter = const StubFilter());
-                  },
-                ),
-              )
-            else if (grid)
-              _grid(list)
-            else
-              SliverList.builder(
-                itemCount: list.length,
-                itemBuilder: (context, i) {
-                  final s = list[i];
-                  final header =
-                      byDate &&
-                      s.hasDate &&
-                      s.precision != DatePrecision.year &&
-                      (i == 0 || !_sameMonth(list[i - 1], s));
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (header)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 14, 20, 4),
-                          child: Text(
-                            fmtMonthYear(context, s.date!).toUpperCase(),
-                            style: disp(15, p.inkSoft, spacing: 1.4),
+            Expanded(
+              child: _cal
+                  ? const CalendarBody()
+                  : CustomScrollView(
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                            child: TextField(
+                              controller: _q,
+                              onChanged: (_) => setState(() {}),
+                              textInputAction: TextInputAction.search,
+                              decoration: InputDecoration(
+                                hintText: l.searchStubs,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: TkIcon(Tk.search, size: 20, color: p.inkSoft),
+                                ),
+                                suffixIcon: _q.text.isEmpty
+                                    ? null
+                                    : TkButton(
+                                        Tk.close,
+                                        tooltip: l.clear,
+                                        size: 18,
+                                        onPressed: () => setState(_q.clear),
+                                      ),
+                              ),
+                            ),
                           ),
                         ),
-                      StubRow(s, key: ValueKey(s.id)),
-                    ],
-                  );
-                },
-              ),
-            const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                        if (diary.stubs.isEmpty)
+                          SliverToBoxAdapter(
+                            child: EmptyNote(l.noStubs, action: l.recordFilm, onAction: () => startRecord(context)),
+                          )
+                        else if (list.isEmpty)
+                          SliverToBoxAdapter(
+                            child: EmptyNote(
+                              l.noMatch,
+                              action: l.resetFilters,
+                              onAction: () {
+                                _q.clear();
+                                setState(() => _filter = const StubFilter());
+                              },
+                            ),
+                          )
+                        else if (grid)
+                          _grid(list)
+                        else
+                          SliverList.builder(
+                            itemCount: list.length,
+                            itemBuilder: (context, i) {
+                              final s = list[i];
+                              final header =
+                                  byDate &&
+                                  s.hasDate &&
+                                  s.precision != DatePrecision.year &&
+                                  (i == 0 || !_sameMonth(list[i - 1], s));
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (header)
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 14, 20, 4),
+                                      child: Text(
+                                        fmtMonthYear(context, s.date!).toUpperCase(),
+                                        style: disp(15, p.inkSoft, spacing: 1.4),
+                                      ),
+                                    ),
+                                  StubRow(s, key: ValueKey(s.id)),
+                                ],
+                              );
+                            },
+                          ),
+                        const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                      ],
+                    ),
+            ),
           ],
         ),
       ),

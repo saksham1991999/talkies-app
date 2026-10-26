@@ -34,7 +34,11 @@ void main() {
     final c = ProviderContainer(
       overrides: [docsDirProvider.overrideWithValue(dir), autoRefreshProvider.overrideWithValue(false)],
     );
-    c.read(settingsProvider.notifier).set((s) => s.copyWith(seenVersion: '1.0.0'));
+    // One localized set per run: --dart-define=STORE_LOCALE=ja. Empty is English.
+    const storeLocale = String.fromEnvironment('STORE_LOCALE');
+    c.read(settingsProvider.notifier).set(
+      (s) => s.copyWith(seenVersion: '1.0.0', locale: storeLocale.isEmpty ? null : () => storeLocale),
+    );
     final cat = await c.read(catalogProvider.future);
     final n = c.read(diaryProvider.notifier);
     const hall = 'Moti Mahal Talkies';
@@ -188,10 +192,15 @@ void main() {
     await t.pumpAndSettle();
     await close();
 
-    for (final (tab, name) in [(1, '05_stubs'), (2, '06_calendar'), (4, '07_stats')]) {
-      c.read(tabProvider.notifier).go(tab);
-      await shot(t, name);
-    }
+    c.read(tabProvider.notifier).go(1);
+    await t.pumpAndSettle();
+    await shot(t, '05_stubs');
+    await t.tap(find.text('Calendar').first);
+    await t.pumpAndSettle();
+    await shot(t, '06_calendar');
+    c.read(tabProvider.notifier).go(3);
+    await t.pumpAndSettle();
+    await shot(t, '07_stats');
     await t.drag(find.byType(Scrollable).first, const Offset(0, -900));
     await shot(t, '08_stats_more');
     c.read(tabProvider.notifier).go(1);
@@ -201,7 +210,7 @@ void main() {
     await t.tap(find.byTooltip('List view').first);
     await t.pumpAndSettle();
 
-    c.read(tabProvider.notifier).go(3);
+    c.read(tabProvider.notifier).go(2);
     await t.pumpAndSettle();
     await t.pump(const Duration(seconds: 2));
     await shot(t, '10_films_new');

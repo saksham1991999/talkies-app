@@ -181,6 +181,7 @@ class Stub {
     this.fdfs = false,
     this.lang,
     this.company,
+    this.private = false,
   });
 
   final String id;
@@ -216,6 +217,9 @@ class Stub {
   final String? lang;
   final String? company;
 
+  /// Stays on this phone and in the owner's own sync: no friend sees it and it is left out of taste.
+  final bool private;
+
   bool get hasDate => date != null && precision != DatePrecision.none;
 
   /// Sort key. An undated viewing is one the user cannot remember, so it most
@@ -241,6 +245,7 @@ class Stub {
     fdfs: (j['fdfs'] as bool?) ?? false,
     lang: j['lang'] as String?,
     company: j['with'] as String?,
+    private: (j['priv'] as bool?) ?? false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -262,6 +267,7 @@ class Stub {
     if (fdfs) 'fdfs': true,
     if (lang != null) 'lang': lang,
     if (company != null) 'with': company,
+    if (private) 'priv': true,
   };
 }
 
@@ -317,6 +323,7 @@ class Diary {
     this.tags = const [],
     this.venues = defaultVenues,
     this.nextNo = 1,
+    this.hidden = const [],
   });
 
   /// Snapshot of every film referenced by a stub or wish, so records never
@@ -328,6 +335,9 @@ class Diary {
   final List<Venue> venues;
   final int nextNo;
 
+  /// Film ids marked "Not interested" in recommendations.
+  final List<String> hidden;
+
   Diary copyWith({
     Map<String, Film>? films,
     List<Stub>? stubs,
@@ -335,6 +345,7 @@ class Diary {
     List<String>? tags,
     List<Venue>? venues,
     int? nextNo,
+    List<String>? hidden,
   }) => Diary(
     films: films ?? this.films,
     stubs: stubs ?? this.stubs,
@@ -342,6 +353,7 @@ class Diary {
     tags: tags ?? this.tags,
     venues: venues ?? this.venues,
     nextNo: nextNo ?? this.nextNo,
+    hidden: hidden ?? this.hidden,
   );
 
   factory Diary.fromJson(Map<String, dynamic> j) => Diary(
@@ -355,6 +367,7 @@ class Diary {
         ? defaultVenues
         : (j['venues'] as List).map((e) => Venue.fromJson(e as Map<String, dynamic>)).toList(),
     nextNo: (j['nextNo'] as int?) ?? 1,
+    hidden: ((j['hidden'] as List?) ?? const []).cast<String>(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -365,6 +378,7 @@ class Diary {
     'tags': tags,
     'venues': venues.map((v) => v.toJson()).toList(),
     'nextNo': nextNo,
+    if (hidden.isNotEmpty) 'hidden': hidden,
   };
 
   VenueType venueType(String? name) {
@@ -385,12 +399,25 @@ class Diary {
     }
     return null;
   }
+
+  /// What another person may learn from this diary: everything except private stubs.
+  Diary publicView() => stubs.any((s) => s.private)
+      ? copyWith(
+          stubs: [
+            for (final s in stubs)
+              if (!s.private) s,
+          ],
+        )
+      : this;
 }
 
-/// Oldest first. Same day: lower ticket number first.
+/// Oldest first. Same day: lower ticket number first. Two phones can repeat a
+/// ticket number, so the id breaks the last tie and every phone sorts alike.
 int byWatchOrder(Stub a, Stub b) {
   final c = a.sortDate.compareTo(b.sortDate);
-  return c != 0 ? c : a.no.compareTo(b.no);
+  if (c != 0) return c;
+  final n = a.no.compareTo(b.no);
+  return n != 0 ? n : a.id.compareTo(b.id);
 }
 
 String ymd(DateTime d) =>

@@ -1,0 +1,16 @@
+{
+  "id": 1043,
+  "kind": "system",
+  "sender": null,
+  "body": null,
+  "code": "night_set",
+  "args": {
+    "night_id": "c0ffee00-1111-4222-8333-444455556666",
+    "film_id": "Q949228",
+    "starts_at": "2026-10-03T14:30:00.000Z"
+  },
+  "film_id": null,
+  "film": null,
+  "night_id": "c0ffee00-1111-4222-8333-444455556666",
+  "created_at": "2026-10-01T12:00:00.000Z"
+}

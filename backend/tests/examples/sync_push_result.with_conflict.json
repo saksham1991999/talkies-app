@@ -1,0 +1,54 @@
+{
+  "server_time": "2026-10-01T12:00:00.000Z",
+  "conflicts": [
+    {
+      "kind": "wish",
+      "id": "Q949228",
+      "updated_at": "2026-09-01T10:00:00.000Z",
+      "deleted": false,
+      "film": {
+        "id": "Q949228",
+        "t": "Kantara",
+        "y": 2022,
+        "d": "2022-09-30",
+        "g": [
+          "action",
+          "drama"
+        ],
+        "l": [
+          "kn"
+        ],
+        "c": [
+          "IN"
+        ],
+        "dir": [
+          "Rishab Shetty"
+        ],
+        "cast": [
+          "Rishab Shetty",
+          "Sapthami Gowda"
+        ],
+        "p": "en/a/a5/Kantara_film_poster.jpg",
+        "pop": 61
+      },
+      "data": {
+        "film": "Q949228",
+        "added": "2026-09-01T10:00:00.000",
+        "planned": "2026-10-05"
+      },
+      "seq": 40
+    }
+  ],
+  "rejected": [
+    {
+      "kind": "stub",
+      "id": "s-9",
+      "code": "invalid_record"
+    },
+    {
+      "kind": "stub",
+      "id": "s-10",
+      "code": "limit_reached"
+    }
+  ]
+}

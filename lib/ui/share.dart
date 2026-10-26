@@ -326,6 +326,7 @@ class StatsShare extends ShareContent {
   Widget build(BuildContext context, ShareOptions o) => Consumer(
     builder: (context, ref, _) {
       final st = computeStats(ref.watch(diaryProvider), period);
+      final currency = ref.watch(settingsProvider.select((s) => s.currency));
       final l = context.l;
       Widget big(String v, String k) => Expanded(
         child: Column(
@@ -367,7 +368,7 @@ class StatsShare extends ShareContent {
             Row(children: [big('${st.count}', l.totalStubs), big(fmtRuntime(context, st.minutes), l.totalTime)]),
             if (st.paidCount > 0) ...[
               const SizedBox(height: 12),
-              Row(children: [big(rupees(st.spent), l.spent), big('${st.fdfs}', l.fdfsCount)]),
+              Row(children: [big(money(context, currency, st.spent), l.spent), big('${st.fdfs}', l.fdfsCount)]),
             ],
             top(l.byLanguage, st.languages, (k) => langName(context, k)),
             top(l.byGenre, st.genres, (k) => genreName(context, k)),

@@ -1,0 +1,33 @@
+{
+  "kind": "taste",
+  "id": "taste",
+  "updated_at": "2026-09-30T20:10:00.000Z",
+  "deleted": false,
+  "film": null,
+  "data": {
+    "v": 1,
+    "t": {
+      "Anurag Kashyap": 82,
+      "Nawazuddin Siddiqui": 64,
+      "Crime": 50,
+      "#gunda": 41
+    },
+    "l": {
+      "kn": 64,
+      "hi": 31
+    },
+    "e": {
+      "202": 70,
+      "201": 42
+    },
+    "k": [
+      88,
+      12
+    ],
+    "s": [
+      "netflix",
+      "prime"
+    ]
+  },
+  "seq": 44
+}

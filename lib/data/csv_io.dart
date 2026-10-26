@@ -7,7 +7,7 @@ import 'models.dart';
 const csvHeader = [
   'ticket_no', 'watched_on', 'date_precision', 'title', 'original_title', 'year', 'film_id', 'kind', //
   'rating', 'place', 'place_type', 'show', 'format', 'seat_class', 'seat', 'price_inr', 'fdfs',
-  'language', 'watched_with', 'tags', 'memo',
+  'language', 'watched_with', 'tags', 'memo', 'private',
 ];
 
 String exportCsv(Diary d) {
@@ -36,6 +36,8 @@ String exportCsv(Diary d) {
       s.company ?? '',
       s.tags.map((t) => '#$t').join(' '),
       s.memo,
+      // Without it a restore would publish stubs the owner kept off their profile.
+      s.private ? 'yes' : '',
     ]);
   }
   // BOM so Excel opens Devanagari and Tamil titles correctly.
@@ -104,6 +106,7 @@ CsvImport parseCsv(String text, Catalog cat, Diary diary) {
   final cShow = col(['show']), cFormat = col(['format']), cClass = col(['seat_class']), cSeat = col(['seat']);
   final cPrice = col(['price_inr', 'price']), cFdfs = col(['fdfs']), cLang = col(['language']);
   final cWith = col(['watched_with', 'with']), cKind = col(['kind']), cOrig = col(['original_title']);
+  final cPrivate = col(['private']);
   if (cTitle < 0 && cId < 0) return CsvImport(const [], 0, 0, table.length - 1, const {}, lb);
 
   final known = {...diary.venues.map((v) => v.name)};
@@ -176,6 +179,7 @@ CsvImport parseCsv(String text, Catalog cat, Diary diary) {
         fdfs: const {'yes', 'true', '1', 'y'}.contains(cell(cFdfs).toLowerCase()),
         lang: cell(cLang).isEmpty ? null : cell(cLang),
         company: cell(cWith).isEmpty ? null : cell(cWith),
+        private: const {'yes', 'true', '1', 'y'}.contains(cell(cPrivate).toLowerCase()),
       ),
     ));
   }

@@ -8,10 +8,74 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Talkies</string>
+	<!-- Every UI language. The App Store reads this for the Languages row, and
+	     iOS lists the app under Settings > Talkies > Language. Keep in sync with
+	     tool/locales.py; tool/l10n_status.py (check mode) verifies it. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ar</string>
+		<string>bn</string>
+		<string>ca</string>
+		<string>cs</string>
+		<string>da</string>
+		<string>de</string>
+		<string>el</string>
+		<string>en</string>
+		<string>es</string>
+		<string>fi</string>
+		<string>fr</string>
+		<string>gu</string>
+		<string>he</string>
+		<string>hi</string>
+		<string>hr</string>
+		<string>hu</string>
+		<string>id</string>
+		<string>it</string>
+		<string>ja</string>
+		<string>kn</string>
+		<string>ko</string>
+		<string>ml</string>
+		<string>mr</string>
+		<string>ms</string>
+		<string>nl</string>
+		<string>no</string>
+		<string>or</string>
+		<string>pa</string>
+		<string>pl</string>
+		<string>pt-BR</string>
+		<string>pt-PT</string>
+		<string>ro</string>
+		<string>ru</string>
+		<string>sk</string>
+		<string>sl</string>
+		<string>sv</string>
+		<string>ta</string>
+		<string>te</string>
+		<string>th</string>
+		<string>tr</string>
+		<string>uk</string>
+		<string>ur</string>
+		<string>vi</string>
+		<string>zh-Hans</string>
+		<string>zh-Hant</string>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>in.talkies.talkies</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>talkies</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,6 +88,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

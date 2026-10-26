@@ -49,3 +49,32 @@ app.*.map.json
 
 # Catalog builder cache (regenerable)
 tool/.cache/
+
+# Backend (backend/): local env files and Python tooling
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# l10n staging: script state and per-language translation handoff files
+tool/l10n_staging/.lock
+tool/l10n_staging/drafted.json
+
+# Xcode's Swift package resolution state, regenerated on the next build. The
+# existing .swiftpm/ rule above does not cover the shared-data copy Xcode 15+
+# writes next to each workspace.
+**/xcshareddata/swiftpm/
+
+# Agent tooling, not part of the app
+.agents/
+
+# Localized App Store screenshot decks: 2.6 GB of derived output, caption cards
+# composited over the English deck. Rebuild with `python3 tool/store_frames.py
+# --all-stores` in about five minutes; the captions and the English screenshots
+# it reads from are tracked.
+store/appstore-localized/*
+!store/appstore-localized/README.md

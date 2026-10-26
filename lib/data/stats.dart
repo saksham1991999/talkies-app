@@ -162,18 +162,22 @@ Stats computeStats(Diary d, Period p) {
     if (first[s.filmId]!.id != s.id) rewatches++;
     if (f == null) continue;
     if (!f.series) minutes += f.runtime ?? 0;
-    for (final g in f.genres) {
+    // One viewing counts once per distinct value, for every list a synced
+    // snapshot carries: `Film.fromJson` and the server's `clean_film` both pass
+    // these arrays through without deduping, so a repeat in `g`, `c`, `dir` or
+    // `cast` would otherwise count the same film twice in that one bucket.
+    for (final g in f.genres.toSet()) {
       _add(genres, g, s);
     }
-    for (final c in f.countries) {
+    for (final c in f.countries.toSet()) {
       _add(countries, c, s);
     }
     final lang = s.lang ?? f.mainLang;
     if (lang != null) _add(languages, lang, s);
-    for (final x in f.directors) {
+    for (final x in f.directors.toSet()) {
       _add(directors, x, s);
     }
-    for (final x in f.cast) {
+    for (final x in f.cast.toSet()) {
       _add(actors, x, s);
     }
     if (f.year != null) _add(decades, '${f.year! ~/ 10 * 10}', s);

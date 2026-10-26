@@ -1,0 +1,27 @@
+{
+  "kind": "meta",
+  "id": "meta",
+  "updated_at": "2026-09-29T08:00:00.000Z",
+  "deleted": false,
+  "film": null,
+  "data": {
+    "tags": [
+      "friends",
+      "weekend"
+    ],
+    "venues": [
+      {
+        "name": "Cinema hall",
+        "type": "cinema"
+      },
+      {
+        "name": "Home",
+        "type": "home"
+      }
+    ],
+    "hidden": [
+      "Q1234"
+    ]
+  },
+  "seq": 43
+}

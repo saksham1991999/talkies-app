@@ -136,8 +136,8 @@ void main() {
     await shot(t, '07_stubs_grid');
     await tapTip(t, 'List view');
 
-    // Calendar: today holds both stubs.
-    await tapText(t, 'CALENDAR');
+    // Stubs calendar view: today holds both stubs.
+    await tapText(t, 'Calendar');
     expect(find.textContaining('2 watched', findRichText: true), findsOneWidget);
     await shot(t, '08_calendar');
     await t.tap(find.byKey(ValueKey('day-${ymd(today)}-true')));

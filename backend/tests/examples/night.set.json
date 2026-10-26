@@ -1,0 +1,94 @@
+{
+  "id": "c0ffee00-1111-4222-8333-444455556666",
+  "group_id": "b6f1a2c3-d4e5-4f60-8a1b-2c3d4e5f6a7b",
+  "status": "set",
+  "host_id": "3f2b8c1e-5d4a-4e0b-9a7c-1b2d3e4f5a6b",
+  "tz_offset_min": 330,
+  "place": "PVR Phoenix",
+  "options": [
+    {
+      "id": "0a000000-0000-4000-8000-000000000001",
+      "kind": "film",
+      "position": 0,
+      "film_id": "Q949228",
+      "film": {
+        "id": "Q949228",
+        "t": "Kantara",
+        "y": 2022,
+        "d": "2022-09-30",
+        "g": [
+          "action",
+          "drama"
+        ],
+        "l": [
+          "kn"
+        ],
+        "c": [
+          "IN"
+        ],
+        "dir": [
+          "Rishab Shetty"
+        ],
+        "cast": [
+          "Rishab Shetty",
+          "Sapthami Gowda"
+        ],
+        "p": "en/a/a5/Kantara_film_poster.jpg",
+        "pop": 61
+      },
+      "starts_at": null,
+      "approvals": 3
+    },
+    {
+      "id": "0a000000-0000-4000-8000-000000000002",
+      "kind": "slot",
+      "position": 0,
+      "film_id": null,
+      "film": null,
+      "starts_at": "2026-10-03T14:30:00.000Z",
+      "approvals": 4
+    }
+  ],
+  "mine": [],
+  "event": {
+    "film_id": "Q949228",
+    "film": {
+      "id": "Q949228",
+      "t": "Kantara",
+      "y": 2022,
+      "d": "2022-09-30",
+      "g": [
+        "action",
+        "drama"
+      ],
+      "l": [
+        "kn"
+      ],
+      "c": [
+        "IN"
+      ],
+      "dir": [
+        "Rishab Shetty"
+      ],
+      "cast": [
+        "Rishab Shetty",
+        "Sapthami Gowda"
+      ],
+      "p": "en/a/a5/Kantara_film_poster.jpg",
+      "pop": 61
+    },
+    "starts_at": "2026-10-03T14:30:00.000Z",
+    "tz_offset_min": 330,
+    "place": "PVR Phoenix"
+  },
+  "rsvps": [
+    {
+      "member_id": "e1a1a1a1-0000-4000-8000-000000000001",
+      "response": "yes"
+    },
+    {
+      "member_id": "e1a1a1a1-0000-4000-8000-000000000002",
+      "response": "maybe"
+    }
+  ]
+}

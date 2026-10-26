@@ -1,0 +1,41 @@
+{
+  "id": 1044,
+  "kind": "text",
+  "sender": {
+    "id": "0a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d",
+    "handle": "meena",
+    "display_name": "Meena",
+    "avatar_color": 1
+  },
+  "body": "This one on Saturday?",
+  "code": null,
+  "args": null,
+  "film_id": "Q949228",
+  "film": {
+    "id": "Q949228",
+    "t": "Kantara",
+    "y": 2022,
+    "d": "2022-09-30",
+    "g": [
+      "action",
+      "drama"
+    ],
+    "l": [
+      "kn"
+    ],
+    "c": [
+      "IN"
+    ],
+    "dir": [
+      "Rishab Shetty"
+    ],
+    "cast": [
+      "Rishab Shetty",
+      "Sapthami Gowda"
+    ],
+    "p": "en/a/a5/Kantara_film_poster.jpg",
+    "pop": 61
+  },
+  "night_id": "c0ffee00-1111-4222-8333-444455556666",
+  "created_at": "2026-10-01T12:00:00.000Z"
+}

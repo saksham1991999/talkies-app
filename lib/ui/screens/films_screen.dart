@@ -153,7 +153,7 @@ class _FilmsScreenState extends ConsumerState<FilmsScreen> {
                       (FilmsSegment.recorded, l.filmsRecorded),
                     ])
                       Padding(
-                        padding: const EdgeInsets.only(right: 8),
+                        padding: const EdgeInsetsDirectional.only(end: 8),
                         child: OptionBox(
                           label: label,
                           selected: seg == s,
@@ -180,7 +180,7 @@ class _FilmsScreenState extends ConsumerState<FilmsScreen> {
                         ),
                         Container(
                           width: 1.5,
-                          margin: const EdgeInsets.fromLTRB(4, 8, 12, 8),
+                          margin: const EdgeInsetsDirectional.fromSTEB(4, 8, 12, 8),
                           decoration: BoxDecoration(color: p.line, borderRadius: BorderRadius.circular(1)),
                         ),
                       ],
@@ -264,7 +264,7 @@ class _LangChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     return Padding(
-      padding: const EdgeInsets.only(right: 14),
+      padding: const EdgeInsetsDirectional.only(end: 14),
       child: Semantics(
         button: true,
         selected: selected,

@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "user": {
+        "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+        "handle": "ravi_k",
+        "display_name": "Ravi Kumar",
+        "avatar_color": 7
+      },
+      "rating": 4.0
+    },
+    {
+      "user": {
+        "id": "0a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d",
+        "handle": "meena",
+        "display_name": "Meena",
+        "avatar_color": 1
+      },
+      "rating": null
+    }
+  ]
+}

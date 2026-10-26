@@ -1,0 +1,17 @@
+{
+  "id": 1042,
+  "kind": "text",
+  "sender": {
+    "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "handle": "ravi_k",
+    "display_name": "Ravi Kumar",
+    "avatar_color": 7
+  },
+  "body": "Saturday works for me",
+  "code": null,
+  "args": null,
+  "film_id": null,
+  "film": null,
+  "night_id": null,
+  "created_at": "2026-10-01T12:00:00.000Z"
+}

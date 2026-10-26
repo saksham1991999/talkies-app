@@ -79,7 +79,7 @@ void main() {
       }
       for (final seg in [FilmsSegment.want, FilmsSegment.recorded]) {
         c.read(filmsSegmentProvider.notifier).go(seg);
-        c.read(tabProvider.notifier).go(3);
+        c.read(tabProvider.notifier).go(2);
         await shot(t, '${tag}_films_${seg.name}');
       }
       c.read(filmsSegmentProvider.notifier).go(FilmsSegment.fresh);
