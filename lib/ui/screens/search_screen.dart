@@ -105,7 +105,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               children: [
                 for (final (v, label) in [(null, l.searchAll), (false, l.kindFilm), (true, l.kindSeries)])
                   Padding(
-                    padding: const EdgeInsets.only(right: 8),
+                    padding: const EdgeInsetsDirectional.only(end: 8),
                     child: OptionBox(
                       label: label,
                       dense: true,
@@ -133,7 +133,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   }
                   return _Footer(
                     prompt: q.isEmpty
-                        ? l.searchPrompt(fmtCount(value.items.length))
+                        ? l.searchPrompt(fmtCount(context, value.items.length))
                         : (results.isEmpty ? l.noResults(q) : null),
                     canAdd: widget.onPick == null,
                     onAdd: () => Navigator.of(context).pushReplacement(
@@ -269,7 +269,7 @@ class _ResultRow extends ConsumerWidget {
             ),
             if (watched > 0)
               Padding(
-                padding: const EdgeInsets.only(left: 8),
+                padding: const EdgeInsetsDirectional.only(start: 8),
                 child: Tooltip(
                   message: l.watchCount(watched),
                   child: Text('×$watched', style: disp(16, serialRed)),

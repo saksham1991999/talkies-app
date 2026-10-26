@@ -439,7 +439,7 @@ class _Invite extends StatelessWidget {
                           const SizedBox(height: 2),
                           FittedBox(
                             fit: BoxFit.scaleDown,
-                            alignment: Alignment.centerLeft,
+                            alignment: AlignmentDirectional.centerStart,
                             child: Semantics(
                               label: code.split('').join(' '),
                               excludeSemantics: true,

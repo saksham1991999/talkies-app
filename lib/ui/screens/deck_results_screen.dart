@@ -93,7 +93,7 @@ class _TopMatch extends StatelessWidget {
                   Padding(padding: const EdgeInsets.all(12), child: Poster(card.film, width: 62, radius: 3)),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,7 +271,7 @@ class _TonightSheetState extends ConsumerState<TonightSheet> {
           },
         ),
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: AlignmentDirectional.centerStart,
           child: TextButton(
             key: const Key('tonight-again'),
             onPressed: () => setState(() => _picks = ref.read(crewProvider(widget.crewId)).tonight(_random)),

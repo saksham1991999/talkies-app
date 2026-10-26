@@ -2154,4 +2154,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String chatNightFilm(String film) {
     return 'नाइट: $film';
   }
+
+  @override
+  String get languagesIndian => 'भारतीय भाषाएँ';
+
+  @override
+  String get languagesWorld => 'अन्य भाषाएँ';
+
+  @override
+  String get currency => 'टिकट की मुद्रा';
+
+  @override
+  String get currencyNote => 'रकम बदली नहीं जाती। सिर्फ़ चिह्न और अंकों का समूहन बदलता है।';
 }

@@ -416,7 +416,7 @@ class _SwiperBar extends StatelessWidget {
           children: [
             for (final m in members)
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsetsDirectional.only(end: 8),
                 child: TapBox(
                   key: ValueKey('swiper-${m.id}'),
                   label: memberName(context, m),
@@ -463,7 +463,7 @@ class _Cards extends StatelessWidget {
     final p = Palette.of(context);
     final l = context.l;
     final counterRow = Padding(
-      padding: const EdgeInsets.fromLTRB(20, 2, 8, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(20, 2, 8, 0),
       child: SizedBox(
         height: 44,
         child: Row(
@@ -487,36 +487,27 @@ class _Cards extends StatelessWidget {
         ),
       ),
     );
+    // The three buttons stand for three physical drags: left is skip, up is
+    // seen, right is want. The card's own drag, tilt and stamp are physical too,
+    // so the row keeps skip on the physical left in both reading directions: a
+    // Row lays its children out from the start side, so the list is reversed to
+    // hold that order, and the arrows are pinned (they name the drag, not the
+    // reading direction). Otherwise Arabic would show Want on the left and still
+    // commit Want on a right drag.
+    final physical = Directionality.of(context) == TextDirection.rtl;
+    final votes = [
+      _VoteButton(key: const Key('vote-skip'), vote: Vote.skip, icon: Tk.left, onTap: () => onVote(Vote.skip)),
+      _VoteButton(key: const Key('vote-seen'), vote: Vote.seen, icon: Tk.up, onTap: () => onVote(Vote.seen)),
+      _VoteButton(key: const Key('vote-want'), vote: Vote.want, icon: Tk.right, onTap: () => onVote(Vote.want)),
+    ];
     final controls = Padding(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
       child: Row(
         children: [
-          Expanded(
-            child: _VoteButton(
-              key: const Key('vote-skip'),
-              vote: Vote.skip,
-              icon: Tk.left,
-              onTap: () => onVote(Vote.skip),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: _VoteButton(
-              key: const Key('vote-seen'),
-              vote: Vote.seen,
-              icon: Tk.up,
-              onTap: () => onVote(Vote.seen),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: _VoteButton(
-              key: const Key('vote-want'),
-              vote: Vote.want,
-              icon: Tk.right,
-              onTap: () => onVote(Vote.want),
-            ),
-          ),
+          for (final (i, b) in (physical ? votes.reversed.toList() : votes).indexed) ...[
+            if (i > 0) const SizedBox(width: 8),
+            Expanded(child: b),
+          ],
         ],
       ),
     );
@@ -616,7 +607,9 @@ class _VoteButton extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TkIcon(icon, size: 24, color: fg),
+                // The arrow names the drag it performs, so it keeps its drawn
+                // orientation in a right-to-left layout.
+                TkIcon(icon, size: 24, color: fg, mirror: false),
                 const SizedBox(height: 2),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -705,7 +698,7 @@ class _Handoff extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: Transform.translate(
                   offset: const Offset(-12, 0),
                   child: TkButton(Tk.back, tooltip: l.back, color: p.onVelvet, onPressed: onCancel),

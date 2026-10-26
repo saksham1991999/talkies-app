@@ -714,5 +714,9 @@
   "chatNightSet": "A night is set: {film}",
   "@chatNightSet": {"placeholders": {"film": {"type": "String"}}},
   "chatNightFilm": "Night: {film}",
-  "@chatNightFilm": {"placeholders": {"film": {"type": "String"}}}
+  "@chatNightFilm": {"placeholders": {"film": {"type": "String"}}},
+  "languagesIndian": "Indian languages",
+  "languagesWorld": "Other languages",
+  "currency": "Ticket currency",
+  "currencyNote": "Amounts are not converted. Only the symbol and the digit grouping change."
 }

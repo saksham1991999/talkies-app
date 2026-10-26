@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/csv_io.dart';
 import '../../data/models.dart';
-import '../../l10n/labels.dart';
 import '../../state/online.dart';
 import '../../state/providers.dart';
 import '../../state/sync.dart';
@@ -22,6 +21,7 @@ import '../theme.dart';
 import '../widgets.dart';
 import '../shell.dart' show showWhatsNew;
 import 'account_screen.dart';
+import 'language_sheet.dart';
 import 'manage_screens.dart';
 
 /// Launcher icon variants. Native side: activity-alias (Android), alternate icons (iOS).
@@ -177,13 +177,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
           ]),
           _Group(l.appLanguage, [
+            _Nav(
+              languageName(context, s.locale),
+              sub: s.locale == null ? l.languageSystem : null,
+              onTap: () => pickLanguage(context, s.locale, (v) => set((x) => x.copyWith(locale: () => v))),
+            ),
+          ]),
+          _Group(l.labelPrice, [
             _Item(
-              null,
-              child: options<String?>(
-                [(null, l.languageSystem), for (final (code, name) in uiLanguages) (code, name)],
-                s.locale,
-                (v) => set((x) => x.copyWith(locale: () => v)),
+              l.currency,
+              child: options(
+                // AED and CHF have no shorter symbol, so printing the code next
+                // to them would read "AED AED".
+                [for (final e in currencySymbols.entries) (e.key, e.value == e.key ? e.key : '${e.value} ${e.key}')],
+                s.currency,
+                (v) => set((x) => x.copyWith(currency: v)),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+              child: Text(l.currencyNote, style: TextStyle(color: p.inkSoft, fontSize: 12)),
             ),
           ]),
           _Group(l.calendarSection, [
@@ -263,7 +276,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             _Nav(l.privacyPolicy, onTap: () => launchUrl(Uri.parse(privacyUrl), mode: LaunchMode.externalApplication)),
             _Nav(
               l.version(appVersion),
-              sub: catalog == null ? null : l.searchPrompt(fmtCount(catalog.items.length)),
+              sub: catalog == null ? null : l.searchPrompt(fmtCount(context, catalog.items.length)),
               onTap: null,
             ),
           ]),

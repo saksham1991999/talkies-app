@@ -228,7 +228,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
           Expanded(child: _list(context, chat, shown, crew, myId, filmOf)),
           if (chat.offline)
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 4, 8, 4),
+              padding: const EdgeInsetsDirectional.fromSTEB(20, 4, 8, 4),
               child: Row(
                 children: [
                   Expanded(
@@ -347,7 +347,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 6),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: AlignmentDirectional.centerStart,
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 320),
                       child: TicketRow(
@@ -495,9 +495,12 @@ class _Slip extends StatelessWidget {
 
     if (mine) {
       return Padding(
-        padding: const EdgeInsets.only(top: 3, bottom: 3, left: 56),
+        // The gutter keeps my own messages off the far edge. It is on the start
+        // side, so in Arabic and Hebrew the bubble hugs the left edge with the
+        // gutter on its right, the way a mirrored chat reads.
+        padding: const EdgeInsetsDirectional.only(top: 3, bottom: 3, start: 56),
         child: Align(
-          alignment: Alignment.centerRight,
+          alignment: AlignmentDirectional.centerEnd,
           child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: things),
         ),
       );
@@ -521,7 +524,7 @@ class _Slip extends StatelessWidget {
                       behavior: HitTestBehavior.opaque,
                       onTap: () => onBlock!(name),
                       child: Align(
-                        alignment: Alignment.topLeft,
+                        alignment: AlignmentDirectional.topStart,
                         child: Avatar(name: name, ink: s.ink, size: 36),
                       ),
                     ),
@@ -531,7 +534,7 @@ class _Slip extends StatelessWidget {
           const SizedBox(width: 6),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.only(right: 36),
+              padding: const EdgeInsetsDirectional.only(end: 36),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

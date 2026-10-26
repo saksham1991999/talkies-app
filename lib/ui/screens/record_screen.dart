@@ -240,7 +240,7 @@ class _RecordScreenState extends ConsumerState<RecordScreen> {
                       ),
                       const SizedBox(height: 6),
                       Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: AlignmentDirectional.centerStart,
                         child: OptionBox(
                           label: l.noRating,
                           dense: true,

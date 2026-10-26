@@ -205,7 +205,7 @@ class _FriendsScreenState extends ConsumerState<FriendsScreen> {
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: switch (found.relation) {
                       Relation.none => Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: AlignmentDirectional.centerStart,
                         child: InkButton(
                           key: const Key('send-request'),
                           label: l.friendsSendRequest,
@@ -213,7 +213,7 @@ class _FriendsScreenState extends ConsumerState<FriendsScreen> {
                         ),
                       ),
                       Relation.incoming => Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: AlignmentDirectional.centerStart,
                         child: InkButton(
                           key: const Key('accept-found'),
                           label: l.friendsAccept,

@@ -168,6 +168,7 @@ class TicketCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final diary = ref.watch(diaryProvider);
     final showRatings = ref.watch(settingsProvider.select((s) => s.showRatings));
+    final currency = ref.watch(settingsProvider.select((s) => s.currency));
     final p = Palette.of(context);
     final l = context.l;
     // The perforation sits under the film block; larger system text moves it down.
@@ -186,7 +187,7 @@ class TicketCard extends ConsumerWidget {
       if (stub.seatClass != null) (l.labelClass, stub.seatClass!),
       if (stub.seat != null) (l.labelSeat, stub.seat!),
       if (stub.format != null) (l.labelFormat, formatName(stub.format!)),
-      if (stub.price != null) (l.labelPrice, rupees(stub.price!)),
+      if (stub.price != null) (l.labelPrice, money(context, currency, stub.price!)),
       if (stub.lang != null) (l.labelLang, langName(context, stub.lang!)),
       if (stub.company != null) (l.labelWith, stub.company!),
     ];
@@ -242,7 +243,7 @@ class TicketCard extends ConsumerWidget {
                             Expanded(
                               child: Padding(
                                 // Clear of the stamp: stamp is 78 wide, 12 from the edge.
-                                padding: const EdgeInsets.only(right: 74),
+                                padding: const EdgeInsetsDirectional.only(end: 74),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -305,14 +306,14 @@ class TicketCard extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  Positioned(
-                    right: 12,
+                  PositionedDirectional(
+                    end: 12,
                     top: 42,
                     child: StampPress(play: pressStamp, child: stamp),
                   ),
                   if (stub.fdfs)
-                    Positioned(
-                      right: 20,
+                    PositionedDirectional(
+                      end: 20,
                       bottom: 22,
                       child: Transform.rotate(
                         angle: 0.12,

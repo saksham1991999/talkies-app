@@ -10,7 +10,7 @@ class AppLocalizationsMl extends AppLocalizations {
   AppLocalizationsMl([String locale = 'ml']) : super(locale);
 
   @override
-  String get appName => 'ടാക്കീസ്';
+  String get appName => 'Talkies';
 
   @override
   String get tabHome => 'ഹോം';
@@ -97,7 +97,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get seeAll => 'എല്ലാം കാണുക';
 
   @override
-  String get emptyHome => 'നിങ്ങളുടെ ആദ്യ ടിക്കറ്റിന് ഒരു സിനിമ മതി. + അമർത്തി സിനിമയുടെ പേര് തിരയുക.';
+  String get emptyHome => 'നിങ്ങളുടെ ആദ്യ ടിക്കറ്റിന് ഒരു സിനിമ മാത്രം ബാക്കി. + അമർത്തി സിനിമയുടെ പേര് തിരയുക.';
 
   @override
   String get venueCinema => 'തിയേറ്റർ';
@@ -130,7 +130,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get sortRatingLow => 'ഏറ്റവും കുറഞ്ഞ റേറ്റിംഗ്';
 
   @override
-  String get sort => 'അടുക്കുക';
+  String get sort => 'ക്രമീകരിക്കുക';
 
   @override
   String get filter => 'ഫിൽട്ടർ';
@@ -160,10 +160,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get kindSeries => 'സീരീസ്';
 
   @override
-  String get gridView => 'ഗ്രിഡ് വ്യൂ';
+  String get gridView => 'ഗ്രിഡ് കാഴ്ച';
 
   @override
-  String get listView => 'ലിസ്റ്റ് വ്യൂ';
+  String get listView => 'പട്ടിക കാഴ്ച';
 
   @override
   String get searchStubs => 'നിങ്ങളുടെ ടിക്കറ്റുകൾ തിരയുക';
@@ -472,7 +472,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get memoHint => 'എന്താണ് മനസ്സിൽ തങ്ങിയത്?';
 
   @override
-  String get stampIt => 'സീൽ അടിക്കുക';
+  String get stampIt => 'സ്റ്റാമ്പ് ചെയ്യുക';
 
   @override
   String get saveChanges => 'മാറ്റങ്ങൾ സേവ് ചെയ്യുക';
@@ -517,7 +517,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get customSaveWish => 'വാച്ച്‌ലിസ്റ്റിൽ ചേർക്കുക';
 
   @override
-  String get required => 'നിർബന്ധം';
+  String get required => 'നിർബന്ധമാണ്';
 
   @override
   String get statsTitle => 'കണക്കുകൾ';
@@ -646,7 +646,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get themeDark => 'ഡാർക്ക്';
 
   @override
-  String get accentColor => 'സീൽ മഷി';
+  String get accentColor => 'സ്റ്റാമ്പ് മഷി';
 
   @override
   String get accent_sindoor => 'സിന്ദൂരം';
@@ -854,7 +854,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get gotIt => 'ശരി';
 
   @override
-  String get gateCantReach => 'Talkies ഇപ്പോൾ ലഭ്യമല്ല. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ സുരക്ഷിതം.';
+  String get gateCantReach => 'Talkies ഇപ്പോൾ ലഭ്യമല്ല. നിങ്ങളുടെ ഡയറി ഈ ഫോണിൽ സുരക്ഷിതം.';
 
   @override
   String get gateRetry => 'വീണ്ടും ശ്രമിക്കുക';
@@ -876,7 +876,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get acctIntro =>
-      'സൈൻ ഇൻ ചെയ്താൽ നിങ്ങളുടെ ഡയറി എല്ലാ ഫോനിലുമുണ്ടാകും; സുഹൃത്തുക്കളുമായി സിനിമകൾ പങ്കുവയ്ക്കാം. അക്കൗണ്ടില്ലാതെയും Talkies പ്രവർത്തിക്കും.';
+      'സൈൻ ഇൻ ചെയ്താൽ നിങ്ങളുടെ ഡയറി എല്ലാ ഫോണിലുമുണ്ടാകും; സുഹൃത്തുക്കളുമായി സിനിമകൾ പങ്കുവയ്ക്കാം. അക്കൗണ്ടില്ലാതെയും Talkies പ്രവർത്തിക്കും.';
 
   @override
   String get acctEmail => 'ഇമെയിൽ';
@@ -979,7 +979,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get acctUnblock => 'തടയൽ നീക്കുക';
 
   @override
-  String get acctSyncIdle => 'നിങ്ങളുടെ ഡയറി സിങ്കിലാണ്.';
+  String get acctSyncIdle => 'നിങ്ങളുടെ ഡയറി സിങ്ക് ചെയ്തിരിക്കുന്നു.';
 
   @override
   String get acctSyncBusy => 'ഡയറി സിങ്ക് ചെയ്യപ്പെടുന്നു.';
@@ -988,7 +988,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get acctSyncFailed => 'സിങ്ക് പൂർത്തിയായില്ല. Talkies വീണ്ടും ശ്രമിക്കും.';
 
   @override
-  String get acctSyncChoose => 'ഈ ഫോനിൽ മറ്റൊരു അക്കൗണ്ടിന്റെ ഡയറിയുണ്ട്.';
+  String get acctSyncChoose => 'ഈ ഫോണിൽ മറ്റൊരു അക്കൗണ്ടിന്റെ ഡയറിയുണ്ട്.';
 
   @override
   String get acctChoose => 'തിരഞ്ഞെടുക്കുക';
@@ -1000,7 +1000,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get acctSignOut => 'സൈൻ ഔട്ട്';
 
   @override
-  String get acctSignedOut => 'സൈൻ ഔട്ട് ആയി. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ തുടരുന്നു.';
+  String get acctSignedOut => 'സൈൻ ഔട്ട് ആയി. നിങ്ങളുടെ ഡയറി ഈ ഫോണിൽ തുടരുന്നു.';
 
   @override
   String get acctDelete => 'അക്കൗണ്ട് മായ്ക്കുക';
@@ -1010,38 +1010,38 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'ഇതോടെ നിങ്ങളുടെ അക്കൗണ്ടും എല്ലാ വിവരങ്ങളും Talkies സെർവറിൽ നിന്നു നീങ്ങും. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ നിൽക്കും. ഇതു തിരികെ കൊണ്ടുവരാനാവില്ല.';
+      'ഇതോടെ നിങ്ങളുടെ അക്കൗണ്ടും എല്ലാ വിവരങ്ങളും Talkies സെർവറിൽ നിന്നു നീങ്ങും. നിങ്ങളുടെ ഡയറി ഈ ഫോണിൽ നിൽക്കും. ഇതു തിരികെ കൊണ്ടുവരാനാവില്ല.';
 
   @override
-  String get acctDeleted => 'നിങ്ങളുടെ അക്കൗണ്ട് മാഞ്ഞു. നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ തുടരുന്നു.';
+  String get acctDeleted => 'നിങ്ങളുടെ അക്കൗണ്ട് മാഞ്ഞു. നിങ്ങളുടെ ഡയറി ഈ ഫോണിൽ തുടരുന്നു.';
 
   @override
   String get acctDeleteFailed => 'അക്കൗണ്ട് മായ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക.';
 
   @override
-  String get acctDown => 'നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ സുരക്ഷിതം. Talkies ഇപ്പോൾ ലഭ്യമല്ല.';
+  String get acctDown => 'നിങ്ങളുടെ ഡയറി ഈ ഫോണിൽ സുരക്ഷിതം. Talkies ഇപ്പോൾ ലഭ്യമല്ല.';
 
   @override
-  String get acctRowSafe => 'നിങ്ങളുടെ ഡയറി ഈ ഫോനിൽ സുരക്ഷിതം';
+  String get acctRowSafe => 'നിങ്ങളുടെ ഡയറി ഈ ഫോണിൽ സുരക്ഷിതം';
 
   @override
-  String get acctChoiceTitle => 'രണ്ട് ഡയറി';
+  String get acctChoiceTitle => 'രണ്ട് ഡയറികൾ';
 
   @override
-  String get acctChoiceBody => 'ഈ ഫോനിൽ മറ്റൊരു അക്കൗണ്ടിന്റെ ഡയറിയുണ്ട്. എന്തു ചെയ്യണമെന്നു തീരുമാനിക്കുക.';
+  String get acctChoiceBody => 'ഈ ഫോണിൽ മറ്റൊരു അക്കൗണ്ടിന്റെ ഡയറിയുണ്ട്. എന്തു ചെയ്യണമെന്നു തീരുമാനിക്കുക.';
 
   @override
   String get acctChoiceMerge => 'ഒന്നിച്ചു ചേർക്കുക';
 
   @override
-  String get acctChoiceMergeNote => 'ഈ ഫോനിലെ സിനിമകൾ ഈ അക്കൗണ്ടിൽ ചേരും.';
+  String get acctChoiceMergeNote => 'ഈ ഫോണിലെ സിനിമകൾ ഈ അക്കൗണ്ടിൽ ചേരും.';
 
   @override
   String get acctChoiceSeparate => 'വേറിട്ടു വയ്ക്കുക';
 
   @override
   String get acctChoiceSeparateNote =>
-      'ഈ ഫോനിൽ ഈ അക്കൗണ്ടിന്റെ ഡയറി മാത്രമേ കാണൂ. ഈ ഫോനിലെ സിനിമകൾ അതിൽ നിന്നു നീക്കും.';
+      'ഈ ഫോണിൽ ഈ അക്കൗണ്ടിന്റെ ഡയറി മാത്രമേ കാണൂ. ഈ ഫോണിലെ സിനിമകൾ അതിൽ നിന്നു നീക്കും.';
 
   @override
   String get privacyStubToggle => 'സ്വകാര്യം: ഈ ടിക്കറ്റ് എന്റെ പ്രൊഫൈലിൽ വേണ്ട';
@@ -1090,7 +1090,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get friendsNowFriends => 'ഇനി നിങ്ങൾ സുഹൃത്തുക്കളാണ്.';
 
   @override
-  String get friendsNotFound => 'ഈ ഹാൻഡിലില്ലാത്ത ആരുമില്ല. അക്ഷരത്തെറ്റു നോക്കൂ.';
+  String get friendsNotFound => 'ഈ ഹാൻഡിൽ ഉള്ള ആരുമില്ല. അക്ഷരത്തെറ്റ് നോക്കുക.';
 
   @override
   String get friendsPendingAlready => 'ഒരു അഭ്യർഥന ഇതിനകം കാത്തിരിക്കുന്നു.';
@@ -1156,7 +1156,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get friendsReasonSpam => 'സ്പാം';
 
   @override
-  String get friendsReasonAbuse => 'നിന്ദാപദം';
+  String get friendsReasonAbuse => 'ദുരുപയോഗം';
 
   @override
   String get friendsReasonHarassment => 'ഉപദ്രവിക്കൽ';
@@ -1171,7 +1171,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get friendsReported => 'റിപ്പോർട്ടയച്ചു. നന്ദി.';
 
   @override
-  String get friendsWatchedThis => 'ഇതു കണ്ടവർ';
+  String get friendsWatchedThis => 'ഇതു കണ്ട സുഹൃത്തുക്കൾ';
 
   @override
   String get friendsStripTitle => 'സുഹൃത്തുക്കൾ കാണുന്നത്';
@@ -1207,7 +1207,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get feedReactClap => 'കൈയടി';
 
   @override
-  String get feedReactMind => 'തല കറങ്ങി';
+  String get feedReactMind => 'അമ്പരപ്പ്';
 
   @override
   String get feedReactPopcorn => 'പോപ്കോൺ';
@@ -1246,7 +1246,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get sendTooFast => 'വളരെ വേഗമായി അയക്കുന്നു. ഒന്നു നിർത്തൂ.';
 
   @override
-  String get sendNotAllowed => 'ഈ വ്യക്തിക്കു നിങ്ങൾക്കയയ്ക്കാനാവില്ല.';
+  String get sendNotAllowed => 'ഈ വ്യക്തിക്ക് അയയ്ക്കാനാവില്ല.';
 
   @override
   String get sendOther => 'മറ്റു ആപ്പുകൾ';
@@ -1325,10 +1325,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get togetherRefusalNameTaken => 'ഗ്രൂപ്പിൽ ഈ പേരു മറ്റൊരാൾക്കാണ്.';
 
   @override
-  String get togetherRefusalGroupFull => 'ഗ്രൂപ്പു നിറഞ്ഞു. 30 പേർ വരും.';
+  String get togetherRefusalGroupFull => 'ഗ്രൂപ്പ് നിറഞ്ഞു. 30 പേരെ ഉൾക്കൊള്ളും.';
 
   @override
-  String get togetherRefusalListFull => 'പട്ടിക നിറഞ്ഞു. 200 സിനിമകൾ വരും.';
+  String get togetherRefusalListFull => 'പട്ടിക നിറഞ്ഞു. 200 സിനിമകൾ ഉൾക്കൊള്ളും.';
 
   @override
   String get togetherRefusalGroupLimit => 'Talkies അനുവദിക്കുന്നത്ര ഗ്രൂപ്പുകളിലാണു നിങ്ങൾ.';
@@ -1346,7 +1346,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get togetherRefusalNotFound => 'ആ ഗ്രൂപ്പോ നൈറ്റോ ഇനിയില്ല.';
 
   @override
-  String get togetherRefusalClosed => 'നിങ്ങൾക്കു മുമ്പേ മറ്റാരോ ഇതു മാറ്റി. ഇപ്പോൾ അതു പുതുമയുള്ളതാണ്.';
+  String get togetherRefusalClosed => 'നിങ്ങൾക്കു മുമ്പേ മറ്റാരോ ഇതു മാറ്റി. ഇപ്പോൾ എല്ലാം പുതുക്കിയിരിക്കുന്നു.';
 
   @override
   String get togetherRefusalInvalid => 'വിവരങ്ങൾ പരിശോധിച്ചു വീണ്ടും ശ്രമിക്കുക.';
@@ -1370,7 +1370,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get crewSharedSwitch => 'ലിങ്കു വഴി സുഹൃത്തുക്കളെ ക്ഷണിക്കുക';
 
   @override
-  String get crewSharedHint => 'സുഹൃത്തുക്കൾ കോഡു വഴി ചേരുന്നു; സ്വന്തം ഫോനിൽ സ്വൈപ്പു ചെയ്യുന്നു.';
+  String get crewSharedHint => 'സുഹൃത്തുക്കൾ കോഡു വഴി ചേരുന്നു; സ്വന്തം ഫോണിൽ സ്വൈപ്പു ചെയ്യുന്നു.';
 
   @override
   String get crewCreate => 'ഗ്രൂപ്പുണ്ടാക്കുക';
@@ -1379,7 +1379,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get crewCreateShared => 'പങ്കിട്ട ഗ്രൂപ്പുണ്ടാക്കുക';
 
   @override
-  String get crewOwnFilmLocal => 'നിങ്ങളുടെ സ്വന്തം സിനിമകൾ ഈ ഫോനിൽ തന്നെ.';
+  String get crewOwnFilmLocal => 'നിങ്ങളുടെ സ്വന്തം സിനിമകൾ ഈ ഫോണിൽ തന്നെ.';
 
   @override
   String get crewJoinTitle => 'ഗ്രൂപ്പിൽ ചേരുക';
@@ -1389,7 +1389,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get crewJoinNote =>
-      'ചേരുമ്പോൾ നിങ്ങളുടെ ഇഷ്ടവും വാച്ച്‌ലിസ്റ്റും ഗ്രൂപ്പിന്റെ ഡെക്കിലേക്കു ചേരും. ആരാ എന്തു ചേർത്തു എന്നു സദസ്യർക്കറിയില്ല.';
+      'ചേരുമ്പോൾ നിങ്ങളുടെ ഇഷ്ടവും വാച്ച്‌ലിസ്റ്റും ഗ്രൂപ്പിന്റെ ഡെക്കിലേക്കു ചേരും. ആരാണ് എന്തു ചേർത്തതെന്ന് അംഗങ്ങൾക്കു കാണില്ല.';
 
   @override
   String get joinAction => 'ഗ്രൂപ്പിൽ ചേരുക';
@@ -1404,7 +1404,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get crewDelete => 'ഗ്രൂപ്പ് മായ്ക്കുക';
 
   @override
-  String get crewDeleteLocal => 'ഗ്രൂപ്പും അതിന്റെ പട്ടികയും നൈറ്റുകളും ഈ ഫോനിൽ നിന്നു നീങ്ങും.';
+  String get crewDeleteLocal => 'ഗ്രൂപ്പും അതിന്റെ പട്ടികയും നൈറ്റുകളും ഈ ഫോണിൽ നിന്നു നീങ്ങും.';
 
   @override
   String get crewDeleteShared => 'ഗ്രൂപ്പ് എല്ലാവർക്കുമായി നീങ്ങും.';
@@ -1413,7 +1413,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get crewLeave => 'ഗ്രൂപ്പു വിടുക';
 
   @override
-  String get crewLeaveBody => 'ഇതു ഈ ഫോനിൽ നിന്നു പോകും. കോഡു പിന്നെയും ചേരാം.';
+  String get crewLeaveBody => 'ഇതു ഈ ഫോണിൽ നിന്നു പോകും. കോഡ് ഉപയോഗിച്ച് വീണ്ടും ചേരാം.';
 
   @override
   String get crewMembers => 'അംഗങ്ങൾ';
@@ -1452,7 +1452,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get crewListAdd => 'സിനിമ ചേർക്കുക';
 
   @override
-  String get crewListEmpty => 'പട്ടിക ശൂന്യം. ഗ്രൂപ്പിനിഷ്ടപ്പെടാവുന്ന സിനിമകൾ ചേർക്കൂ.';
+  String get crewListEmpty => 'പട്ടിക ശൂന്യമാണ്. ഗ്രൂപ്പിന് ഇഷ്ടപ്പെടാവുന്ന സിനിമകൾ ചേർക്കുക.';
 
   @override
   String get crewListRemove => 'പട്ടികയിൽ നിന്നു നീക്കുക';
@@ -1519,7 +1519,8 @@ class AppLocalizationsMl extends AppLocalizations {
   String get deckBuilding => 'ഡെക്കൊരുക്കുന്നു.';
 
   @override
-  String get deckEmpty => 'സ്വൈപ്പിക്കാൻ സിനിമയില്ല. ഗ്രൂപ്പ് പട്ടികയിൽ സിനിമകൾ ചേർത്തിട്ടു ഡെക്കു വീണ്ടുമുണ്ടാക്കൂ.';
+  String get deckEmpty =>
+      'സ്വൈപ്പ് ചെയ്യാൻ സിനിമകളില്ല. ഗ്രൂപ്പ് പട്ടികയിൽ സിനിമകൾ ചേർത്തിട്ട് ഡെക്ക് വീണ്ടുമുണ്ടാക്കുക.';
 
   @override
   String get deckRebuild => 'ഡെക്കു വീണ്ടുമുണ്ടാക്കുക';
@@ -1552,7 +1553,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get deckSchedule => 'ഉറപ്പിക്കുക';
 
   @override
-  String get deckTonight => 'ഇന്നത്തെ രാത്രിയുടെ തിരഞ്ഞെടുപ്പ്';
+  String get deckTonight => 'ഇന്നു രാത്രിയിലെ തിരഞ്ഞെടുപ്പ്';
 
   @override
   String get deckTonightTitle => 'ഇന്നത്തെ സിനിമ';
@@ -1654,20 +1655,20 @@ class AppLocalizationsMl extends AppLocalizations {
   String get nightMaybe => 'ഒരുപക്ഷേ';
 
   @override
-  String get nightNo => 'വേണ്ട';
+  String get nightNo => 'വരില്ല';
 
   @override
   String get nightNoReply => 'ഇതുവരെ മറുപടിയില്ല';
 
   @override
-  String get nightRemind => 'ഓർമിപ്പിക്കൂ';
+  String get nightRemind => 'ഓർമ്മപ്പെടുത്തുക';
 
   @override
   String get nightRemindHint => 'ഒരു ദിവസം മുമ്പും രണ്ടു മണിക്കൂർ മുമ്പും.';
 
   @override
   String get nightRemindRefused =>
-      'Talkies-നു ഓർമപ്പുതുകൾ അയയ്ക്കാനാവുന്നില്ല. ഫോൺ സെറ്റിംഗിൽ Talkies-ന്റെ അറിയിപ്പുകൾ ഓണാക്കൂ.';
+      'Talkies-ന് ഓർമ്മപ്പെടുത്തലുകൾ അയയ്ക്കാനാവില്ല. ഫോൺ ക്രമീകരണങ്ങളിൽ Talkies-ന്റെ അറിയിപ്പുകൾ ഓണാക്കുക.';
 
   @override
   String get nightAddCalendar => 'കലണ്ടറിൽ ചേർക്കുക';
@@ -1676,10 +1677,10 @@ class AppLocalizationsMl extends AppLocalizations {
   String get nightIcsFailed => 'കലണ്ടർ ഫയൽ പങ്കുവയ്ക്കാനായില്ല.';
 
   @override
-  String get nightWrap => 'നൈറ്റ് അവസാന കുറിപ്പ്';
+  String get nightWrap => 'നൈറ്റ് സമാപനം';
 
   @override
-  String get nightWrapNote => 'വന്നവരെല്ലാർക്കും ഒരു ടിക്കറ്റെങ്കിലും ഉണ്ടാക്കൂ.';
+  String get nightWrapNote => 'വന്ന എല്ലാവർക്കും ഒരു ടിക്കറ്റ് ഉണ്ടാക്കുക.';
 
   @override
   String get nightDelete => 'നൈറ്റു മായ്ക്കുക';
@@ -1688,7 +1689,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get nightDeleteQ => 'ഈ നൈറ്റു മായ്ക്കണോ?';
 
   @override
-  String get nightDeleteBody => 'വോട്ടുകളും മറുപടികളും ഓർമപ്പുതുകളും നീങ്ങും.';
+  String get nightDeleteBody => 'വോട്ടുകളും മറുപടികളും ഓർമ്മപ്പെടുത്തലുകളും നീങ്ങും.';
 
   @override
   String get nightGone => 'ഈ നൈറ്റ് ഇനിയില്ല.';
@@ -1721,7 +1722,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get chatNightSetPlain => 'ഒരു നൈറ്റ് ഉറപ്പായി';
 
   @override
-  String get chatWrapped => 'നൈറ്റ് ശേഖരിച്ചു തീർത്തു';
+  String get chatWrapped => 'നൈറ്റ് പൂർത്തിയായി';
 
   @override
   String get chatNight => 'മൂവി നൈറ്റ്';
@@ -2044,7 +2045,12 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String profileViewings(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'തവണ കണ്ടു', other: 'തവണ കണ്ടു');
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      one: 'ഒരു പ്രാവശ്യം കണ്ടു',
+      other: '$count പ്രാവശ്യം കണ്ടു',
+    );
     return '$_temp0';
   }
 
@@ -2164,4 +2170,16 @@ class AppLocalizationsMl extends AppLocalizations {
   String chatNightFilm(String film) {
     return 'നൈറ്റ്: $film';
   }
+
+  @override
+  String get languagesIndian => 'ഇന്ത്യൻ ഭാഷകൾ';
+
+  @override
+  String get languagesWorld => 'മറ്റ് ഭാഷകൾ';
+
+  @override
+  String get currency => 'ടിക്കറ്റ് കറൻസി';
+
+  @override
+  String get currencyNote => 'തുകകൾ മാറ്റില്ല. ചിഹ്നവും അക്കങ്ങളുടെ ക്രമവും മാത്രം മാറും.';
 }

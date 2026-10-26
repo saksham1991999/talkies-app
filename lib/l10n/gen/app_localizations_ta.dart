@@ -2181,4 +2181,16 @@ class AppLocalizationsTa extends AppLocalizations {
   String chatNightFilm(String film) {
     return 'நைட்: $film';
   }
+
+  @override
+  String get languagesIndian => 'இந்திய மொழிகள்';
+
+  @override
+  String get languagesWorld => 'பிற மொழிகள்';
+
+  @override
+  String get currency => 'டிக்கெட் நாணயம்';
+
+  @override
+  String get currencyNote => 'தொகை மாற்றப்படாது. குறியீடும் இலக்குத் தொகுப்பும் மட்டுமே மாறும்.';
 }

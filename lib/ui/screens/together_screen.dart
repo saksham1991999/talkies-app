@@ -92,7 +92,7 @@ class _TogetherScreenState extends ConsumerState<TogetherScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 6, 16, 4),
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: Wrap(
                   spacing: 8,
                   children: [

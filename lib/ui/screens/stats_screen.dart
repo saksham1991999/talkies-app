@@ -85,7 +85,7 @@ class _StatsScreenState extends ConsumerState<StatsScreen> {
                     (StatsScope.all, l.scopeAll),
                   ])
                     Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsetsDirectional.only(end: 8),
                       child: OptionBox(label: t, dense: true, selected: _period.scope == s, onTap: () => _scope(s)),
                     ),
                 ],
@@ -100,7 +100,7 @@ class _StatsScreenState extends ConsumerState<StatsScreen> {
                 Expanded(
                   child: Text(
                     _title(context).toUpperCase(),
-                    textAlign: _period.scope == StatsScope.all ? TextAlign.left : TextAlign.center,
+                    textAlign: _period.scope == StatsScope.all ? TextAlign.start : TextAlign.center,
                     style: disp(34, p.ink, spacing: 1),
                   ),
                 ),
@@ -149,6 +149,7 @@ class _StatsScreenState extends ConsumerState<StatsScreen> {
                 buckets: st.venueTypes,
                 name: (k) => venueTypeName(context, VenueType.values.byName(k)),
               ),
+              _VenueLegend(buckets: st.venueTypes),
               _Bars(title: l.byPlace, buckets: st.places, name: (k) => placeName(context, k)),
               _Bars(title: l.byLanguage, buckets: st.languages, name: (k) => langName(context, k)),
               _Bars(title: l.byGenre, buckets: st.genres, name: (k) => genreName(context, k)),
@@ -167,14 +168,52 @@ class _StatsScreenState extends ConsumerState<StatsScreen> {
   }
 }
 
-class _Headline extends StatelessWidget {
-  const _Headline({required this.st});
-  final Stats st;
+/// The paper colour each venue type prints on, with counts. The diary's data
+/// language, next to the bars that use it.
+class _VenueLegend extends StatelessWidget {
+  const _VenueLegend({required this.buckets});
+  final List<Bucket> buckets;
 
   @override
   Widget build(BuildContext context) {
     final p = Palette.of(context);
+    if (buckets.isEmpty) return const SizedBox();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 2, 20, 6),
+      child: Wrap(
+        spacing: 14,
+        runSpacing: 6,
+        children: [
+          for (final b in buckets)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(color: p.paper(VenueType.values.byName(b.key)), shape: BoxShape.circle),
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  '${venueTypeName(context, VenueType.values.byName(b.key))} ${b.count}',
+                  style: TextStyle(fontSize: 13, color: p.inkSoft, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Headline extends ConsumerWidget {
+  const _Headline({required this.st});
+  final Stats st;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final p = Palette.of(context);
     final l = context.l;
+    final currency = ref.watch(settingsProvider.select((s) => s.currency));
     Widget cell(String label, Widget value) => Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -228,10 +267,10 @@ class _Headline extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(rupees(st.spent), style: disp(28, p.ink, spacing: 0.6)),
+                    Text(money(context, currency, st.spent), style: disp(28, p.ink, spacing: 0.6)),
                     if (st.paidCount > 0)
                       Text(
-                        l.avgTicket(rupees((st.spent / st.paidCount).roundToDouble())),
+                        l.avgTicket(money(context, currency, (st.spent / st.paidCount).roundToDouble())),
                         style: TextStyle(color: p.inkSoft, fontSize: 11.5),
                       ),
                   ],
@@ -314,7 +353,7 @@ class _Timeline extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w800,
-                                  color: buckets[i].count == max ? p.accent : p.inkSoft,
+                                  color: buckets[i].count == max ? p.tonight : p.inkSoft,
                                 ),
                               ),
                             const SizedBox(height: 3),
@@ -329,7 +368,7 @@ class _Timeline extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       color: buckets[i].count == 0
                                           ? p.line
-                                          : (buckets[i].count == max ? p.accent : p.ink),
+                                          : (buckets[i].count == max ? p.tonight : p.ink),
                                       borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
                                     ),
                                   ),
@@ -431,7 +470,7 @@ class _BarsState extends State<_Bars> {
                   ),
                   SizedBox(
                     width: 36,
-                    child: Text('${b.count}', textAlign: TextAlign.right, style: disp(17, p.ink)),
+                    child: Text('${b.count}', textAlign: TextAlign.end, style: disp(17, p.ink)),
                   ),
                 ],
               ),

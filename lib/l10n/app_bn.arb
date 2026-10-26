@@ -642,5 +642,9 @@
   "chatJoined": "{name} যোগ দিলেন",
   "chatLeft": "{name} চলে গেলেন",
   "chatNightSet": "একটি নাইট ঠিক হয়েছে: {film}",
-  "chatNightFilm": "নাইট: {film}"
+  "chatNightFilm": "নাইট: {film}",
+  "languagesIndian": "ভারতীয় ভাষা",
+  "languagesWorld": "অন্যান্য ভাষা",
+  "currency": "টিকিটের মুদ্রা",
+  "currencyNote": "পরিমাণ বদলানো হয় না। শুধু চিহ্ন ও অঙ্কের বিন্যাস বদলায়।"
 }

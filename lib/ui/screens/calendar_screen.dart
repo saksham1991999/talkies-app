@@ -19,14 +19,25 @@ const _base = 1200;
 /// What the grid shows: the stubs, the planned watchlist films, or the movie nights.
 enum _Layer { stubs, wish, nights }
 
-class CalendarScreen extends ConsumerStatefulWidget {
+class CalendarScreen extends ConsumerWidget {
   const CalendarScreen({super.key});
 
   @override
-  ConsumerState<CalendarScreen> createState() => _CalendarScreenState();
+  Widget build(BuildContext context, WidgetRef ref) => Scaffold(
+    floatingActionButton: RecordFab(onPressed: () => startRecord(context), tooltip: context.l.recordFilm),
+    body: const SafeArea(bottom: false, child: CalendarBody()),
+  );
 }
 
-class _CalendarScreenState extends ConsumerState<CalendarScreen> {
+/// The calendar without its scaffold, so the Stubs tab can host it as a view.
+class CalendarBody extends ConsumerStatefulWidget {
+  const CalendarBody({super.key});
+
+  @override
+  ConsumerState<CalendarBody> createState() => _CalendarBodyState();
+}
+
+class _CalendarBodyState extends ConsumerState<CalendarBody> {
   final _pages = PageController(initialPage: _base);
   var _page = _base;
   var _layer = _Layer.stubs;
@@ -60,115 +71,109 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         .where((w) => w.planned != null && w.planned!.year == m.year && w.planned!.month == m.month)
         .length;
 
-    return Scaffold(
-      floatingActionButton: RecordFab(onPressed: () => startRecord(context), tooltip: l.recordFilm),
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            ScreenHeader(
-              l.tabCalendar,
-              sub: Text.rich(
+    return Column(
+      children: [
+        ScreenHeader(
+          l.tabCalendar,
+          sub: Text.rich(
+            TextSpan(
+              children: [
                 TextSpan(
-                  children: [
-                    TextSpan(
-                      text: l.calWatched(watched),
-                      style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
-                    ),
-                    const TextSpan(text: '   '),
-                    TextSpan(
-                      text: l.calPlanned(planned),
-                      style: TextStyle(color: p.inkSoft, fontWeight: FontWeight.w700),
-                    ),
+                  text: l.calWatched(watched),
+                  style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
+                ),
+                const TextSpan(text: '   '),
+                TextSpan(
+                  text: l.calPlanned(planned),
+                  style: TextStyle(color: p.inkSoft, fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TkButton(
+              Tk.share,
+              tooltip: l.shareMonth,
+              onPressed: () => showShareSheet(context, MonthShare(year: m.year, month: m.month)),
+            ),
+            if (_layer == _Layer.stubs)
+              Badge(
+                isLabelVisible: _type != null,
+                smallSize: 8,
+                backgroundColor: p.accent,
+                child: PopupMenuButton<VenueType?>(
+                  tooltip: l.filter,
+                  icon: const TkIcon(Tk.filter),
+                  onSelected: (t) => setState(() => _type = t),
+                  itemBuilder: (_) => [
+                    CheckedPopupMenuItem(value: null, checked: _type == null, child: Text(l.filterAll)),
+                    for (final t in VenueType.values)
+                      CheckedPopupMenuItem(value: t, checked: _type == t, child: Text(venueTypeName(context, t))),
                   ],
                 ),
               ),
-              actions: [
-                TkButton(
-                  Tk.share,
-                  tooltip: l.shareMonth,
-                  onPressed: () => showShareSheet(context, MonthShare(year: m.year, month: m.month)),
-                ),
-                if (_layer == _Layer.stubs)
-                  Badge(
-                    isLabelVisible: _type != null,
-                    smallSize: 8,
-                    backgroundColor: p.accent,
-                    child: PopupMenuButton<VenueType?>(
-                      tooltip: l.filter,
-                      icon: const TkIcon(Tk.filter),
-                      onSelected: (t) => setState(() => _type = t),
-                      itemBuilder: (_) => [
-                        CheckedPopupMenuItem(value: null, checked: _type == null, child: Text(l.filterAll)),
-                        for (final t in VenueType.values)
-                          CheckedPopupMenuItem(value: t, checked: _type == t, child: Text(venueTypeName(context, t))),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        for (final (v, label) in [
-                          (_Layer.stubs, l.showStubs),
-                          (_Layer.wish, l.showWatchlist),
-                          (_Layer.nights, l.togetherNights),
-                        ])
-                          OptionBox(
-                            key: Key('cal-${v.name}'),
-                            label: label,
-                            selected: _layer == v,
-                            dense: true,
-                            onTap: () => setState(() => _layer = v),
-                          ),
-                      ],
-                    ),
-                  ),
-                  if (_page != _base)
-                    TextButton(
-                      onPressed: () => _pages.animateToPage(
-                        _base,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOutCubic,
-                      ),
-                      child: Text(
-                        l.today,
-                        style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                TkButton(Tk.left, tooltip: l.previous, onPressed: () => _go(-1)),
-                Expanded(
-                  child: Text(
-                    fmtMonthYear(context, m).toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: disp(22, p.ink, spacing: 1.2),
-                  ),
-                ),
-                TkButton(Tk.right, tooltip: l.next, onPressed: () => _go(1)),
-              ],
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _pages,
-                onPageChanged: (i) => setState(() => _page = i),
-                itemBuilder: (_, i) => _MonthGrid(month: _month(i), layer: _layer, type: _type),
-              ),
-            ),
           ],
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+          child: Row(
+            children: [
+              Expanded(
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final (v, label) in [
+                      (_Layer.stubs, l.showStubs),
+                      (_Layer.wish, l.showWatchlist),
+                      (_Layer.nights, l.togetherNights),
+                    ])
+                      OptionBox(
+                        key: Key('cal-${v.name}'),
+                        label: label,
+                        selected: _layer == v,
+                        dense: true,
+                        onTap: () => setState(() => _layer = v),
+                      ),
+                  ],
+                ),
+              ),
+              if (_page != _base)
+                TextButton(
+                  onPressed: () => _pages.animateToPage(
+                    _base,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutCubic,
+                  ),
+                  child: Text(
+                    l.today,
+                    style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        Row(
+          children: [
+            TkButton(Tk.left, tooltip: l.previous, onPressed: () => _go(-1)),
+            Expanded(
+              child: Text(
+                fmtMonthYear(context, m).toUpperCase(),
+                textAlign: TextAlign.center,
+                style: disp(22, p.ink, spacing: 1.2),
+              ),
+            ),
+            TkButton(Tk.right, tooltip: l.next, onPressed: () => _go(1)),
+          ],
+        ),
+        Expanded(
+          child: PageView.builder(
+            controller: _pages,
+            onPageChanged: (i) => setState(() => _page = i),
+            itemBuilder: (_, i) => _MonthGrid(month: _month(i), layer: _layer, type: _type),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -357,8 +362,8 @@ class _DayCell extends StatelessWidget {
                         ),
                       ),
                     ),
-                  Positioned(
-                    left: 3,
+                  PositionedDirectional(
+                    start: 3,
                     top: 3,
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -372,16 +377,16 @@ class _DayCell extends StatelessWidget {
                   ),
                   // A movie night that day: the clock mark, on the poster's dark top edge or on the plain cell.
                   if (nights > 0)
-                    Positioned(
-                      right: 4,
+                    PositionedDirectional(
+                      end: 4,
                       top: 4,
                       child: ExcludeSemantics(
                         child: TkIcon(Tk.clock, size: 13, color: films.isEmpty ? p.accent : Colors.white),
                       ),
                     ),
                   if (films.length > 1)
-                    Positioned(
-                      right: 2,
+                    PositionedDirectional(
+                      end: 2,
                       bottom: 2,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),

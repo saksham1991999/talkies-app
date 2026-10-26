@@ -132,7 +132,7 @@ class _FriendScreenState extends ConsumerState<FriendScreen> {
       body = [
         _Quiet(l.friendsHidden(name)),
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: AlignmentDirectional.centerStart,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: TextButton(style: linkStyle(context), onPressed: _load, child: Text(l.gateRetry)),

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new UI strings to the 8 ARB files. This is the only script that writes them.
+"""Add new UI strings to every ARB file. This is the only script that writes them.
 
 Staging (see tool/l10n_staging/README.md):
   tool/l10n_staging/en/<area>.json   {"key": {"text": "...", "placeholders": {"name": "String"}}}   written by UI authors
@@ -8,15 +8,21 @@ Staging (see tool/l10n_staging/README.md):
 
 Usage:
   python3 tool/merge_arb.py --check       validate the staged English strings
-  python3 tool/merge_arb.py --draft       add new staged keys to all 8 ARBs, the 7 other languages with the English
+  python3 tool/merge_arb.py --draft       add new staged keys to every ARB, the non-English ones with the English
                                           text as a draft, then run `flutter gen-l10n`. Safe to run again and from
                                           two shells at once (a lock queues them). A drafted key may change its text.
                                           If a translation already landed for a key whose English draft changed,
                                           the translation is kept and the key stays drafted (--force overwrites).
-  python3 tool/merge_arb.py --translate   replace every draft with the text in tool/l10n_staging/<lang>.json,
-                                          then run `flutter gen-l10n`
+  python3 tool/merge_arb.py --translate   apply the text in tool/l10n_staging/<lang>.json to every language that
+                                          has one, then run `flutter gen-l10n`. Languages without a staging file
+                                          are reported and left in English; the key stays drafted until every
+                                          language has landed. Add --strict to fail instead of continuing.
 
-Checks: key style, no clash with a final key, the same {placeholders} in every language, plural forms have `other`,
+The language list comes from the ARB files on disk, so adding a locale needs no
+code change. Plural messages must carry the CLDR cardinal forms of their
+language (tool/locales.py): Arabic needs six forms, Russian four, Hindi one.
+
+Checks: key style, no clash with a final key, the same {placeholders} in every language, the CLDR plural forms,
 braces balance, no em dash. ARB files are edited line by line, so diffs stay small.
 """
 
@@ -32,8 +38,16 @@ ROOT = Path(os.environ.get('TALKIES_ROOT', Path(__file__).resolve().parent.paren
 ARB = ROOT / 'lib' / 'l10n'
 STAGE = ROOT / 'tool' / 'l10n_staging'
 DRAFTED = STAGE / 'drafted.json'
-LANGS = ['hi', 'ta', 'te', 'bn', 'mr', 'kn', 'ml']
 FORCE = False
+STRICT = False
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import locales  # noqa: E402
+
+
+def langs() -> list[str]:
+    """Every app locale on disk, English included. `app_pt_BR.arb` is `pt_BR`."""
+    return sorted(p.stem[len('app_'):] for p in ARB.glob('app_*.arb'))
 KEY = re.compile(r'^[a-z][A-Za-z0-9]*$')
 PH_TYPES = {'String', 'int', 'double', 'num'}
 ARG = re.compile(r'\{\s*(\w+)\s*(?:,\s*(plural|select)\b)?')
@@ -87,6 +101,57 @@ def placeholders(text: str) -> set[str]:
     names: set[str] = set()
     scan_names(text, 0, len(text), names)
     return names
+
+
+def plural_categories(text: str) -> set[str]:
+    """The CLDR category names a message actually provides, `=1` exact branches aside."""
+    return set(plural_labels(text))
+
+
+def plural_labels(text: str) -> list[str]:
+    """Every branch label in order, repeats included.
+
+    A repeated branch is not a plural form: `one{...}other{...}one{...}` makes
+    `flutter gen-l10n` warn that the first `one` is overridden, so the repeat
+    has to be visible to the validators rather than collapse into a set.
+    """
+    out: list[str] = []
+    for m in re.finditer(r'\{\s*\w+\s*,\s*plural\s*,', text):
+        close = block_end(text, m.start())
+        if close < 0:
+            continue
+        j = m.end()
+        while j < close:
+            label = LABEL.match(text, j)
+            body = label.end() - 1 if label else -1
+            end = block_end(text, body) if label else -1
+            if end < 0 or end > close:
+                j += 1
+                continue
+            name = label.group(0).split('{')[0].strip()
+            if not name.startswith('='):
+                out.append(name)
+            j = end + 1
+    return out
+
+
+def plural_problems(english: str, translated: str, lang: str, where: str) -> list[str]:
+    """A plural message needs every cardinal form its language uses.
+
+    Without them ICU falls back to `other` and Hindi or Russian copy reads wrong
+    for the counts it actually shows. English `=1` branches do not count.
+    """
+    if 'plural,' not in english:
+        return []
+    need = locales.plural_required(lang) - {'other'}
+    labels = plural_labels(translated)
+    have = set(labels)
+    missing = need - have
+    repeats = sorted({n for n in labels if labels.count(n) > 1})
+    out = [f'{where}: plural missing {",".join(sorted(missing))}'] if missing else []
+    if repeats:
+        out.append(f'{where}: plural repeats {",".join(repeats)}')
+    return out
 
 
 def problems_in(text: str, where: str) -> list[str]:
@@ -295,11 +360,15 @@ def cmd_draft() -> int:
             en_lines.append(f'  {json.dumps("@" + k)}: {m},')
     if en_lines:
         append_lines(arb_path('en'), en_lines)
-        for lang in LANGS:
+        for lang in langs():
+            if lang == 'en':
+                continue
             append_lines(arb_path(lang), [f'  {json.dumps(k)}: {json.dumps(staged[k]["text"], ensure_ascii=False)},' for k in new])
     for k in text_changed:
         set_value(arb_path('en'), k, staged[k]['text'])
-        for lang in LANGS:
+        for lang in langs():
+            if lang == 'en':
+                continue
             # A drafted key still holds the English text until --translate runs.
             # If the ARB value differs from the old English text, a real
             # translation landed; keep it (or force) instead of clobbering it.
@@ -331,19 +400,24 @@ def cmd_translate() -> int:
     english = json.loads(arb_path('en').read_text(encoding='utf-8'))
     errors: list[str] = []
     translations: dict[str, dict[str, str]] = {}
-    for lang in LANGS:
+    pending: list[str] = []
+    for lang in langs():
+        if lang == 'en':
+            continue
         f = STAGE / f'{lang}.json'
         if not f.exists():
-            errors.append(f'missing {f.relative_to(ROOT)}')
+            pending.append(lang)
             continue
         t = json.loads(f.read_text(encoding='utf-8'))
         translations[lang] = t
         for k in sorted(drafted - set(t)):
+            pending.append(lang)
             errors.append(f'{lang}: missing {k}')
         for k in sorted(set(t) - drafted):
             errors.append(f'{lang}: extra {k}')
         for k in drafted & set(t):
             errors += problems_in(t[k], f'{lang}.{k}')
+            errors += plural_problems(english.get(k, ''), t[k], lang, f'{lang}.{k}')
             if k not in english:
                 errors.append(f'{lang}.{k}: not a key in app_en.arb')
             elif placeholders(t[k]) != placeholders(english[k]):
@@ -351,21 +425,37 @@ def cmd_translate() -> int:
     if errors:
         print('\n'.join(errors[:80]) + f'\n{len(errors)} problem(s)')
         return 1
-    for lang in LANGS:
-        for k in sorted(drafted):
-            set_value(arb_path(lang), k, translations[lang][k])
-    save_drafted(set())
-    print(f'translated {len(drafted)} keys in {len(LANGS)} languages')
+    if pending and STRICT:
+        print('no translation for: ' + ', '.join(sorted(set(pending))))
+        return 1
+    applied = 0
+    for lang, t in translations.items():
+        for k in sorted(drafted & set(t)):
+            set_value(arb_path(lang), k, t[k])
+            applied += 1
+        rest = {k: v for k, v in t.items() if k not in drafted}
+        f = STAGE / f'{lang}.json'
+        if rest:
+            f.write_text(json.dumps(rest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+        else:
+            f.unlink()
+    done = {lang for lang, t in translations.items() if drafted <= set(t)}
+    if set(langs()) - {'en'} <= done:
+        save_drafted(set())
+    print(f'translated {len(drafted)} keys in {len(translations)} languages ({applied} strings)')
+    if pending:
+        print(f'{len(set(pending))} still in English: ' + ', '.join(sorted(set(pending))))
     gen_l10n()
     return 0
 
 
 def main() -> int:
-    global FORCE
+    global FORCE, STRICT
     modes = {'--check': cmd_check, '--draft': cmd_draft, '--translate': cmd_translate}
     args = sys.argv[1:]
     FORCE = '--force' in args
-    args = [a for a in args if a != '--force']
+    STRICT = '--strict' in args
+    args = [a for a in args if a not in ('--force', '--strict')]
     arg = args[0] if args else ''
     if arg not in modes:
         print(__doc__)

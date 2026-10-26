@@ -9,6 +9,7 @@ import '../data/json_file.dart';
 import '../data/models.dart';
 import '../data/recommend.dart';
 import '../data/wire.dart';
+import '../l10n/locale_meta.dart' show appLanguages;
 
 /// App documents directory. Overridden in main() and in tests.
 final docsDirProvider = Provider<Directory>((ref) => throw UnimplementedError('override docsDirProvider'));
@@ -55,6 +56,7 @@ class Settings {
     this.icon = 'default',
     this.weekStart = DateTime.sunday,
     this.locale,
+    this.currency = 'INR',
     this.showRatings = true,
     this.shareBg = 0,
     this.worldwide = false,
@@ -70,8 +72,11 @@ class Settings {
   /// DateTime.sunday or DateTime.monday.
   final int weekStart;
 
-  /// null follows the device; otherwise 'en', 'hi', ...
+  /// null follows the device; otherwise 'en', 'hi', 'pt_BR', ...
   final String? locale;
+
+  /// Ticket price symbol. Amounts are stored as typed, never converted.
+  final String currency;
   final bool showRatings;
   final int shareBg;
 
@@ -87,6 +92,7 @@ class Settings {
     String? icon,
     int? weekStart,
     String? Function()? locale,
+    String? currency,
     bool? showRatings,
     int? shareBg,
     bool? worldwide,
@@ -99,6 +105,7 @@ class Settings {
     icon: icon ?? this.icon,
     weekStart: weekStart ?? this.weekStart,
     locale: locale == null ? this.locale : locale(),
+    currency: currency ?? this.currency,
     showRatings: showRatings ?? this.showRatings,
     shareBg: shareBg ?? this.shareBg,
     worldwide: worldwide ?? this.worldwide,
@@ -112,7 +119,12 @@ class Settings {
     accent: (j['accent'] as int?) ?? 0,
     icon: (j['icon'] as String?) ?? 'default',
     weekStart: (j['weekStart'] as int?) ?? DateTime.sunday,
-    locale: j['locale'] as String?,
+    // A code this build does not ship (an older install, a hand-edited file)
+    // would otherwise reach `localeFor`, match nothing, and land on whichever
+    // locale Flutter lists first, which is Arabic. Dropping it means the diary
+    // falls back to the phone's language instead of switching to another one.
+    locale: appLanguages.any((a) => a.code == j['locale']) ? j['locale'] as String? : null,
+    currency: (j['currency'] as String?) ?? 'INR',
     showRatings: (j['showRatings'] as bool?) ?? true,
     shareBg: (j['shareBg'] as int?) ?? 0,
     worldwide: (j['worldwide'] as bool?) ?? false,
@@ -127,6 +139,7 @@ class Settings {
     'icon': icon,
     'weekStart': weekStart,
     'locale': locale,
+    'currency': currency,
     'showRatings': showRatings,
     'shareBg': shareBg,
     'worldwide': worldwide,

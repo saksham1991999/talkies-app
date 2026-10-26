@@ -45,16 +45,33 @@ enum Tk {
 }
 
 class TkIcon extends StatelessWidget {
-  const TkIcon(this.icon, {super.key, this.size = 24, this.color});
+  const TkIcon(this.icon, {super.key, this.size = 24, this.color, this.mirror});
   final Tk icon;
   final double size;
   final Color? color;
 
+  /// Whether to flip the glyph in a right-to-left layout. Null follows the
+  /// reading direction, which is what a back arrow should do. False pins the
+  /// drawn orientation: the icon then names a physical direction, not a
+  /// reading one. The group deck's Skip and Want buttons are the case for
+  /// that, because they stand for a left drag and a right drag.
+  final bool? mirror;
+
+  /// Arrows follow the reading direction: back points right in Arabic, Hebrew
+  /// and Urdu. Everything else keeps its drawn orientation.
+  static const _directional = {Tk.back, Tk.left, Tk.right, Tk.send};
+
   @override
-  Widget build(BuildContext context) => CustomPaint(
-    size: Size.square(size),
-    painter: _TkPainter(icon, color ?? IconTheme.of(context).color ?? DefaultTextStyle.of(context).style.color!),
-  );
+  Widget build(BuildContext context) {
+    final paint = CustomPaint(
+      size: Size.square(size),
+      painter: _TkPainter(icon, color ?? IconTheme.of(context).color ?? DefaultTextStyle.of(context).style.color!),
+    );
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    final flip = mirror ?? (_directional.contains(icon) && rtl);
+    if (!flip) return paint;
+    return Transform.flip(flipX: true, child: paint);
+  }
 }
 
 class _TkPainter extends CustomPainter {

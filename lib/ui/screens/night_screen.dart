@@ -184,6 +184,41 @@ class _NightScreenState extends ConsumerState<NightScreen> {
         padding: const EdgeInsets.only(bottom: 48),
         children: [
           _Header(crew: crew, night: night),
+          if (p.dark)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Stack(
+                  children: [
+                    Image.asset('assets/images/hall.jpg', height: 180, width: double.infinity, fit: BoxFit.cover),
+                    Container(
+                      height: 180,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [p.wall.withValues(alpha: 0.1), p.wall.withValues(alpha: 0.72)],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 14,
+                      bottom: 12,
+                      right: 14,
+                      child: Text(
+                        (night.event?.place ?? night.place)?.trim().isNotEmpty == true
+                            ? (night.event?.place ?? night.place)!.trim()
+                            : crew.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           if (st.loading)
             const Padding(padding: EdgeInsets.only(top: 10), child: LinearProgressIndicator(minHeight: 2)),
           if (_note != null)
@@ -212,7 +247,7 @@ class _NightScreenState extends ConsumerState<NightScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 18, 12, 0),
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: TextButton(
                   key: const Key('night-delete'),
                   onPressed: _delete,
@@ -370,7 +405,7 @@ class _NightScreenState extends ConsumerState<NightScreen> {
     final on = ref.watch(reminderOnProvider(night.id));
     return [
       Padding(
-        padding: const EdgeInsets.fromLTRB(20, 14, 12, 0),
+        padding: const EdgeInsetsDirectional.fromSTEB(20, 14, 12, 0),
         child: SwitchListTile(
           key: const Key('night-remind'),
           contentPadding: EdgeInsets.zero,
@@ -536,10 +571,10 @@ class _ApprovalRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                // The leader's count takes the accent; on ink it stays in the wall's tone.
+                // The leader's count takes the tonight amber; on ink it stays in the wall's tone.
                 Text(
                   '${option.approvals}',
-                  style: disp(26, selected ? p.wall : (leading ? p.accent : p.inkSoft), spacing: 0.5),
+                  style: disp(26, selected ? p.wall : (leading ? p.tonight : p.inkSoft), spacing: 0.5),
                 ),
               ],
             ),
@@ -644,7 +679,7 @@ class _Header extends StatelessWidget {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 14, 0, 14),
+                        padding: const EdgeInsetsDirectional.fromSTEB(14, 14, 0, 14),
                         child: film == null ? SizedBox(width: posterW) : Poster(film, width: posterW, radius: 3),
                       ),
                       Expanded(

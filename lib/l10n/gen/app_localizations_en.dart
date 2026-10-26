@@ -2166,4 +2166,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String chatNightFilm(String film) {
     return 'Night: $film';
   }
+
+  @override
+  String get languagesIndian => 'Indian languages';
+
+  @override
+  String get languagesWorld => 'Other languages';
+
+  @override
+  String get currency => 'Ticket currency';
+
+  @override
+  String get currencyNote => 'Amounts are not converted. Only the symbol and the digit grouping change.';
 }

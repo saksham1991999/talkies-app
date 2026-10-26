@@ -10,7 +10,7 @@ class AppLocalizationsKn extends AppLocalizations {
   AppLocalizationsKn([String locale = 'kn']) : super(locale);
 
   @override
-  String get appName => 'ಟಾಕೀಸ್';
+  String get appName => 'Talkies';
 
   @override
   String get tabHome => 'ಹೋಮ್';
@@ -43,7 +43,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get delete => 'ಅಳಿಸಿ';
 
   @override
-  String get edit => 'ಬದಲಿಸಿ';
+  String get edit => 'ಸಂಪಾದಿಸಿ';
 
   @override
   String get done => 'ಆಯಿತು';
@@ -160,10 +160,10 @@ class AppLocalizationsKn extends AppLocalizations {
   String get kindSeries => 'ಸೀರೀಸ್';
 
   @override
-  String get gridView => 'ಗ್ರಿಡ್ ವ್ಯೂ';
+  String get gridView => 'ಗ್ರಿಡ್ ನೋಟ';
 
   @override
-  String get listView => 'ಲಿಸ್ಟ್ ವ್ಯೂ';
+  String get listView => 'ಪಟ್ಟಿ ನೋಟ';
 
   @override
   String get searchStubs => 'ನಿಮ್ಮ ಟಿಕೆಟ್‌ಗಳನ್ನು ಹುಡುಕಿ';
@@ -380,7 +380,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get recordTitle => 'ಹೊಸ ಟಿಕೆಟ್';
 
   @override
-  String get editTitle => 'ಟಿಕೆಟ್ ಬದಲಿಸಿ';
+  String get editTitle => 'ಟಿಕೆಟ್ ಸಂಪಾದಿಸಿ';
 
   @override
   String get whenWatched => 'ಯಾವಾಗ ನೋಡಿದಿರಿ?';
@@ -698,7 +698,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get icon_blue => 'ನೀಲಿ ಟಿಕೆಟ್';
 
   @override
-  String get icon_night => 'ನೈಟ್ ಶೋ';
+  String get icon_night => 'ರಾತ್ರಿ ಶೋ';
 
   @override
   String get iconChanged => 'ಆ್ಯಪ್ ಐಕಾನ್ ಬದಲಾಗಿದೆ';
@@ -979,7 +979,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get acctUnblock => 'ತಡೆ ತೆಗೆಯಿರಿ';
 
   @override
-  String get acctSyncIdle => 'ನಿಮ್ಮ ಡೈರಿ ಸಿಂಕ್‌ನಲ್ಲಿದೆ.';
+  String get acctSyncIdle => 'ನಿಮ್ಮ ಡೈರಿ ಸಿಂಕ್ ಆಗಿದೆ.';
 
   @override
   String get acctSyncBusy => 'ಡೈರಿ ಸಿಂಕ್ ಆಗುತ್ತಿದೆ.';
@@ -1025,7 +1025,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get acctRowSafe => 'ನಿಮ್ಮ ಡೈರಿ ಈ ಫೋನ್‌ನಲ್ಲಿ ಸುರಕ್ಷಿತ';
 
   @override
-  String get acctChoiceTitle => 'ಎರಡು ಡೈರಿ';
+  String get acctChoiceTitle => 'ಎರಡು ಡೈರಿಗಳು';
 
   @override
   String get acctChoiceBody => 'ಈ ಫೋನ್‌ನಲ್ಲಿ ಇನ್ನೊಂದು ಖಾತೆಯ ಡೈರಿ ಇದೆ. ಏನು ಮಾಡಬೇಕು ಆಯ್ಕೆ ಮಾಡಿ.';
@@ -1034,14 +1034,14 @@ class AppLocalizationsKn extends AppLocalizations {
   String get acctChoiceMerge => 'ವಿಲೀನಗೊಳಿಸಿ';
 
   @override
-  String get acctChoiceMergeNote => 'ಈ ಫೋನಿನ ಚಿತ್ರಗಳು ಈ ಖಾತೆಗೆ ಸೇರುತ್ತವೆ.';
+  String get acctChoiceMergeNote => 'ಈ ಫೋನ್‌ನ ಚಿತ್ರಗಳು ಈ ಖಾತೆಗೆ ಸೇರುತ್ತವೆ.';
 
   @override
   String get acctChoiceSeparate => 'ಬೇರೆಯಾಗಿ ಇರಿಸಿ';
 
   @override
   String get acctChoiceSeparateNote =>
-      'ಈ ಫೋನ್‌ನಲ್ಲಿ ಈ ಖಾತೆಯ ಡೈರಿ ಮಾತ್ರ ಕಾಣುತ್ತದೆ. ಈ ಫೋನಿನ ಚಿತ್ರಗಳು ಅದರಿಂದ ತೆಗೆದುಹಾಕಲ್ಪಡುತ್ತವೆ.';
+      'ಈ ಫೋನ್‌ನಲ್ಲಿ ಈ ಖಾತೆಯ ಡೈರಿ ಮಾತ್ರ ಕಾಣುತ್ತದೆ. ಈ ಫೋನ್‌ನ ಚಿತ್ರಗಳು ಅದರಿಂದ ತೆಗೆದುಹಾಕಲ್ಪಡುತ್ತವೆ.';
 
   @override
   String get privacyStubToggle => 'ಖಾಸಗಿ: ಈ ಟಿಕೆಟ್ ನನ್ನ ಪ್ರೊಫೈಲ್‌ನಲ್ಲಿ ಬೇಡ';
@@ -1050,14 +1050,14 @@ class AppLocalizationsKn extends AppLocalizations {
   String get privacyStubLabel => 'ಖಾಸಗಿ ಟಿಕೆಟ್';
 
   @override
-  String get privacyTitle => 'ಗೋಪ್ಯತೆ';
+  String get privacyTitle => 'ಗೌಪ್ಯತೆ';
 
   @override
   String get privacySheetTitle => 'ಸ್ನೇಹಿತರಿಗೆ ಮಾತ್ರ ತೋರಿಸಬೇಕೆ?';
 
   @override
   String get privacySheetBody =>
-      'ಸ್ನೇಹಿತರಿಗೆ ನೀವು ನೋಡಿದ ಚಿತ್ರ ಮತ್ತು ವಾಚ್‌ಲಿಸ್ಟ್ ಕಾಣುತ್ತದೆ. ನಿಮ್ಮ ರೇಟಿಂಗ್ ನೀವು ಚಾಲು ಮಾಡಿದರೆ ಮಾತ್ರ ಕಾಣುತ್ತದೆ. ಯಾರೂ ದಿನಾಂಕ ನೋಡುವುದಿಲ್ಲ. ಒಂದು ಟಿಕೆಟ್ ಮರೆಮಾಡಲು ಅದನ್ನು ತೆರೆದು ಖಾಸಗಿ ಚಾಲು ಮಾಡಿ.';
+      'ಸ್ನೇಹಿತರಿಗೆ ನೀವು ನೋಡಿದ ಚಿತ್ರ ಮತ್ತು ವಾಚ್‌ಲಿಸ್ಟ್ ಕಾಣುತ್ತದೆ. ನಿಮ್ಮ ರೇಟಿಂಗ್ ನೀವು ಆನ್ ಮಾಡಿದರೆ ಮಾತ್ರ ಕಾಣುತ್ತದೆ. ಯಾರೂ ದಿನಾಂಕ ನೋಡುವುದಿಲ್ಲ. ಒಂದು ಟಿಕೆಟ್ ಮರೆಮಾಡಲು ಅದನ್ನು ತೆರೆದು ಖಾಸಗಿ ಆನ್ ಮಾಡಿ.';
 
   @override
   String get friendsTitle => 'ಸ್ನೇಹಿತರು';
@@ -1156,7 +1156,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get friendsReasonSpam => 'ಸ್ಪ್ಯಾಮ್';
 
   @override
-  String get friendsReasonAbuse => 'ದೂಷಣೆ';
+  String get friendsReasonAbuse => 'ದುರುಪಯೋಗ';
 
   @override
   String get friendsReasonHarassment => 'ಕಿರುಕುಳ';
@@ -1207,7 +1207,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get feedReactClap => 'ಚಪ್ಪಾಳೆ';
 
   @override
-  String get feedReactMind => 'ತಲೆಯೇ ಸುತ್ತಿತು';
+  String get feedReactMind => 'ಅಚ್ಚರಿ';
 
   @override
   String get feedReactPopcorn => 'ಪಾಪ್‌ಕಾರ್ನ್';
@@ -1255,13 +1255,13 @@ class AppLocalizationsKn extends AppLocalizations {
   String get sendShareLine => 'Talkies ನಿಂದ ಹಂಚಿದ್ದು, ಟಿಕೆಟ್ ಹೋಲುವ ಚಿತ್ರ ಡೈರಿ.';
 
   @override
-  String get nightTitle => 'ಮೂವಿ ನೈಟ್';
+  String get nightTitle => 'ಸಿನಿಮಾ ಸಂಜೆ';
 
   @override
   String get nightPollOpen => 'ಮತದಾನ ತೆರೆದಿದೆ';
 
   @override
-  String get nightPlanTitle => 'ನೈಟ್ ಯೋಜನೆ';
+  String get nightPlanTitle => 'ಸಂಜೆ ಯೋಜಿಸಿ';
 
   @override
   String get nightChooseGroup => 'ಯಾವ ಗುಂಪು?';
@@ -1270,7 +1270,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get togetherGroups => 'ಗುಂಪುಗಳು';
 
   @override
-  String get togetherNights => 'ನೈಟ್‌ಗಳು';
+  String get togetherNights => 'ಸಂಜೆಗಳು';
 
   @override
   String get togetherFriends => 'ಸ್ನೇಹಿತರು';
@@ -1303,7 +1303,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get togetherYou => 'ನೀವು';
 
   @override
-  String get togetherNextNight => 'ಮುಂದಿನ ನೈಟ್';
+  String get togetherNextNight => 'ಮುಂದಿನ ಸಂಜೆ';
 
   @override
   String get togetherNightPoll => 'ಮತದಾನ';
@@ -1345,7 +1345,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get togetherRefusalNotFound => 'ಆ ಗುಂಪು ಅಥವಾ ನೈಟ್ ಈಗ ಇಲ್ಲ.';
 
   @override
-  String get togetherRefusalClosed => 'ನಿಮಗಿಂತ ಮೊದಲೇ ಬೇರೊಬ್ಬರು ಇದನ್ನು ಬದಲಿಸಿದ್ದಾರೆ. ಈಗ ಅದು ಹೊಸದಾಗಿದೆ.';
+  String get togetherRefusalClosed => 'ನಿಮಗಿಂತ ಮೊದಲೇ ಬೇರೊಬ್ಬರು ಇದನ್ನು ಬದಲಿಸಿದ್ದಾರೆ. ಈಗ ಎಲ್ಲವೂ ನವೀಕೃತವಾಗಿದೆ.';
 
   @override
   String get togetherRefusalInvalid => 'ಮಾಹಿತಿ ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
@@ -1369,7 +1369,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get crewSharedSwitch => 'ಲಿಂಕ್‌ನಿಂದ ಸ್ನೇಹಿತರನ್ನು ಕರೆ';
 
   @override
-  String get crewSharedHint => 'ಸ್ನೇಹಿತರು ಕೋಡ್‌ನಿಂದ ಸೇರಿ ತಮ್ಮ ಫೋನ್‌ನಲ್ಲೇ ಸ್ವೈಪ್ ಮಾಡುತ್ತಾರೆ.';
+  String get crewSharedHint => 'ಸ್ನೇಹಿತರು ಕೋಡ್‌ನಿಂದ ಸೇರಿ ತಮ್ಮ ಫೋನ್‌ಗಳಲ್ಲಿ ಸ್ವೈಪ್ ಮಾಡುತ್ತಾರೆ.';
 
   @override
   String get crewCreate => 'ಗುಂಪು ರಚಿಸಿ';
@@ -1378,7 +1378,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get crewCreateShared => 'ಹಂಚಿದ ಗುಂಪು ರಚಿಸಿ';
 
   @override
-  String get crewOwnFilmLocal => 'ನಿಮ್ಮದೇ ಚಿತ್ರಗಳು ಈ ಫೋನಲ್ಲೇ ಉಳಿಯುತ್ತವೆ.';
+  String get crewOwnFilmLocal => 'ನಿಮ್ಮದೇ ಚಿತ್ರಗಳು ಈ ಫೋನ್‌ನಲ್ಲೇ ಉಳಿಯುತ್ತವೆ.';
 
   @override
   String get crewJoinTitle => 'ಗುಂಪಿಗೆ ಸೇರಿ';
@@ -1403,7 +1403,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get crewDelete => 'ಗುಂಪು ಅಳಿಸಿ';
 
   @override
-  String get crewDeleteLocal => 'ಗುಂಪು, ಅದರ ಪಟ್ಟಿ ಮತ್ತು ನೈಟ್‌ಗಳು ಈ ಫೋನಿನಿಂದ ತೆಗೆಯಲ್ಪಡುತ್ತವೆ.';
+  String get crewDeleteLocal => 'ಗುಂಪು, ಅದರ ಪಟ್ಟಿ ಮತ್ತು ಸಂಜೆಗಳು ಈ ಫೋನ್‌ನಿಂದ ತೆಗೆಯಲ್ಪಡುತ್ತವೆ.';
 
   @override
   String get crewDeleteShared => 'ಗುಂಪು ಎಲ್ಲರಿಗೂ ತೆಗೆದುಹೋಗುತ್ತದೆ.';
@@ -1412,7 +1412,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get crewLeave => 'ಗುಂಪು ಬಿಡಿ';
 
   @override
-  String get crewLeaveBody => 'ಇದು ಈ ಫೋನಿನಿಂದ ಹೋಗುತ್ತದೆ. ಕೋಡ್‌ನಿಂದ ಮತ್ತೆ ಸೇರಬಹುದು.';
+  String get crewLeaveBody => 'ಇದು ಈ ಫೋನ್‌ನಿಂದ ಹೋಗುತ್ತದೆ. ಕೋಡ್‌ನಿಂದ ಮತ್ತೆ ಸೇರಬಹುದು.';
 
   @override
   String get crewMembers => 'ಸದಸ್ಯರು';
@@ -1463,10 +1463,10 @@ class AppLocalizationsKn extends AppLocalizations {
   String get crewSwipe => 'ಹೊಂದಾಣಿಕೆಗೆ ಸ್ವೈಪ್ ಮಾಡಿ';
 
   @override
-  String get crewNights => 'ನೈಟ್‌ಗಳು';
+  String get crewNights => 'ಸಂಜೆಗಳು';
 
   @override
-  String get crewNoNights => 'ಇನ್ನೂ ನೈಟ್ ಇಲ್ಲ.';
+  String get crewNoNights => 'ಇನ್ನೂ ಸಂಜೆ ಇಲ್ಲ.';
 
   @override
   String get crewRemoveBody => 'ಅವರ ಸ್ವೈಪ್, ಮತ ಮತ್ತು ಉತ್ತರಗಳೂ ಹೋಗುತ್ತವೆ.';
@@ -1523,7 +1523,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get deckRebuild => 'ಡೆಕ್ ಮರುನಿರ್ಮಾಣ';
 
   @override
-  String get deckAllSwiped => 'ಗತ್ತು, ಎಲ್ಲಾ ಕಾರ್ಡ್ ಮುಗಿಯಿತು.';
+  String get deckAllSwiped => 'ಇವೇ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳು.';
 
   @override
   String get deckNoMatch => 'ಈ ಫಿಲ್ಟರ್‌ಗೆ ಯಾವ ಕಾರ್ಡೂ ಸರಿಹೊಂದುವುದಿಲ್ಲ.';
@@ -1634,7 +1634,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get nightClosePoll => 'ಮತದಾನ ಮುಚ್ಚಿ';
 
   @override
-  String get nightCloseNote => 'ಹೆಚ್ಚು ಮತ ಬಂದ ಚಿತ್ರ ಮತ್ತು ಸಮಯ ಗೆಲುವುದು. ಸಮಬಾಜು ಇದ್ದರೆ ಮೊದಲನೆಯದು.';
+  String get nightCloseNote => 'ಹೆಚ್ಚು ಮತ ಬಂದ ಚಿತ್ರ ಮತ್ತು ಸಮಯ ಗೆಲ್ಲುತ್ತದೆ. ಸಮಬಲವಿದ್ದರೆ ಮೊದಲನೆಯದು.';
 
   @override
   String get nightWaitNote => 'ಎಲ್ಲರ ಮತ ಬಿದ್ದ ಮೇಲೆ ಹೋಸ್ಟ್ ಅಥವಾ ಮಾಲೀಕ ಮತದಾನ ಮುಚ್ಚುತ್ತಾರೆ.';
@@ -1664,7 +1664,8 @@ class AppLocalizationsKn extends AppLocalizations {
   String get nightRemindHint => 'ಒಂದು ದಿನ ಮೊದಲು ಮತ್ತು ಎರಡು ಗಂಟೆ ಮೊದಲು.';
 
   @override
-  String get nightRemindRefused => 'Talkies ಜ್ಞಾಪನೆ ಕಳುಹಿಸಲಾರದು. ಫೋನ್ ಸೆಟ್ಟಿಂಗ್‌ನಲ್ಲಿ Talkies ಅಧಿಸೂಚನೆ ಚಾಲು ಮಾಡಿ.';
+  String get nightRemindRefused =>
+      'Talkies ಜ್ಞಾಪನೆಗಳನ್ನು ಕಳುಹಿಸಲಾರದು. ಫೋನ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ Talkies ನ ಅಧಿಸೂಚನೆಗಳನ್ನು ಆನ್ ಮಾಡಿ.';
 
   @override
   String get nightAddCalendar => 'ಕ್ಯಾಲೆಂಡರ್‌ಗೆ ಸೇರಿಸಿ';
@@ -1673,22 +1674,22 @@ class AppLocalizationsKn extends AppLocalizations {
   String get nightIcsFailed => 'ಕ್ಯಾಲೆಂಡರ್ ಫೈಲ್ ಹಂಚಲಾಗಲಿಲ್ಲ.';
 
   @override
-  String get nightWrap => 'ನೈಟ್ ಸಮಾರೋಪ';
+  String get nightWrap => 'ಸಂಜೆಯ ಸಮಾರೋಪ';
 
   @override
   String get nightWrapNote => 'ಬಂದವರೆಲ್ಲರಿಗೂ ಒಂದೊಂದು ಟಿಕೆಟ್ ಮಾಡಿ.';
 
   @override
-  String get nightDelete => 'ನೈಟ್ ಅಳಿಸಿ';
+  String get nightDelete => 'ಸಂಜೆ ಅಳಿಸಿ';
 
   @override
-  String get nightDeleteQ => 'ಈ ನೈಟ್ ಅಳಿಸಬೇಕೆ?';
+  String get nightDeleteQ => 'ಈ ಸಂಜೆ ಅಳಿಸಬೇಕೆ?';
 
   @override
   String get nightDeleteBody => 'ಮತದಾನ, ಉತ್ತರ ಮತ್ತು ಜ್ಞಾಪನೆಗಳು ತೆಗೆಯಲ್ಪಡುತ್ತವೆ.';
 
   @override
-  String get nightGone => 'ಈ ನೈಟ್ ಈಗ ಇಲ್ಲ.';
+  String get nightGone => 'ಈ ಸಂಜೆ ಇನ್ನು ಇಲ್ಲ.';
 
   @override
   String get chatTitle => 'ಚಾಟ್';
@@ -1712,19 +1713,19 @@ class AppLocalizationsKn extends AppLocalizations {
   String get chatOlder => 'ಹಿಂದಿನ ಸಂದೇಶಗಳು';
 
   @override
-  String get chatPollOpen => 'ಒಂದು ನೈಟ್ ಮತದಾನ ತೆರೆದಿದೆ';
+  String get chatPollOpen => 'ಸಂಜೆಯ ಮತದಾನ ತೆರೆದಿದೆ';
 
   @override
-  String get chatNightSetPlain => 'ಒಂದು ನೈಟ್ ನಿಗದಿಯಾಗಿದೆ';
+  String get chatNightSetPlain => 'ಸಂಜೆ ನಿಗದಿಯಾಗಿದೆ';
 
   @override
-  String get chatWrapped => 'ನೈಟ್ ಮುಗಿಸಲಾಯಿತು';
+  String get chatWrapped => 'ಸಂಜೆ ಮುಗಿಯಿತು';
 
   @override
-  String get chatNight => 'ಮೂವಿ ನೈಟ್';
+  String get chatNight => 'ಸಿನಿಮಾ ಸಂಜೆ';
 
   @override
-  String get chatReport => 'ಸಂದೇಶ ದೂರು';
+  String get chatReport => 'ಸಂದೇಶವನ್ನು ವರದಿ ಮಾಡಿ';
 
   @override
   String get chatReportTitle => 'ಈ ಸಂದೇಶವನ್ನು ಯಾಕೆ ದೂರು ಮಾಡುತ್ತೀರಿ?';
@@ -2046,7 +2047,12 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String profileViewings(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'ಬಾರಿ ನೋಡಿದ್ದು', other: 'ಬಾರಿ ನೋಡಿದ್ದು');
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      one: 'ಒಮ್ಮೆ ನೋಡಿದ್ದು',
+      other: '$count ಬಾರಿ ನೋಡಿದ್ದು',
+    );
     return '$_temp0';
   }
 
@@ -2159,11 +2165,23 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String chatNightSet(String film) {
-    return 'ಒಂದು ನೈಟ್ ನಿಗದಿಯಾಗಿದೆ: $film';
+    return 'ಸಂಜೆ ನಿಗದಿಯಾಗಿದೆ: $film';
   }
 
   @override
   String chatNightFilm(String film) {
-    return 'ನೈಟ್: $film';
+    return 'ಸಂಜೆ: $film';
   }
+
+  @override
+  String get languagesIndian => 'ಭಾರತೀಯ ಭಾಷೆಗಳು';
+
+  @override
+  String get languagesWorld => 'ಇತರ ಭಾಷೆಗಳು';
+
+  @override
+  String get currency => 'ಟಿಕೆಟ್ ಕರೆನ್ಸಿ';
+
+  @override
+  String get currencyNote => 'ಮೊತ್ತಗಳನ್ನು ಪರಿವರ್ತಿಸಲಾಗುವುದಿಲ್ಲ. ಚಿಹ್ನೆ ಮತ್ತು ಅಂಕಿಗಳ ಗುಂಪು ಮಾತ್ರ ಬದಲಾಗುತ್ತದೆ.';
 }
