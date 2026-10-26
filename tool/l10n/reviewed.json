@@ -1,0 +1,6 @@
+{
+ "_howto": "Add a locale code here only after a native speaker has read lib/l10n/app_<code>.arb. The app marks unreviewed languages in Settings and tool/asc.py refuses to publish their store copy unless --allow-unreviewed is passed.",
+ "reviewed": [
+  "en"
+ ]
+}

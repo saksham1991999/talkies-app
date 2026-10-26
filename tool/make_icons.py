@@ -5,10 +5,9 @@ Run: python3 tool/make_icons.py
 """
 import json
 import os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FONT = os.path.join(ROOT, 'assets/fonts/Tanker-Regular.otf')
 INK, RED = (42, 19, 22), (176, 52, 43)
 VARIANTS = {  # name: (background, paper, ink, serial)
     'default': ((58, 21, 25), (242, 203, 193), INK, RED),
@@ -23,32 +22,28 @@ def ticket(size, bg, paper, ink, serial, scale=1.0, transparent=False):
     S = 1024
     im = Image.new('RGBA', (S, S), (0, 0, 0, 0) if transparent else bg + (255,))
     d = ImageDraw.Draw(im)
-    w, h = 500 * scale, 724 * scale
-    x0, y0 = (S - w) / 2, (S - h) / 2
+    # A kept stub, landscape: cream paper, side notches, two print bars, and the
+    # sindoor ring landing over its corner. No text: readable at 29 pt.
+    w, h = 640 * scale, 580 * scale
+    x0, y0 = (S - w) / 2, (S - h) / 2 - 30 * scale
     x1, y1 = x0 + w, y0 + h
-    d.rounded_rectangle([x0, y0, x1, y1], radius=44 * scale, fill=paper + (255,))
-    perf = y0 + h * 0.745
-    r = 40 * scale
+    cy = (y0 + y1) / 2
+    d.rounded_rectangle([x0, y0, x1, y1], radius=64 * scale, fill=paper + (255,))
+    r = 56 * scale
     cut = (0, 0, 0, 0) if transparent else bg + (255,)
     for cx in (x0, x1):
-        d.ellipse([cx - r, perf - r, cx + r, perf + r], fill=cut)
-    dash, gap = 26 * scale, 20 * scale
-    x = x0 + r + 24 * scale
-    while x + dash <= x1 - r - 24 * scale:
-        d.rounded_rectangle([x, perf - 5 * scale, x + dash, perf + 5 * scale], radius=5 * scale, fill=ink + (110,))
-        x += dash + gap
-
-    def text(t, size_, y, color, spacing=0):
-        f = ImageFont.truetype(FONT, int(size_ * scale))
-        tw = sum(d.textlength(c, font=f) for c in t) + spacing * scale * (len(t) - 1)
-        cx = S / 2 - tw / 2
-        for c in t:
-            d.text((cx, y), c, font=f, fill=color + (255,), anchor='ls')
-            cx += d.textlength(c, font=f) + spacing * scale
-
-    text('TALKIES', 134, y0 + 246 * scale, ink, 5)
-    text('No.0001', 112, y0 + 452 * scale, serial, 4)
-    text('ADMIT ONE', 58, y0 + 650 * scale, ink, 8)
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=cut)
+    bx = x0 + 84 * scale
+    d.rounded_rectangle(
+        [bx, cy - 158 * scale, bx + 330 * scale, cy - 94 * scale],
+        radius=28 * scale, fill=ink + (255,))
+    d.rounded_rectangle(
+        [bx, cy - 60 * scale, bx + 210 * scale, cy - 16 * scale],
+        radius=22 * scale, fill=ink + (110,))
+    ring_d, ring_w = 300 * scale, 34 * scale
+    rx, ry = x1 - 120 * scale, y1 - 70 * scale
+    d.ellipse([rx - ring_d / 2, ry - ring_d / 2, rx + ring_d / 2, ry + ring_d / 2],
+              outline=serial + (255,), width=int(ring_w))
     return im.resize((size, size), Image.LANCZOS)
 
 
