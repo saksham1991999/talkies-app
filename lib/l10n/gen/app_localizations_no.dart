@@ -978,16 +978,16 @@ class AppLocalizationsNo extends AppLocalizations {
   String get acctUnblock => 'Lukk opp blokkering';
 
   @override
-  String get acctSyncIdle => 'Skriset ditt er synkronisert.';
+  String get acctSyncIdle => 'Dagboken din er synkronisert.';
 
   @override
-  String get acctSyncBusy => 'Synkroniserer skriset ditt.';
+  String get acctSyncBusy => 'Synkroniserer dagboken din.';
 
   @override
   String get acctSyncFailed => 'Synkronisering er ikke ferdig. Talkies vil forsøke igjen.';
 
   @override
-  String get acctSyncChoose => 'Denne telefonen har et skrise fra en annen konto.';
+  String get acctSyncChoose => 'Denne telefonen har en dagbok fra en annen konto.';
 
   @override
   String get acctChoose => 'Velg';
@@ -999,7 +999,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get acctSignOut => 'Logg ut';
 
   @override
-  String get acctSignedOut => 'Logget ut. Skriset ditt blir igjen på denne telefonen.';
+  String get acctSignedOut => 'Logget ut. Dagboken din blir igjen på denne telefonen.';
 
   @override
   String get acctDelete => 'Slett konto';
@@ -1009,25 +1009,25 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Dette fjerner kontoen din, profilen din og dagboken din fra Talkies-serveren. Rapporter du har sendt eller mottatt, arkiveres uten konto-ID-en din. Dagboken på telefonen din blir liggende. Du kan ikke angre dette.';
+      'Dette fjerner kontoen din, profilen din, dagboken din og resten av kontodataene dine fra Talkies-serveren. Rapporter du har sendt eller mottatt, arkiveres uten konto-ID-en din, med årsak, notat og dato. Dagboken på telefonen din blir liggende. Du kan ikke angre dette.';
 
   @override
-  String get acctDeleted => 'Kontoen din er slettet. Skriset ditt blir igjen på denne telefonen.';
+  String get acctDeleted => 'Kontoen din er slettet. Dagboken din blir igjen på denne telefonen.';
 
   @override
   String get acctDeleteFailed => 'Kunne ikke slette kontoen din. Prøv igjen.';
 
   @override
-  String get acctDown => 'Skriset ditt er trygt på denne telefonen. Talkies er ikke tilgjengelig nå.';
+  String get acctDown => 'Dagboken din er trygt på denne telefonen. Talkies er ikke tilgjengelig nå.';
 
   @override
-  String get acctRowSafe => 'Skriset ditt er trygt på denne telefonen';
+  String get acctRowSafe => 'Dagboken din er trygt på denne telefonen';
 
   @override
   String get acctChoiceTitle => 'To skrider';
 
   @override
-  String get acctChoiceBody => 'Denne telefonen har et skrise fra en annen konto. Velg hva du skal gjøre med det.';
+  String get acctChoiceBody => 'Denne telefonen har en dagbok fra en annen konto. Velg hva du skal gjøre med det.';
 
   @override
   String get acctChoiceMerge => 'Slå sammen';

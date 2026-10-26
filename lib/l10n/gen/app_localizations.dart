@@ -2168,7 +2168,7 @@ abstract class AppLocalizations {
   /// No description provided for @acctDeleteBody.
   ///
   /// In en, this message translates to:
-  /// **'This removes your account, your profile and your diary from the Talkies server. Reports you filed or received are archived without your account id. The diary on your phone stays. You cannot undo this.'**
+  /// **'This removes your account, your profile, your diary and the rest of your account data from the Talkies server. Reports you filed or received are archived without your account id, keeping the reason, note and date. The diary on your phone stays. You cannot undo this.'**
   String get acctDeleteBody;
 
   /// No description provided for @acctDeleted.

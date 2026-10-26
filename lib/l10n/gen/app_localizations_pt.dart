@@ -1010,7 +1010,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Isso exclui sua conta, seu perfil e seu diário do servidor do Talkies. As denúncias que você enviou ou recebeu são arquivadas sem o ID da sua conta. O diário no celular fica. Não é possível desfazer.';
+      'Isso exclui sua conta, seu perfil, seu diário e o restante dos dados da sua conta do servidor do Talkies. As denúncias que você enviou ou recebeu são arquivadas sem o ID da sua conta, mantendo o motivo, a observação e a data. O diário no celular fica. Não é possível desfazer.';
 
   @override
   String get acctDeleted => 'Sua conta foi excluída. Seu diário fica neste celular.';
@@ -3187,7 +3187,7 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
 
   @override
   String get acctDeleteBody =>
-      'Isto elimina a tua conta, o teu perfil e o teu diário do servidor do Talkies. As denúncias que enviaste ou recebeste são arquivadas sem o identificador da tua conta. O diário no telefone fica. Não podes desfazer isto.';
+      'Isto elimina a tua conta, o teu perfil, o teu diário e o resto dos dados da tua conta do servidor do Talkies. As denúncias que enviaste ou recebeste são arquivadas sem o identificador da tua conta, mantendo o motivo, a nota e a data. O diário no telefone fica. Não podes desfazer isto.';
 
   @override
   String get acctDeleted => 'A tua conta foi eliminada. O teu diário fica neste telefone.';

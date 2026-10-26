@@ -16,7 +16,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get tabHome => 'בית';
 
   @override
-  String get tabStubs => 'אגריפים';
+  String get tabStubs => 'כרטיסים';
 
   @override
   String get tabCalendar => 'לוח שנה';
@@ -166,10 +166,10 @@ class AppLocalizationsHe extends AppLocalizations {
   String get listView => 'תצוגת רשימה';
 
   @override
-  String get searchStubs => 'חפש באגריפים';
+  String get searchStubs => 'חפש בכרטיסים';
 
   @override
-  String get noStubs => 'אין אגריפים עדיין. כל סרט שתדון עליו הופך לכרטיס כאן.';
+  String get noStubs => 'אין כרטיסים עדיין. כל סרט שתדון עליו הופך לכרטיס כאן.';
 
   @override
   String get noMatch => 'אין תוצאות תואמות למסננים האלה.';
@@ -178,7 +178,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get resetFilters => 'איפוס מסננים';
 
   @override
-  String get showStubs => 'אגריפים';
+  String get showStubs => 'כרטיסים';
 
   @override
   String get showWatchlist => 'רשימת צפייה';
@@ -1007,7 +1007,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'פעולה זו מסירה את החשבון, הפרופיל והיומן שלך משרת Talkies. דיווחים ששלחת או שקיבלת נשמרים בארכיון בלי מזהה החשבון שלך. היומן בטלפון שלך נשאר. לא ניתן לשנות את זה.';
+      'פעולה זו מסירה את החשבון, הפרופיל, היומן ושאר נתוני החשבון שלך משרת Talkies. דיווחים ששלחת או שקיבלת נשמרים בארכיון בלי מזהה החשבון שלך, עם הסיבה, ההערה והתאריך. היומן בטלפון שלך נשאר. לא ניתן לבטל זאת.';
 
   @override
   String get acctDeleted => 'החשבון שלך נמחק. היומן שלך נשאר בטלפון זה.';

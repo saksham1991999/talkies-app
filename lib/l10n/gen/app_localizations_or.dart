@@ -855,7 +855,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get gotIt => 'ହୁମ୍, ବୁଝିଲି';
 
   @override
-  String get gateCantReach => 'ଏହି ସମୟରେ Talkies ରେ ଯୋଗ ଦେଇପାରୁ ନାହିଁ। ଆପଣଙ୍କ ଡାଇରୀ ଏହି ଫୋନ୍‌ରେ ସୁରକ୍ଷିତ।';
+  String get gateCantReach => 'ଏବେ Talkies କୁ ପହଞ୍ଚି ହେଉନାହିଁ। ଆପଣଙ୍କ ଡାୟାରୀ ଏହି ଫୋନରେ ସୁରକ୍ଷିତ ଅଛି।';
 
   @override
   String get gateRetry => 'ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ';
@@ -913,7 +913,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get acctBadCode => 'କୋଡ୍ଟି ଠିକ୍ ନୁହେଁ। ଯାଞ୍ଚ କରିପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
 
   @override
-  String get acctBadRequest => 'ଏମେଲ୍ ପୃତିଆଦେଶ ଯାଞ୍ଚ କରିପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
+  String get acctBadRequest => 'ଇମେଲ୍ ଠିକଣା ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
 
   @override
   String get acctRateLimited => 'ବହୁତ ଚେଷ୍ଟା ହୋଇଛି। କିଛି ମିନିଟ୍ ରଖି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
@@ -925,7 +925,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get acctFailed => 'କିଛି ଭୁଲ୍ ହୋଇଛି। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
 
   @override
-  String get acctYou => 'ଆପଣଙ୍କ କ୍ରମିକ';
+  String get acctYou => 'ଆପଣଙ୍କ ଖାତା';
 
   @override
   String get acctNoHandle => 'ଏବେ ପର୍ଯ୍ୟନ୍ତ ହ୍ୟାଣ୍ଡଲ୍ ନାହିଁ';
@@ -938,7 +938,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String get acctHandleHelp =>
-      'ଦୋଷ୍ଠ କିଆଁ ଏହା ଦ୍ୱାରା ଆପଣଙ୍କୁ ଖୋଜନ୍ତି। 3 ରୁ 20 ଅକ୍ଷର, ଅଙ୍କ କିମ୍ବା ଅଣ୍ଡରସ୍କୋର୍ ଉପଯୋଗ କରନ୍ତୁ।';
+      'ବନ୍ଧୁମାନେ ଏହା ଦ୍ୱାରା ଆପଣଙ୍କୁ ଖୋଜନ୍ତି। 3 ରୁ 20 ଅକ୍ଷର, ଅଙ୍କ କିମ୍ବା ଅଣ୍ଡରସ୍କୋର୍ ଉପଯୋଗ କରନ୍ତୁ।';
 
   @override
   String get acctHandleInvalid => '3 ରୁ 20 ଅକ୍ଷର, ଅଙ୍କ କିମ୍ବା ଅଣ୍ଡରସ୍କୋର୍ ଉପଯୋଗ କରନ୍ତୁ।';
@@ -950,7 +950,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get acctSaved => 'ସେଭ ହୋଇଛି';
 
   @override
-  String get acctInk => 'ଆପଣଙ୍କ ଅଙ୍କ ଅଙ୍କିକ';
+  String get acctInk => 'ଆପଣଙ୍କ ସ୍ଟାମ୍ପ ଇଙ୍କ';
 
   @override
   String get acctVisibility => 'ଆର ଲୋକ ଆପଣଙ୍କ ସିନେମା ଦେଖିପାରିବେ';
@@ -959,82 +959,80 @@ class AppLocalizationsOr extends AppLocalizations {
   String get acctVisPrivate => 'ନିଜସ୍ୱ';
 
   @override
-  String get acctVisFriends => 'ଦୋଷ୍ଠମାନେ ମାତ୍ର';
+  String get acctVisFriends => 'କେବଳ ବନ୍ଧୁମାନେ';
 
   @override
-  String get acctVisPrivateNote => 'ଅପେକ୍ଷାକୃତ୍ ଚଳଚ୍ଛିତ୍ର ଧାରଣ କରୁଥିବେ।';
+  String get acctVisPrivateNote => 'କେବଳ ଆପଣ ହିଁ ଆପଣଙ୍କ ଚଳଚ୍ଚିତ୍ର ଦେଖିପାରିବେ।';
 
   @override
-  String get acctVisFriendsNote =>
-      'ମିତ୍ରମଣ୍ଡଳୀ ଚଳଚ୍ଛିତ୍ର ତଥା ହାଇଲାଇଟ୍ ଦେଖିପାରିବେ। କ୍ୱାର୍ ମେଦେକ୍ଷା ନିମନ୍ତେ ଅପେକ୍ଷାକୃତ୍।';
+  String get acctVisFriendsNote => 'ବନ୍ଧୁମାନେ ଆପଣଙ୍କ ଚଳଚ୍ଚିତ୍ର ଓ ୱାଚଲିଷ୍ଟ ଦେଖିପାରିବେ। କେହି ତାରିଖ ଦେଖିପାରିବେ ନାହିଁ।';
 
   @override
-  String get acctShareRatings => 'ମିତ୍ରମଣ୍ଡଳୀଙ୍କୁ ମମ୍ଲ ସ୍ୱତ୍ୱ ସମ୍ବଳୀତ ସହର ସମ୍ମିଳନ ଦେଖାଯାଏ';
+  String get acctShareRatings => 'ବନ୍ଧୁମାନଙ୍କୁ ମୋ ରେଟିଂ ଦେଖାନ୍ତୁ';
 
   @override
-  String get acctBlocked => 'ବିବରଣୀ କ୍ଷୟ';
+  String get acctBlocked => 'ବ୍ଲକ୍ କରାଯାଇଥିବା ଲୋକ';
 
   @override
-  String get acctBlockedNone => 'ଆପଣ କାହାକୁ ବିବରଣୀ କ୍ଷୟ କରିନାହାଁନ୍ତି।';
+  String get acctBlockedNone => 'ଆପଣ କାହାକୁ ବ୍ଲକ୍ କରିନାହାନ୍ତି।';
 
   @override
-  String get acctUnblock => 'ବିବରଣୀ କ୍ଷୟ ନିମନ୍ତେ';
+  String get acctUnblock => 'ଉନବ୍ଲକ୍';
 
   @override
-  String get acctSyncIdle => 'ଆପଣଙ୍କ ଚଳଚ୍ଛିତ୍ର ସମ୍ମିଳନ ସମ୍ମିଳନ।';
+  String get acctSyncIdle => 'ଆପଣଙ୍କ ଡାୟାରୀ ସିଙ୍କ ହୋଇଛି।';
 
   @override
-  String get acctSyncBusy => 'ଚଳଚ୍ଛିତ୍ର ସମ୍ମିଳନ ସମ୍ମିଳନ।';
+  String get acctSyncBusy => 'ଆପଣଙ୍କ ଡାୟାରୀ ସିଙ୍କ ହେଉଛି।';
 
   @override
-  String get acctSyncFailed => 'ସମ୍ମିଳନ ସମ୍ମିଳନ ସମ୍ମିଳନ। Talkies ପୁନର୍ବିନୀୟୁକ୍ତ୍ କ୍ଷୟ ନିମନ୍ତେ।';
+  String get acctSyncFailed => 'ସିଙ୍କ ସମ୍ପୂର୍ଣ୍ଣ ହୋଇନାହିଁ। Talkies ପୁଣି ଚେଷ୍ଟା କରିବ।';
 
   @override
-  String get acctSyncChoose => 'ଏହି ଚଳଚ୍ଛିତ୍ର କ୍ଷୟ ନିମନ୍ତେ ଅନ୍ୟାକାର୍ ପ୍ରେକ୍ଷା କ୍ଷୟ।';
+  String get acctSyncChoose => 'ଏହି ଫୋନରେ ଅନ୍ୟ ଏକ ଖାତାର ଡାୟାରୀ ଅଛି।';
 
   @override
-  String get acctChoose => 'ପ୍ରେକ୍ଷା ନିମନ୍ତେ';
+  String get acctChoose => 'ବାଛନ୍ତୁ';
 
   @override
-  String get acctProfile => 'ଆପଣଙ୍କ ପ୍ରେକ୍ଷା';
+  String get acctProfile => 'ଆପଣଙ୍କ ପ୍ରୋଫାଇଲ୍';
 
   @override
-  String get acctSignOut => 'ପ୍ରେକ୍ଷା ନିମନ୍ତେ';
+  String get acctSignOut => 'ସାଇନ୍ ଆଉଟ୍';
 
   @override
-  String get acctSignedOut => 'ପ୍ରେକ୍ଷା ନିମନ୍ତେ। ଆପଣଙ୍କ ଚଳଚ୍ଛିତ୍ର ଧାରଣ କରୁଥିବେ।';
+  String get acctSignedOut => 'ସାଇନ୍ ଆଉଟ୍ ହୋଇଗଲା। ଆପଣଙ୍କ ଡାୟାରୀ ଏହି ଫୋନରେ ରହିବ।';
 
   @override
-  String get acctDelete => 'ପ୍ରେକ୍ଷା ନିମନ୍ତେ';
+  String get acctDelete => 'ଖାତା ଡିଲିଟ୍ କରନ୍ତୁ';
 
   @override
-  String get acctDeleteQ => 'ଆପଣଙ୍କ ପ୍ରେକ୍ଷା ନିମନ୍ତେ?';
+  String get acctDeleteQ => 'ଆପଣଙ୍କ ଖାତା ଡିଲିଟ୍ କରିବେ?';
 
   @override
   String get acctDeleteBody =>
-      'ଏହା ଆପଣଙ୍କ ଖାତା, ପ୍ରୋଫାଇଲ୍ ଓ ଡାୟାରୀକୁ Talkies ସର୍ଭରରୁ ହଟାଇ ଦିଏ। ଆପଣ ପଠାଇଥିବା କିମ୍ବା ପାଇଥିବା ରିପୋର୍ଟଗୁଡ଼ିକ ଆପଣଙ୍କ ଖାତା ଆଇଡି ବିନା ଆର୍କାଇଭ୍ କରାଯାଏ। ଆପଣଙ୍କ ଫୋନରେ ଥିବା ଡାୟାରୀ ସେହିପରି ରହିବ। ଏହାକୁ ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ ନାହିଁ।';
+      'ଏହା ଆପଣଙ୍କ ଖାତା, ପ୍ରୋଫାଇଲ୍, ଡାୟାରୀ ଓ ଖାତାର ଅନ୍ୟ ସମସ୍ତ ତଥ୍ୟକୁ Talkies ସର୍ଭରରୁ ହଟାଇ ଦିଏ। ଆପଣ ପଠାଇଥିବା କିମ୍ବା ପାଇଥିବା ରିପୋର୍ଟଗୁଡ଼ିକ ଆପଣଙ୍କ ଖାତା ଆଇଡି ବିନା ଆର୍କାଇଭ୍ କରାଯାଏ; କେବଳ କାରଣ, ଟିପ୍ପଣୀ ଓ ତାରିଖ ରଖାଯାଏ। ଆପଣଙ୍କ ଫୋନରେ ଥିବା ଡାୟାରୀ ସେହିପରି ରହିବ। ଏହାକୁ ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ ନାହିଁ।';
 
   @override
-  String get acctDeleted => 'ଆପଣଙ୍କ ପ୍ରେକ୍ଷା ନିମନ୍ତେ। ଆପଣଙ୍କ ଚଳଚ୍ଛିତ୍ର ଧାରଣ କରୁଥିବେ।';
+  String get acctDeleted => 'ଆପଣଙ୍କ ଖାତା ଡିଲିଟ୍ ହୋଇଗଲା। ଆପଣଙ୍କ ଡାୟାରୀ ଏହି ଫୋନରେ ରହିବ।';
 
   @override
-  String get acctDeleteFailed => 'ଆପଣଙ୍କ ପ୍ରେକ୍ଷା ନିମନ୍ତେ କ୍ଷୟ। ପୁନର୍ବିନୀୟୁକ୍ତ୍ କ୍ଷୟ ନିମନ୍ତେ।';
+  String get acctDeleteFailed => 'ଆପଣଙ୍କ ଖାତା ଡିଲିଟ୍ କରାଯାଇପାରିଲା ନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
 
   @override
-  String get acctDown => 'ଆପଣଙ୍କ ଚଳଚ୍ଛିତ୍ର ଧାରଣ କରୁଥିବେ। Talkies ପୁନର୍ବିନୀୟୁକ୍ତ୍ କ୍ଷୟ ନିମନ୍ତେ।';
+  String get acctDown => 'ଆପଣଙ୍କ ଡାୟାରୀ ଏହି ଫୋନରେ ସୁରକ୍ଷିତ ଅଛି। ଏବେ Talkies କୁ ପହଞ୍ଚି ହେଉନାହିଁ।';
 
   @override
-  String get acctRowSafe => 'ଆପଣଙ୍କ ଚଳଚ୍ଛିତ୍ର ଧାରଣ କରୁଥିବେ';
+  String get acctRowSafe => 'ଆପଣଙ୍କ ଡାୟାରୀ ଏହି ଫୋନରେ ସୁରକ୍ଷିତ ଅଛି';
 
   @override
-  String get acctChoiceTitle => 'ଦ୍ୱିତୀୟ ଚଳଚ୍ଛିତ୍ର';
+  String get acctChoiceTitle => 'ଦୁଇଟି ଡାୟାରୀ';
 
   @override
-  String get acctChoiceBody =>
-      'ଏହି ଚଳଚ୍ଛିତ୍ର କ୍ଷୟ ନିମନ୍ତେ ଅନ୍ୟାକାର୍ ପ୍ରେକ୍ଷା କ୍ଷୟ। ଏହାକୁ କ୍ଷୟ ନିମନ୍ତେ ପ୍ରେକ୍ଷା ନିମନ୍ତେ।';
+  String get acctChoiceBody => 'ଏହି ଫୋନରେ ଅନ୍ୟ ଏକ ଖାତାର ଡାୟାରୀ ଅଛି। ଏହାକୁ କେମିତି ସମ୍ଭାଳିବେ ତାହା ବାଛନ୍ତୁ।';
 
   @override
-  String get acctChoiceMerge => 'ସମ୍ମିଳନ';
+  String get acctChoiceMerge => 'ମିଶାନ୍ତୁ';
 
   @override
   String get acctChoiceMergeNote => 'ଏହି ଫୋନ୍‌ର ଫିଲ୍ମଗୁଡ଼ିକୁ ଏହି ଆକାଉଣ୍ଟରେ ଯୋଡ଼ନ୍ତୁ।';
@@ -1126,13 +1124,13 @@ class AppLocalizationsOr extends AppLocalizations {
   String get friendsWantsToBe => 'ଆପଣଙ୍କର ମିତ୍ର ହେବାକୁ ଚାହାଁନ୍ତି';
 
   @override
-  String get friendsNoCommon => 'ଏକ୍ସି ପର୍ଯ୍ୟନ୍ତ କୌଣସି ସାଧାରଣ ଚଳଚ୍ଚିତ୍ର ନାହିଁ';
+  String get friendsNoCommon => 'ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସାଧାରଣ ଚଳଚ୍ଚିତ୍ର ନାହିଁ';
 
   @override
-  String get friendsKeepsPrivate => 'ସପର୍କ ପାର୍ସୁ କିଲେ ଚଳଚ୍ଚିତ୍ର ଏକବେସ ନିୟମିତ ରଖୁଛନ୍ତି';
+  String get friendsKeepsPrivate => 'ଚଳଚ୍ଚିତ୍ରଗୁଡ଼ିକୁ ଗୋପନ ରଖିଛନ୍ତି';
 
   @override
-  String get friendsEmpty => 'ଏକ୍ସି ପର୍ଯ୍ୟନ୍ତ କୌଣସି ମିତ୍ର ନାହିଁ। କିଏ ଦେଖୁଛନ୍ତି ତାହା ଦେଖିବାକୁ ଏକ ମିତ୍ରଙ୍କୁ ଯୋଡ଼ନ୍ତୁ।';
+  String get friendsEmpty => 'ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ବନ୍ଧୁ ନାହିଁ। ସେମାନେ କଣ ଦେଖୁଛନ୍ତି ଜାଣିବାକୁ ଜଣେ ବନ୍ଧୁ ଯୋଡ଼ନ୍ତୁ।';
 
   @override
   String get friendsAll => 'ସମସ୍ତ ମିତ୍ର';
@@ -1141,7 +1139,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get friendsMenu => 'ସେବାର ଅପ୍ସନ';
 
   @override
-  String get friendsUnfriend => 'ମିତ୍ର ବିଭାଗକୁ ଦେଖୁଛି';
+  String get friendsUnfriend => 'ବନ୍ଧୁ ହଟାନ୍ତୁ';
 
   @override
   String get friendsUnfriendBody => 'ଆପଣ ପରବର୍ତ୍ତୀ ସମୟରେ ତାହାକୁ ପୁଣି ଯୋଡ଼ିପାରିବନ୍ତି।';
@@ -1151,7 +1149,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String get friendsBlockBody =>
-      'ଆପଣ ପରସପରର ଚଳଚ୍ଚିତ୍ର, ଅନୁରୋଧ ବା ପ୍ରଦର୍ଶନ କୁ ଦେଖିପାରିବେ ନାହିଁ। ଆପଣ କଣ୍ଟ୍ରେକ୍ଟ ଆକାଉଣ୍ଟରେ ଉନବ୍ଲକ୍ କରିପାରିବେ।';
+      'ଆପଣ ପରସ୍ପରର ଚଳଚ୍ଚିତ୍ର, ଅନୁରୋଧ କିମ୍ବା ସନ୍ଦେଶ ଦେଖିପାରିବେ ନାହିଁ। ଆପଣ ଖାତାରେ ଉନବ୍ଲକ୍ କରିପାରିବେ।';
 
   @override
   String get friendsReport => 'ରିପୋର୍ଟ';
@@ -1166,13 +1164,13 @@ class AppLocalizationsOr extends AppLocalizations {
   String get friendsReasonHarassment => 'କ୍ଷତିକରିବା';
 
   @override
-  String get friendsReasonInappropriate => 'ଅବହୁକ ଗତି ଉପସ୍ଥାପନା';
+  String get friendsReasonInappropriate => 'ଅନୁପଯୁକ୍ତ ବିଷୟବସ୍ତୁ';
 
   @override
   String get friendsReasonOther => 'ଅନ୍ୟ କିଛି';
 
   @override
-  String get friendsReported => 'ରିପୋର୍ଟ ପ୍ରସ୍ତାବ କରାଯାଇଛି। ପ୍ରତିକୃତ୍।';
+  String get friendsReported => 'ରିପୋର୍ଟ ପଠାଗଲା। ଧନ୍ୟବାଦ।';
 
   @override
   String get friendsWatchedThis => 'ଏହି ଯିଏ ଏହାକୁ ଦେଖିଲେ';
@@ -1329,7 +1327,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get togetherRefusalNameTaken => 'ଗ୍ରୁପ୍‌ରେ କହନିକି ଏହି ନାମ ପାଇ ସେମାନଙ୍କ ପାଇଁ ନିଆଯାଇଛି।';
 
   @override
-  String get togetherRefusalGroupFull => 'ଏହି ଗ୍ରୁପ୍ ଖାଲି। ଏଥିରେ ୩୦ ଜଣ ଥାଆନ୍ତୁ।';
+  String get togetherRefusalGroupFull => 'ଏହି ଗ୍ରୁପ୍ ପୂର୍ଣ୍ଣ ଅଛି। ଏଥିରେ ୩୦ ଜଣ ରହିପାରିବେ।';
 
   @override
   String get togetherRefusalListFull => 'ସୂଚୀଟି ପୂର୍ଣ୍ଣ। ଏଥିରେ ୨୦୦ ଫିଲ୍ମ ରହିବ।';
@@ -1344,7 +1342,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get togetherRefusalRateLimited => 'ଅତି ସାଧାରଣ ଚେଷ୍ଟା। କିଛି ସମୟ ଅପେକ୍ଷା କରନ୍ତୁ, ତେଣ୍ତା ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।';
 
   @override
-  String get togetherRefusalNotAllowed => 'ସିମାତ୍ରିକ ସମୟ କେବଳ ମାଲିକ କିମ୍ବା ହଷ୍ଟ୍ ପାଇଁ ଅବ୍ୟବସ୍ଥାତ୍।';
+  String get togetherRefusalNotAllowed => 'କେବଳ ମାଲିକ କିମ୍ବା ହଷ୍ଟ ଏହା କରିପାରିବେ।';
 
   @override
   String get togetherRefusalNotFound => 'ସେ ଗ୍ରୁପ୍ କିମ୍ବା ରାତ୍ରୀ ଗୁଡିକୁ ହାରାହାରି ଅବସ୍ଥାରେ ଅଛି।';
@@ -1402,19 +1400,19 @@ class AppLocalizationsOr extends AppLocalizations {
   String get joinOpen => 'ଖୋଲା ଗ୍ରୁପ୍';
 
   @override
-  String get crewRename => 'ଗୋପର ନାମ ପରିବର୍ତ୍ତନ';
+  String get crewRename => 'ଗ୍ରୁପ୍ ନାମ ପରିବର୍ତ୍ତନ';
 
   @override
-  String get crewDelete => 'ଗୋପ ଖତମାଇବା';
+  String get crewDelete => 'ଗ୍ରୁପ୍ ଡିଲିଟ୍ କରନ୍ତୁ';
 
   @override
-  String get crewDeleteLocal => 'ଗୋପ, ଏହାର ତାଲିକା ଏବଂ ରାତ୍ରୀଗୁଡ଼ିକ ଏହି ଫୋନ୍ ଅବ୍ଯବହାରକୁ ହଟାଯିବ।';
+  String get crewDeleteLocal => 'ଗ୍ରୁପ୍, ଏହାର ତାଲିକା ଏବଂ ରାତ୍ରୀଗୁଡ଼ିକ ଏହି ଫୋନରୁ ହଟାଯିବ।';
 
   @override
-  String get crewDeleteShared => 'ଏହି ଗୋପଟି ସମସ୍ତଙ୍କ ପାଇଁ ଅବ୍ଯବହାର ହଟିଯିବ।';
+  String get crewDeleteShared => 'ଏହି ଗ୍ରୁପ୍ ସମସ୍ତ ସଦସ୍ୟଙ୍କ ପାଇଁ ହଟାଯିବ।';
 
   @override
-  String get crewLeave => 'ଗୋପ ଛାଡ଼ି ଦେବା';
+  String get crewLeave => 'ଗ୍ରୁପ୍ ଛାଡ଼ି ଦିଅନ୍ତୁ';
 
   @override
   String get crewLeaveBody => 'ଏହା ଏହି ଫୋନ୍ରୁ ହଟିଯିବ। ଆପଣ କୋଡ୍ ଚାଲୁକରି ପୁଣି ଯୋଗେଇପାରିବେ।';
@@ -1444,22 +1442,22 @@ class AppLocalizationsOr extends AppLocalizations {
   String get crewNewCodeQ => 'ନୂଆ କୋଡ୍ ଗଠନ କରୁଛି?';
 
   @override
-  String get crewNewCodeBody => 'ପୁରୁଣା କୋଡ୍ ଏବଂ ଲିଙ୍କ ଅବ୍ଯବହାର ହେବ ନାହିଁ।';
+  String get crewNewCodeBody => 'ପୁରୁଣା କୋଡ୍ ଏବଂ ଲିଙ୍କ ଆଉ କାମ କରିବ ନାହିଁ।';
 
   @override
-  String get crewChat => 'ଗୋପ ଚାଟ୍';
+  String get crewChat => 'ଗ୍ରୁପ୍ ଚାଟ୍';
 
   @override
-  String get crewList => 'ଗୋପ ତାଲିକା';
+  String get crewList => 'ଗ୍ରୁପ୍ ତାଲିକା';
 
   @override
   String get crewListAdd => 'ଏକ ସିନେମା ଯୋଡ଼ନ୍ତୁ';
 
   @override
-  String get crewListEmpty => 'ତାଲିକା ଖାଲି। ଗୋପକୁ ଅଧିକ ପସନ୍ଦ ହୋଇପାରିବ ଚଳଚ୍ଚିତ୍ର ଯୋଡ଼ନ୍ତୁ।';
+  String get crewListEmpty => 'ତାଲିକା ଖାଲି। ଗ୍ରୁପ୍ ପସନ୍ଦ କରିପାରେ ଏପରି ଚଳଚ୍ଚିତ୍ର ଯୋଡ଼ନ୍ତୁ।';
 
   @override
-  String get crewListRemove => 'ତାଲିକାରୁ ଅବ୍ଯବହାର କରନ୍ତୁ';
+  String get crewListRemove => 'ତାଲିକାରୁ ହଟାନ୍ତୁ';
 
   @override
   String get crewOpenFilm => 'ସିନେମା ଖୋଲନ୍ତୁ';
@@ -1471,10 +1469,10 @@ class AppLocalizationsOr extends AppLocalizations {
   String get crewNights => 'ରାତ୍ରୀଗୁଡ଼ିକ';
 
   @override
-  String get crewNoNights => 'ହେଉନାହିଁ ଯାକ୍ଷି।';
+  String get crewNoNights => 'ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ରାତ୍ରି ନାହିଁ।';
 
   @override
-  String get crewRemoveBody => 'ସେମାନଙ୍କର ସ୍ୱାଇପ୍, ଭୋଟ ଏବଂ ଉତ୍ତର ମଧ୍ୟ ଅନୁବାଦ ହୋଇଯିବ।';
+  String get crewRemoveBody => 'ସେମାନଙ୍କ ସ୍ୱାଇପ୍, ଭୋଟ ଏବଂ ଉତ୍ତର ମଧ୍ୟ ହଟିଯିବ।';
 
   @override
   String get togetherMore => 'ଅଧିକ';
@@ -1538,7 +1536,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get deckFilters => 'ଫିଲ୍ଟର';
 
   @override
-  String get deckHideSeen => 'ଯାହାକୁ ଅନ୍ୟାହାରି ଦେଖିଲେ ଅତି ଭୁଲ୍ ଉପରେ ଲୁଚାନ୍ତୁ';
+  String get deckHideSeen => 'କେହି ଦେଖିଥିବା ଚଳଚ୍ଚିତ୍ର ଲୁଚାନ୍ତୁ';
 
   @override
   String get deckSearchHint => 'ଡେକ୍ରେ ଖୋଜନ୍ତୁ';
@@ -1692,7 +1690,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get nightDeleteQ => 'ଏହି ରାତ୍ରୀ ହଟାଇବେ କି?';
 
   @override
-  String get nightDeleteBody => 'ସ୍ୱଚ୍ଛା, ପ୍ରତିକ୍ରିୟା ଏବଂ ଯାଦ୍ଦଘାତକ ଅବଲୋପିତ ହେଲା।';
+  String get nightDeleteBody => 'ପୋଲ୍, ଉତ୍ତର ଏବଂ ସ୍ମରଣ ହଟାଯାଇଛି।';
 
   @override
   String get nightGone => 'ଏହି ରାତ୍ରି ଆଉ ନାହିଁ।';
@@ -1719,7 +1717,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get chatOlder => 'ପୂର୍ବ ସନ୍ଦେଶଗୁଡ଼ିକ';
 
   @override
-  String get chatPollOpen => 'ଏକ ରାତ୍ରି ପଚାରି ଅପ୍ସମାନ ହୋଇଛି';
+  String get chatPollOpen => 'ଏକ ରାତ୍ରି ପୋଲ୍ ଖୋଲା ଅଛି';
 
   @override
   String get chatNightSetPlain => 'ଏକ ରାତ୍ରି ନିର୍ଦ୍ଧାରିତ ହୋଇଛି';
@@ -1741,7 +1739,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String unitFilms(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'ଚଳଚ୍ଚିତ୍ର', other: 'ଚଳଚ୍ଚିତ୍ର');
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'ଚଳଚ୍ଚିତ୍ର', other: 'ଚଳଚ୍ଚିତ୍ରଗୁଡ଼ିକ');
     return '$_temp0';
   }
 
@@ -1774,7 +1772,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String calPlanned(int count) {
-    return '$count ପ୍ରେକ୍ଷା ନିର୍ଦ୍ଧାରିତ';
+    return '$count ଯୋଜିତ';
   }
 
   @override
@@ -1782,7 +1780,7 @@ class AppLocalizationsOr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      one: 'ଏକାଧିକ ଥର ଦେଖାଯାଇଛି',
+      one: 'ଥରେ ଦେଖାଯାଇଛି',
       other: '$count ଥର ଦେଖାଯାଇଛି',
     );
     return '$_temp0';
@@ -1873,7 +1871,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String refreshDone(int count) {
-    return '$count ସାମାନ୍ୟ କାହିଁକି ଓ ଆଗକୁ ଆସୁଥିବା ଚଳଚ୍ଚିତ୍ର ଅପଡେଟ୍ ହୋଇଛି';
+    return '$count ସାମ୍ପ୍ରତିକ ଏବଂ ଆଗାମୀ ଚଳଚ୍ଚିତ୍ର ଅପଡେଟ୍ ହୋଇଛି';
   }
 
   @override
@@ -1893,7 +1891,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String deleteTagQ(String tag, int count) {
-    return '#$tag ମୁଛ କରନ୍ତୁ କି? ଏହା $count ଟିକେଟ୍ ରୁ ହଟାଯିବ।';
+    return '#$tag ଡିଲିଟ୍ କରିବେ କି? ଏହା $count ଟିକେଟ୍ ରୁ ହଟାଯିବ।';
   }
 
   @override

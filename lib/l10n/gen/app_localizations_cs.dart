@@ -16,7 +16,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get tabHome => 'Domů';
 
   @override
-  String get tabStubs => 'Lítky';
+  String get tabStubs => 'Lístky';
 
   @override
   String get tabCalendar => 'Kalendář';
@@ -178,7 +178,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get resetFilters => 'Resetovat filtry';
 
   @override
-  String get showStubs => 'Lítky';
+  String get showStubs => 'Lístky';
 
   @override
   String get showWatchlist => 'Sledované';
@@ -545,7 +545,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get fdfsCount => 'FDFS';
 
   @override
-  String get rewatches => 'Prohlédnutí znovu';
+  String get rewatches => 'Opakovaná zhlédnutí';
 
   @override
   String get avgRating => 'Průměrné hodnocení';
@@ -1009,7 +1009,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Tímto odstraníte ze serveru Talkies svůj účet, svůj profil a svůj deník. Nahlášení, která jste podali nebo obdrželi, se archivují bez identifikátoru vašeho účtu. Deník na telefonu zůstává. Tuto akci nelze vrátit.';
+      'Tímto odstraníte ze serveru Talkies svůj účet, svůj profil, svůj deník a zbytek dat účtu. Nahlášení, která jste podali nebo obdrželi, se archivují bez identifikátoru vašeho účtu, ponechává se důvod, poznámka a datum. Deník na telefonu zůstává. Tuto akci nelze vrátit.';
 
   @override
   String get acctDeleted => 'Váš účet je smazán. Váš deník zůstává na tomto telefonu.';
@@ -1825,11 +1825,11 @@ class AppLocalizationsCs extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Shlédnutí č. $n',
-      many: 'Shlédnutí č. $n',
-      few: 'Shlédnutí č. $n',
-      two: 'Druhé shlédnutí',
-      one: 'První shlédnutí',
+      other: 'Zhlédnutí č. $n',
+      many: 'Zhlédnutí č. $n',
+      few: 'Zhlédnutí č. $n',
+      two: 'Druhé zhlédnutí',
+      one: 'První zhlédnutí',
     );
     return '$_temp0';
   }

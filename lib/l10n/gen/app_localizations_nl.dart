@@ -1009,7 +1009,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Dit verwijdert je account, je profiel en je dagboek van de Talkies-server. Meldingen die je hebt gedaan of ontvangen, worden gearchiveerd zonder je account-ID. Het dagboek op je telefoon blijft. Je kunt dit niet ongedaan maken.';
+      'Dit verwijdert je account, je profiel, je dagboek en de rest van je accountgegevens van de Talkies-server. Meldingen die je hebt gedaan of ontvangen, worden gearchiveerd zonder je account-ID, met behoud van de reden, de notitie en de datum. Het dagboek op je telefoon blijft. Je kunt dit niet ongedaan maken.';
 
   @override
   String get acctDeleted => 'Je account is verwijderd. Je dagboek blijft op deze telefoon.';
@@ -2043,7 +2043,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String profileViewings(int count) {
-    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, one: 'viewing', other: 'viewings');
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      one: '1 keer bekeken',
+      other: '$count keer bekeken',
+    );
     return '$_temp0';
   }
 

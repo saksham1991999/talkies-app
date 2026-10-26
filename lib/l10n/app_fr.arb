@@ -330,7 +330,7 @@
   "acctSignedOut": "Déconnecté. Votre journal reste sur ce téléphone.",
   "acctDelete": "Supprimer le compte",
   "acctDeleteQ": "Supprimer votre compte ?",
-  "acctDeleteBody": "Cela supprime votre compte, votre profil et votre journal du serveur Talkies. Les signalements que vous avez envoyés ou reçus sont archivés sans l'identifiant de votre compte. Le journal de votre téléphone reste en place. Irréversible.",
+  "acctDeleteBody": "Cela supprime votre compte, votre profil, votre journal et le reste des données de votre compte du serveur Talkies. Les signalements que vous avez envoyés ou reçus sont archivés sans l'identifiant de votre compte, en conservant le motif, la note et la date. Le journal de votre téléphone reste en place. Irréversible.",
   "acctDeleted": "Votre compte est supprimé. Votre journal reste sur ce téléphone.",
   "acctDeleteFailed": "Impossible de supprimer votre compte. Réessayez.",
   "acctDown": "Votre journal est en sécurité sur ce téléphone. Talkies est injoignable pour l'instant.",

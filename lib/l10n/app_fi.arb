@@ -330,7 +330,7 @@
   "acctSignedOut": "Kirjauduttu ulos. Päiväkirjasi pysyy tässä puhelimessa.",
   "acctDelete": "Poista tili",
   "acctDeleteQ": "Poistetaanko tilisi?",
-  "acctDeleteBody": "Tämä poistaa tilisi, profiilisi ja päiväkirjasi Talkies-palvelimelta. Lähettämäsi tai saamasi ilmoitukset arkistoidaan ilman tilisi tunnistetta. Puhelimesi päiväkirja pysyy ennallaan. Tätä ei voi kumota.",
+  "acctDeleteBody": "Tämä poistaa tilisi, profiilisi, päiväkirjasi ja muut tilitietosi Talkies-palvelimelta. Lähettämäsi tai saamasi ilmoitukset arkistoidaan ilman tilisi tunnistetta, ja niistä säilyvät syy, muistiinpano ja päivämäärä. Puhelimesi päiväkirja pysyy ennallaan. Tätä ei voi kumota.",
   "acctDeleted": "Tilisi on poistettu. Päiväkirjasi pysyy tässä puhelimessa.",
   "acctDeleteFailed": "Tiliä ei voitu poistaa. Yritä uudelleen.",
   "acctDown": "Päiväkirjasi on turvallisesti tässä puhelimessa. Talkiesia ei voi tällä hetkellä tavoittaa.",

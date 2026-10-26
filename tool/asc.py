@@ -198,9 +198,14 @@ def versions(api: ASC, app: str) -> list[dict]:
 
 
 def version_state(v: dict) -> str | None:
-    """appStoreVersions reports `appStoreState`; appInfos reports `state`."""
+    """The version's state, whichever field the record reports it in.
+
+    `appStoreState` is the older field and is what most records carry; newer ones
+    also carry `appVersionState`, whose vocabulary is narrower (it has no
+    REJECTED, for instance). appInfos reports plain `state`.
+    """
     a = v['attributes']
-    return a.get('appStoreState') or a.get('state')
+    return a.get('appStoreState') or a.get('appVersionState') or a.get('state')
 
 
 def current_version(api: ASC, app: str) -> dict | None:
@@ -259,9 +264,15 @@ def editable_version(api: ASC, app: str, version_string: str | None = None, crea
         if v['attributes'].get('versionString') != want:
             continue
         state = version_state(v)
-        if state == 'READY_FOR_SALE':
+        # States where the version is out of our hands: approved and released, or
+        # approved and waiting for its release date. `READY_FOR_SALE` is the live
+        # one, `READY_FOR_DISTRIBUTION` the gap before an AFTER_APPROVAL release,
+        # and older records report the same thing through `appStoreState` only.
+        # Localizations are read-only in all of them, so returning the record
+        # would fail halfway through a push.
+        if state in ('READY_FOR_SALE', 'READY_FOR_DISTRIBUTION', 'REMOVED_FROM_SALE', 'DEVELOPER_REMOVED_FROM_SALE'):
             raise SystemExit(
-                f'{want} is already live, and a released version cannot be edited. '
+                f'{want} is already released ({state}), and a released version cannot be edited. '
                 'Bump `version:` in pubspec.yaml to start the next release.')
         return v
     return api.post('/v1/appStoreVersions', {
@@ -679,11 +690,19 @@ def sync_locale(api: ASC, loc_id: str, code: str, apply: bool, replace: bool = F
                 created = True
         done = 0
         swapped = 0
-        if apply and row is not None and replace and plan['changed']:
+        # Replacing deletes live records and re-sends the tail, so it is only safe
+        # on a clean deck. A FAILED card or a live order that disagrees with disk
+        # means the set needs a person, not a rebuild: fall through to the held
+        # path, which uploads nothing and reports the failures.
+        tail = 0
+        if replace and plan['changed']:
+            names = [f.name for f in files]
+            tail = len(files) - min(names.index(f.name) for f in plan['changed'])
+        if apply and row is not None and replace and plan['changed'] and not plan['fail']:
             try:
                 gone = replace_changed(api, row['id'], files, plan['changed'])
                 swapped = len(gone)
-                done = len(files) - min([f.name for f in files].index(f.name) for f in plan['changed'])
+                done = tail
                 out['notes'].append(f'{display}: replaced {swapped}, re-uploaded {done}')
             except BaseException as exc:
                 out['fail'].append(f'{display}: replace failed: {exc}')
@@ -696,7 +715,9 @@ def sync_locale(api: ASC, loc_id: str, code: str, apply: bool, replace: bool = F
                     out['fail'].append(f'{display}/{f.name}: {exc}')
                     break
         else:
-            done = len(plan['upload']) + len(plan['changed'] if replace else [])
+            # The dry run has to report the same work `--apply` would do: a
+            # replace rebuilds the whole tail, not just the changed cards.
+            done = len(plan['upload']) + tail
         out['uploaded'] += done
         out['skipped'] += plan['skip']
         out['fail'] += [f'{display}/{m}' for m in plan['fail']]

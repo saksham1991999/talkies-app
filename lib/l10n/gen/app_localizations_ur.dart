@@ -674,7 +674,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get accent_kesar => 'کسر';
 
   @override
-  String get accent_paan => 'پaan';
+  String get accent_paan => 'پان';
 
   @override
   String get accent_chai => 'چاے';
@@ -854,7 +854,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get gotIt => 'سمجھ گیا';
 
   @override
-  String get gateCantReach => 'ابھی Talkies تک رسائی نہیں مل رہی۔ آپ کا ڈائری اس فون پر محفوظ ہے۔';
+  String get gateCantReach => 'ابھی Talkies تک رسائی نہیں مل رہی۔ آپ کی ڈائری اس فون پر محفوظ ہے۔';
 
   @override
   String get gateRetry => 'دوبارہ کوشش کریں';
@@ -978,16 +978,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctUnblock => 'پابندی اٹھائیں';
 
   @override
-  String get acctSyncIdle => 'آپ کا ڈائری مزامنہ ہے۔';
+  String get acctSyncIdle => 'آپ کی ڈائری مزامنہ ہے۔';
 
   @override
-  String get acctSyncBusy => 'آپ کا ڈائری سنک ہو رہا ہے۔';
+  String get acctSyncBusy => 'آپ کی ڈائری سنک ہو رہا ہے۔';
 
   @override
   String get acctSyncFailed => 'سنک مکمل نہیں ہوا۔ Talkies دوبارہ کوشش کرے گا۔';
 
   @override
-  String get acctSyncChoose => 'اس فون پر کسی دوسرے اکاؤنٹ کا ڈائری ہے۔';
+  String get acctSyncChoose => 'اس فون پر کسی دوسرے اکاؤنٹ کی ڈائری ہے۔';
 
   @override
   String get acctChoose => 'منتخب کریں';
@@ -999,7 +999,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctSignOut => 'سائن آؤٹ کریں';
 
   @override
-  String get acctSignedOut => 'سائن آؤٹ ہو گیا۔ آپ کا ڈائری اس فون پر رہے گا۔';
+  String get acctSignedOut => 'سائن آؤٹ ہو گیا۔ آپ کی ڈائری اس فون پر رہے گا۔';
 
   @override
   String get acctDelete => 'اکاؤنٹ حذف کریں';
@@ -1009,25 +1009,25 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'یہ آپ کا اکاؤنٹ، آپ کا پروفائل اور آپ کا ڈائری Talkies سرور سے ہٹا دے گا۔ آپ کی بھیجی یا موصول ہوئی رپورٹیں آپ کے اکاؤنٹ آئی ڈی کے بغیر آرکائیو کر دی جاتی ہیں۔ آپ کے فون کی ڈائری ویسی ہی رہے گی۔ آپ اسے واپس نہیں کر سکتے۔';
+      'یہ آپ کا اکاؤنٹ، آپ کا پروفائل، آپ کی ڈائری اور اکاؤنٹ کا باقی سارا ڈیٹا Talkies سرور سے ہٹا دے گا۔ آپ کی بھیجی یا موصول ہوئی رپورٹیں آپ کے اکاؤنٹ آئی ڈی کے بغیر آرکائیو کر دی جاتی ہیں، جن میں صرف وجہ، نوٹ اور تاریخ محفوظ رہتی ہے۔ آپ کے فون کی ڈائری ویسی ہی رہے گی۔ آپ اسے واپس نہیں کر سکتے۔';
 
   @override
-  String get acctDeleted => 'آپ کا اکاؤنٹ حذف ہو گیا۔ آپ کا ڈائری اس فون پر رہے گا۔';
+  String get acctDeleted => 'آپ کا اکاؤنٹ حذف ہو گیا۔ آپ کی ڈائری اس فون پر رہے گا۔';
 
   @override
   String get acctDeleteFailed => 'اکاؤنٹ حذف نہیں ہوا۔ دوبارہ کوشش کریں۔';
 
   @override
-  String get acctDown => 'آپ کا ڈائری اس فون پر محفوظ ہے۔ Talkies ابھی تک رسائی نہیں ہو سکتا۔';
+  String get acctDown => 'آپ کی ڈائری اس فون پر محفوظ ہے۔ Talkies ابھی تک رسائی نہیں ہو سکتا۔';
 
   @override
-  String get acctRowSafe => 'آپ کا ڈائری اس فون پر محفوظ ہے';
+  String get acctRowSafe => 'آپ کی ڈائری اس فون پر محفوظ ہے';
 
   @override
   String get acctChoiceTitle => 'دو ڈائری';
 
   @override
-  String get acctChoiceBody => 'اس فون پر کسی دوسرے اکاؤنٹ کا ڈائری ہے۔ چن لیں کہ اس کے ساتھ کیا کریں۔';
+  String get acctChoiceBody => 'اس فون پر کسی دوسرے اکاؤنٹ کی ڈائری ہے۔ چن لیں کہ اس کے ساتھ کیا کریں۔';
 
   @override
   String get acctChoiceMerge => 'ملائیں';

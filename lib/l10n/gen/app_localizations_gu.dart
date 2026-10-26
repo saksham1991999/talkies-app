@@ -852,7 +852,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get gotIt => 'મજા છે';
 
   @override
-  String get gateCantReach => 'હાલમાં Talkies પાસે જવાની રજા નથી. તમારો ડાયરી એ ફોન પર સુરક્ષિત છે.';
+  String get gateCantReach => 'હાલમાં Talkies પાસે જવાની રજા નથી. તમારી ડાયરી એ ફોન પર સુરક્ષિત છે.';
 
   @override
   String get gateRetry => 'પાછલો પ્રયાસ કરો';
@@ -976,10 +976,10 @@ class AppLocalizationsGu extends AppLocalizations {
   String get acctUnblock => 'અનબ્લોક કરો';
 
   @override
-  String get acctSyncIdle => 'તમારો ડાયરી સિંક છે.';
+  String get acctSyncIdle => 'તમારી ડાયરી સિંક છે.';
 
   @override
-  String get acctSyncBusy => 'તમારો ડાયરી સિંક થઈ રહ્યો છે.';
+  String get acctSyncBusy => 'તમારી ડાયરી સિંક થઈ રહ્યો છે.';
 
   @override
   String get acctSyncFailed => 'સિંક પૂરું થયું નથી. Talkies ફરી પ્રયત્ન કરશે.';
@@ -997,7 +997,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get acctSignOut => 'સાઇન આઉટ';
 
   @override
-  String get acctSignedOut => 'સાઇન આઉટ થઈ ગયાં. તમારો ડાયરી આ ફોન પર રહેશે.';
+  String get acctSignedOut => 'સાઇન આઉટ થઈ ગયાં. તમારી ડાયરી આ ફોન પર રહેશે.';
 
   @override
   String get acctDelete => 'એકાઉન્ટ ડિલીટ કરો';
@@ -1007,19 +1007,19 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'આ તમારું એકાઉન્ટ, તમારું પ્રોફાઈલ અને તમારો ડાયરી Talkies સર્વર પરથી દૂર કરશે. તમે કરેલા કે મળેલા રિપોર્ટ તમારા એકાઉન્ટ આઈડી વગર આર્કાઇવ થશે. તમારા ફોનનો ડાયરી યથાવત્ રહેશે. તેને પાછું લાવી શકાતું નથી.';
+      'આ તમારું એકાઉન્ટ, તમારું પ્રોફાઈલ, તમારી ડાયરી અને બાકીનો એકાઉન્ટ ડેટા Talkies સર્વર પરથી દૂર કરશે. તમે કરેલા કે મળેલા રિપોર્ટ તમારા એકાઉન્ટ આઈડી વગર આર્કાઇવ થશે, જેમાં કારણ, નોંધ અને તારીખ રહેશે. તમારા ફોનની ડાયરી યથાવત્ રહેશે. તેને પાછું લાવી શકાતું નથી.';
 
   @override
-  String get acctDeleted => 'તમારું એકાઉન્ટ ડિલીટ થઈ ગયું છે. તમારો ડાયરી આ ફોન પર રહેશે.';
+  String get acctDeleted => 'તમારું એકાઉન્ટ ડિલીટ થઈ ગયું છે. તમારી ડાયરી આ ફોન પર રહેશે.';
 
   @override
   String get acctDeleteFailed => 'એકાઉન્ટ ડિલીટ કરી શકાઈ નથી. ફરી પ્રયત્ન કરો.';
 
   @override
-  String get acctDown => 'તમારો ડાયરી આ ફોન પર સુરક્ષિત છે. હાલમાં Talkies ને ના પહોંચી શકાય છે.';
+  String get acctDown => 'તમારી ડાયરી આ ફોન પર સુરક્ષિત છે. હાલમાં Talkies ને ના પહોંચી શકાય છે.';
 
   @override
-  String get acctRowSafe => 'તમારો ડાયરી આ ફોન પર સુરક્ષિત છે';
+  String get acctRowSafe => 'તમારી ડાયરી આ ફોન પર સુરક્ષિત છે';
 
   @override
   String get acctChoiceTitle => 'બે ડાયરી';

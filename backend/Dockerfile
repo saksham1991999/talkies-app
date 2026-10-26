@@ -28,6 +28,14 @@ EXPOSE 8000
 # addresses in TRUSTED_PROXIES: the same list the rate limiter reads, and the
 # same rule (trust nobody but loopback unless the deployment says otherwise).
 # Never '*': a directly reachable container would then let any client pick its
-# own IP and its own rate-limit bucket.
+# own IP and its own rate-limit bucket. The app already refuses '*' and falls
+# back to trusting nobody, but uvicorn would still be rewriting request.client
+# from the header, so the container refuses to start on '*' at all.
 ENV TRUSTED_PROXIES=127.0.0.1,::1
-CMD exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips="${TRUSTED_PROXIES}"
+CMD set -e; \
+    case "${TRUSTED_PROXIES}" in *'*'*) \
+      echo "TRUSTED_PROXIES must not contain '*': uvicorn would trust every peer and any client could choose its own rate-limit bucket." >&2; \
+      exit 1; \
+      ;; \
+    esac; \
+    exec uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-8000}" --proxy-headers --forwarded-allow-ips="${TRUSTED_PROXIES}"

@@ -1,7 +1,7 @@
 {
- "name": "Talkies: Palstan päiväkirja",
- "subtitle": "Liput, seurausa, tilastot",
- "keywords": "elokuva,film,seuranta,katselulista,lippu,kino,arvostelu,kokoelma,bollywood",
+ "name": "Talkies: Elokuvapäiväkirja",
+ "subtitle": "Liput, seuranta, tilastot",
+ "keywords": "elokuva,film,muistiinpanot,katselulista,lippu,kino,arvostelu,kokoelma,bollywood",
  "promotionalText": "Jokaisesta katsomastasi elokuvasta tulee lippu. Kirjaa sali, paikka, esitys ja hinta. Näe vuotesi elokuvissa. Maksuton, offline, ei mainoksia, tili valinnainen.",
  "whatsNew": "Sovellus tukee nyt 45 kieltä, hindistä ja tamilista arabiaan, japaniin ja portugaliin. Voit valita kielen Asetuksista. Lippuhinnat voi näyttää omassa valuutassasi, ja koko sovellus noudattaa oikealta vasemmalle kirjoitettavia kieliä. Päiväkirja, tilastot ja liput pysyvät ennallaan."
 }

@@ -330,7 +330,7 @@
   "acctSignedOut": "Sessió tancada. El teu diari es queda en aquest telèfon.",
   "acctDelete": "Suprimeix el compte",
   "acctDeleteQ": "Vols suprimir el teu compte?",
-  "acctDeleteBody": "Això suprimeix el teu compte, el teu perfil i el teu diari del servidor de Talkies. Les denúncies que has enviat o rebut s'arxiven sense l'identificador del teu compte. El diari del telèfon es queda tal com és. No es pot desfer.",
+  "acctDeleteBody": "Això suprimeix el teu compte, el teu perfil, el teu diari i la resta de les dades del compte del servidor de Talkies. Les denúncies que has enviat o rebut s'arxiven sense l'identificador del teu compte, conservant el motiu, la nota i la data. El diari del telèfon es queda tal com és. No es pot desfer.",
   "acctDeleted": "El teu compte s'ha suprimit. El teu diari es queda en aquest telèfon.",
   "acctDeleteFailed": "No s'ha pogut suprimir el teu compte. Prova-ho de nou.",
   "acctDown": "El teu diari està segur en aquest telèfon. No es pot connectar amb Talkies ara mateix.",

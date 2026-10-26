@@ -1008,7 +1008,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Thao tác này xóa tài khoản, hồ sơ và nhật ký của bạn khỏi máy chủ Talkies. Các báo cáo bạn đã gửi hoặc nhận được lưu trữ mà không có ID tài khoản của bạn. Nhật ký trên điện thoại vẫn còn. Không thể hoàn tác.';
+      'Thao tác này xóa tài khoản, hồ sơ, nhật ký và phần còn lại của dữ liệu tài khoản khỏi máy chủ Talkies. Các báo cáo bạn đã gửi hoặc nhận được lưu trữ mà không có ID tài khoản của bạn, chỉ giữ lại lý do, ghi chú và ngày. Nhật ký trên điện thoại vẫn còn. Không thể hoàn tác.';
 
   @override
   String get acctDeleted => 'Tài khoản của bạn đã bị xóa. Nhật ký của bạn vẫn ở trên điện thoại này.';

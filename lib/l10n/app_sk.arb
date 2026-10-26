@@ -330,7 +330,7 @@
   "acctSignedOut": "Odhlásený. Denník zostáva na tomto telefóne.",
   "acctDelete": "Zmazať účet",
   "acctDeleteQ": "Zmazať váš účet?",
-  "acctDeleteBody": "Týmto zmažete svoj účet, svoj profil a svoj denník zo servera Talkies. Nahlásenia, ktoré ste odoslali alebo dostali, sa archivujú bez identifikátora vášho účtu. Denník v telefóne zostane. Nemožno vrátiť.",
+  "acctDeleteBody": "Týmto zmažete svoj účet, svoj profil, svoj denník a zvyšok údajov svojho účtu zo servera Talkies. Nahlásenia, ktoré ste odoslali alebo dostali, sa archivujú bez identifikátora vášho účtu, pričom sa zachová dôvod, poznámka a dátum. Denník v telefóne zostane. Nemožno vrátiť.",
   "acctDeleted": "Účet bol zmazaný. Denník zostáva na tomto telefóne.",
   "acctDeleteFailed": "Účet sa nepodarilo zmazať. Skúste znova.",
   "acctDown": "Váš denník je v bezpečí na tomto telefóne. Talkies sa momentálne nedá kontaktovať.",

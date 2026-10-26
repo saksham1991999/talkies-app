@@ -350,7 +350,11 @@ def apply_locale(code: str, done: dict[str, str], only: set[str] | None = None) 
     written = 0
     for key, text in done.items():
         if only is not None and key not in only:
-            continue
+            # A coherent alias inherits its source's text (`tabStubs` follows
+            # `showStubs`), so a run on the source must write the alias too, or
+            # the tab label keeps whatever the last full run left there.
+            if not any(a == key and s in only for a, s in COHERENT.items()):
+                continue
         merge_arb.set_value(target, key, text)
         written += 1
     return written
@@ -488,6 +492,10 @@ def main() -> int:
     written: dict[str, dict[str, str]] = {}
     failures: list[str] = []
     total = 0
+    # Each locale's own key list, not the `todo` left over from the loop that
+    # built the jobs: reading that variable here filtered every locale by the
+    # last locale's keys, so most translations were never written.
+    asked = dict(jobs)
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         futures = [pool.submit(translate_one, code, en, todo) for code, todo in jobs]
         for future in concurrent.futures.as_completed(futures):
@@ -496,7 +504,7 @@ def main() -> int:
             failures += bad
             # Apply as each locale finishes, so a stopped run keeps its work.
             # Only the keys this run was asked for: the rest of `done` is cache.
-            count = apply_locale(code, done, only=set(todo)) if not DRY else 0
+            count = apply_locale(code, done, only=set(asked[code])) if not DRY else 0
             total += count
             print(f'  {code}: {count} strings' + (f', {len(bad)} problem(s)' if bad else ''))
 

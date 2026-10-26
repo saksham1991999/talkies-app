@@ -20,10 +20,12 @@ Run the merge in order:
 2. `python3 tool/merge_arb.py --draft` adds the new keys to all 45 ARBs, the 44 other languages holding the English text as a draft, and records the keys in `drafted.json`.
 3. `python3 tool/merge_arb.py --translate` replaces drafts with whatever translations have arrived.
 
-Step 3 does not need every language at once. It reads each `<lang>.json` that
-exists, checks it, and applies it; a language with no file simply keeps its
-English draft and stays listed in `drafted.json`, so a partly translated batch
-ships nothing wrong and nothing is lost. Run it again as more files arrive.
+Step 3 reads every `<lang>.json` that exists and checks them **together**, then
+applies them all or none. One malformed or partial file fails the whole run: you
+get a list of problems and no ARB is touched. Fix the named file and run it
+again. A language with no file at all is not an error; it keeps its English draft
+and stays listed in `drafted.json`, so a partly translated batch ships nothing
+wrong and nothing is lost.
 `--translate` prints `no drafts to translate` when `drafted.json` is empty,
 which is the state after a completed merge.
 

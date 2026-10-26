@@ -1013,7 +1013,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Cela supprime votre compte, votre profil et votre journal du serveur Talkies. Les signalements que vous avez envoyés ou reçus sont archivés sans l\'identifiant de votre compte. Le journal de votre téléphone reste en place. Irréversible.';
+      'Cela supprime votre compte, votre profil, votre journal et le reste des données de votre compte du serveur Talkies. Les signalements que vous avez envoyés ou reçus sont archivés sans l\'identifiant de votre compte, en conservant le motif, la note et la date. Le journal de votre téléphone reste en place. Irréversible.';
 
   @override
   String get acctDeleted => 'Votre compte est supprimé. Votre journal reste sur ce téléphone.';

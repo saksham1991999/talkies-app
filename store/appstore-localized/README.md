@@ -173,11 +173,20 @@ writable during review, screenshots do not. So the corrected decks upload the
 moment the version leaves review, with:
 
 ```sh
-python3 tool/asc.py screenshots --apply
+python3 tool/asc.py screenshots --apply --replace-changed
 ```
 
-`tool/asc.py` skips by checksum, so the handful of cards that actually changed
-are the only ones re-sent.
+`--replace-changed` is not optional here. Apple appends a new screenshot to the
+end of a set and offers no way to insert or reorder one, so a plain `--apply`
+would send the one changed card (card 8) and land it *after* card 8's
+predecessors, leaving the deck out of order. `--replace-changed` deletes the set's
+records from the first changed card onward and re-uploads that tail, which is why
+the run reports more than one card re-sent per column. A deck with any failure is
+held instead of rebuilt, so a broken file cannot cost you a good one.
+
+Run it without `--apply` first to see the tail it would rebuild; the plan prints
+`+n =n c<n> x<n>` per column, where `c<n>` is the changed count and `+n` the cards
+that will be re-sent.
 
 Before the first upload, have a native speaker read the eight lines of each
 locale you care about. The wording in `tool/store_frames.py` that I would not

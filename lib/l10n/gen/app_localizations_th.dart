@@ -656,7 +656,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get accent_marigold => 'มาริโกลด์';
 
   @override
-  String get accent_peacock => 'เปacock';
+  String get accent_peacock => 'พีค็อก';
 
   @override
   String get accent_mehendi => 'เมฮนดี';
@@ -1008,7 +1008,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'การนี้จะลบบัญชี โปรไฟล์ และไดอารี่ของคุณออกจากเซิร์ฟเวอร์ Talkies รายงานที่คุณส่งหรือได้รับจะถูกเก็บถาวรโดยไม่มีไอดีบัญชีของคุณ ไดอารี่บนโทรศัพท์ยังอยู่เหมือนเดิม ไม่สามารถยกเลิกได้';
+      'การนี้จะลบบัญชี โปรไฟล์ ไดอารี่ และข้อมูลบัญชีอื่น ๆ ของคุณออกจากเซิร์ฟเวอร์ Talkies รายงานที่คุณส่งหรือได้รับจะถูกเก็บถาวรโดยไม่มีไอดีบัญชีของคุณ โดยเก็บไว้เพียงเหตุผล บันทึกย่อ และวันที่ ไดอารี่บนโทรศัพท์ยังอยู่เหมือนเดิม ไม่สามารถยกเลิกได้';
 
   @override
   String get acctDeleted => 'ลบบัญชีแล้ว ไดอารี่ยังอยู่บนโทรศัพท์เครื่องนี้';
