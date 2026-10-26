@@ -16,7 +16,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get tabHome => 'હોમ';
 
   @override
-  String get tabStubs => 'ટિકેટ';
+  String get tabStubs => 'ટિકિટ';
 
   @override
   String get tabCalendar => 'કેલેન્ડર';
@@ -76,7 +76,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get recent => 'હાલનું';
 
   @override
-  String get allStubs => 'બધા ટિકેટ';
+  String get allStubs => 'બધા ટિકિટ';
 
   @override
   String get newReleases => 'નવી રિલીઝ';
@@ -166,10 +166,10 @@ class AppLocalizationsGu extends AppLocalizations {
   String get listView => 'લિસ્ટ વ્યૂ';
 
   @override
-  String get searchStubs => 'તમારી ટિકેટ શોધો';
+  String get searchStubs => 'તમારી ટિકિટ શોધો';
 
   @override
-  String get noStubs => 'અત્યારે કોઈ ટિકેટ નથી. તમે નોંધો દરેક ફિલ્મ અહીં ટિકેટ બને છે.';
+  String get noStubs => 'અત્યારે કોઈ ટિકિટ નથી. તમે નોંધો દરેક ફિલ્મ અહીં ટિકિટ બને છે.';
 
   @override
   String get noMatch => 'આ ફિલ્ટર્સ સાથે કંઈ મળ્યું નથી.';
@@ -178,7 +178,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get resetFilters => 'ફિલ્ટર રીસેટ કરો';
 
   @override
-  String get showStubs => 'ટિકેટ';
+  String get showStubs => 'ટિકિટ';
 
   @override
   String get showWatchlist => 'વાચલિસ્ટ';
@@ -292,7 +292,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get clearDate => 'તારીખ ખાલી કરો';
 
   @override
-  String get yourStubs => 'તમારા ટિકેટ';
+  String get yourStubs => 'તમારા ટિકિટ';
 
   @override
   String get openWikipedia => 'વિકિપેડિયા પર વાંચો';
@@ -685,16 +685,16 @@ class AppLocalizationsGu extends AppLocalizations {
   String get appIcon => 'એપ્લિકેશન કિંક';
 
   @override
-  String get icon_default => 'પિંક ટિકેટ';
+  String get icon_default => 'પિંક ટિકિટ';
 
   @override
-  String get icon_yellow => 'પીળી ટિકેટ';
+  String get icon_yellow => 'પીળી ટિકિટ';
 
   @override
-  String get icon_green => 'લીલી ટિકેટ';
+  String get icon_green => 'લીલી ટિકિટ';
 
   @override
-  String get icon_blue => 'કાચી ટિકેટ';
+  String get icon_blue => 'કાચી ટિકિટ';
 
   @override
   String get icon_night => 'રાત્રિ શો';
@@ -1746,9 +1746,9 @@ class AppLocalizationsGu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      zero: 'કોઈ ટિકેટ નથી',
-      one: '1 ટિકેટ',
-      other: '$count ટિકેટ્સ',
+      zero: 'કોઈ ટિકિટ નથી',
+      one: '1 ટિકિટ',
+      other: '$count ટિકિટ્સ',
     );
     return '$_temp0';
   }
@@ -2167,7 +2167,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get languagesWorld => 'અન્ય ભાષાઓ';
 
   @override
-  String get currency => 'ટિકેટ મુદ્રા';
+  String get currency => 'ટિકિટ મુદ્રા';
 
   @override
   String get currencyNote => 'રકમ રૂપાંતરિત થતી નથી. ફક્ત ચિહ્ન અને આંકડા ગ્રુપિંગ બદલાય છે.';
