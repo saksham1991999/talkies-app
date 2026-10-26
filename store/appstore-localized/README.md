@@ -48,7 +48,25 @@ only drift from the shipped bytes.
 `build/caption_check/` and refuses to pass if a glyph would render as a box, a
 line would overrun the safe width, the caption ink would touch the serial ink,
 two lines would collide, an RTL deck would not be right-aligned, or a deck would
-change font or size between its eight cards.
+change font or size between its eight cards. It also fails if a reach line ("45
+languages" on card 8) disagrees with the language count in `tool/locales.py`,
+reading Arabic-Indic and Urdu digits as digits: `٤٤` and `۴۴` are 44 too, and a
+plain `'45' in caption` test let both through.
+
+## Re-rendering is byte-reproducible
+
+The paper grain is drawn from a fixed seed (`GRAIN_SEED` in
+`tool/store_frames.py`). That matters more than it sounds: `Image.effect_noise`
+draws a fresh sequence each call, so before the seed two runs produced decks
+that looked identical and differed in every pixel. `tool/asc.py` compares md5 of
+the file bytes, so any re-render made all 736 screenshots look stale and a
+one-locale plan wanted to re-upload everything. With the seed, re-rendering a
+deck that changed nothing produces the same bytes as the deck already on the
+App Store.
+
+One consequence worth knowing: the decks committed here predate the seed, so the
+first render after it rewrote every file at the same visual content. Nothing
+about the images changed; only the noise, and therefore the checksum.
 
 ## How to recapture one locale properly
 
@@ -142,6 +160,23 @@ What you are shipping is a localized advert, not a localized product demo. Write
 it down wherever the listing is discussed so nobody later assumes these prove the
 app is translated on screen; the app *is* translated (45 locales in
 `lib/l10n/`), these captures just are not.
+
+## Not submitted yet
+
+The 1.1.0 listing carries these decks as they were before the "44 languages" →
+"45 languages" correction. Card 8 of every deck said 44 while the listing text
+and the app's own picker say 45. The decks here are rebuilt, but App Store
+Connect locks screenshots while a version is `WAITING_FOR_REVIEW`
+(`POST /v1/appScreenshotSets` returns `409 STATE_ERROR`); metadata stays
+writable during review, screenshots do not. So the corrected decks upload the
+moment the version leaves review, with:
+
+```sh
+python3 tool/asc.py screenshots --apply
+```
+
+`tool/asc.py` skips by checksum, so the handful of cards that actually changed
+are the only ones re-sent.
 
 Before the first upload, have a native speaker read the eight lines of each
 locale you care about. The wording in `tool/store_frames.py` that I would not

@@ -30,6 +30,8 @@ from concurrent.futures import ProcessPoolExecutor
 from fontTools.ttLib import TTCollection, TTFont
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 
+import numpy as np
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import locales  # noqa: E402  the one list of languages, for RTL and store codes
 
@@ -37,6 +39,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, 'build/store_raw')
 OUT = os.path.join(ROOT, 'store')
 TANKER = os.path.join(ROOT, 'assets/fonts/Tanker-Regular.otf')
+# One fixed seed for the paper grain, so a re-render is reproducible byte for
+# byte. Changing it restyles every deck at once; that is not a per-locale knob.
+GRAIN_SEED = 0x7A1C5
 
 GREEN = (31, 59, 54)      # peacock wall (icon "yellow" variant background)
 PAPER = (242, 203, 193)   # cinema ticket paper
@@ -161,10 +166,10 @@ CAPTIONS = {
            'ਟਿਕਟ\nਸਾਂਝੀ ਕਰੋ', '45 ਭਾਸ਼ਾਵਾਂ'],
     'ja': ['観た映画は\nすべて切符に', '劇場、座席、\n上映回、料金', 'ポスターで\n振り返る一か月',
            '映画で振り返る\n一年', 'あらゆる言語の\n新作', 'どこで\n配信中',
-           '切符を\nシェア', '44言語'],
+           '切符を\nシェア', '45言語'],
     'ko': ['모든 영화가\n티켓이 됩니다', '상영관, 좌석,\n회차, 가격', '포스터로 보는\n한 달',
            '영화로 보는\n한 해', '모든 언어의\n신작', '어디서\n스트리밍',
-           '티켓을\n공유', '44개 언어'],
+           '티켓을\n공유', '45개 언어'],
     'zh-Hans': ['每部电影\n都是一张票', '影院、座位\n场次、票价', '用海报\n记录这个月',
                 '用电影\n记录这一年', '各语种\n新片', '在哪里\n可以看',
                 '分享你的\n电影票', '45 种语言'],
@@ -256,13 +261,14 @@ CAPTIONS = {
            'השנה שלך\nבסרטים', 'חדשים בכל\nשפה', 'איפה\nזה זורם',
            'שתף את\nהכרטיס', '45 שפות'],
     # Arabic storefronts print Arabic-Indic digits: Geeza Pro has no Latin ones,
-    # and ٤٤ لغة reads as Arabic rather than as a barcode.
+    # and ٤٥ لغة reads as Arabic rather than as a barcode. 11 to 99 takes a
+    # singular noun, so لغة stays singular at 45.
     'ar': ['كل فيلم يصبح\nتذكرة', 'القاعة والمقعد\nوالعرض والسعر', 'شهرك\nفي الملصقات',
            'عامك\nفي الأفلام', 'أفلام جديدة\nبكل لغة', 'أين\nيُبث',
-           'شارك\nتذكرتك', '٤٤ لغة'],
+           'شارك\nتذكرتك', '٤٥ لغة'],
     'ur': ['ہر فلم ایک\nٹکٹ بنتی ہے', 'ہال، نشست،\nشو اور قیمت', 'پوسٹروں میں\nآپ کا مہینہ',
            'فلموں میں\nآپ کا سال', 'ہر زبان میں\nنئی فلمیں', 'کہاں\nاسٹریم ہوتی ہے',
-           'ٹکٹ\nشیئر کریں', '۴۴ زبانیں'],
+           'ٹکٹ\nشیئر کریں', '۴۵ زبانیں'],
 }
 # Storefronts that share another storefront's language. Reusing the copy keeps a
 # single line to proofread per language.
@@ -504,9 +510,20 @@ def upper_case(caption: str, locale: str) -> str:
 
 
 def grain(size, base, sigma=5):
-    """Flat colour with fine monochrome noise (about +-5 levels), so it does not band."""
-    noise = Image.effect_noise(size, sigma).convert('RGB')
-    return ImageChops.add(Image.new('RGB', size, base), noise, 1.0, -128)
+    """Flat colour with fine monochrome noise (about +-5 levels), so it does not band.
+
+    Seeded, and that is the whole point. `Image.effect_noise` draws a fresh
+    sequence on every call, so two runs of this file produced decks that looked
+    identical and differed in every pixel. `tool/asc.py` compares md5 of the
+    file bytes, so re-rendering one caption made all 736 screenshots look
+    changed, and a plan for one locale would have re-uploaded every deck. With
+    a fixed seed a deck that changed nothing is byte-identical to the one
+    already on the App Store.
+    """
+    rng = np.random.default_rng(GRAIN_SEED)
+    noise = rng.normal(128.0, sigma, size=(size[1], size[0]))
+    flat = np.clip(np.rint(noise), 0, 255).astype(np.uint8)
+    return ImageChops.add(Image.new('RGB', size, base), Image.fromarray(flat).convert('RGB'), 1.0, -128)
 
 
 def rounded(im, radius):

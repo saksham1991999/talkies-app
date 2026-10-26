@@ -45,6 +45,25 @@ SHOT = os.path.join(ROOT, 'build/store_raw/iphone/01_home.png')
 SERIAL = 'NO. 0001'
 
 
+def latin_digits(s: str) -> str:
+    """Arabic-Indic and Urdu digits to ASCII, so a count can be compared.
+
+    Arabic storefronts print ٤٥ and Urdu prints ۴۵: both are in different
+    Unicode blocks, and a naive `'45' in caption` test passes them while they
+    still say 44. That is exactly what happened.
+    """
+    out = []
+    for ch in s:
+        o = ord(ch)
+        if 0x0660 <= o <= 0x0669:
+            out.append(chr(ord('0') + o - 0x0660))
+        elif 0x06F0 <= o <= 0x06F9:
+            out.append(chr(ord('0') + o - 0x06F0))
+        else:
+            out.append(ch)
+    return ''.join(out)
+
+
 def marks(ch: str) -> bool:
     """True for a character that legitimately inks nothing on its own."""
     return unicodedata.category(ch) in {'Mn', 'Mc', 'Me', 'Cf'} or ch.isspace()
@@ -206,6 +225,14 @@ def main(argv=None):
     if uncovered:
         print('\napp language with no store captions:', ', '.join(uncovered))
         failures += len(uncovered)
+    # The last caption in every deck is the reach line, "45 languages". It has
+    # to agree with the app's own language picker, or the store text says one
+    # number and the screenshot behind it says another.
+    want = str(len(locales.LOCALES))
+    for locale, caps in sf.CAPTIONS.items():
+        if want not in latin_digits(caps[-1]):
+            print(f'\n{locale}: reach line is {caps[-1]!r}, expected {want} languages')
+            failures += 1
 
     # A storefront whose code is in store/metadata/ is one App Store Connect will
     # receive, so it needs a caption set or a declared alias.
