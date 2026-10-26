@@ -330,7 +330,7 @@
   "acctSignedOut": "Đã đăng xuất. Nhật ký của bạn vẫn ở trên điện thoại này.",
   "acctDelete": "Xóa tài khoản",
   "acctDeleteQ": "Xóa tài khoản của bạn?",
-  "acctDeleteBody": "Hành động này xóa tài khoản và toàn bộ dữ liệu của bạn khỏi máy chủ Talkies. Nhật ký của bạn vẫn ở trên điện thoại này. Không thể hoàn tác.",
+  "acctDeleteBody": "Thao tác này xóa tài khoản, hồ sơ và nhật ký của bạn khỏi máy chủ Talkies. Các báo cáo bạn đã gửi hoặc nhận được lưu trữ mà không có ID tài khoản của bạn. Nhật ký trên điện thoại vẫn còn. Không thể hoàn tác.",
   "acctDeleted": "Tài khoản của bạn đã bị xóa. Nhật ký của bạn vẫn ở trên điện thoại này.",
   "acctDeleteFailed": "Không thể xóa tài khoản. Thử lại nhé.",
   "acctDown": "Nhật ký của bạn an toàn trên điện thoại này. Không kết nối được với Talkies lúc này.",

@@ -330,7 +330,7 @@
   "acctSignedOut": "Signed out. Your diary stays on this phone.",
   "acctDelete": "Delete account",
   "acctDeleteQ": "Delete your account?",
-  "acctDeleteBody": "This removes your account and all your data from the Talkies server. Your diary stays on this phone. You cannot undo this.",
+  "acctDeleteBody": "This removes your account, your profile and your diary from the Talkies server. Reports you filed or received are archived without your account id. The diary on your phone stays. You cannot undo this.",
   "acctDeleted": "Your account is deleted. Your diary stays on this phone.",
   "acctDeleteFailed": "Could not delete your account. Try again.",
   "acctDown": "Your diary is safe on this phone. Talkies cannot be reached right now.",

@@ -1,7 +1,7 @@
 {
- "name": "Talkies: Elokipäiväkirja",
- "subtitle": "Liput, katsottavat, tilastot",
- "keywords": "leffa,arvio,kokoelma,IMAX,4DX,Netflix,bollywood,sala,ohjelma,katso,kirjanpito",
- "promotionalText": "Jokainen elokuva muuttuu lipuksi ja voit merkitä esityksen sekä hinnan. Ilmainen ja toimii ilman nettiä, ei mainosia eikä tiliä.",
- "whatsNew": "Sovellus tukee nyt 44 kieltä, hindistä tamiliin, arabiasta japaniin ja portugaliin. Valitse kieli Asetuksissa. Lippuhinnat voidaan näyttää omassa valuuttassasi, ja koko sovellus toimii oikealta vasemmalle kirjoitettavien kielten kanssa. Päiväkirja, tilastot ja liput pysyvät ennallaan."
+ "name": "Talkies: Palstan päiväkirja",
+ "subtitle": "Liput, seurausa, tilastot",
+ "keywords": "elokuva,film,seuranta,katselulista,lippu,kino,arvostelu,kokoelma,bollywood",
+ "promotionalText": "Jokaisesta katsomastasi elokuvasta tulee lippu. Kirjaa sali, paikka, esitys ja hinta. Näe vuotesi elokuvissa. Maksuton, offline, ei mainoksia, tili valinnainen.",
+ "whatsNew": "Sovellus tukee nyt 45 kieltä, hindistä ja tamilista arabiaan, japaniin ja portugaliin. Voit valita kielen Asetuksista. Lippuhinnat voi näyttää omassa valuutassasi, ja koko sovellus noudattaa oikealta vasemmalle kirjoitettavia kieliä. Päiväkirja, tilastot ja liput pysyvät ennallaan."
 }

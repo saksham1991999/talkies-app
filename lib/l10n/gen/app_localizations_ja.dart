@@ -1004,7 +1004,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get acctDeleteQ => 'アカウントを削除しますか？';
 
   @override
-  String get acctDeleteBody => 'これにより、アカウントとすべてのデータを Talkies サーバーから削除します。日記はこの端末に保存されます。この操作は元に戻せません。';
+  String get acctDeleteBody =>
+      'アカウント、プロフィール、日記が Talkies サーバーから削除されます。あなたが送信または受信した通報は、アカウント ID なしで保存されます。端末の日記はそのまま残ります。この操作は元に戻せません。';
 
   @override
   String get acctDeleted => 'アカウントが削除されました。日記はこの端末に保存されます。';

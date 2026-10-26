@@ -1010,7 +1010,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Esto elimina tu cuenta y todos tus datos del servidor de Talkies. Tu diario se queda en este teléfono. No puedes deshacerlo.';
+      'Esto elimina tu cuenta, tu perfil y tu diario del servidor de Talkies. Los reportes que enviaste o recibiste se archivan sin el identificador de tu cuenta. El diario de tu teléfono se queda. No puedes deshacerlo.';
 
   @override
   String get acctDeleted => 'Tu cuenta ha sido eliminada. Tu diario se queda en este teléfono.';

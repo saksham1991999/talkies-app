@@ -1009,7 +1009,7 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Això elimina el teu compte i tots els teus dades del servidor de Talkies. El teu diari es queda en aquest telèfon. No es pot desfer.';
+      'Això suprimeix el teu compte, el teu perfil i el teu diari del servidor de Talkies. Les denúncies que has enviat o rebut s\'arxiven sense l\'identificador del teu compte. El diari del telèfon es queda tal com és. No es pot desfer.';
 
   @override
   String get acctDeleted => 'El teu compte s\'ha suprimit. El teu diari es queda en aquest telèfon.';

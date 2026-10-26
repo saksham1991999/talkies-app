@@ -82,7 +82,7 @@ Login is optional. Without it, the app works as it does today.
 - Private by default: new profiles start private.
 - Viewing dates are never shown to anyone, ever. Nothing on a profile, the feed, or a friend's shelf carries the date you watched a film. Chat messages are the one exception: a message carries its send time to the other members of its group.
 - Talkies works offline, and login is not required.
-- Account deletion is in Settings and removes all server data. If the account used Sign in with Apple, the Apple grant is revoked on deletion.
+- Account deletion is in Settings and removes your profile, diary and other account data from the server. Moderation reports you filed or received are archived without your account id, keeping their reason, note, date and target. If the account used Sign in with Apple, the Apple grant is revoked when the server holds Apple sign-in credentials (`APPLE_CLIENT_ID`, `APPLE_CLIENT_SECRET`); without them a failed revoke is logged and skipped, and it never blocks the deletion.
 - Users can report and block other users.
 - Night wrap-up is not private: the stub it creates fills in "who you went with", and that list carries the other attendees' names. Every guest gets such a stub, and each one is visible per that user's own privacy settings.
 - `docs/privacy.html` and the store listings will change from "no account, no backend" to describe the optional account.

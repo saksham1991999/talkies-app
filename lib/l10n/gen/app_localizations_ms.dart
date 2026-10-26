@@ -1011,7 +1011,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Ini memadam akaun dan semua data anda dari pelayan Talkies. Diari anda kekal pada telefon ini. Anda tidak boleh batalkan ini.';
+      'Ini memadam akaun, profil dan diari anda dari pelayan Talkies. Laporan yang anda hantar atau terima diarkibkan tanpa ID akaun anda. Diari pada telefon anda kekal. Anda tidak boleh batalkan ini.';
 
   @override
   String get acctDeleted => 'Akaun anda dipadam. Diari anda kekal pada telefon ini.';

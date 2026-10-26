@@ -1009,7 +1009,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Dit verwijdert je account en al je data van de Talkies-server. Je dagboek blijft op deze telefoon. Je kunt dit niet ongedaan maken.';
+      'Dit verwijdert je account, je profiel en je dagboek van de Talkies-server. Meldingen die je hebt gedaan of ontvangen, worden gearchiveerd zonder je account-ID. Het dagboek op je telefoon blijft. Je kunt dit niet ongedaan maken.';
 
   @override
   String get acctDeleted => 'Je account is verwijderd. Je dagboek blijft op deze telefoon.';

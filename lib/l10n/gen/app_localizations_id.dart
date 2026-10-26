@@ -1009,7 +1009,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Ini menghapus akunmu dan semua data dari server Talkies. Buku harian tetap ada di ponsel ini. Tindakan ini tidak bisa dibatalkan.';
+      'Ini menghapus akunmu, profilmu dan buku harianmu dari server Talkies. Laporan yang kamu kirim atau terima diarsipkan tanpa ID akunmu. Buku harian di ponselmu tetap ada. Tindakan ini tidak bisa dibatalkan.';
 
   @override
   String get acctDeleted => 'Akunmu sudah dihapus. Buku harian tetap ada di ponsel ini.';

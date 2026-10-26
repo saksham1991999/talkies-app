@@ -1008,7 +1008,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'This removes your account and all your data from the Talkies server. Your diary stays on this phone. You cannot undo this.';
+      'This removes your account, your profile and your diary from the Talkies server. Reports you filed or received are archived without your account id. The diary on your phone stays. You cannot undo this.';
 
   @override
   String get acctDeleted => 'Your account is deleted. Your diary stays on this phone.';

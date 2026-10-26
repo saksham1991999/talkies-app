@@ -1003,7 +1003,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get acctDeleteQ => '删除你的账号？';
 
   @override
-  String get acctDeleteBody => '这会从 Talkies 服务器删除你的账号和所有数据。你的日记仍会保存在这部手机上。此操作无法撤销。';
+  String get acctDeleteBody => '这会从 Talkies 服务器删除你的账号、你的个人资料和你的日记。你提交或收到的举报会在没有账号 ID 的情况下归档。手机上的日记仍会保留。此操作无法撤销。';
 
   @override
   String get acctDeleted => '账号已删除。你的日记仍保存在这部手机上。';
@@ -3128,7 +3128,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get acctDeleteQ => '要刪除你的帳戶嗎？';
 
   @override
-  String get acctDeleteBody => '這將從 Talkies 伺服器移除你的帳戶和所有資料。你的日記會保留在此手機上。此操作無法復原。';
+  String get acctDeleteBody => '這將從 Talkies 伺服器移除你的帳戶、你的個人檔案和你的日記。你送出或收到的檢舉會在沒有帳戶 ID 的情況下封存。手機上的日記會保留。此操作無法復原。';
 
   @override
   String get acctDeleted => '你的帳戶已刪除。你的日記保留在此手機上。';

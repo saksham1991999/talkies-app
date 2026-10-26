@@ -330,7 +330,7 @@
   "acctSignedOut": "Logget ut. Skriset ditt blir igjen på denne telefonen.",
   "acctDelete": "Slett konto",
   "acctDeleteQ": "Vil du slette kontoen din?",
-  "acctDeleteBody": "Dette fjerner kontoen din og alle dataene dine fra Talkies-serveren. Skriset ditt blir igjen på denne telefonen. Du kan ikke angre dette.",
+  "acctDeleteBody": "Dette fjerner kontoen din, profilen din og dagboken din fra Talkies-serveren. Rapporter du har sendt eller mottatt, arkiveres uten konto-ID-en din. Dagboken på telefonen din blir liggende. Du kan ikke angre dette.",
   "acctDeleted": "Kontoen din er slettet. Skriset ditt blir igjen på denne telefonen.",
   "acctDeleteFailed": "Kunne ikke slette kontoen din. Prøv igjen.",
   "acctDown": "Skriset ditt er trygt på denne telefonen. Talkies er ikke tilgjengelig nå.",

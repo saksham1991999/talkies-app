@@ -330,7 +330,7 @@
   "acctSignedOut": "已退出登录。你的日记仍保存在这部手机上。",
   "acctDelete": "删除账号",
   "acctDeleteQ": "删除你的账号？",
-  "acctDeleteBody": "这会从 Talkies 服务器删除你的账号和所有数据。你的日记仍会保存在这部手机上。此操作无法撤销。",
+  "acctDeleteBody": "这会从 Talkies 服务器删除你的账号、你的个人资料和你的日记。你提交或收到的举报会在没有账号 ID 的情况下归档。手机上的日记仍会保留。此操作无法撤销。",
   "acctDeleted": "账号已删除。你的日记仍保存在这部手机上。",
   "acctDeleteFailed": "无法删除账号。请再试一次。",
   "acctDown": "你的日记安全保存在这部手机上。目前无法连接 Talkies。",

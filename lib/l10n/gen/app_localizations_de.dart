@@ -1009,7 +1009,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Dadurch werden dein Konto und alle deine Daten vom Talkies-Server entfernt. Dein Tagebuch bleibt auf diesem Telefon. Dies kann nicht rückgängig gemacht werden.';
+      'Dadurch werden dein Konto, dein Profil und dein Tagebuch vom Talkies-Server entfernt. Meldungen, die du erstattet oder erhalten hast, werden ohne deine Konto-ID archiviert. Das Tagebuch auf deinem Telefon bleibt. Dies kann nicht rückgängig gemacht werden.';
 
   @override
   String get acctDeleted => 'Dein Konto ist gelöscht. Dein Tagebuch bleibt auf diesem Telefon.';

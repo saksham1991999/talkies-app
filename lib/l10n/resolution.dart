@@ -15,7 +15,19 @@ import 'gen/app_localizations.dart';
 /// stays Flutter's own algorithm, which already handles script and region
 /// (`zh-Hant` → Traditional, `pt-PT` → European Portuguese); only the fallback
 /// changes, by putting English first in the list it searches.
-Locale resolveAppLocale(List<Locale>? preferred) => basicLocaleListResolution(preferred, _englishFirst);
+///
+/// One trap in that algorithm, which English-first does not remove on its own:
+/// it remembers a country-only match separately, and hands it back when no
+/// language or script matched. A Swahili phone set to Portugal (`sw-PT`) is not
+/// Swahili as far as the app is concerned, but `PT` alone matches `pt-PT`, so
+/// the phone opened in Portuguese. A country match is not evidence that someone
+/// reads the language spoken there, so a result is only accepted when the
+/// language itself was asked for; anything else is English.
+Locale resolveAppLocale(List<Locale>? preferred) {
+  final resolved = basicLocaleListResolution(preferred, _englishFirst);
+  final asked = preferred?.map((l) => l.languageCode).toSet() ?? const <String>{};
+  return asked.contains(resolved.languageCode) ? resolved : const Locale('en');
+}
 
 final List<Locale> _englishFirst = [
   const Locale('en'),

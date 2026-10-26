@@ -49,9 +49,10 @@ only drift from the shipped bytes.
 line would overrun the safe width, the caption ink would touch the serial ink,
 two lines would collide, an RTL deck would not be right-aligned, or a deck would
 change font or size between its eight cards. It also fails if a reach line ("45
-languages" on card 8) disagrees with the language count in `tool/locales.py`,
-reading Arabic-Indic and Urdu digits as digits: `٤٤` and `۴۴` are 44 too, and a
-plain `'45' in caption` test let both through.
+languages" on card 8) disagrees with the language count in `tool/locales.py`.
+That check reads Arabic-Indic and Urdu digits as digits, because `٤٤` and `۴۴`
+are 44 too, and it compares the whole digit token, because `'45' in '145
+languages'` is true.
 
 ## Re-rendering is byte-reproducible
 
@@ -60,13 +61,13 @@ The paper grain is drawn from a fixed seed (`GRAIN_SEED` in
 draws a fresh sequence each call, so before the seed two runs produced decks
 that looked identical and differed in every pixel. `tool/asc.py` compares md5 of
 the file bytes, so any re-render made all 736 screenshots look stale and a
-one-locale plan wanted to re-upload everything. With the seed, re-rendering a
-deck that changed nothing produces the same bytes as the deck already on the
-App Store.
+one-locale plan wanted to re-upload everything.
 
-One consequence worth knowing: the decks committed here predate the seed, so the
-first render after it rewrote every file at the same visual content. Nothing
-about the images changed; only the noise, and therefore the checksum.
+With the seed, a deck rendered twice is byte-identical. It is **not** identical
+to what App Store Connect already holds: those copies were uploaded before the
+seed existed, so their bytes carry the old noise. The first seeded render of a
+deck therefore always differs from the live record, and needs
+`--replace-changed` (below) rather than a plain upload.
 
 ## How to recapture one locale properly
 

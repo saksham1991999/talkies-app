@@ -10,11 +10,10 @@ Work happens on the `recommendations` branch. Nothing here is live until
 - 2026-10-26: Multilingual launch correction.
   - `docs/index.html`: every understated language-count claim replaced
     with the true count (45). Touched: JSON-LD `featureList`, JSON-LD
-    `inLanguage` (was 8 codes, now all 45 locale codes)
-    `en`), the FAQ answer (schema and visible copy kept word-for-word
-    identical), the "What is Talkies" paragraph, the hero stub body, the
-    "Made for Indian cinema" scripts line, and the Hindi screenshot
-    caption + alt text.
+    `inLanguage` (was 8 codes, now all 45 locale codes), the FAQ answer (schema
+    and visible copy kept word-for-word identical), the "What is Talkies"
+    paragraph, the hero stub body, the "Made for Indian cinema" scripts line,
+    and the Hindi screenshot caption + alt text.
   - Added `rel="alternate"` `hreflang="en"` and `hreflang="x-default"`
     pointing at the single English landing page. No translated landing
     pages were created.

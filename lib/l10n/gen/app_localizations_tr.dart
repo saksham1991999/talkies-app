@@ -1008,7 +1008,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Bu işlem, hesabını ve tüm verilerini Talkies sunucusundan siler. Günlüğün bu telefonda kalır. Bu işlemi geri alamazsın.';
+      'Bu işlem hesabını, profilini ve günlüğünü Talkies sunucusundan siler. Gönderdiğin veya aldığın bildirimler hesap kimliğin olmadan arşivlenir. Telefonundaki günlük olduğu gibi kalır. Bu işlemi geri alamazsın.';
 
   @override
   String get acctDeleted => 'Hesabın silindi. Günlüğün bu telefonda kalır.';

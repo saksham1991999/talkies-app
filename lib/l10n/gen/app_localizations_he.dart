@@ -1007,7 +1007,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'פעולה זו מסירה את החשבון ואת כל המידע שלך משרת Talkies. היומן שלך נשאר בטלפון זה. לא ניתן לשנות את זה.';
+      'פעולה זו מסירה את החשבון, הפרופיל והיומן שלך משרת Talkies. דיווחים ששלחת או שקיבלת נשמרים בארכיון בלי מזהה החשבון שלך. היומן בטלפון שלך נשאר. לא ניתן לשנות את זה.';
 
   @override
   String get acctDeleted => 'החשבון שלך נמחק. היומן שלך נשאר בטלפון זה.';

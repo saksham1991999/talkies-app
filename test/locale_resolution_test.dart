@@ -29,6 +29,25 @@ void main() {
     expect(resolveAppLocale(const []).languageCode, 'en');
   });
 
+  test('a country alone never picks a language', () {
+    // Flutter remembers a region-only match and hands it back when no language
+    // matched. `sw-PT` therefore resolved to `pt-PT`: a Swahili phone in
+    // Portugal opened in Portuguese. The region says where a phone is, not what
+    // its owner reads.
+    for (final tag in ['sw-PT', 'zu-CA', 'ne-FR', 'km-ES', 'my-DE', 'am-IT', 'uz-RU', 'ka-TR']) {
+      final parts = tag.split('-');
+      final got = resolveAppLocale([Locale(parts[0], parts[1])]);
+      expect(got.languageCode, 'en', reason: '$tag must not become ${got.toLanguageTag()}');
+    }
+  });
+
+  test('a shipped language still wins on a shared region', () {
+    // The guard above must not throw away a real match: a Portuguese phone in
+    // Portugal is Portuguese.
+    expect(resolveAppLocale(const [Locale('pt', 'PT')]).toLanguageTag(), 'pt-PT');
+    expect(resolveAppLocale(const [Locale('es', 'MX')]).languageCode, 'es');
+  });
+
   test('the phone\'s ordered preference is respected', () {
     // A phone set to French then English reads in French.
     expect(resolveAppLocale(const [Locale('fr'), Locale('en')]).languageCode, 'fr');

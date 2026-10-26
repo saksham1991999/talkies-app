@@ -330,7 +330,7 @@
   "acctSignedOut": "Te-ai deconectat. Jurnalul tău rămâne pe acest telefon.",
   "acctDelete": "Șterge contul",
   "acctDeleteQ": "Ștergi contul?",
-  "acctDeleteBody": "Aceasta elimină contul tău și toate datele tale de pe serverul Talkies. Jurnalul tău rămâne pe acest telefon. Nu se poate anula.",
+  "acctDeleteBody": "Aceasta elimină contul, profilul și jurnalul tău de pe serverul Talkies. Semnalările pe care le-ai trimis sau primit sunt arhivate fără ID-ul contului tău. Jurnalul de pe telefon rămâne. Nu se poate anula.",
   "acctDeleted": "Contul tău a fost șters. Jurnalul tău rămâne pe acest telefon.",
   "acctDeleteFailed": "Contul nu a putut fi șters. Încearcă din nou.",
   "acctDown": "Jurnalul tău este în siguranță pe acest telefon. Talkies nu poate fi accesat momentan.",

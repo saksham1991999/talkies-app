@@ -330,7 +330,7 @@
   "acctSignedOut": "Wylogowano. Twój dziennik zostaje na tym telefonie.",
   "acctDelete": "Usuń konto",
   "acctDeleteQ": "Usunąć Twoje konto?",
-  "acctDeleteBody": "To usuwa Twoje konto i wszystkie Twoje dane z serwera Talkies. Twój dziennik zostaje na tym telefonie. Tego nie można cofnąć.",
+  "acctDeleteBody": "To usuwa Twoje konto, Twój profil i Twój dziennik z serwera Talkies. Zgłoszenia, które wysłałeś lub otrzymałeś, są archiwizowane bez identyfikatora Twojego konta. Dziennik na telefonie zostaje. Tego nie można cofnąć.",
   "acctDeleted": "Twoje konto zostało usunięte. Twój dziennik zostaje na tym telefonie.",
   "acctDeleteFailed": "Nie udało się usunąć konta. Spróbuj ponownie.",
   "acctDown": "Twój dziennik jest bezpieczny na tym telefonie. Nie można teraz połączyć się z Talkies.",

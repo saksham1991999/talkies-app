@@ -1007,7 +1007,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Detta tar bort ditt konto och all din data från Talkies-servern. Din dagbok stannar på den här telefonen. Du kan inte ångra det.';
+      'Detta tar bort ditt konto, din profil och din dagbok från Talkies-servern. Rapporter du skickade eller tog emot arkiveras utan ditt konto-ID. Dagboken på telefonen ligger kvar. Du kan inte ångra det.';
 
   @override
   String get acctDeleted => 'Ditt konto är raderat. Din dagbok stannar på den här telefonen.';

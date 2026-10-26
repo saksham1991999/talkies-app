@@ -1010,7 +1010,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Ez törli a fiókodat és az adataidat a Talkies szerverről. A napló marad ezen a telefonon. Ez nem visszavonható.';
+      'Ez törli a fiókodat, a profilodat és a naplódat a Talkies szerverről. A beküldött vagy kapott jelentéseket a fiókod azonosítója nélkül archiváljuk. A telefonon lévő napló megmarad. Ez nem visszavonható.';
 
   @override
   String get acctDeleted => 'A fiókod törölve. A napló marad ezen a telefonon.';
