@@ -63,3 +63,10 @@ __pycache__/
 # l10n staging: script state and per-language translation handoff files
 tool/l10n_staging/.lock
 tool/l10n_staging/drafted.json
+
+# Localized App Store screenshot decks: 2.6 GB of derived output, caption cards
+# composited over the English deck. Rebuild with `python3 tool/store_frames.py
+# --all-stores` in about five minutes; the captions and the English screenshots
+# it reads from are tracked.
+store/appstore-localized/*
+!store/appstore-localized/README.md

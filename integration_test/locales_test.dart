@@ -73,13 +73,13 @@ void main() {
           .read(settingsProvider.notifier)
           .set((s) => s.copyWith(locale: () => code, themeMode: code == 'ta' ? ThemeMode.dark : ThemeMode.light));
       await t.pumpAndSettle();
-      for (var tab = 0; tab < 6; tab++) {
+      for (var tab = 0; tab < 5; tab++) {
         c.read(tabProvider.notifier).go(tab);
         await shot(t, '${tag}_$tab');
       }
       for (final seg in [FilmsSegment.want, FilmsSegment.recorded]) {
         c.read(filmsSegmentProvider.notifier).go(seg);
-        c.read(tabProvider.notifier).go(3);
+        c.read(tabProvider.notifier).go(2);
         await shot(t, '${tag}_films_${seg.name}');
       }
       c.read(filmsSegmentProvider.notifier).go(FilmsSegment.fresh);

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:talkies/data/crews.dart';
 import 'package:talkies/state/crews.dart';
+import 'package:talkies/ui/icons.dart';
 import 'package:talkies/ui/screens/deck_screen.dart';
 import 'package:talkies/ui/swipe_card.dart';
 
@@ -44,6 +45,34 @@ void main() {
     expect(find.byKey(const Key('deck-pass')), findsNothing);
     expect(t.takeException(), isNull);
   });
+
+  // The three buttons stand for three drags: left skips, up marks seen, right
+  // wants. A Row lays out from the start side, so under Arabic the list is
+  // reversed to keep skip physically left; otherwise the answer drawn on the
+  // left would commit the action on the right. The arrows are pinned for the
+  // same reason, since they name the drag and not the reading direction.
+  for (final locale in const [Locale('en'), Locale('ar'), Locale('he')]) {
+    testWidgets('skip stays on the physical left in ${locale.toLanguageTag()}', (t) async {
+      phoneSize(t);
+      final r = rig();
+      final id = await makeCrew(r);
+      await t.pumpWidget(r.app(DeckScreen(crewId: id), locale: locale));
+      await t.pumpAndSettle();
+
+      double x(String k) => t.getCenter(find.byKey(Key(k))).dx;
+      expect(x('vote-skip'), lessThan(x('vote-seen')), reason: 'skip must be left of seen');
+      expect(x('vote-seen'), lessThan(x('vote-want')), reason: 'seen must be left of want');
+
+      // And the icon keeps pointing the way the drag goes.
+      for (final (key, icon) in [('vote-skip', Tk.left), ('vote-want', Tk.right)]) {
+        final glyph = t.widget<TkIcon>(
+          find.descendant(of: find.byKey(Key(key)), matching: find.byType(TkIcon)),
+        );
+        expect(glyph.icon, icon);
+        expect(glyph.mirror, isFalse, reason: '$key: the arrow names the drag, so it must not flip');
+      }
+    });
+  }
 
   testWidgets('the buttons vote, save at once, and move on to the next card', (t) async {
     phoneSize(t);

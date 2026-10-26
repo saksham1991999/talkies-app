@@ -1,7 +1,7 @@
 name: talkies
 description: "Talkies: a movie ticket diary for India. Every film you watch becomes a ticket stub."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+5
 
 environment:
   sdk: ^3.13.3
@@ -44,6 +44,7 @@ flutter:
     - assets/catalog/
     - assets/paper/
     - assets/icons/
+    - assets/images/
   fonts:
     - family: Tanker
       fonts:

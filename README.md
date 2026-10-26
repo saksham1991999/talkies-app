@@ -55,9 +55,9 @@ This repo holds the app, its optional backend and its website.
 - Hall details: show (morning, matinee, evening, night), class (Balcony, Dress Circle, Recliner…), seat, format (IMAX, 4DX, ScreenX, P[XL]…), ticket price in ₹.
 - FDFS (first day, first show) stamp and count.
 - "Watched in" language for dubbed viewings (KGF in Hindi, RRR in Tamil).
-- Spend stats with Indian number grouping (₹1,23,456).
+- Spend stats with Indian number grouping (₹1,23,456) in rupees; a ticket currency setting swaps the symbol and grouping for 14 currencies without converting the amount.
 - Places: cinema halls, Netflix, Prime Video, JioHotstar, SonyLIV, ZEE5, aha, Sun NXT, TV. Add your own (PVR Phoenix, Maratha Mandir).
-- UI in 8 languages: English, Hindi, Tamil, Telugu, Bengali, Marathi, Kannada, Malayalam. Indian date formats. Imports `DD/MM/YYYY` dates.
+- UI in 44 languages, the App Store's 50 metadata locales. Indian date formats, right-to-left layout for Arabic, Hebrew and Urdu. Imports `DD/MM/YYYY` dates.
 - Films you add yourself, with your own poster photo, for titles not in the list.
 - Backup and restore as one JSON file. Poster photos you chose for your own films stay on the phone and are not in the backup.
 
@@ -113,6 +113,8 @@ Listing text for both stores is in `store/listing_data.py` (run it to check the 
 1. Run `integration_test/store_screens_test.dart` with `flutter drive` on an iPhone 6.9" simulator, then copy `build/screens/*.png` to `build/store_raw/iphone/`.
 2. Do the same on an iPad 13" simulator into `build/store_raw/ipad/`.
 3. Run `python3 tool/store_frames.py`. It writes captioned App Store and Play screenshots, the feature graphic and the 512 px icon to `store/`.
+
+Localized captions ship as `store/appstore-localized/<storefront>/`: 45 caption sets for 50 storefronts, written by `python3 tool/store_frames.py --all-stores --raw build/store_raw`. The caption is translated, the app screen inside the frame is still the English capture; `store/appstore-localized/README.md` says which is which and how to recapture a locale on a simulator. `python3 tool/check_captions.py --strict` proves every caption renders (no missing glyph, no overrun, one font and one size per deck) and exits non-zero if not. Three portrait app previews cut from `docs/img/talkies-explainer.mp4` are in `store/appstore/previews/`.
 
 ## Data sources
 
@@ -172,13 +174,45 @@ lib/
   state/      Riverpod providers: settings, diary, catalog, navigation,
               server status and session, sync, groups, reminders
   ui/         theme, icons, widgets, share images, screens/
-  l10n/       app_<lang>.arb (8 languages), labels for languages and genres
+  l10n/       app_<lang>.arb (one file per locale), labels for languages and genres, generated locale_meta.dart
 backend/      optional FastAPI service (Supabase Auth and Postgres): app/, tests/, API.md
 supabase/     config.toml and SQL migrations
 docs/         website: landing, privacy, support, account deletion
-store/        store listing text and screenshots
-tool/         catalog builder, recent-release baker, icon generator, label generator, ARB merge script
+store/        metadata/<locale>.json for all 50 App Store languages, screenshots, listing validator
+tool/         catalog builder, recent-release baker, icon generator, label generator, ARB tools,
+              the translation pipeline, tool/asc.py for App Store Connect
 ```
+
+## Languages and the store listing
+
+The app ships one ARB file per language, 44 in all, covering the App Store's 50
+metadata locales. Settings lists a language only after its text is translated;
+`tool/l10n_status.py` decides that and regenerates `lib/l10n/locale_meta.dart`.
+
+```bash
+python3 tool/l10n_status.py            # coverage table, rewrites locale_meta.dart
+python3 tool/l10n_status.py --check    # fails on a missing key, placeholder or plural form
+python3 tool/l10n_new.py               # seed an ARB for a new locale
+python3 tool/l10n_fill.py es file.json # write reviewed values into one locale
+python3 tool/merge_arb.py --draft      # add new UI keys everywhere
+python3 tool/translate_ai.py --locales ja,ko   # machine-draft UI text, validated per batch
+```
+
+The App Store listing lives in `store/metadata/<locale>.json`, one file per
+storefront language, validated against Apple's per-field limits:
+
+```bash
+python3 store/listing_data.py           # every locale, every limit
+python3 tool/asc.py audit               # repo vs the live App Store Connect listing
+python3 tool/asc.py push                # show the change set
+python3 tool/asc.py push --apply        # write metadata; then submit for review
+python3 tool/asc.py cpp --apply         # custom product pages
+python3 tool/asc.py ppo --apply         # product page optimization experiment
+python3 tool/asc.py events --apply      # in-app event shells
+```
+
+`asc.py` reads the key in `~/.appstoreconnect`. It never deletes anything and
+never prints the key. Re-running is safe.
 
 ## Licences
 

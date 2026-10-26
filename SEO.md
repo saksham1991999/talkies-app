@@ -7,6 +7,24 @@ Work happens on the `recommendations` branch. Nothing here is live until
 
 ## Changelog
 
+- 2026-10-26: Multilingual launch correction.
+  - `docs/index.html`: every understated language-count claim replaced
+    with the true count (44). Touched: JSON-LD `featureList`, JSON-LD
+    `inLanguage` (was 8 codes, now all 44 translated locale codes plus
+    `en`), the FAQ answer (schema and visible copy kept word-for-word
+    identical), the "What is Talkies" paragraph, the hero stub body, the
+    "Made for Indian cinema" scripts line, and the Hindi screenshot
+    caption + alt text.
+  - Added `rel="alternate"` `hreflang="en"` and `hreflang="x-default"`
+    pointing at the single English landing page. No translated landing
+    pages were created.
+  - New paragraph naming what the languages are and stating plainly that
+    this page stays in English.
+  - FAQ stub serial `Eight answers` renamed `Common questions` so the word
+    "Eight" cannot be misread as a language count.
+  - No URL changed, so `sitemap.xml` URLs are unchanged; only `lastmod` on
+    `/` moved to 2026-10-26.
+
 - 2026-10-05: Landing-page SEO/AEO/GEO pass (this session).
   - `docs/index.html`: title now `Talkies: Movie Ticket Diary for India`;
     meta description rewritten to ~155 chars; added self-referencing
@@ -55,6 +73,41 @@ Work happens on the `recommendations` branch. Nothing here is live until
   ownership is unconfirmed. github.io stays canonical for now.
 - No CTR/title tuning: no Search Console data exists yet, so there is
   nothing to tune against.
+
+## Multilingual launch (2026-10-26)
+
+What shipped localized:
+
+- **App UI**: 44 languages (`lib/l10n/locale_meta.dart` is the source of
+  truth; 44 entries with `ready: true`, English is the template). The
+  picker in Settings lists a language only once its ARB is complete, so a
+  seeded file never ships as a broken translation. Arabic, Hebrew and Urdu
+  are RTL; the layout flips through directional insets and alignments, and
+  the printed `WATCHED` / `FDFS` stamp words stay Latin in every locale
+  because Tanker has no other script.
+- **Store metadata**: 50 locale files in `store/metadata/` (the App Store's
+  50 storefront languages), 41 in `store/translations/`, screenshots per
+  locale in `store/appstore/*/` and `store/play/*/`.
+- **Store listing URLs**: one listing, localized by storefront —
+  `https://apps.apple.com/{storefront}/app/id6817738462`, e.g. `/in/`,
+  `/us/`, `/jp/`, `/de/`. There is no per-language URL to rank; each
+  storefront serves its own metadata.
+
+What did **not** ship localized, and should not for now:
+
+- The landing page. One English page (`lang="en-IN"`), declared with
+  `hreflang="en"` and `hreflang="x-default"`. 44 half-translated landing
+  pages would be thin duplicate content competing with each other, and the
+  page has no indexing history yet to protect.
+
+The measurement that matters: **store page conversion rate by storefront**
+(App Store Connect → App Analytics → Metrics → Conversion Rate, split by
+storefront and by source). Not keyword rankings for a github.io subdomain,
+and not landing-page sessions: the landing page's job is to hand people to
+the listing, and the listing is where a localized visit either converts or
+does not. If a storefront shows impressions with near-zero conversion,
+that is the signal to look at that storefront's screenshots and first two
+lines of description, not at English keywords.
 
 ## Baselines (2026-10-05, before deploy)
 
