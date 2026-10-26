@@ -1009,7 +1009,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Dette fjerner din konto, din profil, din dagbog og resten af dine kontooplysninger fra Talkies-serveren. Rapporter, du har sendt eller modtaget, arkiveres uden dit konto-id og beholder årsag, note og dato. Dagbogen på din telefon bliver liggende. Du kan ikke fortryde dette.';
+      'Dette fjerner din konto, din profil, din dagbog og resten af dine kontooplysninger fra Talkies-serveren. Rapporter, du har sendt eller modtaget, arkiveres uden dit konto-id og beholder årsag, note og dato. Dagbogen på din telefon bliver liggende, og det samme gør de billetter, som en filmnat skrev i andre medlemmers dagbøger. Du kan ikke fortryde dette.';
 
   @override
   String get acctDeleted => 'Din konto er slettet. Din dagbog forbliver på denne telefon.';

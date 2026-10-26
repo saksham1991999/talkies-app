@@ -49,7 +49,7 @@ class AppLocalizationsOr extends AppLocalizations {
   String get done => 'ସମ୍ପୂର୍ଣ୍ଣ';
 
   @override
-  String get undo => 'ଅବିଲମ୍ବିତ୍';
+  String get undo => 'ପୂର୍ବବତ୍ କରନ୍ତୁ';
 
   @override
   String get share => 'ସେୟାର୍';
@@ -363,16 +363,16 @@ class AppLocalizationsOr extends AppLocalizations {
   String get noRating => 'ମାପ ନାହିଁ';
 
   @override
-  String get tearUpQ => 'ଏହି ଟିକେଟ୍ ଛିଡ଼ାଇ ଯିବେ?';
+  String get tearUpQ => 'ଏହି ଟିକେଟ୍ ଛିଣ୍ଡାଇବେ?';
 
   @override
   String get tearUpBody => 'ଏହା ଦ୍ୱାରା ଏହି ଦର୍ଶନର ରେକର୍ଡ ମୁଦତ୍‌ପ୍ରୟା ହେବ।';
 
   @override
-  String get tearUp => 'ଛିଡ଼ା';
+  String get tearUp => 'ଛିଣ୍ଡାନ୍ତୁ';
 
   @override
-  String get stubDeleted => 'ଟିକେଟ୍ ଛିଡ଼ା ହୋଇଗଲା';
+  String get stubDeleted => 'ଟିକେଟ୍ ଛିଣ୍ଡିଗଲା';
 
   @override
   String get shareTicket => 'ଟିକେଟ୍ ଭାଗ ଦିଅନ୍ତୁ';
@@ -1011,7 +1011,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'ଏହା ଆପଣଙ୍କ ଖାତା, ପ୍ରୋଫାଇଲ୍, ଡାୟାରୀ ଓ ଖାତାର ଅନ୍ୟ ସମସ୍ତ ତଥ୍ୟକୁ Talkies ସର୍ଭରରୁ ହଟାଇ ଦିଏ। ଆପଣ ପଠାଇଥିବା କିମ୍ବା ପାଇଥିବା ରିପୋର୍ଟଗୁଡ଼ିକ ଆପଣଙ୍କ ଖାତା ଆଇଡି ବିନା ଆର୍କାଇଭ୍ କରାଯାଏ; କେବଳ କାରଣ, ଟିପ୍ପଣୀ ଓ ତାରିଖ ରଖାଯାଏ। ଆପଣଙ୍କ ଫୋନରେ ଥିବା ଡାୟାରୀ ସେହିପରି ରହିବ। ଏହାକୁ ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ ନାହିଁ।';
+      'ଏହା ଆପଣଙ୍କ ଖାତା, ପ୍ରୋଫାଇଲ୍, ଡାୟାରୀ ଓ ଖାତାର ଅନ୍ୟ ସମସ୍ତ ତଥ୍ୟକୁ Talkies ସର୍ଭରରୁ ହଟାଇ ଦିଏ। ଆପଣ ପଠାଇଥିବା କିମ୍ବା ପାଇଥିବା ରିପୋର୍ଟଗୁଡ଼ିକ ଆପଣଙ୍କ ଖାତା ଆଇଡି ବିନା ଆର୍କାଇଭ୍ କରାଯାଏ; କେବଳ କାରଣ, ଟିପ୍ପଣୀ ଓ ତାରିଖ ରଖାଯାଏ। ଆପଣଙ୍କ ଫୋନରେ ଥିବା ଡାୟାରୀ ସେହିପରି ରହିବ, ଏବଂ ମୁଭି ନାଇଟ୍ ଅନ୍ୟ ସଦସ୍ୟଙ୍କ ଡାୟାରୀରେ ପ୍ରସ୍ତୁତ କରିଥିବା ଟିକେଟ୍ ମଧ୍ୟ ରହିବ। ଏହାକୁ ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ ନାହିଁ।';
 
   @override
   String get acctDeleted => 'ଆପଣଙ୍କ ଖାତା ଡିଲିଟ୍ ହୋଇଗଲା। ଆପଣଙ୍କ ଡାୟାରୀ ଏହି ଫୋନରେ ରହିବ।';
@@ -1391,7 +1391,7 @@ class AppLocalizationsOr extends AppLocalizations {
 
   @override
   String get crewJoinNote =>
-      'ଯୋଡ଼ିଲେ ଆପଣଙ୍କର ଟିକ୍ଟ କିମ୍ବା ଦେଖିବା ଚାହୁଁଥିବା ସୂଚୀ ଗ୍ରୁପ୍ ଡେକ୍ ସହ ବାଣ୍ଟା ହେବ। ସଦସ୍ୟମାନେ କିମ୍ବେ ଯାହା ଅତିସମ୍ଭାବ୍ୟ କରିଛନ୍ତି ତାହା ଦେଖିପାରିବେ ନାହିଁ।';
+      'ଯୋଡ଼ିଲେ ଆପଣଙ୍କର ଟିକେଟ୍ କିମ୍ବା ଦେଖିବା ଚାହୁଁଥିବା ସୂଚୀ ଗ୍ରୁପ୍ ଡେକ୍ ସହ ବାଣ୍ଟା ହେବ। ସଦସ୍ୟମାନେ କିଏ କଣ ଯୋଡ଼ିଛି ତାହା ଦେଖିପାରିବେ ନାହିଁ।';
 
   @override
   String get joinAction => 'ଗ୍ରୁପ୍ ସହ ଯୋଡ଼ନ୍ତୁ';

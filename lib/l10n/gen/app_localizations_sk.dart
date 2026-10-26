@@ -1010,7 +1010,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Týmto zmažete svoj účet, svoj profil, svoj denník a zvyšok údajov svojho účtu zo servera Talkies. Nahlásenia, ktoré ste odoslali alebo dostali, sa archivujú bez identifikátora vášho účtu, pričom sa zachová dôvod, poznámka a dátum. Denník v telefóne zostane. Nemožno vrátiť.';
+      'Týmto zmažete svoj účet, svoj profil, svoj denník a zvyšok údajov svojho účtu zo servera Talkies. Nahlásenia, ktoré ste odoslali alebo dostali, sa archivujú bez identifikátora vášho účtu, pričom sa zachová dôvod, poznámka a dátum. Denník v telefóne zostane, rovnako ako lístky, ktoré filmový večer zapísal do denníkov ostatných členov. Nemožno vrátiť.';
 
   @override
   String get acctDeleted => 'Účet bol zmazaný. Denník zostáva na tomto telefóne.';

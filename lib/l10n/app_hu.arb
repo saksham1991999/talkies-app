@@ -330,7 +330,7 @@
   "acctSignedOut": "Kijelentkeztél. A napló marad ezen a telefonon.",
   "acctDelete": "Fiók törlése",
   "acctDeleteQ": "Törlöd a fiókod?",
-  "acctDeleteBody": "Ez törli a fiókodat, a profilodat, a naplódat és a fiók többi adatát a Talkies szerverről. A beküldött vagy kapott jelentéseket a fiókod azonosítója nélkül archiváljuk, az okot, a megjegyzést és a dátumot megtartva. A telefonon lévő napló megmarad. Ez nem visszavonható.",
+  "acctDeleteBody": "Ez törli a fiókodat, a profilodat, a naplódat és a fiók többi adatát a Talkies szerverről. A beküldött vagy kapott jelentéseket a fiókod azonosítója nélkül archiváljuk, az okot, a megjegyzést és a dátumot megtartva. A telefonon lévő napló megmarad, és a moziestek során más tagok naplójába írt jegyek is megmaradnak. Ez nem visszavonható.",
   "acctDeleted": "A fiókod törölve. A napló marad ezen a telefonon.",
   "acctDeleteFailed": "Nem sikerült törölni a fiókodat. Próbáld újra.",
   "acctDown": "A napló biztonságban van ezen a telefonon. A Talkies most nem érhető el.",

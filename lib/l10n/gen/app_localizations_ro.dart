@@ -1011,7 +1011,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Aceasta elimină contul, profilul, jurnalul și restul datelor contului tău de pe serverul Talkies. Semnalările pe care le-ai trimis sau primit sunt arhivate fără ID-ul contului tău, păstrând motivul, nota și data. Jurnalul de pe telefon rămâne. Nu se poate anula.';
+      'Aceasta elimină contul, profilul, jurnalul și restul datelor contului tău de pe serverul Talkies. Semnalările pe care le-ai trimis sau primit sunt arhivate fără ID-ul contului tău, păstrând motivul, nota și data. Jurnalul de pe telefon rămâne, la fel și biletele pe care seara de film le-a scris în jurnalele celorlalți membri. Nu se poate anula.';
 
   @override
   String get acctDeleted => 'Contul tău a fost șters. Jurnalul tău rămâne pe acest telefon.';

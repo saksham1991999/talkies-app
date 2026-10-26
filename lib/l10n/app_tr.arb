@@ -330,7 +330,7 @@
   "acctSignedOut": "Çıkış yapıldı. Günlüğün bu telefonda kalır.",
   "acctDelete": "Hesabı sil",
   "acctDeleteQ": "Hesabın silinsin mi?",
-  "acctDeleteBody": "Bu işlem hesabını, profilini, günlüğünü ve hesabının geri kalan verilerini Talkies sunucusundan siler. Gönderdiğin veya aldığın şikayetler hesap kimliğin olmadan arşivlenir; yalnızca neden, not ve tarih saklanır. Telefonundaki günlük olduğu gibi kalır. Bu işlemi geri alamazsın.",
+  "acctDeleteBody": "Bu işlem hesabını, profilini, günlüğünü ve hesabının geri kalan verilerini Talkies sunucusundan siler. Gönderdiğin veya aldığın şikayetler hesap kimliğin olmadan arşivlenir; yalnızca neden, not ve tarih saklanır. Telefonundaki günlük olduğu gibi kalır; film gecesinin diğer üyelerin günlüğüne yazdığı biletler de kalır. Bu işlemi geri alamazsın.",
   "acctDeleted": "Hesabın silindi. Günlüğün bu telefonda kalır.",
   "acctDeleteFailed": "Hesabın silinemedi. Tekrar dene.",
   "acctDown": "Günlüğün bu telefonda güvende. Şu an Talkies'e ulaşılamıyor.",

@@ -330,7 +330,7 @@
   "acctSignedOut": "Utloggad. Din dagbok stannar på den här telefonen.",
   "acctDelete": "Radera konto",
   "acctDeleteQ": "Radera ditt konto?",
-  "acctDeleteBody": "Detta tar bort ditt konto, din profil, din dagbok och resten av dina kontouppgifter från Talkies-servern. Rapporter du skickade eller tog emot arkiveras utan ditt konto-ID, medan orsak, anteckning och datum behålls. Dagboken på telefonen ligger kvar. Du kan inte ångra det.",
+  "acctDeleteBody": "Detta tar bort ditt konto, din profil, din dagbok och resten av dina kontouppgifter från Talkies-servern. Rapporter du skickade eller tog emot arkiveras utan ditt konto-ID, medan orsak, anteckning och datum behålls. Dagboken på telefonen ligger kvar, och det gör även biljetterna som en filmkväll skrev in i andra medlemmars dagböcker. Du kan inte ångra det.",
   "acctDeleted": "Ditt konto är raderat. Din dagbok stannar på den här telefonen.",
   "acctDeleteFailed": "Kunde inte radera ditt konto. Försök igen.",
   "acctDown": "Din dagbok är säker på den här telefonen. Talkies kan inte nås just nu.",

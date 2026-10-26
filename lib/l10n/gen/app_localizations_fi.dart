@@ -1010,7 +1010,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Tämä poistaa tilisi, profiilisi, päiväkirjasi ja muut tilitietosi Talkies-palvelimelta. Lähettämäsi tai saamasi ilmoitukset arkistoidaan ilman tilisi tunnistetta, ja niistä säilyvät syy, muistiinpano ja päivämäärä. Puhelimesi päiväkirja pysyy ennallaan. Tätä ei voi kumota.';
+      'Tämä poistaa tilisi, profiilisi, päiväkirjasi ja muut tilitietosi Talkies-palvelimelta. Lähettämäsi tai saamasi ilmoitukset arkistoidaan ilman tilisi tunnistetta, ja niistä säilyvät syy, muistiinpano ja päivämäärä. Puhelimesi päiväkirja pysyy ennallaan, ja niin myös liput, jotka elokuvailta kirjoitti muiden jäsenten päiväkirjoihin. Tätä ei voi kumota.';
 
   @override
   String get acctDeleted => 'Tilisi on poistettu. Päiväkirjasi pysyy tässä puhelimessa.';

@@ -330,7 +330,7 @@
   "acctSignedOut": "Logget ut. Dagboken din blir igjen på denne telefonen.",
   "acctDelete": "Slett konto",
   "acctDeleteQ": "Vil du slette kontoen din?",
-  "acctDeleteBody": "Dette fjerner kontoen din, profilen din, dagboken din og resten av kontodataene dine fra Talkies-serveren. Rapporter du har sendt eller mottatt, arkiveres uten konto-ID-en din, med årsak, notat og dato. Dagboken på telefonen din blir liggende. Du kan ikke angre dette.",
+  "acctDeleteBody": "Dette fjerner kontoen din, profilen din, dagboken din og resten av kontodataene dine fra Talkies-serveren. Rapporter du har sendt eller mottatt, arkiveres uten konto-ID-en din, med årsak, notat og dato. Dagboken på telefonen din blir liggende, og det samme gjør billettene som en filmkveld skrev i andre medlemmers dagbøker. Du kan ikke angre dette.",
   "acctDeleted": "Kontoen din er slettet. Dagboken din blir igjen på denne telefonen.",
   "acctDeleteFailed": "Kunne ikke slette kontoen din. Prøv igjen.",
   "acctDown": "Dagboken din er trygg på denne telefonen. Talkies er ikke tilgjengelig nå.",

@@ -198,6 +198,10 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
       context: context,
       builder: (c) => AlertDialog(
         title: Text(l.acctDeleteQ),
+        // The body names what is removed and what survives, so it runs long in
+        // German, Russian and Tamil; scroll it rather than let a small screen clip
+        // the sentence that says the local diary stays.
+        scrollable: true,
         content: Text(l.acctDeleteBody),
         actions: [
           TextButton(style: linkStyle(context), onPressed: () => Navigator.pop(c, false), child: Text(l.cancel)),

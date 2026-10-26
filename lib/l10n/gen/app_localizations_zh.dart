@@ -1004,7 +1004,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      '这会从 Talkies 服务器删除你的账号、你的个人资料、你的日记以及账号的其余数据。你提交或收到的举报会在没有账号 ID 的情况下归档，仅保留原因、备注和日期。手机上的日记仍会保留。此操作无法撤销。';
+      '这会从 Talkies 服务器删除你的账号、你的个人资料、你的日记以及账号的其余数据。你提交或收到的举报会在没有账号 ID 的情况下归档，仅保留原因、备注和日期。手机上的日记仍会保留，电影之夜写进其他成员日记的票根也同样保留。此操作无法撤销。';
 
   @override
   String get acctDeleted => '账号已删除。你的日记仍保存在这部手机上。';
@@ -3130,7 +3130,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get acctDeleteBody =>
-      '這將從 Talkies 伺服器移除你的帳戶、你的個人檔案、你的日記以及帳戶的其餘資料。你送出或收到的檢舉會在沒有帳戶 ID 的情況下封存，僅保留原因、備註和日期。手機上的日記會保留。此操作無法復原。';
+      '這將從 Talkies 伺服器移除你的帳戶、你的個人檔案、你的日記以及帳戶的其餘資料。你送出或收到的檢舉會在沒有帳戶 ID 的情況下封存，僅保留原因、備註和日期。手機上的日記會保留，電影之夜寫進其他成員日記的票根也同樣會保留。此操作無法復原。';
 
   @override
   String get acctDeleted => '你的帳戶已刪除。你的日記保留在此手機上。';

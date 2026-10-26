@@ -330,7 +330,7 @@
   "acctSignedOut": "Tanda keluar. Diari anda kekal pada telefon ini.",
   "acctDelete": "Padam akaun",
   "acctDeleteQ": "Padam akaun anda?",
-  "acctDeleteBody": "Ini memadam akaun, profil, diari dan data akaun selebihnya anda dari pelayan Talkies. Laporan yang anda hantar atau terima diarkibkan tanpa ID akaun anda, dengan sebab, nota dan tarikh dikekalkan. Diari pada telefon anda kekal. Anda tidak boleh batalkan ini.",
+  "acctDeleteBody": "Ini memadam akaun, profil, diari dan data akaun selebihnya anda dari pelayan Talkies. Laporan yang anda hantar atau terima diarkibkan tanpa ID akaun anda, dengan sebab, nota dan tarikh dikekalkan. Diari pada telefon anda kekal, begitu juga tiket yang ditulis oleh malam filem ke dalam diari ahli lain. Anda tidak boleh batalkan ini.",
   "acctDeleted": "Akaun anda dipadam. Diari anda kekal pada telefon ini.",
   "acctDeleteFailed": "Tidak dapat memadam akaun anda. Cuba lagi.",
   "acctDown": "Diari anda selamat pada telefon ini. Talkies tidak dapat dihubungi sekarang.",

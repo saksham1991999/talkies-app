@@ -216,6 +216,47 @@ void main() {
     }
   });
 
+  test('the delete dialog says what survives, not only what goes', () {
+    // The dialog is the last thing read before a delete, and it twice understated
+    // the result: first it stopped at "your diary is removed" without saying the
+    // copy on the phone stays, then it named the phone but not the stubs a movie
+    // night wrote into other members' diaries. The policy page and all 50 store
+    // listings carry both facts, so the dialog must too.
+    final en = strings('en')['acctDeleteBody']!;
+    for (final fact in [
+      'from the Talkies server',
+      'The diary on your phone stays',
+      "other members' diaries",
+      'stubs',
+      'cannot undo',
+    ]) {
+      expect(en, contains(fact), reason: 'English acctDeleteBody lost "$fact"');
+    }
+
+    // A translation cannot be substring-checked, so pin a floor per language. The
+    // floor is below the shipped length, which means a reworded clause passes and a
+    // dropped one does not. Raise these when a language is edited to say more.
+    const floors = <String, int>{
+      'ar': 255, 'bn': 313, 'ca': 339, 'cs': 300, 'da': 312, 'de': 373,
+      'el': 371, 'es': 337, 'fi': 310, 'fr': 353, 'gu': 280, 'he': 226,
+      'hi': 291, 'hr': 295, 'hu': 297, 'id': 298, 'it': 363, 'ja': 137,
+      'kn': 309, 'ko': 139, 'ml': 327, 'mr': 318, 'ms': 292, 'nl': 351,
+      'no': 307, 'or': 308, 'pa': 312, 'pl': 323, 'pt': 315, 'pt_PT': 324,
+      'ro': 304, 'ru': 289, 'sk': 308, 'sl': 325, 'sv': 315, 'ta': 348,
+      'te': 293, 'th': 271, 'tr': 303, 'uk': 302, 'ur': 321, 'vi': 316,
+      'zh': 106, 'zh_Hant': 106,
+    };
+    for (final MapEntry(key: lang, value: floor) in floors.entries) {
+      final body = strings(lang)['acctDeleteBody']!;
+      expect(body.length, greaterThanOrEqualTo(floor),
+          reason: '$lang.acctDeleteBody is ${body.length} chars; the disclosure '
+              'needs at least $floor. A dropped clause is the usual cause.');
+    }
+
+    // The floors must cover every language, so a new ARB cannot slip past.
+    expect(floors.keys.toSet(), languages().toSet());
+  });
+
   test('no string borrows a letter from another script', () {
     // Machine translation drops single letters of a neighbouring alphabet into
     // the middle of a word: Korean 삭제 inside Thai, Hindi बदल inside Punjabi,

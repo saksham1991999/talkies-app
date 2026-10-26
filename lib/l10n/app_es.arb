@@ -330,7 +330,7 @@
   "acctSignedOut": "Sesión cerrada. Tu diario se queda en este teléfono.",
   "acctDelete": "Eliminar cuenta",
   "acctDeleteQ": "¿Eliminar tu cuenta?",
-  "acctDeleteBody": "Esto elimina tu cuenta, tu perfil, tu diario y el resto de los datos de tu cuenta del servidor de Talkies. Los reportes que enviaste o recibiste se archivan sin el identificador de tu cuenta, conservando el motivo, la nota y la fecha. El diario de tu teléfono se queda. No puedes deshacerlo.",
+  "acctDeleteBody": "Esto elimina tu cuenta, tu perfil, tu diario y el resto de los datos de tu cuenta del servidor de Talkies. Los reportes que enviaste o recibiste se archivan sin el identificador de tu cuenta, conservando el motivo, la nota y la fecha. El diario de tu teléfono se queda, y también las entradas que una noche de cine escribió en los diarios de los demás miembros. No puedes deshacerlo.",
   "acctDeleted": "Tu cuenta ha sido eliminada. Tu diario se queda en este teléfono.",
   "acctDeleteFailed": "No se pudo eliminar tu cuenta. Inténtalo de nuevo.",
   "acctDown": "Tu diario está seguro en este teléfono. Talkies no está disponible ahora mismo.",

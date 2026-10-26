@@ -1009,7 +1009,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'To usuwa Twoje konto, Twój profil, Twój dziennik oraz resztę danych Twojego konta z serwera Talkies. Zgłoszenia, które wysłałeś lub otrzymałeś, są archiwizowane bez identyfikatora Twojego konta, z zachowaniem powodu, notatki i daty. Dziennik na telefonie zostaje. Tego nie można cofnąć.';
+      'To usuwa Twoje konto, Twój profil, Twój dziennik oraz resztę danych Twojego konta z serwera Talkies. Zgłoszenia, które wysłałeś lub otrzymałeś, są archiwizowane bez identyfikatora Twojego konta, z zachowaniem powodu, notatki i daty. Dziennik na telefonie zostaje, podobnie jak bilety, które wieczór filmowy zapisał w dziennikach innych członków. Tego nie można cofnąć.';
 
   @override
   String get acctDeleted => 'Twoje konto zostało usunięte. Twój dziennik zostaje na tym telefonie.';

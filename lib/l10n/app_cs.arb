@@ -330,7 +330,7 @@
   "acctSignedOut": "Odhlášeno. Váš deník zůstává na tomto telefonu.",
   "acctDelete": "Smazat účet",
   "acctDeleteQ": "Smazat váš účet?",
-  "acctDeleteBody": "Tímto odstraníte ze serveru Talkies svůj účet, svůj profil, svůj deník a zbytek dat účtu. Nahlášení, která jste podali nebo obdrželi, se archivují bez identifikátoru vašeho účtu, ponechává se důvod, poznámka a datum. Deník na telefonu zůstává. Tuto akci nelze vrátit.",
+  "acctDeleteBody": "Tímto odstraníte ze serveru Talkies svůj účet, svůj profil, svůj deník a zbytek dat účtu. Nahlášení, která jste podali nebo obdrželi, se archivují bez identifikátoru vašeho účtu, ponechává se důvod, poznámka a datum. Deník na telefonu zůstává, a stejně tak lístky, které filmová noc zapsala do deníků ostatních členů. Tuto akci nelze vrátit.",
   "acctDeleted": "Váš účet je smazán. Váš deník zůstává na tomto telefonu.",
   "acctDeleteFailed": "Účet se nepodařilo smazat. Zkuste to znovu.",
   "acctDown": "Váš deník je bezpečně uložen na tomto telefonu. K Talkies se teď nedá připojit.",

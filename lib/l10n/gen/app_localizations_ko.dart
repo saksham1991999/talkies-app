@@ -1005,7 +1005,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      '계정, 프로필, 일지와 나머지 계정 데이터가 Talkies 서버에서 삭제됩니다. 신고한 내용이나 받은 신고는 계정 ID 없이 보관되며, 사유, 메모, 날짜는 남습니다. 기기의 일지는 그대로 남습니다. 되돌릴 수 없습니다.';
+      '계정, 프로필, 일지와 나머지 계정 데이터가 Talkies 서버에서 삭제됩니다. 신고한 내용이나 받은 신고는 계정 ID 없이 보관되며, 사유, 메모, 날짜는 남습니다. 기기의 일지는 그대로 남고, 무비 나이트에서 다른 멤버의 일지에 남긴 티켓도 그대로 남습니다. 되돌릴 수 없습니다.';
 
   @override
   String get acctDeleted => '계정이 삭제되었습니다. 일지는 이 기기에 남아 있습니다.';

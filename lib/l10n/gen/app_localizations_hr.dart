@@ -1009,7 +1009,7 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get acctDeleteBody =>
-      'Ovo uklanja tvoj račun, tvoj profil, tvoj dnevnik i ostale podatke računa s Talkies poslužitelja. Prijave koje si poslao ili primio arhiviraju se bez ID-a tvog računa, uz zadržani razlog, bilješku i datum. Dnevnik na tvom telefonu ostaje. Ovo ne možeš poništiti.';
+      'Ovo uklanja tvoj račun, tvoj profil, tvoj dnevnik i ostale podatke računa s Talkies poslužitelja. Prijave koje si poslao ili primio arhiviraju se bez ID-a tvog računa, uz zadržani razlog, bilješku i datum. Dnevnik na tvom telefonu ostaje, a ostaju i ulaznice koje je kino večer upisala u dnevnike drugih članova. Ovo ne možeš poništiti.';
 
   @override
   String get acctDeleted => 'Tvoj račun je izbrisan. Tvoj dnevnik ostaje na ovom telefonu.';

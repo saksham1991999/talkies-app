@@ -330,7 +330,7 @@
   "acctSignedOut": "Odjavljen si. Tvoj dnevnik ostaje na ovom telefonu.",
   "acctDelete": "Izbriši račun",
   "acctDeleteQ": "Izbrisati tvoj račun?",
-  "acctDeleteBody": "Ovo uklanja tvoj račun, tvoj profil, tvoj dnevnik i ostale podatke računa s Talkies poslužitelja. Prijave koje si poslao ili primio arhiviraju se bez ID-a tvog računa, uz zadržani razlog, bilješku i datum. Dnevnik na tvom telefonu ostaje. Ovo ne možeš poništiti.",
+  "acctDeleteBody": "Ovo uklanja tvoj račun, tvoj profil, tvoj dnevnik i ostale podatke računa s Talkies poslužitelja. Prijave koje si poslao ili primio arhiviraju se bez ID-a tvog računa, uz zadržani razlog, bilješku i datum. Dnevnik na tvom telefonu ostaje, a ostaju i ulaznice koje je kino večer upisala u dnevnike drugih članova. Ovo ne možeš poništiti.",
   "acctDeleted": "Tvoj račun je izbrisan. Tvoj dnevnik ostaje na ovom telefonu.",
   "acctDeleteFailed": "Račun nije izbrisan. Pokušaj ponovno.",
   "acctDown": "Tvoj dnevnik je siguran na ovom telefonu. Trenutno se ne može dostići Talkies.",

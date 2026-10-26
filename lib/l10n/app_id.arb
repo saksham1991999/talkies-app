@@ -330,7 +330,7 @@
   "acctSignedOut": "Kamu sudah keluar. Buku harian tetap ada di ponsel ini.",
   "acctDelete": "Hapus akun",
   "acctDeleteQ": "Hapus akunmu?",
-  "acctDeleteBody": "Ini menghapus akunmu, profilmu, buku harianmu dan sisa data akunmu dari server Talkies. Laporan yang kamu kirim atau terima diarsipkan tanpa ID akunmu, dengan menyimpan alasan, catatan dan tanggal. Buku harian di ponselmu tetap ada. Tindakan ini tidak bisa dibatalkan.",
+  "acctDeleteBody": "Ini menghapus akunmu, profilmu, buku harianmu dan sisa data akunmu dari server Talkies. Laporan yang kamu kirim atau terima diarsipkan tanpa ID akunmu, dengan menyimpan alasan, catatan dan tanggal. Buku harian di ponselmu tetap ada, begitu juga tiket yang ditulis malam film ke buku harian anggota lain. Tindakan ini tidak bisa dibatalkan.",
   "acctDeleted": "Akunmu sudah dihapus. Buku harian tetap ada di ponsel ini.",
   "acctDeleteFailed": "Gagal menghapus akunmu. Coba lagi.",
   "acctDown": "Buku harianmu aman di ponsel ini. Talkies tidak dapat dihubungi saat ini.",
