@@ -18,6 +18,7 @@ import 'package:talkies/ui/theme.dart';
 import '../support/device.dart' show MemoryStorage, testCatalog;
 import '../support/fake_api.dart';
 import '../support/fake_backend.dart';
+import '../support/scratch.dart';
 
 /// Tanker, Teko and Roboto with their real glyph metrics. Tests draw boxy Ahem letters unless fonts are
 /// loaded, and Ahem is far wider than any real font, which would fake overflow. Roboto comes from the Flutter
@@ -98,9 +99,7 @@ class Phone {
   }) : server = server ?? FakeBackend(),
        dir = Directory.systemTemp.createTempSync('talkies_ui'),
        storage = MemoryStorage() {
-    addTearDown(() {
-      if (dir.existsSync()) dir.deleteSync(recursive: true);
-    });
+    addTearDown(() => removeScratch(dir));
   }
 
   /// False builds the app with no server address: no online code may run.

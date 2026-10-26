@@ -17,6 +17,7 @@ import 'package:talkies/state/providers.dart';
 import 'package:talkies/state/sync.dart';
 
 import 'fake_backend.dart';
+import 'scratch.dart';
 
 /// Secure storage in memory, one per phone. [failing] makes every call throw, like a missing keychain.
 class MemoryStorage extends FlutterSecureStorage {
@@ -169,7 +170,10 @@ class Device {
        storage = MemoryStorage(),
        client = client ?? server.client {
     addTearDown(() {
-      if (this.dir.existsSync()) this.dir.deleteSync(recursive: true);
+      // Dispose before removing the folder. Disposing stops the providers that write
+      // into it, so the delete does not race a save that is half way to disk.
+      c.dispose();
+      removeScratch(this.dir);
     });
     catalog ??= testCatalog();
     c = _make();
