@@ -782,7 +782,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get aboutBody =>
-      'Talkies ભારતીય ફિલમ પ્રેમીઓ માટેના ટિકિટ દૈનિક ટીકીટ ડાયરી છે. તમારી ટિકિટો આ ફોન પર રહે છે. ફિલમ વિગતો Wikidata (CC0) થી અને પોસ્ટરો Wikipedia થી મળે છે.';
+      'Talkies ભારતીય ફિલ્મ પ્રેમીઓ માટેની ટિકિટ ડાયરી છે. તમારી ટિકિટો આ ફોન પર રહે છે. ફિલ્મ વિગતો Wikidata (CC0) થી અને પોસ્ટરો Wikipedia થી મળે છે.';
 
   @override
   String get whatsNew => 'નવું શું છે';
@@ -809,7 +809,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get nothingToExport => 'હજી કોઈ ટિકિટ એક્સપોર્ટ કરવા માટે નથી.';
 
   @override
-  String get tagsEmpty => 'હજી કોઈ ટૅગ નથી. અહીં અથવા ફિલમ નોંધતાં સમયે એક ઉમેરો.';
+  String get tagsEmpty => 'હજી કોઈ ટૅગ નથી. અહીં અથવા ફિલ્મ નોંધતાં સમયે એક ઉમેરો.';
 
   @override
   String get renameTag => 'ટેગનું નામ બદલો';
@@ -1701,7 +1701,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get chatAttach => 'ફિલ્મ જોડો';
 
   @override
-  String get chatRemoveFilm => 'ફિલમ દૂર કરો';
+  String get chatRemoveFilm => 'ફિલ્મ દૂર કરો';
 
   @override
   String get chatEmpty => 'હજુ સુધી સંદેશ નથી. હેલ્લો કહો.';
