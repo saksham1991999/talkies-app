@@ -97,7 +97,8 @@ class HttpApi implements Api {
 
     final authPath = path.startsWith('/v1/auth/');
     final session = _ref.read(sessionProvider.notifier);
-    final signedIn = _ref.read(sessionProvider) != null;
+    final user = _ref.read(sessionProvider)?.userId;
+    final signedIn = user != null;
     if (!authPath && !signedIn) throw const ApiUnauthorized();
 
     // Tokens are read lazily: a signed-out user never touches secure storage.
@@ -113,6 +114,9 @@ class HttpApi implements Api {
       // One refresh for every request that failed at the same time, then one retry.
       if (!await session.refresh(token)) throw const ApiUnauthorized();
       _live();
+      // A request that outlived its session must not be replayed under another account: its body
+      // was built from the old account's data. A sync push of a deleted account is the case.
+      if (_ref.read(sessionProvider)?.userId != user) throw const ApiUnauthorized();
       token = await session.accessToken();
       _live();
       reply = await _send(method, path, query, body, token);

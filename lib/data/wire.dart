@@ -371,4 +371,9 @@ class SyncStore {
     generation++;
     save();
   }
+
+  /// Ends a run in flight without losing anything: the cursor and the meta stay
+  /// for the account that comes back, but the rows that run is carrying belong
+  /// to the account we are leaving, so it must not write them.
+  void invalidate() => generation++;
 }

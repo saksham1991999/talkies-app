@@ -128,15 +128,21 @@ void main() {
     await t.pumpAndSettle();
     await t.enterText(find.byKey(const Key('deck-search')), 'film');
     await t.pumpAndSettle();
+    // `enterText` leaves the caret at the end of "film", where arrowRight has
+    // nowhere to go, so an assertion after it would pass whether the field got
+    // the key or not. Move the caret left first: the right press below then
+    // proves the key reached the field, and that the field is not the only thing
+    // that could have taken it.
+    final field = t.widget<TextField>(find.byKey(const Key('deck-search'))).controller!;
+    await t.sendKeyEvent(LogicalKeyboardKey.arrowLeft);
+    await t.pumpAndSettle();
+    expect(field.selection.baseOffset, 3, reason: 'arrowLeft moved the caret in the field');
     await t.sendKeyEvent(LogicalKeyboardKey.arrowRight);
     await t.pumpAndSettle();
     expect(_votes(r, id, 'Me'), isEmpty, reason: 'no card was voted');
     expect(find.text('1 of 8'), findsOneWidget, reason: 'the top card did not move');
-    expect(
-      t.widget<TextField>(find.byKey(const Key('deck-search'))).controller?.text,
-      'film',
-      reason: 'the field kept its text',
-    );
+    expect(field.selection.baseOffset, 4, reason: 'arrowRight moved the caret back to the end');
+    expect(field.text, 'film', reason: 'the field kept its text');
   });
 
   testWidgets('a swipe on the card itself votes too', (t) async {

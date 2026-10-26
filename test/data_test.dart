@@ -214,6 +214,7 @@ void main() {
             fdfs: true,
             lang: 'hi',
             company: 'Dadi',
+            private: true,
           ),
           Stub(
             id: 'b',
@@ -243,6 +244,7 @@ void main() {
         [s1.show, s1.format, s1.seatClass, s1.seat, s1.price, s1.fdfs, s1.lang, s1.company],
         ['matinee', '2d', 'Balcony', 'H12', 120.0, true, 'hi', 'Dadi'],
       );
+      expect(s1.private, isTrue, reason: 'a restore must not publish a private stub');
       final (f2, s2) = r.rows[0];
       expect(f2.title, 'Home Video, "Part 1"');
       expect(f2.isCustom, isTrue);

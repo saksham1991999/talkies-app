@@ -162,6 +162,9 @@ class SyncEngine extends Notifier<SyncState> {
     if (last == user) return true;
     final d = ref.read(diaryProvider);
     if (last != null && (d.stubs.isNotEmpty || d.wishes.isNotEmpty)) {
+      // The store still holds the last account's rows until the question is answered, so a run
+      // in flight must stop here: its generation is now the old one.
+      _store.invalidate();
       state = SyncState.needsAccountChoice;
       return false;
     }
@@ -506,6 +509,8 @@ class SyncEngine extends Notifier<SyncState> {
       }
       if (records.isEmpty) continue;
 
+      // A reset between the scan above and this send would put these rows under another account.
+      if (!ref.mounted || _store.generation != gen) return;
       final reply = await api.post('/v1/sync/push', body: SyncPush(records).toJson());
       final res = SyncPushResult.fromJson(reply as Map<String, dynamic>);
       if (!ref.mounted || _store.generation != gen) return;

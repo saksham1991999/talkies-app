@@ -39,7 +39,7 @@
       "name": "Talkies: Movie Ticket Diary",
       "alternateName": "Talkies",
       "applicationCategory": "EntertainmentApplication",
-      "operatingSystem": ["iOS", "iPadOS", "Android"],
+      "operatingSystem": ["iOS", "iPadOS"],
       "softwareVersion": "1.0.0",
       "url": "https://saksham1991999.github.io/talkies-app/",
       "image": "https://saksham1991999.github.io/talkies-app/img/og.jpg",
@@ -187,6 +187,10 @@
     <video controls preload="metadata" playsinline width="1920" height="1080"
            poster="img/talkies-explainer-poster.jpg">
       <source src="img/talkies-explainer.mp4" type="video/mp4">
+      <!-- Fallback for a browser that cannot play the mp4, which would otherwise
+           render an empty box. The film has an audio track, so a transcript is
+           still owed to anyone who cannot hear it; the link is the stopgap. -->
+      <p>The 75-second tour plays here. If it does not, <a href="img/talkies-explainer.mp4">open the film directly</a>.</p>
     </video>
   </section>
   <section class="guide" aria-label="About Talkies">

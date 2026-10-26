@@ -101,10 +101,16 @@ class RemoteCrewRepo implements CrewRepo {
       votes: {...crew.votes, ?me: reply.mine},
       tallies: reply.tallies,
       // The list carries only mine; keep each night's known guest votes, as
-      // [_take] does for a single night read.
+      // [_take] does for a single night read. Filtered to members the group
+      // still has: the cache outlives a removal, and keeping a removed guest's
+      // vote would inflate that night's approvals and show a vote from someone
+      // who is no longer in the crew.
       nights: [
         for (final n in Night.listFromJson(nights, mineFor: me))
-          n.copyWith(votes: {...?oldVotes[n.id], ...n.votes}),
+          n.copyWith(votes: {
+            for (final e in {...?oldVotes[n.id], ...n.votes}.entries)
+              if (head.member(e.key) != null) e.key: e.value,
+          }),
       ],
     );
   });

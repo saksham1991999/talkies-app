@@ -212,11 +212,17 @@ def _meta_span(text: str, key: str) -> tuple[int, int] | None:
                 i += 1
                 break
         i += 1
-    # Swallow the trailing comma and the rest of the line.
-    while i < len(text) and text[i] in ' \t':
-        i += 1
-    if i < len(text) and text[i] == ',':
-        i += 1
+    # Swallow the trailing comma and the rest of the line. The comma may sit on
+    # the line after the closing brace (valid JSON, and some formatters write it
+    # that way), so whitespace is skipped before asking whether there is one.
+    # Consuming only the brace's own line in that case left the comma behind and
+    # `set_meta` then wrote a file that no longer parsed.
+    j = i
+    while j < len(text) and text[j] in ' \t\n':
+        j += 1
+    if j < len(text) and text[j] == ',':
+        end = text.find('\n', j)
+        return (head.start(), len(text) if end == -1 else end + 1)
     end = text.find('\n', i)
     return (head.start(), len(text) if end == -1 else end + 1)
 

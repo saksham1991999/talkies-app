@@ -226,9 +226,7 @@ html:has(body.landing) { background: #3a1519; }
   .admit .stub-body { padding: 22px 24px 26px; }
   .admit .stub-body p { font-size: 17px; }
   .stores img { height: 44px; }
-  .guide { padding: 2vh 16px 6vh; gap: 20px; }
 }
-
 /* Tagline under the wordmark: gives the H1 its topic in plain text. */
 .tagline {
   margin: 12px 0 0;
@@ -266,8 +264,6 @@ html:has(body.landing) { background: #3a1519; }
 .guide .stub-body p { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
 .guide .stub-body .lead { font-size: 19px; }
 .guide .stores { margin: 18px 0 4px; }
-.android-soon { font-size: 15px; color: var(--ink-soft); margin: 14px 0 0; }
-.admit .fine { margin-top: 10px; }
 
 /* The 75-second tour: the explainer film, framed like a screen. */
 .screening {
@@ -299,4 +295,18 @@ html:has(body.landing) { background: #3a1519; }
   background: #2a0e11;
   outline: 1px solid rgba(239, 223, 214, 0.14);
   outline-offset: -1px;
+}
+
+/* Fine print and the Android note sit inside a stub body, whose own paragraph
+   rules are more specific than a bare class. Both selectors name the paragraph
+   element for that reason: the first versions lost the cascade and the notice
+   rendered at body size, flush against the paragraph above it. */
+.admit .stub-body p.fine { margin-top: 10px; }
+.admit .stub-body p.android-soon,
+.guide .stub-body p.android-soon { font-size: 15px; color: var(--ink-soft); margin: 14px 0 0; }
+
+/* Mobile last, so these win over the base rules above rather than losing to
+   whichever base rule happens to be written further down the file. */
+@media (max-width: 520px) {
+  .guide { padding: 2vh 16px 6vh; gap: 20px; }
 }

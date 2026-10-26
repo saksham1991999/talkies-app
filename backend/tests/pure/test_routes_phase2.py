@@ -339,6 +339,11 @@ async def test_reaction_put_and_clear():
         reply = await client.put("/v1/reactions", json=body, headers=HEADERS)
     assert reply.status_code == 204
     assert conn.args_of("insert into reactions") == (USER, OTHER, "Q949228", FILM, 3)
+    # The pair lock, keyed on the two ids in sorted order. Asserted on the
+    # arguments, not just the statement: LOCK_USER and LOCK_PAIR are both
+    # `pg_advisory_xact_lock`, so a scripted conn accepts the wrong one happily
+    # and the claim that this shares a lock with block() would go unchecked.
+    assert conn.args_of("pg_advisory_xact_lock") == tuple(sorted((str(USER), str(OTHER))))
     app, conn = app_for(("pg_advisory_xact_lock", None), ("delete from reactions", "DELETE 1"))
     async with client_for(app) as client:
         reply = await client.put("/v1/reactions", json={**body, "reaction": None}, headers=HEADERS)

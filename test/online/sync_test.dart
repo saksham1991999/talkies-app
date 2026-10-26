@@ -814,9 +814,13 @@ void main() {
       await expectLater(a.c.read(apiProvider).get('/v1/me'), throwsA(isA<ApiUnauthorized>()));
       expect(a.c.read(signedInProvider), isFalse);
 
+      final gen = a.store.generation;
       await a.signIn('two@example.test');
       final two = w.user(a);
       expect(a.syncState, SyncState.needsAccountChoice);
+      // The first account's store is still here, so the run that belongs to it must be stopped by
+      // the generation alone: it is the only signal an unanswered switch gives.
+      expect(a.store.generation, greaterThan(gen));
       final calls = w.server.total;
       await a.engine.run();
       expect(w.server.total, calls); // nothing syncs until the user chooses
@@ -868,6 +872,23 @@ void main() {
       expect(w.server.rowsOf(w.user(a)).where((r) => r['kind'] == 'stub'), hasLength(2));
       expect(int.parse(w.server.calls.lastWhere((c) => c.key == 'GET /v1/sync/pull').query['after']!), greaterThan(0));
       expect(w.server.count('GET /v1/sync/pull'), pulls + 1);
+    });
+
+    test('an expired session ends the run in flight but keeps what it had synced', () async {
+      final w = World();
+      final a = await w.phone();
+      a.watch('Q1');
+      await a.sync();
+      await a.sync(); // the second pull is the one that passes the pushed row
+      final cursor = a.store.cursor, gen = a.store.generation, user = a.store.lastUser;
+      expect(cursor, greaterThan(0));
+      w.server.revokeAll();
+      await expectLater(a.c.read(apiProvider).get('/v1/me'), throwsA(isA<ApiUnauthorized>()));
+      // expire() keeps the store for the same account to resume, so only the generation can tell a
+      // run that began under it to stop.
+      expect(a.store.generation, greaterThan(gen));
+      expect(a.store.cursor, cursor);
+      expect(a.store.lastUser, user);
     });
 
     test('an empty phone does not ask: it starts clean with whoever signs in', () async {

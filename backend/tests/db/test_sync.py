@@ -23,7 +23,11 @@ async def test_push_then_pull_round_trip(world):
     record = stub("s1", date=today(), rating=4.5, memo="loved it", seat="F14")
     result = await asha.push(record)
     assert result["conflicts"] == [] and result["rejected"] == []
-    assert parse(result["server_time"]) - now() < timedelta(minutes=1)
+    # Both directions, because the server stamps server_time during the push:
+    # comparing only against `now()` read after the push made this true no matter
+    # how stale the stamp was, since the difference is always negative.
+    drift = abs(parse(result["server_time"]) - now())
+    assert drift < timedelta(minutes=1), f"server clock drifted by {drift}"
     pulled = await asha.pull()
     assert pulled["more"] is False
     (got,) = pulled["records"]

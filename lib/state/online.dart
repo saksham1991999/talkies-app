@@ -494,11 +494,17 @@ class SessionNotifier extends Notifier<Session?> {
   Future<void> Function() _teardown({required bool resetSync}) {
     final file = _file;
     final tokens = ref.read(tokenStoreProvider);
-    final sync = resetSync ? ref.read(syncStoreProvider) : null;
+    final sync = ref.read(syncStoreProvider);
     final signedIn = state != null;
     return () async {
       if (!signedIn) return;
-      sync?.reset(); // before the flip: the engine reads a clean store
+      // Before the flip: the engine reads the store at once, and a run that began under this
+      // session must not finish under the next one, even when the store itself survives.
+      if (resetSync) {
+        sync.reset();
+      } else {
+        sync.invalidate(); // an expiry keeps the store for the same account
+      }
       if (ref.mounted) state = null; // the UI and the engine react now
       try {
         if (_googleInit != null) await GoogleSignIn.instance.signOut();

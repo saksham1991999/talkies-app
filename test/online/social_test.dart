@@ -612,7 +612,8 @@ void main() {
     test('a snapshot that repeats a genre or a language counts it once', () {
       // A synced snapshot may hold duplicates in `g` / `l`. The server counts a
       // film once per distinct value, and so must the local profile: counted
-      // twice, romance and kn would lead the top three and push drama and ta out.
+      // twice, romance and kn would lead their top three and push drama and te
+      // out of it.
       Film f(String id, List<String> g, List<String> l) => Film(id: id, title: id, genres: g, langs: l);
       final d = Diary(
         films: {

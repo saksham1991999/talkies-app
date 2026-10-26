@@ -220,6 +220,7 @@ Rules:
 - Approval voting: a member approves any options. Close without ids: the film and slot with the most approvals win, ties by lowest `position`.
 - Slots must fall between now minus 1 day and now plus 400 days.
 - `rsvps` lists only members who replied.
+- Wrap-up reads the membership, locks every member it saw, then re-reads the votes. A member who joins or leaves inside that window makes the snapshot wrong, so the write is refused with `409 group_changed` rather than stamping stubs for someone who is no longer in the crew. Retry it: the route rebuilds the plan from the current membership, and three attempts is what the app makes before showing the error.
 
 ### Phase 5: chat, wrap-up, send a film
 
@@ -227,7 +228,7 @@ Rules:
 |---|---|---|---|---|
 | `GET /v1/groups/{gid}/messages?after=&before=&limit=` | M | | `message_list` (ascending; no ids = the latest page) | |
 | `POST /v1/groups/{gid}/messages` | M | `message_post` | 201 `message` | 429 |
-| `POST /v1/nights/{nid}/wrapup` | H | `wrapup_post` | `wrapup_result` | 403, 409 `not_set` |
+| `POST /v1/nights/{nid}/wrapup` | H | `wrapup_post` | `wrapup_result` | 403, 409 `not_set`, 409 `group_changed` |
 | `POST /v1/films/send` | U | `send_film` | 201 `{}` | 404, 422, 429 |
 
 Rules:
