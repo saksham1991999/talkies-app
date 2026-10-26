@@ -220,7 +220,7 @@ Rules:
 - Approval voting: a member approves any options. Close without ids: the film and slot with the most approvals win, ties by lowest `position`.
 - Slots must fall between now minus 1 day and now plus 400 days.
 - `rsvps` lists only members who replied.
-- Wrap-up reads the membership, locks every account member it saw, then reads the RSVPs and re-reads the membership. A member who joins or leaves inside that window makes the snapshot wrong, so the plan is thrown away and rebuilt, up to three attempts inside the route. Only when all three attempts still see a different membership is the write refused with `409 group_changed`. The client makes one call and decides whether to try again; on `409 group_changed` it should show the error rather than loop.
+- Wrap-up reads the membership, locks every account member it saw, then reads the attendees and re-reads the membership. The attendees are the members who replied yes, unless the body carries `member_ids`, in which case it is exactly that list and no RSVP is read. A member who joins or leaves inside that window makes the snapshot wrong, so the plan is thrown away and rebuilt, up to three attempts inside the route. Only when all three attempts still see a different membership is the write refused with `409 group_changed`. The client makes one call and decides whether to try again; on `409 group_changed` it should show the error rather than loop.
 
 ### Phase 5: chat, wrap-up, send a film
 

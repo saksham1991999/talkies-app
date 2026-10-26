@@ -169,14 +169,15 @@ class Device {
        dir = dir ?? Directory.systemTemp.createTempSync('talkies_dev'),
        storage = MemoryStorage(),
        client = client ?? server.client {
-    addTearDown(() {
-      // Dispose before removing the folder. Disposing stops the providers that write
-      // into it, so the delete does not race a save that is half way to disk.
-      c.dispose();
-      removeScratch(this.dir);
-    });
+    // The folder goes first in, last out: registered before `_make()`, so a construction failure still
+    // removes the temporary folder instead of leaving it behind.
+    addTearDown(() => removeScratch(this.dir));
     catalog ??= testCatalog();
     c = _make();
+    // Registered after `_make()`, so it never runs against an unassigned `c`: a failure in `_make()` would
+    // otherwise surface as a teardown `LateInitializationError` over the real error. Tear-downs run in
+    // reverse, so this dispose happens before the folder is removed - stops the writes, then deletes.
+    addTearDown(() => c.dispose());
   }
 
   final FakeBackend server;

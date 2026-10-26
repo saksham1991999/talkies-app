@@ -330,7 +330,7 @@
   "acctSignedOut": "Gelogd uit. Je dagboek blijft op deze telefoon.",
   "acctDelete": "Account verwijderen",
   "acctDeleteQ": "Account verwijderen?",
-  "acctDeleteBody": "Dit verwijdert je account, je profiel, je dagboek en de rest van je accountgegevens van de Talkies-server. Meldingen die je hebt gedaan of ontvangen, worden gearchiveerd zonder je account-ID, met behoud van de reden, de notitie en de datum. Het dagboek op je telefoon blijft, en dat geldt ook voor de stubs die een filmavond in de dagboeken van andere leden schreef. Je kunt dit niet ongedaan maken.",
+  "acctDeleteBody": "Dit verwijdert je account, je profiel, je dagboek en de rest van je accountgegevens van de Talkies-server. Meldingen die je hebt gedaan of ontvangen, worden gearchiveerd zonder je account-ID, met behoud van de reden, de notitie en de datum. Het dagboek op je telefoon blijft, en dat geldt ook voor de tickets die een filmavond in de dagboeken van andere leden schreef. Je kunt dit niet ongedaan maken.",
   "acctDeleted": "Je account is verwijderd. Je dagboek blijft op deze telefoon.",
   "acctDeleteFailed": "Account kon niet worden verwijderd. Probeer opnieuw.",
   "acctDown": "Je dagboek is veilig op deze telefoon. Talkies is momenteel niet te bereiken.",

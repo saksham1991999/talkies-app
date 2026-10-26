@@ -136,7 +136,10 @@ class HttpApi implements Api {
       reply = await _send(method, path, query, body, retryToken);
       if (reply.status == 401) {
         // The retry can outlive the account too. Expiring here after a switch would sign out the new
-        // account over a 401 that was meant for the old one's dead token.
+        // account over a 401 that was meant for the old one's dead token. Reading the session needs the
+        // same guard as every other read after an await: a reply that lands after teardown is a lost
+        // connection, not a provider read.
+        _live();
         if (_ref.read(sessionProvider)?.userId != user) throw const ApiAccountChanged();
         await session.expire();
         throw const ApiUnauthorized();

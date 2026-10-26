@@ -490,6 +490,23 @@ void main() {
           .submit(const ReportPost(kind: ReportKind.user, targetId: 'u7', reason: ReportReason.spam));
       expect(limited.outcome, CallOutcome.rateLimited);
     });
+
+    test('an account change mid-call is a sign-out only when no session is left', () async {
+      final e = Env();
+      const report = ReportPost(kind: ReportKind.user, targetId: 'u7', reason: ReportReason.abuse);
+      // Somebody else signed in over the top: the request is abandoned, but the reader is still here, so
+      // this is a failure the screen can offer to retry, not a sign-out that empties it.
+      e.api.routes['POST /v1/reports'] = (_, _) => throw const ApiAccountChanged();
+      expect((await e.c.read(reportProvider.notifier).submit(report)).outcome, CallOutcome.failed);
+
+      // Signed out while the report was in flight: the same exception now means the session is gone. Note
+      // the call has to start signed in - with no session at entry `_call` answers offline and never asks.
+      e.api.routes['POST /v1/reports'] = (_, _) {
+        e.who.set(null);
+        throw const ApiAccountChanged();
+      };
+      expect((await e.c.read(reportProvider.notifier).submit(report)).outcome, CallOutcome.signedOut);
+    });
   });
 
   group('not online', () {
