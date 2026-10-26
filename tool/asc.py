@@ -16,10 +16,17 @@ Usage:
   python3 tool/asc.py cpp --apply            create the 8 custom product pages
   python3 tool/asc.py ppo --apply            create the product page experiment
   python3 tool/asc.py events --apply         create the 4 in-app events
+  python3 tool/asc.py submit --apply         attach the newest valid build and submit for review
+  python3 tool/asc.py cancel --apply         pull a submission back so the build can be replaced
 
-Nothing is deleted. Re-running is safe: every write looks up what exists first.
-Submitting for review stays manual, because that is the one step Apple cannot
-undo for you.
+Re-running is safe: every write looks up what exists first. Nothing is deleted
+except screenshot records that Apple never accepted bytes for, and those are
+re-uploaded in the same run.
+
+Submitting releases on approval (`releaseType AFTER_APPROVAL`), the app's
+existing setting, so no release date has to be nursed afterwards. `cancel` is
+the escape hatch: a submitted version's build cannot be swapped, so replacing a
+build means cancel, swap, submit again.
 """
 
 from __future__ import annotations
@@ -122,6 +129,10 @@ class ASC:
 
     def patch(self, path: str, payload: dict):
         return self.request('PATCH', path, json=payload)
+
+    def delete(self, path: str):
+        """Cancelling a review submission is a DELETE with no body."""
+        return self.request('DELETE', path)
 
     def all(self, path: str, **params) -> list[dict]:
         out: list[dict] = []
@@ -1032,9 +1043,37 @@ def cmd_submit(api: ASC, args) -> int:
     return 0
 
 
+def cmd_cancel(api: ASC, args) -> int:
+    """Pull a submission back so the version is editable again.
+
+    Needed to replace a build after submitting. A version's build relationship
+    cannot be changed while the version is WAITING_FOR_REVIEW, and the API
+    refuses DELETE on reviewSubmissions ("Allowed operations are: CREATE,
+    GET_COLLECTION, GET_INSTANCE, UPDATE"). Cancelling is therefore an update.
+    It moves the version to DEVELOPER_REJECTED, from which the build can be
+    swapped and the version submitted again.
+    """
+    app = api.app_id()
+    live = [s for s in api.all(f'/v1/apps/{app}/reviewSubmissions', **{'filter[platform]': 'IOS'})
+            if s['attributes'].get('state') in ('WAITING_FOR_REVIEW', 'IN_REVIEW', 'UNRESOLVED_ISSUES')]
+    if not live:
+        print('no submission is waiting for review')
+        return 0
+    for s in live:
+        print(f'cancelling {s["id"]} ({s["attributes"].get("state")})')
+        if not args.apply:
+            continue
+        r = api.patch(f'/v1/reviewSubmissions/{s["id"]}', {'data': {
+            'type': 'reviewSubmissions', 'id': s['id'], 'attributes': {'canceled': True}}})
+        print('  ->', r['data']['attributes'].get('state'))
+    if not args.apply:
+        print('dry run: pass --apply to cancel')
+    return 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('command', choices=['audit', 'push', 'screenshots', 'cpp', 'ppo', 'events', 'submit'])
+    p.add_argument('command', choices=['audit', 'push', 'screenshots', 'cpp', 'ppo', 'events', 'submit', 'cancel'])
     p.add_argument('--apply', action='store_true', help='write to App Store Connect')
     p.add_argument('--screenshots', action='store_true', help='upload localized screenshots during push')
     p.add_argument('--locales', help='screenshots: comma-separated subset (Apple or folder codes)')
@@ -1047,7 +1086,8 @@ def main() -> int:
     args = p.parse_args()
     api = ASC()
     return {'audit': cmd_audit, 'push': cmd_push, 'screenshots': cmd_screenshots,
-            'cpp': cmd_cpp, 'ppo': cmd_ppo, 'events': cmd_events, 'submit': cmd_submit}[args.command](api, args)
+            'cpp': cmd_cpp, 'ppo': cmd_ppo, 'events': cmd_events, 'submit': cmd_submit,
+            'cancel': cmd_cancel}[args.command](api, args)
 
 
 if __name__ == '__main__':
