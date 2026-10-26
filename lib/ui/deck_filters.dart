@@ -161,7 +161,7 @@ class _FiltersSheetState extends State<_FiltersSheet> {
           ),
         if (_f.active)
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: AlignmentDirectional.centerStart,
             child: TextButton(
               key: const Key('deck-reset-filters'),
               onPressed: () => _set(const DeckFilters()),

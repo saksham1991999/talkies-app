@@ -242,11 +242,7 @@ class SwipeCardState extends State<SwipeCard> with SingleTickerProviderStateMixi
                             child: ExcludeSemantics(
                               child: Opacity(
                                 opacity: shown(v),
-                                child: Stamp(
-                                  word: voteWord(context, v).toUpperCase(),
-                                  color: voteInk(v),
-                                  size: 96,
-                                ),
+                                child: Stamp(word: voteWord(context, v).toUpperCase(), color: voteInk(v), size: 96),
                               ),
                             ),
                           ),

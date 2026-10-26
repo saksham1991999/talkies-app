@@ -68,7 +68,7 @@ class StubRow extends ConsumerWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 12),
+                      padding: const EdgeInsetsDirectional.only(end: 12),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,8 +185,10 @@ class PosterTile extends ConsumerWidget {
                 ),
               ),
               if (strip != null)
-                Positioned(
-                  left: 0,
+                // The corner marks on a poster are chrome, not picture: they
+                // follow the reading direction like everything else.
+                PositionedDirectional(
+                  start: 0,
                   bottom: 8,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(6, 3, 7, 2),
@@ -194,8 +196,8 @@ class PosterTile extends ConsumerWidget {
                     child: Text(strip!, style: disp(11.5, paperInk, spacing: 0.6)),
                   ),
                 ),
-              Positioned(
-                right: 4,
+              PositionedDirectional(
+                end: 4,
                 top: 0,
                 child: watched > 0
                     ? _Ribbon(color: serialRed, label: '★$watched', tooltip: l.watchCount(watched))
@@ -283,7 +285,7 @@ class ScreenHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 12, 8, 10),
+      padding: const EdgeInsetsDirectional.fromSTEB(20, 12, 8, 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

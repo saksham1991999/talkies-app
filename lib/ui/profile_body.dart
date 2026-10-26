@@ -113,7 +113,7 @@ class StatsTicket extends StatelessWidget {
                                   // A long number (Indian grouping) shrinks the line instead of overflowing.
                                   FittedBox(
                                     fit: BoxFit.scaleDown,
-                                    alignment: Alignment.centerLeft,
+                                    alignment: AlignmentDirectional.centerStart,
                                     child: Text(value, textScaler: big, style: disp(46, serialRed, spacing: 1)),
                                   ),
                                   const SizedBox(height: 4),
@@ -216,7 +216,7 @@ class ProfileShare extends ShareContent {
         children: [
           FittedBox(
             fit: BoxFit.scaleDown,
-            alignment: Alignment.bottomLeft,
+            alignment: AlignmentDirectional.bottomStart,
             child: Text(v, style: disp(40, o.ink, spacing: 0.6)),
           ),
           Text(

@@ -57,10 +57,27 @@ class Palette extends ThemeExtension<Palette> {
     required this.velvet,
     required this.onVelvet,
     required this.dark,
+    required this.tonight,
+    required this.tonightFill,
+    required this.onTonightFill,
+    required this.btnPrimary,
+    required this.onBtnPrimary,
   });
 
   final Color wall, surface, ink, inkSoft, line, accent, onAccent, velvet, onVelvet;
   final bool dark;
+
+  /// Marquee amber. Means exactly one thing: tonight is on (live vote, poll
+  /// leader, selected segment). Text-safe on [wall] in both modes.
+  final Color tonight;
+
+  /// Amber fill for vote pills and live highlights. Same pigment both modes;
+  /// dark text on it always passes.
+  final Color tonightFill, onTonightFill;
+
+  /// Primary buttons (Record, Save, wrap-up): ink in Matinee, cream when the
+  /// house lights are down. Never amber, never velvet.
+  final Color btnPrimary, onBtnPrimary;
 
   /// Ticket paper for a venue type; slightly dimmed in dark mode.
   Color paper(VenueType t) => dark ? Color.lerp(paperColors[t]!, wall, 0.12)! : paperColors[t]!;
@@ -90,28 +107,38 @@ ThemeData buildTheme({required bool dark, required int accentIndex}) {
   final accent = accents[accentIndex.clamp(0, accents.length - 1)].color;
   final p = dark
       ? Palette(
-          wall: const Color(0xFF170D0E),
+          wall: const Color(0xFF150C0E),
           surface: const Color(0xFF241416),
-          ink: const Color(0xFFF1E5DD),
-          inkSoft: const Color(0xFFB9A49B),
+          ink: const Color(0xFFF4E9DF),
+          inkSoft: const Color(0xFFC9AC9C),
           line: const Color(0x33F1E5DD),
           accent: Color.lerp(accent, Colors.white, accentIndex == 10 ? 0.75 : 0.12)!,
           onAccent: accentIndex == 10 ? paperInk : Colors.white,
           velvet: const Color(0xFF2E1316),
           onVelvet: const Color(0xFFE9D8CF),
           dark: true,
+          tonight: const Color(0xFFE8A41C),
+          tonightFill: const Color(0xFFE8A41C),
+          onTonightFill: const Color(0xFF241300),
+          btnPrimary: const Color(0xFFF4E9DF),
+          onBtnPrimary: const Color(0xFF241310),
         )
       : Palette(
-          wall: const Color(0xFFE3E6D8),
-          surface: const Color(0xFFEEF0E5),
+          wall: const Color(0xFFF1EBDD),
+          surface: const Color(0xFFF8F4EA),
           ink: const Color(0xFF2A1316),
-          inkSoft: const Color(0xFF6B5A55),
+          inkSoft: const Color(0xFF6B5450),
           line: const Color(0x2B2A1316),
           accent: accent,
           onAccent: Colors.white,
           velvet: const Color(0xFF3A1519),
           onVelvet: const Color(0xFFEFDFD6),
           dark: false,
+          tonight: const Color(0xFF7A5403),
+          tonightFill: const Color(0xFFE8A41C),
+          onTonightFill: const Color(0xFF241300),
+          btnPrimary: const Color(0xFF2A1316),
+          onBtnPrimary: const Color(0xFFF6F1E4),
         );
   final scheme = ColorScheme.fromSeed(seedColor: accent, brightness: dark ? Brightness.dark : Brightness.light)
       .copyWith(

@@ -76,7 +76,7 @@ class _IncomingRequestState extends ConsumerState<IncomingRequest> {
         PersonRow(card: widget.card, subtitle: l.friendsWantsToBe),
         // Under the name, so the buttons never squeeze it.
         Padding(
-          padding: const EdgeInsets.fromLTRB(72, 0, 20, 8),
+          padding: const EdgeInsetsDirectional.fromSTEB(72, 0, 20, 8),
           child: Wrap(
             spacing: 8,
             runSpacing: 4,
@@ -130,9 +130,9 @@ class _OutgoingRequestState extends ConsumerState<OutgoingRequest> {
       children: [
         PersonRow(card: widget.card, subtitle: l.friendsWaiting),
         Padding(
-          padding: const EdgeInsets.fromLTRB(60, 0, 20, 4),
+          padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 20, 4),
           child: Align(
-            alignment: Alignment.centerLeft,
+            alignment: AlignmentDirectional.centerStart,
             child: TextButton(
               style: linkStyle(context),
               key: Key('cancel-${widget.card.id}'),

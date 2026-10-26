@@ -98,7 +98,7 @@ class TitleCard extends StatelessWidget {
       height: width * 1.5,
       color: bg,
       padding: EdgeInsets.all(small ? 2 : width * 0.08),
-      alignment: small ? Alignment.center : Alignment.bottomLeft,
+      alignment: small ? Alignment.center : AlignmentDirectional.bottomStart,
       child: small
           ? Center(
               child: Text(
@@ -452,7 +452,7 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = Palette.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 24, 12, 8),
+      padding: const EdgeInsetsDirectional.fromSTEB(20, 24, 12, 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

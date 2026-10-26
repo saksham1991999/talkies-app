@@ -525,7 +525,11 @@ class _FriendsSegmentState extends ConsumerState<FriendsSegment> with WidgetsBin
         else ...[
           for (final x in friends.take(3)) FriendRow(x, key: ValueKey(x.card.id)),
           if (friends.length > 3)
-            NavRow(l.friendsAll, sub: fmtCount(friends.length), onTap: () => push(context, const FriendsScreen())),
+            NavRow(
+              l.friendsAll,
+              sub: fmtCount(context, friends.length),
+              onTap: () => push(context, const FriendsScreen()),
+            ),
         ],
         SectionTitle(l.feedTitle, action: l.feedRefresh, onAction: () => ref.read(feedProvider.notifier).load()),
         if (feed.items.isEmpty)

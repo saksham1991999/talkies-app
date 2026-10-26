@@ -345,7 +345,7 @@ class CrewTicket extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 12, 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -440,7 +440,7 @@ class NightTicket extends ConsumerWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,

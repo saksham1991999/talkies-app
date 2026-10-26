@@ -13,7 +13,6 @@ import '../state/together.dart';
 import 'common.dart';
 import 'format.dart';
 import 'icons.dart';
-import 'screens/calendar_screen.dart';
 import 'screens/films_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';
@@ -105,8 +104,8 @@ class _ShellState extends ConsumerState<Shell> {
     return Scaffold(
       body: IndexedStack(
         index: tab,
-        // Together is appended: the tab numbers go(1) and go(3) stay valid.
-        children: const [HomeScreen(), StubsScreen(), CalendarScreen(), FilmsScreen(), StatsScreen(), TogetherScreen()],
+        // Together is appended: the tab numbers go(1) and go(2) stay valid.
+        children: const [HomeScreen(), StubsScreen(), FilmsScreen(), StatsScreen(), TogetherScreen()],
       ),
       bottomNavigationBar: TicketNav(
         index: tab,
@@ -114,7 +113,6 @@ class _ShellState extends ConsumerState<Shell> {
         items: [
           (Tk.home, l.tabHome),
           (Tk.stubs, l.tabStubs),
-          (Tk.calendar, l.tabCalendar),
           (Tk.films, l.tabFilms),
           (Tk.stats, l.tabStats),
           (Tk.people, l.tabTogether),
@@ -149,16 +147,24 @@ class TicketNav extends StatelessWidget {
               return Stack(
                 children: [
                   for (var i = 1; i < items.length; i++)
-                    Positioned(
-                      left: i * w - 1,
+                    // Directional for the same reason as the ticket below. The
+                    // dividers land on the same pixel either way (the cell edges
+                    // are at every multiple of w in both directions), so the bar
+                    // looks identical in Arabic and English.
+                    PositionedDirectional(
+                      start: i * w - 1,
                       top: 16,
                       bottom: 16,
                       child: CustomPaint(size: const Size(2, 32), painter: _Dots(p.onVelvet.withValues(alpha: 0.3))),
                     ),
-                  AnimatedPositioned(
+                  // The tab row itself runs right to left in Arabic, Hebrew and
+                  // Urdu, so the paper has to slide from the same edge it is
+                  // measured from: a physical `left` left it under the first tab
+                  // while the pressed tab sat at the other end.
+                  AnimatedPositionedDirectional(
                     duration: reduce ? Duration.zero : const Duration(milliseconds: 280),
                     curve: Curves.easeOutCubic,
-                    left: index * w + 5,
+                    start: index * w + 5,
                     top: 7,
                     width: w - 10,
                     height: 50,

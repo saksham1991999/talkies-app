@@ -320,7 +320,7 @@ class _AddToGroupSheetState extends ConsumerState<_AddToGroupSheet> {
         if (_refused != null) Note(refusalText(context, _refused!), strong: true),
         const SizedBox(height: 8),
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: AlignmentDirectional.centerStart,
           child: TextButton.icon(
             key: const Key('add-to-new-group'),
             onPressed: _busyId == null ? _new : null,
