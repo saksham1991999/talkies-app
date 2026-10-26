@@ -83,6 +83,42 @@ class _HoldClient extends http.BaseClient {
   }
 }
 
+/// Holds the next [times] requests to [path], each with its own completer, so a test
+/// can act between the first attempt and its retry.
+class _GateN extends http.BaseClient {
+  _GateN(this.inner, this.path, this.times);
+  final http.Client inner;
+  final String path;
+  final int times;
+  bool _armed = false;
+  int _seen = 0;
+  final _hits = <Completer<void>>[];
+  final _releases = <Completer<void>>[];
+
+  void arm() {
+    _armed = true;
+    _seen = 0;
+    for (var i = 0; i < times; i++) {
+      _hits.add(Completer<void>());
+      _releases.add(Completer<void>());
+    }
+  }
+
+  Future<void> hit(int i) => _hits[i].future;
+  void release(int i) => _releases[i].complete();
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    if (_armed && request.url.path == path && _seen < times) {
+      final i = _seen++;
+      _hits[i].complete();
+      await _releases[i].future;
+      if (_seen == times) _armed = false;
+    }
+    return inner.send(request);
+  }
+}
+
 /// An http client that holds the next pull on the wire, so the test can act
 /// (sign out, sign in as someone else) while a sync run is in flight.
 class _PullGate extends http.BaseClient {
@@ -876,6 +912,37 @@ void main() {
       expect(w.server.count('GET /v1/sync/pull'), pulls + 1);
     });
 
+    test('a retry that comes back 401 after a switch does not sign the new account out', () async {
+      final w = World();
+      // Holds each of the next two pulls separately: the one that 401s, and the retry that follows
+      // the successful refresh. The retry is the request the switch has to be caught after.
+      final wire = _GateN(w.server.client, '/v1/sync/pull', 2);
+      final a = Device(w.server, client: wire);
+      w.phones.add(a);
+      await a.signIn('one@example.test');
+      a.watch('Q1');
+      await a.sync();
+
+      wire.arm();
+      final run = a.engine.run();
+
+      // First pull: 401, which the client answers with a refresh.
+      await wire.hit(0);
+      w.server.expireAccess();
+      wire.release(0);
+
+      // Retry: on the wire when the account changes, and it 401s too.
+      await wire.hit(1);
+      w.server.expireAccess();
+      await a.signIn('two@example.test');
+      final two = a.c.read(sessionProvider)!.userId;
+      wire.release(1);
+      await run;
+
+      expect(a.c.read(sessionProvider)?.userId, two,
+          reason: "the 401 belonged to account one's retry, not to account two");
+    });
+
     test('a refresh that outlives an account switch cannot touch the new account', () async {
       final w = World();
       final wire = _HoldClient(w.server.client, 'POST', path: '/v1/auth/refresh');
@@ -895,7 +962,7 @@ void main() {
       await a.signIn('two@example.test');
       final two = a.c.read(sessionProvider)!.userId;
 
-      wire.release.complete(); // the reply is account one's, and it is a 401
+      wire.release.complete(); // the stale refresh fails, and must not expire account two
       await expectLater(refresh, throwsA(isA<ApiAccountChanged>()));
 
       // Account two is still signed in, and its own tokens are the ones in secure storage: a request

@@ -29,9 +29,11 @@ class ApiUnauthorized extends ApiException {
   String toString() => 'ApiUnauthorized';
 }
 
-/// The account changed while the request was in flight, so the retry was dropped: the body was built
-/// from the old account's data. Deliberately **not** an [ApiUnauthorized], because the user is still
-/// signed in: a caller that treats this as a sign-out would leave the new account without a run.
+/// The account behind the request changed while it was in flight, so it was dropped or never retried:
+/// the body was built from the old account's data. Deliberately **not** an [ApiUnauthorized], because
+/// the user did not become signed out, they became somebody else (or nobody): a caller that treats
+/// this as a sign-out would leave the new account without a run, and one that treats it as a
+/// transient failure retries. Callers therefore decide by whether a session exists now.
 class ApiAccountChanged extends ApiException {
   const ApiAccountChanged();
   @override
@@ -133,6 +135,9 @@ class HttpApi implements Api {
       if (_ref.read(sessionProvider)?.userId != user) throw const ApiAccountChanged();
       reply = await _send(method, path, query, body, retryToken);
       if (reply.status == 401) {
+        // The retry can outlive the account too. Expiring here after a switch would sign out the new
+        // account over a 401 that was meant for the old one's dead token.
+        if (_ref.read(sessionProvider)?.userId != user) throw const ApiAccountChanged();
         await session.expire();
         throw const ApiUnauthorized();
       }

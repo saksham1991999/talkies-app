@@ -187,11 +187,16 @@
     <video controls preload="metadata" playsinline width="1920" height="1080"
            poster="img/talkies-explainer-poster.jpg">
       <source src="img/talkies-explainer.mp4" type="video/mp4">
-      <!-- Fallback for a browser that cannot play the mp4, which would otherwise
-           render an empty box. The film has an audio track, so a transcript is
-           still owed to anyone who cannot hear it; the link is the stopgap. -->
+      <!-- The film is narrated, so it ships a caption track: 23 cues, the
+           spoken lines only, timed against the voice. -->
+      <track kind="captions" src="img/talkies-explainer.en.vtt" srclang="en" label="English" default>
+      <!-- Fallback for a browser with no <video> support at all, which would
+           otherwise render an empty box. A browser that supports <video> but
+           cannot fetch or decode the mp4 never renders this, so the link below
+           the element carries the same affordance at all times. -->
       <p>The 75-second tour plays here. If it does not, <a href="img/talkies-explainer.mp4">open the film directly</a>.</p>
     </video>
+    <p>Can't play it here? <a href="img/talkies-explainer.mp4">Open the 75-second film directly</a>.</p>
   </section>
   <section class="guide" aria-label="About Talkies">
     <article class="stub detail">

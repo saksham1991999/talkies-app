@@ -999,7 +999,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get acctSignOut => 'سائن آؤٹ کریں';
 
   @override
-  String get acctSignedOut => 'سائن آؤٹ ہو گیا۔ آپ کی ڈائری اس فون پر رہے گا۔';
+  String get acctSignedOut => 'سائن آؤٹ ہو گیا۔ آپ کی ڈائری اس فون پر رہے گی۔';
 
   @override
   String get acctDelete => 'اکاؤنٹ حذف کریں';
@@ -1012,7 +1012,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'یہ آپ کا اکاؤنٹ، آپ کا پروفائل، آپ کی ڈائری اور اکاؤنٹ کا باقی سارا ڈیٹا Talkies سرور سے ہٹا دے گا۔ آپ کی بھیجی یا موصول ہوئی رپورٹیں آپ کے اکاؤنٹ آئی ڈی کے بغیر آرکائیو کر دی جاتی ہیں، جن میں صرف وجہ، نوٹ اور تاریخ محفوظ رہتی ہے۔ آپ کے فون کی ڈائری ویسی ہی رہے گی۔ آپ اسے واپس نہیں کر سکتے۔';
 
   @override
-  String get acctDeleted => 'آپ کا اکاؤنٹ حذف ہو گیا۔ آپ کی ڈائری اس فون پر رہے گا۔';
+  String get acctDeleted => 'آپ کا اکاؤنٹ حذف ہو گیا۔ آپ کی ڈائری اس فون پر رہے گی۔';
 
   @override
   String get acctDeleteFailed => 'اکاؤنٹ حذف نہیں ہوا۔ دوبارہ کوشش کریں۔';

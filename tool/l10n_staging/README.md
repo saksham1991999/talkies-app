@@ -22,10 +22,11 @@ Run the merge in order:
 
 Step 3 reads every `<lang>.json` that exists and checks them **together**, then
 applies them all or none. One malformed or partial file fails the whole run: you
-get a list of problems and no ARB is touched. Fix the named file and run it
-again. A language with no file at all is not an error; it keeps its English draft
-and stays listed in `drafted.json`, so a partly translated batch ships nothing
-wrong and nothing is lost.
+get a list of problems, including any file that does not parse, and no ARB is
+touched. Fix the named file and run it again. A language with no file at all is
+not an error unless you pass `--strict` (which requires every language); it keeps
+its English draft and stays listed in `drafted.json`, so a partly translated
+batch ships nothing wrong and nothing is lost.
 `--translate` prints `no drafts to translate` when `drafted.json` is empty,
 which is the state after a completed merge.
 

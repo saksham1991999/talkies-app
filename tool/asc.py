@@ -640,19 +640,46 @@ def replace_changed(api: ASC, set_id: str, files: list[Path], changed: list[Path
     the first changed card is therefore deleted as a block and re-uploaded in
     order: everything before it is untouched, and the appends land where they
     belong.
+
+    The delete has to come first: a set holds at most 10 cards per size, and
+    uploading the replacements before removing the old ones would briefly hold
+    more than that. The cost is a window where the tail is short, so a failure
+    here is reported with the exact cards now missing and the command to fix it,
+    and `apply` never submits a version on its own. Re-running is what repairs
+    it: the plan sees the missing cards as uploads.
     """
     if not changed:
         return []
     names = [f.name for f in files]
     first = min(names.index(f.name) for f in changed)
+    tail = files[first:]
     removed: list[str] = []
     for shot in live_screenshots(api, set_id):
         name = shot['attributes'].get('fileName')
         if name in names and names.index(name) >= first:
             api.request('DELETE', f'/v1/appScreenshots/{shot["id"]}')
             removed.append(f'{name} ({shot["id"]})')
-    for f in files[first:]:
-        upload_one(api, set_id, f)
+    done: list[str] = []
+    try:
+        for f in tail:
+            upload_one(api, set_id, f)
+            done.append(f.name)
+    except BaseException as exc:
+        missing = [f.name for f in tail if f.name not in done]
+        raise SystemExit(
+            f'the tail of this deck is now incomplete: {len(missing)} card(s) missing '
+            f'({", ".join(missing[:4])}{"..." if len(missing) > 4 else ""}). '
+            f'The first {len(done)} went back. Nothing was submitted: run the same command '
+            f'again to upload the rest, and do not submit this version until the plan reports '
+            f'0 changed and 0 to upload. Cause: {exc}') from exc
+    # Prove the deck is whole and in order rather than trusting the uploads.
+    live = [s['attributes'].get('fileName') for s in live_screenshots(api, set_id)]
+    expected = names
+    if live != expected:
+        raise SystemExit(
+            f'the deck does not match disk after the rebuild: Apple holds {live}, disk has '
+            f'{expected}. Re-run with --replace-changed once the cause is fixed; do not submit '
+            f'this version while they disagree.')
     return removed
 
 

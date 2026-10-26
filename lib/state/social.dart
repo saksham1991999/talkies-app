@@ -69,7 +69,12 @@ Future<CallResult<T>> _call<T>(Ref ref, Future<T> Function(Api api) run) async {
   try {
     return CallResult<T>(CallOutcome.ok, value: await run(ref.read(apiProvider)));
   } catch (e) {
-    return CallResult<T>(_outcome(e), code: e is ApiError ? e.code : null);
+    // `ApiAccountChanged` covers both "somebody else signed in" and "you signed out" mid-request, and
+    // only the second one is a sign-out: read the session rather than assuming.
+    final outcome = e is ApiAccountChanged && ref.read(sessionProvider) == null
+        ? CallOutcome.signedOut
+        : _outcome(e);
+    return CallResult<T>(outcome, code: e is ApiError ? e.code : null);
   }
 }
 

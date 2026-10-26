@@ -1018,10 +1018,10 @@ class AppLocalizationsNo extends AppLocalizations {
   String get acctDeleteFailed => 'Kunne ikke slette kontoen din. Prøv igjen.';
 
   @override
-  String get acctDown => 'Dagboken din er trygt på denne telefonen. Talkies er ikke tilgjengelig nå.';
+  String get acctDown => 'Dagboken din er trygg på denne telefonen. Talkies er ikke tilgjengelig nå.';
 
   @override
-  String get acctRowSafe => 'Dagboken din er trygt på denne telefonen';
+  String get acctRowSafe => 'Dagboken din er trygg på denne telefonen';
 
   @override
   String get acctChoiceTitle => 'To skrider';

@@ -307,8 +307,14 @@ class SyncEngine extends Notifier<SyncState> {
       state = SyncState.idle;
       return true;
     } on ApiAccountChanged {
-      // The run was for the account that was signed in when it started, and that is not the account
-      // any more. Nothing was written; loop once more so the new account still gets its run.
+      // The run belonged to the account that was signed in when it started. Rows applied before the
+      // throw stay applied: `_apply` and the cursor write happen before `_push`, and the new account
+      // replaces the store through `_checkAccount` on the next pass. Loop once more so it gets one.
+      if (!ref.mounted) return false;
+      if (ref.read(sessionProvider) == null) {
+        state = SyncState.idle; // signed out mid-run: nothing to retry
+        return false;
+      }
       _again = true;
       return true;
     } on ApiUnauthorized {

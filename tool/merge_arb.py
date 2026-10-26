@@ -414,7 +414,16 @@ def cmd_translate() -> int:
         if not f.exists():
             pending.append(lang)
             continue
-        t = json.loads(f.read_text(encoding='utf-8'))
+        try:
+            t = json.loads(f.read_text(encoding='utf-8'))
+        except (OSError, json.JSONDecodeError) as exc:
+            # A file a translator saved badly must join the problem list, not abort the run with a
+            # traceback: the whole point of collecting errors first is to name every bad file at once.
+            errors.append(f'{lang}.json: not valid JSON ({exc})')
+            continue
+        if not isinstance(t, dict):
+            errors.append(f'{lang}.json: not a JSON object')
+            continue
         translations[lang] = t
         for k in sorted(drafted - set(t)):
             pending.append(lang)

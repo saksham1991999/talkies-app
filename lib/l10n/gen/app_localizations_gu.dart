@@ -979,7 +979,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get acctSyncIdle => 'તમારી ડાયરી સિંક છે.';
 
   @override
-  String get acctSyncBusy => 'તમારી ડાયરી સિંક થઈ રહ્યો છે.';
+  String get acctSyncBusy => 'તમારી ડાયરી સિંક થઈ રહી છે.';
 
   @override
   String get acctSyncFailed => 'સિંક પૂરું થયું નથી. Talkies ફરી પ્રયત્ન કરશે.';

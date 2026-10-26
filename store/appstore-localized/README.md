@@ -181,8 +181,22 @@ end of a set and offers no way to insert or reorder one, so a plain `--apply`
 would send the one changed card (card 8) and land it *after* card 8's
 predecessors, leaving the deck out of order. `--replace-changed` deletes the set's
 records from the first changed card onward and re-uploads that tail, which is why
-the run reports more than one card re-sent per column. A deck with any failure is
-held instead of rebuilt, so a broken file cannot cost you a good one.
+the run reports more than one card re-sent per column.
+
+The guarantee is narrower than "nothing can go wrong", and it is worth knowing
+exactly where it stops:
+
+- **Before the rebuild**, a deck with any failure is held, not rebuilt: a broken
+  file or a live order that disagrees with disk cannot cost you a good deck.
+- **During the rebuild**, the delete has to go first. A set holds at most 10 cards
+  per size, so uploading the replacements before removing the old ones would
+  briefly hold more than Apple allows. That leaves a few seconds where the tail is
+  short. If an upload fails in that window, the tool stops with a `SystemExit`
+  naming the cards that are missing and the command to run again; re-running
+  uploads only what is absent, because the plan reads them as uploads. It also
+  re-reads the set afterwards and refuses if Apple's order disagrees with disk.
+- **Nothing is submitted** by this tool. Do not submit the version while a rebuild
+  is failing: run the plan again and wait for `0 changed, 0 to upload`.
 
 Run it without `--apply` first to see the tail it would rebuild; the plan prints
 `+n =n c<n> x<n>` per column, where `c<n>` is the changed count and `+n` the cards
