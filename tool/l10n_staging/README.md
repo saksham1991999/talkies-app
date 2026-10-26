@@ -10,13 +10,21 @@ Keys are lowerCamelCase with an area prefix (`acct`, `friends`, `crew`, `deck`, 
 Plural text uses ICU: `{count, plural, =1{1 friend} other{{count} friends}}`, with `count` declared as `int`.
 No em dashes. Plain, short sentences.
 
-Translators write one file per language, `<lang>.json` (`hi ta te bn mr kn ml`), mapping every staged key to its translation.
+Translators write one file per language, `<lang>.json`, mapping every staged key to its translation.
+The name is the ARB code, so `zh_Hant.json` and `pt_BR.json` keep their underscore.
 Keep the same `{placeholders}` and plural structure.
 
 Run the merge in order:
 
 1. `python3 tool/merge_arb.py --check` validates the staged English strings. (`--draft` runs the same checks.)
-2. `python3 tool/merge_arb.py --draft` adds the new keys to all 8 ARBs, the 7 other languages with the English text as a draft.
-3. When `<lang>.json` exists for every language (`hi ta te bn mr kn ml`), `python3 tool/merge_arb.py --translate` replaces the drafts with those translations.
+2. `python3 tool/merge_arb.py --draft` adds the new keys to all 45 ARBs, the 44 other languages holding the English text as a draft, and records the keys in `drafted.json`.
+3. `python3 tool/merge_arb.py --translate` replaces drafts with whatever translations have arrived.
 
-`--draft` and `--translate` run `flutter gen-l10n` themselves, so there is no separate step. A bare `python3 tool/merge_arb.py` only prints the usage. Delete the staged files after a merge.
+Step 3 does not need every language at once. It reads each `<lang>.json` that
+exists, checks it, and applies it; a language with no file simply keeps its
+English draft and stays listed in `drafted.json`, so a partly translated batch
+ships nothing wrong and nothing is lost. Run it again as more files arrive.
+`--translate` prints `no drafts to translate` when `drafted.json` is empty,
+which is the state after a completed merge.
+
+`--draft` and `--translate` run `flutter gen-l10n` themselves, so there is no separate step. A bare `python3 tool/merge_arb.py` only prints the usage. Delete the staged files after a merge, and leave `drafted.json` as `[]`.

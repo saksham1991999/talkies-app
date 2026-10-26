@@ -333,13 +333,24 @@ def translate_one(code: str, english: dict[str, str], todo: list[str]) -> tuple[
 COHERENT = {'tabStubs': 'showStubs'}
 
 
-def apply_locale(code: str, done: dict[str, str]) -> int:
+def apply_locale(code: str, done: dict[str, str], only: set[str] | None = None) -> int:
+    """Write this locale's finished strings into its ARB.
+
+    `done` is the whole resume cache, which is much larger than any one run:
+    with `--keys` it holds every string ever translated for the locale. Writing
+    all of it back meant a targeted run silently overwrote unrelated keys with
+    the cache's older text, undoing hand fixes made to the ARB since. `only`
+    limits the write to the keys this run actually worked on, which is what a
+    command that names keys should do.
+    """
     for alias, source in COHERENT.items():
         if source in done:
             done[alias] = done[source]
     target = merge_arb.arb_path(code)
     written = 0
     for key, text in done.items():
+        if only is not None and key not in only:
+            continue
         merge_arb.set_value(target, key, text)
         written += 1
     return written
@@ -484,7 +495,8 @@ def main() -> int:
             written[code] = done
             failures += bad
             # Apply as each locale finishes, so a stopped run keeps its work.
-            count = apply_locale(code, done) if not DRY else 0
+            # Only the keys this run was asked for: the rest of `done` is cache.
+            count = apply_locale(code, done, only=set(todo)) if not DRY else 0
             total += count
             print(f'  {code}: {count} strings' + (f', {len(bad)} problem(s)' if bad else ''))
 

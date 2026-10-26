@@ -48,9 +48,11 @@ SERIAL = 'NO. 0001'
 def latin_digits(s: str) -> str:
     """Arabic-Indic and Urdu digits to ASCII, so a count can be compared.
 
-    Arabic storefronts print ٤٥ and Urdu prints ۴۵: both are in different
-    Unicode blocks, and a naive `'45' in caption` test passes them while they
-    still say 44. That is exactly what happened.
+    Arabic storefronts print ٤٥ and Urdu prints ۴۵: both live in different
+    Unicode blocks from ASCII, so a correction that only searches for the ASCII
+    `44` walked straight past those two storefronts, and Japanese and Korean
+    (`44言語`, `44개 언어`) escaped a search that required a following space.
+    Those four shipped a card saying 44 while the app said 45.
     """
     out = []
     for ch in s:
@@ -230,7 +232,11 @@ def main(argv=None):
     # number and the screenshot behind it says another.
     want = str(len(locales.LOCALES))
     for locale, caps in sf.CAPTIONS.items():
-        if want not in latin_digits(caps[-1]):
+        # The whole digit token, not a substring: `'45' in '145 languages'` is
+        # true, and so is `'45' in '45 cosas y 145 más'`. Splitting on anything
+        # that is not a digit makes the comparison exact.
+        tokens = ''.join(c if c.isdigit() else ' ' for c in latin_digits(caps[-1])).split()
+        if want not in tokens:
             print(f'\n{locale}: reach line is {caps[-1]!r}, expected {want} languages')
             failures += 1
 

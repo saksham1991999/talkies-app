@@ -13,15 +13,19 @@ Usage:
   python3 tool/asc.py push --apply --screenshots
   python3 tool/asc.py screenshots            plan the screenshot upload, locale by locale
   python3 tool/asc.py screenshots --apply    upload only what is missing, resumable
+  python3 tool/asc.py screenshots --apply --replace-changed
+                                             also swap cards whose bytes changed
   python3 tool/asc.py cpp --apply            create the 8 custom product pages
   python3 tool/asc.py ppo --apply            create the product page experiment
   python3 tool/asc.py events --apply         create the 4 in-app events
   python3 tool/asc.py submit --apply         attach the newest valid build and submit for review
   python3 tool/asc.py cancel --apply         pull a submission back so the build can be replaced
 
-Re-running is safe: every write looks up what exists first. Nothing is deleted
-except screenshot records that Apple never accepted bytes for, and those are
-re-uploaded in the same run.
+Re-running is safe: every write looks up what exists first. Deletes happen only
+with `--repair-stuck` (screenshot records Apple never took bytes for) or
+`--reset-display` (every record in one display set, including ones Apple already
+holds, because a gap in the middle of a deck cannot be fixed by appending). Both
+then re-upload what they removed in the same run.
 
 Submitting releases on approval (`releaseType AFTER_APPROVAL`), the app's
 existing setting, so no release date has to be nursed afterwards. `cancel` is
@@ -130,10 +134,6 @@ class ASC:
     def patch(self, path: str, payload: dict):
         return self.request('PATCH', path, json=payload)
 
-    def delete(self, path: str):
-        """Cancelling a review submission is a DELETE with no body."""
-        return self.request('DELETE', path)
-
     def all(self, path: str, **params) -> list[dict]:
         out: list[dict] = []
         data = self.get(path, limit=200, **params)
@@ -223,9 +223,16 @@ def screenshot_sets(api: ASC, loc_id: str) -> dict[str, dict]:
 
 
 def pubspec_version() -> str:
-    """The marketing version in pubspec.yaml, so a new release names itself."""
+    """The marketing version in pubspec.yaml, so a new release names itself.
+
+    Raises rather than guessing. A silent fallback to 1.0.0 would let `push
+    --apply` create an App Store version numbered 1.0.0, and a version record
+    cannot be deleted through the API, so the mistake would be permanent.
+    """
     m = re.search(r'^version:\s*([0-9]+\.[0-9]+\.[0-9]+)', (ROOT / 'pubspec.yaml').read_text(), re.M)
-    return m.group(1) if m else '1.0.0'
+    if not m:
+        raise SystemExit('no marketing version in pubspec.yaml (expected `version: 1.2.3+4`)')
+    return m.group(1)
 
 
 def editable_version(api: ASC, app: str, version_string: str | None = None, create: bool = False) -> dict | None:
@@ -244,11 +251,19 @@ def editable_version(api: ASC, app: str, version_string: str | None = None, crea
         return None
     want = version_string or pubspec_version()
     # A version with this number already exists but is past preparing (it may be
-    # waiting for review, or live). Correct that one: its metadata is still
+    # waiting for review, or in review). Correct that one: its metadata is still
     # writable, and POSTing the same number again is rejected as a duplicate.
+    # A released version is different: its localizations are read-only, so
+    # returning it would fail halfway through a push. Say so instead.
     for v in versions(api, app):
-        if v['attributes'].get('versionString') == want:
-            return v
+        if v['attributes'].get('versionString') != want:
+            continue
+        state = version_state(v)
+        if state == 'READY_FOR_SALE':
+            raise SystemExit(
+                f'{want} is already live, and a released version cannot be edited. '
+                'Bump `version:` in pubspec.yaml to start the next release.')
+        return v
     return api.post('/v1/appStoreVersions', {
         'data': {
             'type': 'appStoreVersions',
@@ -487,7 +502,7 @@ def screenshot_plan(files: list[Path], existing: list[dict]) -> dict:
     when anything about the existing set is off, because a gap in the middle of
     a deck cannot be fixed by appending.
     """
-    res = {'upload': [], 'skip': 0, 'fail': [], 'note': [], 'held': 0}
+    res = {'upload': [], 'skip': 0, 'fail': [], 'note': [], 'held': 0, 'changed': []}
     if not files:
         res['note'].append('no files on disk')
         return res
@@ -518,7 +533,9 @@ def screenshot_plan(files: list[Path], existing: list[dict]) -> dict:
             res['fail'].append(f'{f.name}: live record has no checksum, the upload never finished. '
                                'Re-run with --repair-stuck to delete the empty record and upload it again.')
         elif rec['checksum'] != md5_file(f):
-            res['fail'].append(f'{f.name}: live checksum {rec["checksum"]} differs from disk {md5_file(f)}')
+            # Not a failure to report and stop on: the bytes on disk are newer
+            # than the record. `changed` carries it for --replace-changed.
+            res['changed'].append(f)
         elif rec['state'] not in (None, 'COMPLETE'):
             res['fail'].append(f'{f.name}: live state {rec["state"]}')
         else:
@@ -604,9 +621,38 @@ def repair_stuck(api: ASC, loc_id: str, code: str) -> list[str]:
     return removed
 
 
-def sync_locale(api: ASC, loc_id: str, code: str, apply: bool) -> dict:
+def replace_changed(api: ASC, set_id: str, files: list[Path], changed: list[Path]) -> list[str]:
+    """Replace cards whose disk bytes no longer match the live record.
 
-    """Upload only what one locale is missing. Never deletes a set or a file."""
+    Apple appends a new screenshot, so deleting one card in the middle and
+    re-adding it would move it to the end and scramble the deck. The tail from
+    the first changed card is therefore deleted as a block and re-uploaded in
+    order: everything before it is untouched, and the appends land where they
+    belong.
+    """
+    if not changed:
+        return []
+    names = [f.name for f in files]
+    first = min(names.index(f.name) for f in changed)
+    removed: list[str] = []
+    for shot in live_screenshots(api, set_id):
+        name = shot['attributes'].get('fileName')
+        if name in names and names.index(name) >= first:
+            api.request('DELETE', f'/v1/appScreenshots/{shot["id"]}')
+            removed.append(f'{name} ({shot["id"]})')
+    for f in files[first:]:
+        upload_one(api, set_id, f)
+    return removed
+
+
+def sync_locale(api: ASC, loc_id: str, code: str, apply: bool, replace: bool = False) -> dict:
+
+    """Upload only what one locale is missing. Never deletes a set or a file.
+
+    With `replace`, a card whose checksum differs is replaced as well, by
+    rebuilding the tail of its deck (see `replace_changed`). Off by default so
+    an ordinary run cannot move a screenshot Apple already holds.
+    """
     out = {'code': code, 'rows': {}, 'uploaded': 0, 'skipped': 0, 'fail': [], 'notes': []}
     wanted = screenshot_files(code)
     if not any(files for _, files in wanted):
@@ -632,7 +678,16 @@ def sync_locale(api: ASC, loc_id: str, code: str, apply: bool) -> dict:
             else:
                 created = True
         done = 0
-        if apply and row is not None:
+        swapped = 0
+        if apply and row is not None and replace and plan['changed']:
+            try:
+                gone = replace_changed(api, row['id'], files, plan['changed'])
+                swapped = len(gone)
+                done = len(files) - min([f.name for f in files].index(f.name) for f in plan['changed'])
+                out['notes'].append(f'{display}: replaced {swapped}, re-uploaded {done}')
+            except BaseException as exc:
+                out['fail'].append(f'{display}: replace failed: {exc}')
+        elif apply and row is not None:
             for f in plan['upload']:
                 try:
                     upload_one(api, row['id'], f)
@@ -641,13 +696,14 @@ def sync_locale(api: ASC, loc_id: str, code: str, apply: bool) -> dict:
                     out['fail'].append(f'{display}/{f.name}: {exc}')
                     break
         else:
-            done = len(plan['upload'])
+            done = len(plan['upload']) + len(plan['changed'] if replace else [])
         out['uploaded'] += done
         out['skipped'] += plan['skip']
         out['fail'] += [f'{display}/{m}' for m in plan['fail']]
         out['notes'] += plan['note']
         out['rows'][display] = {'upload': done, 'skip': plan['skip'],
                                  'fail': len(plan['fail']), 'created': created,
+                                 'changed': len(plan['changed']),
                                  'pending': len(plan['upload']) - done if apply else len(plan['upload'])}
     return out
 
@@ -687,7 +743,8 @@ def cmd_screenshots(api: ASC, args) -> int:
             continue
         targets.append((apple_loc, code, live[apple_loc]['id']))
 
-    print(f'{"locale":10} {"dir":12} {"iphone-6.5":14} {"iphone-6.9":14} {"ipad-13":14} result')
+    print(f'{"locale":10} {"dir":12} {"iphone-6.5":22} {"iphone-6.9":22} {"ipad-13":22} result')
+    columns = (('iphone-6.5', IPHONE_65), ('iphone-6.9', IPHONE_69), ('ipad-13', IPAD_13))
     results: list[tuple[str, str, dict]] = []
     import threading
     lock = threading.Lock()
@@ -703,7 +760,7 @@ def cmd_screenshots(api: ASC, args) -> int:
             if args.reset_display and args.apply:
                 gone = reset_display(worker, loc_id, code, args.reset_display)
                 print(f'    reset {code} {args.reset_display}: removed {len(gone)}')
-            res = sync_locale(worker, loc_id, code, apply=args.apply)
+            res = sync_locale(worker, loc_id, code, apply=args.apply, replace=args.replace_changed)
         except BaseException as exc:
             res = {'code': code, 'rows': {}, 'uploaded': 0, 'skipped': 0,
                    'fail': [f'locale failed: {exc}'], 'notes': []}
@@ -711,12 +768,17 @@ def cmd_screenshots(api: ASC, args) -> int:
             results.append((apple_loc, code, res))
             rows = res['rows']
             cells = []
-            for label, display, _dir in screenshot_dirs(code):
+            # Every locale prints the same three columns, `-` where it has no
+            # such set. Printing only the sets a locale has put each locale's
+            # numbers under another locale's headings.
+            for _label, display in columns:
                 r = rows.get(display)
                 if r is None:
                     cells.append(f'{"-":22}')
                 else:
-                    cell = '+' + str(r['upload']) + ' =' + str(r['skip']) + ' x' + str(r['fail'])
+                    cell = ('+' + str(r['upload']) + ' =' + str(r['skip'])
+                            + (' c' + str(r.get('changed', 0)) if r.get('changed') else '')
+                            + ' x' + str(r['fail']))
                     cells.append(f'{cell:22}')
             status = 'failed' if res['fail'] else ('upload' if res['uploaded'] else 'skip')
             if res['notes'] and not rows:
@@ -737,10 +799,14 @@ def cmd_screenshots(api: ASC, args) -> int:
 
     up = sum(r['uploaded'] for _, _, r in results)
     sk = sum(r['skipped'] for _, _, r in results)
+    changed = sum(rw.get('changed', 0) for _, _, r in results for rw in r['rows'].values())
     bad = [r for _, _, r in results if r['fail']]
     print(f'\n{len(results)} locales: {up} {"uploaded" if args.apply else "to upload"}, '
-          f'{sk} already present, {len(bad)} with failures')
+          f'{sk} already present, {changed} changed on disk, {len(bad)} with failures')
     if not args.apply:
+        if changed and not args.replace_changed:
+            print(f'{changed} card(s) differ from what Apple holds; '
+                  'pass --replace-changed to swap them (rebuilds that deck\'s tail)')
         print('dry run: pass --apply to upload')
     elif bad:
         print('re-run to resume; completed locales are skipped by checksum')
@@ -991,7 +1057,10 @@ def cmd_submit(api: ASC, args) -> int:
     state = version_state(version)
     name = version['attributes'].get('versionString')
     print(f'version {name}  state {state}  id {version["id"]}')
-    if state != 'PREPARE_FOR_SUBMISSION':
+    # DEVELOPER_REJECTED is what `cancel --apply` leaves behind: the version is
+    # ours again, its build can be swapped, and it can be submitted afresh. That
+    # is the documented way to replace a build, so it has to be allowed here.
+    if state not in ('PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED'):
         print('that version is not editable, nothing to submit')
         return 1
 
@@ -1083,6 +1152,9 @@ def main() -> int:
                    help='screenshots: delete AWAITING_UPLOAD records with no bytes, then upload them again')
     p.add_argument('--reset-display', metavar='DISPLAY_TYPE',
                    help='screenshots: delete one display set and rebuild it in order (APP_IPAD_PRO_3GEN_129)')
+    p.add_argument('--replace-changed', action='store_true',
+                   help='screenshots: replace cards whose bytes changed since upload, '
+                        'rebuilding the tail of that deck so the order holds')
     args = p.parse_args()
     api = ASC()
     return {'audit': cmd_audit, 'push': cmd_push, 'screenshots': cmd_screenshots,
