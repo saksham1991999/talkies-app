@@ -233,28 +233,28 @@ void main() {
       expect(en, contains(fact), reason: 'English acctDeleteBody lost "$fact"');
     }
 
-    // A translation cannot be substring-checked, so pin a floor per language. The
-    // floor is below the shipped length, which means a reworded clause passes and a
-    // dropped one does not. Raise these when a language is edited to say more.
-    const floors = <String, int>{
-      'ar': 255, 'bn': 313, 'ca': 339, 'cs': 300, 'da': 312, 'de': 373,
-      'el': 371, 'es': 337, 'fi': 310, 'fr': 353, 'gu': 280, 'he': 226,
-      'hi': 291, 'hr': 295, 'hu': 297, 'id': 298, 'it': 363, 'ja': 137,
-      'kn': 309, 'ko': 139, 'ml': 327, 'mr': 318, 'ms': 292, 'nl': 351,
-      'no': 307, 'or': 308, 'pa': 312, 'pl': 323, 'pt': 315, 'pt_PT': 324,
-      'ro': 304, 'ru': 289, 'sk': 308, 'sl': 325, 'sv': 315, 'ta': 348,
-      'te': 293, 'th': 271, 'tr': 303, 'uk': 302, 'ur': 321, 'vi': 316,
-      'zh': 106, 'zh_Hant': 106,
-    };
-    for (final MapEntry(key: lang, value: floor) in floors.entries) {
+    // A length is not a meaning: a translation could drop the warning and still be
+    // long. Each language therefore names the two clauses it must keep, in its own
+    // words, in test/fixtures/deletion_disclosure.json. Rewriting a language means
+    // updating its entry, which is the review gate this copy needs.
+    final fixture = (jsonDecode(File('test/fixtures/deletion_disclosure.json').readAsStringSync())
+        as Map<String, dynamic>);
+    for (final MapEntry(key: lang, value: want) in fixture.entries) {
       final body = strings(lang)['acctDeleteBody']!;
-      expect(body.length, greaterThanOrEqualTo(floor),
-          reason: '$lang.acctDeleteBody is ${body.length} chars; the disclosure '
-              'needs at least $floor. A dropped clause is the usual cause.');
+      final clauses = want as Map<String, dynamic>;
+      final other = clauses['otherMembers'] as String;
+      if (other.isNotEmpty) {
+        expect(body, contains(other),
+            reason: '$lang.acctDeleteBody no longer says the stubs in other '
+                "members' diaries survive: missing \"$other\"");
+      }
+      expect(body, contains(clauses['irreversible'] as String),
+          reason: '$lang.acctDeleteBody lost its irreversible warning: missing '
+              '"${clauses['irreversible']}"');
     }
 
-    // The floors must cover every language, so a new ARB cannot slip past.
-    expect(floors.keys.toSet(), languages().toSet());
+    // Every language needs an entry, so a new ARB cannot slip past.
+    expect(fixture.keys.toSet(), {'en', ...languages()});
   });
 
   test('no string borrows a letter from another script', () {

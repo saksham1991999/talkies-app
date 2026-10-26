@@ -424,6 +424,13 @@ def cmd_translate() -> int:
         if not isinstance(t, dict):
             errors.append(f'{lang}.json: not a JSON object')
             continue
+        # Valid JSON is not enough: `{"hello": null}` parses, then blows up inside
+        # problems_in with a TypeError on `.strip()` or the placeholder scanner, which
+        # loses the rest of the report. Non-strings are a problem to name, not to crash on.
+        bad = sorted(k for k, v in t.items() if not isinstance(v, str))
+        if bad:
+            errors.append(f'{lang}.json: {len(bad)} value(s) are not strings ({", ".join(bad[:4])})')
+            continue
         translations[lang] = t
         for k in sorted(drafted - set(t)):
             pending.append(lang)

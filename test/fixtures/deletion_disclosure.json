@@ -1,0 +1,182 @@
+{
+  "ar": {
+    "irreversible": "لا يمكن التراجع عن ذلك",
+    "otherMembers": "الأعضاء الآخرين"
+  },
+  "bn": {
+    "irreversible": "এটি আর ফেরানো যাবে না",
+    "otherMembers": "অন্য সদস্যদের"
+  },
+  "ca": {
+    "irreversible": "No es pot desfer",
+    "otherMembers": "altres membres"
+  },
+  "cs": {
+    "irreversible": "Tuto akci nelze vrátit",
+    "otherMembers": "ostatních členů"
+  },
+  "da": {
+    "irreversible": "Du kan ikke fortryde dette",
+    "otherMembers": "andre medlemmers"
+  },
+  "de": {
+    "irreversible": "Dies kann nicht rückgängig gemacht werden",
+    "otherMembers": "anderer Mitglieder"
+  },
+  "el": {
+    "irreversible": "Δεν αναιρείται",
+    "otherMembers": "άλλων μελών"
+  },
+  "en": {
+    "irreversible": "cannot undo",
+    "otherMembers": "other members' diaries"
+  },
+  "es": {
+    "irreversible": "No puedes deshacerlo",
+    "otherMembers": "demás miembros"
+  },
+  "fi": {
+    "irreversible": "Tätä ei voi kumota",
+    "otherMembers": "muiden jäsenten"
+  },
+  "fr": {
+    "irreversible": "Irréversible",
+    "otherMembers": "autres membres"
+  },
+  "gu": {
+    "irreversible": "તેને પાછું લાવી શકાતું નથી",
+    "otherMembers": "બીજા સભ્યોની"
+  },
+  "he": {
+    "irreversible": "לא ניתן לבטל זאת",
+    "otherMembers": "חברים אחרים"
+  },
+  "hi": {
+    "irreversible": "इसे वापस नहीं किया जा सकता",
+    "otherMembers": "दूसरे सदस्यों"
+  },
+  "hr": {
+    "irreversible": "Ovo ne možeš poništiti",
+    "otherMembers": "drugih članova"
+  },
+  "hu": {
+    "irreversible": "Ez nem visszavonható",
+    "otherMembers": "más tagok"
+  },
+  "id": {
+    "irreversible": "Tindakan ini tidak bisa dibatalkan",
+    "otherMembers": "anggota lain"
+  },
+  "it": {
+    "irreversible": "Non puoi annullare questa operazione",
+    "otherMembers": "altri membri"
+  },
+  "ja": {
+    "irreversible": "この操作は元に戻せません",
+    "otherMembers": "他のメンバー"
+  },
+  "kn": {
+    "irreversible": "ಇದನ್ನು ಹಿಂತಿರುಗಿಸಲಾಗುವುದಿಲ್ಲ",
+    "otherMembers": "ಇತರ ಸದಸ್ಯರ"
+  },
+  "ko": {
+    "irreversible": "되돌릴 수 없습니다",
+    "otherMembers": "다른 멤버"
+  },
+  "ml": {
+    "irreversible": "ഇതു തിരികെ കൊണ്ടുവരാനാവില്ല",
+    "otherMembers": "മറ്റ് അംഗങ്ങളുടെ"
+  },
+  "mr": {
+    "irreversible": "हे परत घडवता येणार नाही",
+    "otherMembers": "इतर सदस्यांच्या"
+  },
+  "ms": {
+    "irreversible": "Anda tidak boleh batalkan ini",
+    "otherMembers": "ahli lain"
+  },
+  "nl": {
+    "irreversible": "Je kunt dit niet ongedaan maken",
+    "otherMembers": "andere leden"
+  },
+  "no": {
+    "irreversible": "Du kan ikke angre dette",
+    "otherMembers": "andre medlemmers"
+  },
+  "or": {
+    "irreversible": "ଏହାକୁ ପୂର୍ବାବସ୍ଥାକୁ ଫେରାଇ ହେବ ନାହିଁ",
+    "otherMembers": "ଅନ୍ୟ ସଦସ୍ୟଙ୍କ"
+  },
+  "pa": {
+    "irreversible": "ਇਸ ਨੂੰ ਮੋੜਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ",
+    "otherMembers": "ਹੋਰ ਮੈਂਬਰਾਂ"
+  },
+  "pl": {
+    "irreversible": "Tego nie można cofnąć",
+    "otherMembers": "innych członków"
+  },
+  "pt": {
+    "irreversible": "Não é possível desfazer",
+    "otherMembers": "outros membros"
+  },
+  "pt_PT": {
+    "irreversible": "Não podes desfazer isto",
+    "otherMembers": "outros membros"
+  },
+  "ro": {
+    "irreversible": "Nu se poate anula",
+    "otherMembers": "celorlalți membri"
+  },
+  "ru": {
+    "irreversible": "Отменить это нельзя",
+    "otherMembers": "других участников"
+  },
+  "sk": {
+    "irreversible": "Nemožno vrátiť",
+    "otherMembers": "ostatných členov"
+  },
+  "sl": {
+    "irreversible": "Tega ni mogoče razveljaviti",
+    "otherMembers": "drugih članov"
+  },
+  "sv": {
+    "irreversible": "Du kan inte ångra det",
+    "otherMembers": "andra medlemmars"
+  },
+  "ta": {
+    "irreversible": "இதை மீட்க முடியாது",
+    "otherMembers": "மற்ற உறுப்பினர்களின்"
+  },
+  "te": {
+    "irreversible": "దీన్ని వెనక్కి తీసుకోలేరు",
+    "otherMembers": "ఇతర సభ్యుల"
+  },
+  "th": {
+    "irreversible": "ไม่สามารถยกเลิกได้",
+    "otherMembers": "สมาชิกคนอื่น"
+  },
+  "tr": {
+    "irreversible": "Bu işlemi geri alamazsın",
+    "otherMembers": "diğer üyelerin"
+  },
+  "uk": {
+    "irreversible": "Це не можна скасувати",
+    "otherMembers": "інших учасників"
+  },
+  "ur": {
+    "irreversible": "آپ اسے واپس نہیں کر سکتے",
+    "otherMembers": "دوسرے ممبرز"
+  },
+  "vi": {
+    "irreversible": "Không thể hoàn tác",
+    "otherMembers": "thành viên khác"
+  },
+  "zh": {
+    "irreversible": "此操作无法撤销",
+    "otherMembers": "其他成员"
+  },
+  "zh_Hant": {
+    "irreversible": "此操作無法復原",
+    "otherMembers": "其他成員"
+  }
+}

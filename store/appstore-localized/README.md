@@ -191,10 +191,12 @@ exactly where it stops:
 - **During the rebuild**, the delete has to go first. A set holds at most 10 cards
   per size, so uploading the replacements before removing the old ones would
   briefly hold more than Apple allows. That leaves a few seconds where the tail is
-  short. If an upload fails in that window, the tool stops with a `SystemExit`
-  naming the cards that are missing and the command to run again; re-running
-  uploads only what is absent, because the plan reads them as uploads. It also
-  re-reads the set afterwards and refuses if Apple's order disagrees with disk.
+  short. A failure in that window cannot be undone by the tool, so it ends the whole
+  run: the command names the cards that are missing, says nothing was submitted, and
+  exits non-zero without touching another locale. Repair is the same command again,
+  which uploads only what is absent because the plan reads missing cards as uploads.
+  The tool also re-reads the set after a rebuild and stops the run if Apple's order
+  disagrees with disk.
 - **Nothing is submitted** by this tool. Do not submit the version while a rebuild
   is failing: run the plan again and wait for `0 changed, 0 to upload`.
 

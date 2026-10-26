@@ -632,6 +632,17 @@ def repair_stuck(api: ASC, loc_id: str, code: str) -> list[str]:
     return removed
 
 
+class RebuildIncomplete(RuntimeError):
+    """A deck was left short because its tail could not be put back.
+
+    Deliberately not a `SystemExit`: `sync_locale` catches `BaseException` around
+    each upload so one bad card does not stop the rest, and that also swallowed the
+    old `SystemExit`. A half-empty deck has to stop the whole run, because every
+    later set the command touches makes the mess bigger, so this is raised where
+    `sync_locale` re-raises it and left to propagate.
+    """
+
+
 def replace_changed(api: ASC, set_id: str, files: list[Path], changed: list[Path]) -> list[str]:
     """Replace cards whose disk bytes no longer match the live record.
 
@@ -666,7 +677,7 @@ def replace_changed(api: ASC, set_id: str, files: list[Path], changed: list[Path
             done.append(f.name)
     except BaseException as exc:
         missing = [f.name for f in tail if f.name not in done]
-        raise SystemExit(
+        raise RebuildIncomplete(
             f'the tail of this deck is now incomplete: {len(missing)} card(s) missing '
             f'({", ".join(missing[:4])}{"..." if len(missing) > 4 else ""}). '
             f'The first {len(done)} went back. Nothing was submitted: run the same command '
@@ -676,7 +687,7 @@ def replace_changed(api: ASC, set_id: str, files: list[Path], changed: list[Path
     live = [s['attributes'].get('fileName') for s in live_screenshots(api, set_id)]
     expected = names
     if live != expected:
-        raise SystemExit(
+        raise RebuildIncomplete(
             f'the deck does not match disk after the rebuild: Apple holds {live}, disk has '
             f'{expected}. Re-run with --replace-changed once the cause is fixed; do not submit '
             f'this version while they disagree.')
@@ -731,6 +742,10 @@ def sync_locale(api: ASC, loc_id: str, code: str, apply: bool, replace: bool = F
                 swapped = len(gone)
                 done = tail
                 out['notes'].append(f'{display}: replaced {swapped}, re-uploaded {done}')
+            except RebuildIncomplete:
+                # Propagate: the tail of this deck is short, and carrying on to the
+                # next set would leave more decks short instead of stopping at one.
+                raise
             except BaseException as exc:
                 out['fail'].append(f'{display}: replace failed: {exc}')
         elif apply and row is not None:
@@ -794,6 +809,7 @@ def cmd_screenshots(api: ASC, args) -> int:
     print(f'{"locale":10} {"dir":12} {"iphone-6.5":22} {"iphone-6.9":22} {"ipad-13":22} result')
     columns = (('iphone-6.5', IPHONE_65), ('iphone-6.9', IPHONE_69), ('ipad-13', IPAD_13))
     results: list[tuple[str, str, dict]] = []
+    aborts: list[str] = []
     import threading
     lock = threading.Lock()
 
@@ -809,6 +825,11 @@ def cmd_screenshots(api: ASC, args) -> int:
                 gone = reset_display(worker, loc_id, code, args.reset_display)
                 print(f'    reset {code} {args.reset_display}: removed {len(gone)}')
             res = sync_locale(worker, loc_id, code, apply=args.apply, replace=args.replace_changed)
+        except RebuildIncomplete as exc:
+            # A deck is short. Stop here rather than shorting more of them.
+            aborts.append(str(exc))
+            res = {'code': code, 'rows': {}, 'uploaded': 0, 'skipped': 0,
+                   'fail': [f'deck left incomplete: {exc}'], 'notes': []}
         except BaseException as exc:
             res = {'code': code, 'rows': {}, 'uploaded': 0, 'skipped': 0,
                    'fail': [f'locale failed: {exc}'], 'notes': []}
@@ -843,7 +864,18 @@ def cmd_screenshots(api: ASC, args) -> int:
             list(pool.map(work, targets))
     else:
         for item in targets:
+            # One deck is already short. Uploading the rest cannot repair it, and
+            # every extra set touched is another chance to leave a second one short.
+            if aborts:
+                print(f'    stopping: {len(targets) - len(results)} locale(s) not touched')
+                break
             work(item)
+
+    if aborts:
+        print('\nA deck was left incomplete, so the run stopped. Nothing was submitted.')
+        for a in aborts:
+            print(f'  {a}')
+        return 1
 
     up = sum(r['uploaded'] for _, _, r in results)
     sk = sum(r['skipped'] for _, _, r in results)
