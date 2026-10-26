@@ -18,9 +18,9 @@ Talkies already knows your taste. The next step is to use it for the group.
 4. **A 34,000-title catalog on the phone.** It works offline and refreshes every 3 days from Wikidata and Wikipedia.
 5. **Recommendations on Home.** "For you" and "Because you liked" run on the phone. They use your ratings, directors, cast, genres, language, and streaming services.
 
-Also included: a watchlist with planned dates, streaming availability, CSV and Letterboxd import, backup and restore, share images for tickets and stats, 44 languages, and 11 accent colors.
+Also included: a watchlist with planned dates, streaming availability, CSV and Letterboxd import, backup and restore, share images for tickets and stats, 45 languages, and 11 accent colors.
 
-The listing is multilingual too: the app speaks 44 interface languages, the store listing carries metadata in the App Store's 50 storefront languages, and the language picker in Settings offers a language only once its translation is finished.
+The listing is multilingual too: the app speaks 45 interface languages, the store listing carries metadata in the App Store's 50 storefront languages, and the language picker in Settings offers a language only once its translation is finished.
 
 Talkies has no account by default, no analytics, and no tracking. Signing in stays optional: without an account the app works exactly as it does today.
 

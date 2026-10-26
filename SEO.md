@@ -9,8 +9,8 @@ Work happens on the `recommendations` branch. Nothing here is live until
 
 - 2026-10-26: Multilingual launch correction.
   - `docs/index.html`: every understated language-count claim replaced
-    with the true count (44). Touched: JSON-LD `featureList`, JSON-LD
-    `inLanguage` (was 8 codes, now all 44 translated locale codes plus
+    with the true count (45). Touched: JSON-LD `featureList`, JSON-LD
+    `inLanguage` (was 8 codes, now all 45 locale codes)
     `en`), the FAQ answer (schema and visible copy kept word-for-word
     identical), the "What is Talkies" paragraph, the hero stub body, the
     "Made for Indian cinema" scripts line, and the Hindi screenshot
@@ -78,7 +78,7 @@ Work happens on the `recommendations` branch. Nothing here is live until
 
 What shipped localized:
 
-- **App UI**: 44 languages (`lib/l10n/locale_meta.dart` is the source of
+- **App UI**: 45 languages (`lib/l10n/locale_meta.dart` is the source of
   truth; 44 entries with `ready: true`, English is the template). The
   picker in Settings lists a language only once its ARB is complete, so a
   seeded file never ships as a broken translation. Arabic, Hebrew and Urdu
@@ -96,7 +96,7 @@ What shipped localized:
 What did **not** ship localized, and should not for now:
 
 - The landing page. One English page (`lang="en-IN"`), declared with
-  `hreflang="en"` and `hreflang="x-default"`. 44 half-translated landing
+  `hreflang="en"` and `hreflang="x-default"`. 45 half-translated landing
   pages would be thin duplicate content competing with each other, and the
   page has no indexing history yet to protect.
 

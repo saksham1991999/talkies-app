@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'l10n/gen/app_localizations.dart';
 import 'l10n/locale_meta.dart';
+import 'l10n/resolution.dart';
 import 'state/providers.dart';
 import 'ui/shell.dart';
 import 'ui/theme.dart';
@@ -23,6 +24,9 @@ class TalkiesApp extends ConsumerWidget {
       // `pt_BR` and `zh_Hans` cannot be read by `Locale(String)`, which would
       // leave the app in English.
       locale: s.locale == null ? null : localeFor(s.locale!),
+      // A phone in a language the app does not ship falls back to English, not
+      // to whichever locale sorts first in the generated list, which is Arabic.
+      localeListResolutionCallback: (locales, _) => resolveAppLocale(locales),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,

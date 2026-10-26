@@ -57,7 +57,7 @@ This repo holds the app, its optional backend and its website.
 - "Watched in" language for dubbed viewings (KGF in Hindi, RRR in Tamil).
 - Spend stats with Indian number grouping (₹1,23,456) in rupees; a ticket currency setting swaps the symbol and grouping for 14 currencies without converting the amount.
 - Places: cinema halls, Netflix, Prime Video, JioHotstar, SonyLIV, ZEE5, aha, Sun NXT, TV. Add your own (PVR Phoenix, Maratha Mandir).
-- UI in 44 languages, the App Store's 50 metadata locales. Indian date formats, right-to-left layout for Arabic, Hebrew and Urdu. Imports `DD/MM/YYYY` dates.
+- UI in 45 languages, the App Store's 50 metadata locales. Indian date formats, right-to-left layout for Arabic, Hebrew and Urdu. Imports `DD/MM/YYYY` dates.
 - Films you add yourself, with your own poster photo, for titles not in the list.
 - Backup and restore as one JSON file. Poster photos you chose for your own films stay on the phone and are not in the backup.
 
@@ -185,7 +185,7 @@ tool/         catalog builder, recent-release baker, icon generator, label gener
 
 ## Languages and the store listing
 
-The app ships one ARB file per language, 44 in all, covering the App Store's 50
+The app ships one ARB file per language, 45 in all, covering the App Store's 50
 metadata locales. Settings lists a language only after its text is translated;
 `tool/l10n_status.py` decides that and regenerates `lib/l10n/locale_meta.dart`.
 

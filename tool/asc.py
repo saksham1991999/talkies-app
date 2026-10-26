@@ -28,6 +28,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -51,6 +52,10 @@ STATE = ROOT / 'store' / 'asc_state.json'
 # 6.5-inch enum; both are accepted.
 IPHONE_69 = 'APP_IPHONE_67'
 IPAD_13 = 'APP_IPAD_PRO_3GEN_129'
+# The English listing also carries a 6.5-inch (1242 x 2688) set, uploaded before
+# the 6.9-inch one existed. It is served to older devices, so it has to stay in
+# step with the deck rather than keep whatever was there on day one.
+IPHONE_65 = 'APP_IPHONE_65'
 
 
 # Apple's locale enum is narrower than Xcode's language IDs. Thirteen of the
@@ -158,11 +163,22 @@ def app_info_all(api: ASC, app: str) -> list[dict]:
 
 
 def app_info(api: ASC, app: str) -> dict:
-    """The record we may write to, falling back to the live one."""
+    """The record we may write to, falling back to the live one.
+
+    A released app keeps its own appInfo (READY_FOR_DISTRIBUTION) next to the
+    one belonging to the version in flight. That in-flight record changes state
+    as the version moves: PREPARE_FOR_SUBMISSION, then WAITING_FOR_REVIEW, then
+    IN_REVIEW. Looking only for PREPARE_FOR_SUBMISSION meant that once a version
+    was submitted, every write went to the released record, which rejects them,
+    and the plan claimed 50 app-info localizations were missing.
+    """
     rows = app_info_all(api, app)
-    for row in rows:
+    in_flight = [r for r in rows if r['state'] != 'READY_FOR_DISTRIBUTION']
+    for row in in_flight:
         if row['state'] == 'PREPARE_FOR_SUBMISSION':
             return row
+    if in_flight:
+        return in_flight[0]
     return rows[0]
 
 
@@ -195,15 +211,41 @@ def screenshot_sets(api: ASC, loc_id: str) -> dict[str, dict]:
     return {x['attributes']['screenshotDisplayType']: x for x in rows}
 
 
-def editable_version(api: ASC, app: str, version_string: str = '1.1.0') -> dict:
-    """The version we may edit, creating one when the live version is closed."""
+def pubspec_version() -> str:
+    """The marketing version in pubspec.yaml, so a new release names itself."""
+    m = re.search(r'^version:\s*([0-9]+\.[0-9]+\.[0-9]+)', (ROOT / 'pubspec.yaml').read_text(), re.M)
+    return m.group(1) if m else '1.0.0'
+
+
+def editable_version(api: ASC, app: str, version_string: str | None = None, create: bool = False) -> dict | None:
+    """The version we may edit, and optionally create one when none is editable.
+
+    Creating is opt-in. A version record cannot be deleted through the API, so a
+    command that only wants to read metadata must never leave one behind: this
+    used to POST on every call, which meant a read-only command on a submitted
+    app either failed with a confusing duplicate error or, after a version bump,
+    quietly created a stray draft.
+    """
     for v in versions(api, app):
         if version_state(v) == 'PREPARE_FOR_SUBMISSION':
+            return v
+    if not create:
+        return None
+    want = version_string or pubspec_version()
+    # A version with this number already exists but is past preparing (it may be
+    # waiting for review, or live). Correct that one: its metadata is still
+    # writable, and POSTing the same number again is rejected as a duplicate.
+    for v in versions(api, app):
+        if v['attributes'].get('versionString') == want:
             return v
     return api.post('/v1/appStoreVersions', {
         'data': {
             'type': 'appStoreVersions',
-            'attributes': {'versionString': version_string, 'platform': 'IOS', 'releaseType': 'AFTER_APPROVAL'},
+            'attributes': {
+                'versionString': want,
+                'platform': 'IOS',
+                'releaseType': 'AFTER_APPROVAL',
+            },
             'relationships': {'app': {'data': {'type': 'apps', 'id': app}}},
         }
     })['data']
@@ -264,7 +306,9 @@ def cmd_audit(api: ASC, args) -> int:
 
 def cmd_push(api: ASC, args) -> int:
     app = api.app_id()
-    version = editable_version(api, app) if args.apply else current_version(api, app)
+    # `create=True`: pushing metadata is the one command that may open a new
+    # version, and only when it is really writing.
+    version = editable_version(api, app, create=True) if args.apply else current_version(api, app)
     # Resolve the appInfo and the version's locales *after* the editable version
     # exists: creating a version spawns a new PREPARE_FOR_SUBMISSION appInfo,
     # and the released one rejects writes.
@@ -374,7 +418,13 @@ def screenshot_dirs(code: str) -> list[tuple[str, str, Path]]:
         base = ROOT / 'store' / 'appstore'
     else:
         base = ROOT / 'store' / 'appstore-localized' / code
-    return [('iphone-6.9', IPHONE_69, base / 'iphone-6.9'), ('ipad-13', IPAD_13, base / 'ipad-13')]
+    dirs = [('iphone-6.9', IPHONE_69, base / 'iphone-6.9'), ('ipad-13', IPAD_13, base / 'ipad-13')]
+    # Only en-US ever had a 6.5-inch set: it was uploaded before the 6.9-inch one
+    # existed. The other English storefronts were added later without it, so
+    # looking for one there would create a set Apple never asked for.
+    if code == 'en-US' and (base / 'iphone-6.5').is_dir():
+        dirs.insert(0, ('iphone-6.5', IPHONE_65, base / 'iphone-6.5'))
+    return dirs
 
 
 def screenshot_files(code: str) -> list[tuple[str, list[Path]]]:
@@ -626,7 +676,7 @@ def cmd_screenshots(api: ASC, args) -> int:
             continue
         targets.append((apple_loc, code, live[apple_loc]['id']))
 
-    print(f'{"locale":10} {"dir":12} {"iphone-6.9":22} {"ipad-13":22} result')
+    print(f'{"locale":10} {"dir":12} {"iphone-6.5":14} {"iphone-6.9":14} {"ipad-13":14} result')
     results: list[tuple[str, str, dict]] = []
     import threading
     lock = threading.Lock()
@@ -660,7 +710,7 @@ def cmd_screenshots(api: ASC, args) -> int:
             status = 'failed' if res['fail'] else ('upload' if res['uploaded'] else 'skip')
             if res['notes'] and not rows:
                 status += ' (' + res['notes'][0] + ')'
-            print(f'{apple_loc:10} {code:12} {cells[0]} {cells[1]} {status}')
+            print(f'{apple_loc:10} {code:12} {" ".join(cells)} {status}')
             for m in res['fail']:
                 print(f'    FAIL {m}')
             for m in res['notes']:
@@ -785,7 +835,10 @@ def cmd_cpp(api: ASC, args) -> int:
 
 def cmd_ppo(api: ASC, args) -> int:
     app = api.app_id()
-    version = editable_version(api, app)
+    # Read the version, never create one: this command only reports, and a
+    # version record cannot be deleted through the API, so a stray create is
+    # permanent clutter on the app.
+    version = current_version(api, app)
     existing = api.all(f'/v1/apps/{app}/appStoreVersionExperimentsV2')
     name = 'Screenshots and preview'
     print(f'experiment "{name}" with 3 treatments, {len(existing)} already on the app')
