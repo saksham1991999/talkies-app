@@ -133,6 +133,12 @@ async def _wrap_up_once(nid: UUID, body: WrapupPost, user: UUID, db: Db) -> dict
             rows = await c.fetch(WENT, night["group_id"], nid)
         else:
             rows = await c.fetch(NAMED, night["group_id"], body.member_ids)
+            # NAMED joins the membership, so an id that is no longer in the crew - or never was -
+            # produces no row at all. Without this the wrap-up would finish, report success and
+            # quietly stamp fewer diaries than the host picked, and the host would never know who
+            # was missed. A selection that does not resolve is the same event as a member leaving.
+            if {row["id"] for row in rows} != set(body.member_ids):
+                raise _MembershipChanged()
         attendees = [Attendee(r["name"], r["user_id"]) for r in rows]
         if any(a.user_id is not None and a.user_id not in locked for a in attendees):
             raise _MembershipChanged()

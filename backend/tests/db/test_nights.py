@@ -368,6 +368,20 @@ async def test_wrapup_with_named_members_and_a_random_seat(world):
     assert stubs_of(await ravi.pull(), nid) == []
 
 
+async def test_a_named_member_who_left_the_crew_fails_the_wrapup(world):
+    asha, ravi, meena, gid, nid, members, _, _ = await wrapped_night(world)
+    # The host picked two people, then one stopped being a member: the client's list is stale.
+    # NAMED joins the membership, so that id returns no row, and the wrap-up used to finish and
+    # report success with one stub - a silent omission in somebody else's diary.
+    gone = str(UUID(int=0))
+    body = {"seat_row": None, "first_seat": None, "member_ids": [members["Meena"], gone]}
+    reply = await asha.post(f"/v1/nights/{nid}/wrapup", body)
+    assert reply.status_code == 409 and reply.json()["error"]["code"] == "group_changed"
+    assert await world.value("select count(*) from stubs where id = $1", f"night-{nid}") == 0
+    # And the night is still open, so the host can pick again rather than losing the wrap-up.
+    assert await world.value("select status from nights where id = $1", nid) == "set"
+
+
 async def test_wrapup_needs_a_set_night(world):
     asha, _, _, gid, _ = await crew(world)
     poll = await asha.ok("post", f"/v1/groups/{gid}/nights", night_body(), status=201)
