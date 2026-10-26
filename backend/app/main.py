@@ -1,4 +1,7 @@
-"""The FastAPI app. Run: uvicorn app.main:app --proxy-headers --forwarded-allow-ips='*'"""
+"""The FastAPI app.
+
+Run: uvicorn app.main:app --proxy-headers --forwarded-allow-ips=<TRUSTED_PROXIES>
+"""
 
 import logging
 from collections.abc import AsyncIterator

@@ -24,6 +24,10 @@ USER talkies
 
 EXPOSE 8000
 
-# --proxy-headers makes the rate limiter see the real client IP behind a proxy.
-# Run the container only behind a proxy that sets X-Forwarded-For itself.
-CMD exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips='*'
+# --proxy-headers makes uvicorn believe X-Forwarded-For, but only from the
+# addresses in TRUSTED_PROXIES: the same list the rate limiter reads, and the
+# same rule (trust nobody but loopback unless the deployment says otherwise).
+# Never '*': a directly reachable container would then let any client pick its
+# own IP and its own rate-limit bucket.
+ENV TRUSTED_PROXIES=127.0.0.1,::1
+CMD exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips="${TRUSTED_PROXIES}"

@@ -34,6 +34,11 @@ class Settings(BaseSettings):
     # asyncpg rejects a pool size below 1, which would leave every database
     # request unavailable after boot, so a bad value fails at startup instead.
     db_pool_max: Annotated[int, Field(ge=1)] = 10
+    # Addresses or CIDRs of the proxies in front of this server, comma list.
+    # X-Forwarded-For is only believed when the socket peer is one of these, so
+    # the default trusts nobody but a proxy on the same machine. The Dockerfile
+    # passes the same list to uvicorn --forwarded-allow-ips.
+    trusted_proxies: str = "127.0.0.1,::1"
 
     @property
     def base_url(self) -> str:

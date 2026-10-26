@@ -33,6 +33,7 @@ Copy `.env.example` to `.env` for local runs. On a host, set real environment va
 | `APPLE_CLIENT_ID` | The Apple client ID, which is the app bundle ID. With the secret, turns on Apple grant revocation. |
 | `APPLE_CLIENT_SECRET` | The ES256 client-secret JWT minted from the Apple team key. |
 | `DB_POOL_MAX` | Most database connections in this process. Default 10. |
+| `TRUSTED_PROXIES` | Comma list of the proxy addresses or CIDRs in front of this server. `X-Forwarded-For` is read only when the request comes from one of them. Default `127.0.0.1,::1`, so a proxy on the same machine works and nothing else does. |
 
 The server starts with none of these set. Sign-in routes answer 502 while Supabase is not set up. Other routes answer 401 without a valid token and 503 while the database is not set or not reachable. `GET /healthz` answers 503 while the database is not reachable.
 
@@ -67,7 +68,7 @@ The server starts with none of these set. Sign-in routes answer 502 while Supaba
 
    The reply is `{"ok":true,"api":1,"auth":["email"]}`.
 
-6. Build the app with the address of the server. The address must be HTTPS: the app refuses an `http://` one (`_uri()` in `lib/net/api.dart`). Uvicorn in step 4 serves plain HTTP, so put a TLS proxy in front of it and point the app at that proxy: `flutter run --dart-define=TALKIES_API_URL=https://<your host>` (an Android emulator reaches the host as `10.0.2.2`, an iOS simulator as `localhost`). For a scratch build only, relax the HTTPS check and use the plain address instead: `--dart-define=TALKIES_API_URL=http://10.0.2.2:8000` or `http://localhost:8000`.
+6. Build the app with the address of the server. The address must be HTTPS. `_uri()` in `lib/net/api.dart` throws `ApiOffline` for any `http://` address in every build, debug included, and there is no switch to relax it. Step 4 serves plain HTTP, so put a TLS proxy in front of it and point the app at that proxy: `flutter run --dart-define=TALKIES_API_URL=https://<your host>` (an Android emulator reaches the host as `10.0.2.2`, an iOS simulator as `localhost`). A plain `--dart-define=TALKIES_API_URL=http://10.0.2.2:8000` is refused by the app: it answers every call offline and the online features stay hidden. For a self-signed proxy on your own machine, trust the certificate on the device, or run a local tunnel that ends TLS for you.
 
 ## Set up Supabase
 
@@ -99,10 +100,10 @@ docker build -t talkies-api backend
 docker run -p 8000:8000 --env-file backend/.env talkies-api
 ```
 
-The image runs `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips='*'`.
+The image runs `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips="$TRUSTED_PROXIES"`.
 
-1. Put the container behind a proxy that ends TLS and sets `X-Forwarded-For` itself. The rate limiter reads the client IP from that header. Without `--proxy-headers` (or when running uvicorn any other way), every client looks like the proxy and shares one limit, so requests that still carry `X-Forwarded-For` from a non-trusted address are refused with 429 and an error is logged: the limiter fails closed rather than grouping everyone into one bucket.
-2. Never expose the container to the internet without that proxy. With `--forwarded-allow-ips='*'`, any client could set `X-Forwarded-For` and pick its own IP.
+1. Put the container behind a proxy that ends TLS and sets `X-Forwarded-For` itself. Set `TRUSTED_PROXIES` to the address the proxy connects from, so uvicorn and the rate limiter believe the header: `docker run --env TRUSTED_PROXIES=172.17.0.1 ...` for a proxy on the Docker host, or the CDN ranges when one sits in front. The image defaults to `127.0.0.1,::1`, so with no proxy configured the header is ignored and every client is counted by the address the socket saw. That is correct but blunt behind a proxy: everyone shares the proxy's bucket. Set the list.
+2. Never expose the container to the internet without that proxy. `--forwarded-allow-ips` is the same list as `TRUSTED_PROXIES` and never `*`: with `*`, any client could set `X-Forwarded-For` and pick its own bucket. The limiter also reads the chain itself, from the right, and skips the hops that are trusted proxies, so a client that sends its own `X-Forwarded-For` first cannot move its bucket: the entry the proxy appended is the one that counts. uvicorn accepts literal addresses in `--forwarded-allow-ips` but not CIDRs; the app does accept CIDRs, so a CIDR in the list still works, and uvicorn simply leaves the rewrite to the app.
 3. Run one instance. The rate limiter keeps its counts in the memory of one process.
 4. Use `GET /healthz` as the health check. It answers 200 when the database works and 503 when it does not. The database check is cached for 5 seconds.
 5. Build the app with `--dart-define=TALKIES_API_URL=https://<your host>`. Publish the privacy page and the store text in the same release.

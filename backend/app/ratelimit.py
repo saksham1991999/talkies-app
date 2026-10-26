@@ -1,25 +1,57 @@
 """A sliding-window rate limiter that lives in process memory.
 
-Run uvicorn with --proxy-headers and --forwarded-allow-ips, or every client
-looks like the proxy and shares one IP bucket.
+The limits are keyed by client IP, so the IP has to be one the client cannot
+choose. `client_ip` is where that is decided: X-Forwarded-For is believed only
+when the request comes from a proxy in TRUSTED_PROXIES.
 """
 
+import ipaddress
 import logging
 import math
 import time
 from collections import deque
 from collections.abc import Callable
+from functools import lru_cache
 from typing import Annotated
 
 from fastapi import Depends, Request
 
 from app.errors import RateLimited
+from app.settings import get_settings
 
 log = logging.getLogger("talkies")
 
-# Addresses allowed to sit in front of the server and set X-Forwarded-For.
-# The Dockerfile runs uvicorn with --forwarded-allow-ips for exactly these.
-_TRUSTED_PROXIES = {"127.0.0.1", "::1", "172.17.0.1"}
+
+@lru_cache
+def trusted_networks(spec: str) -> tuple[ipaddress.IPv4Network | ipaddress.IPv6Network, ...]:
+    """Parse the comma list of proxy addresses and CIDRs. Bad entries are skipped.
+
+    The spec is the cache key, so changing TRUSTED_PROXIES never serves a stale
+    list. A typo drops the hop from the trust set, which fails towards trusting
+    less, so the limiter ignores the header rather than believing anybody.
+    """
+    nets = []
+    for item in spec.split(","):
+        item = item.strip()
+        if not item:
+            continue
+        try:
+            nets.append(ipaddress.ip_network(item, strict=False))
+        except ValueError:
+            log.error("TRUSTED_PROXIES entry %r is not an address or CIDR; ignored", item)
+    return tuple(nets)
+
+
+def is_trusted_proxy(host: str | None) -> bool:
+    """True when the address is one of the proxies this server sits behind."""
+    if not host:
+        return False
+    try:
+        address = ipaddress.ip_address(host)
+    except ValueError:
+        return False
+    return any(address in net for net in trusted_networks(get_settings().trusted_proxies))
+
 
 # rule name -> (hits allowed, window in seconds)
 RULES: dict[str, tuple[int, float]] = {
@@ -82,34 +114,31 @@ LimiterDep = Annotated[Limiter, Depends(get_limiter)]
 
 
 def client_ip(request: Request) -> str:
-    """The address the limit is counted against. It fails closed.
+    """The address the limit is counted against.
 
-    The server runs behind a proxy (see the Dockerfile: uvicorn --proxy-headers),
-    so uvicorn rewrites `request.client` from X-Forwarded-For when the socket
-    peer is trusted. Uvicorn leaves the header on the request, so its presence
-    alone proves nothing: the rewrite is what makes the header and the socket
-    agree. When they disagree the header came from an untrusted peer, the
-    proxy-header pass did not run, and every client would share one bucket:
-    deny the request and say so loudly instead of silently grouping everyone.
+    X-Forwarded-For is a list that every hop prepends to, and only the entries a
+    trusted proxy appended can be believed: a client can send any header it
+    likes, and an appending proxy ($proxy_add_x_forwarded_for) keeps the client's
+    text at the front of the chain. So the read walks the chain from the right,
+    where the closest proxy wrote last, and returns the first address that is not
+    itself a trusted proxy. The leftmost entry is never used; taking it let a
+    client send a fresh value per request and get a fresh bucket every time,
+    which would defeat the per-IP limits on the sign-in and code-check routes.
 
-    Uvicorn --proxy-headers with --forwarded-allow-ips='*' (the Dockerfile's
-    flags) rewrites `request.client` to the FIRST entry of the chain, while
-    the header itself keeps every hop a proxy appended
-    ($proxy_add_x_forwarded_for) or a CDN added in front. Compare against
-    that first entry so a legitimate multi-hop chain is not refused; when
-    the rewrite did not run `host` is the socket peer, which is never the
-    first entry of an appended chain, so the check still fails closed.
+    When the socket peer is not a trusted proxy, the header proves nothing and
+    is ignored: the peer is the client. That is also what a deployment without
+    uvicorn --proxy-headers looks like, and what a direct hit on the container
+    looks like, so the limiter stays correct instead of believing the caller.
     """
     host = request.client.host if request.client else None
-    forwarded = request.headers.get("x-forwarded-for")
-    first = forwarded.split(",")[0].strip() if forwarded is not None else None
-    if forwarded is None or host in _TRUSTED_PROXIES or host == first:
+    if not is_trusted_proxy(host):
         return host or "unknown"
-    log.error(
-        "x-forwarded-for %r on a request from %s: start uvicorn with "
-        "--proxy-headers --forwarded-allow-ips, or the rate limiter cannot "
-        "tell clients apart; refusing the request",
-        forwarded,
-        host,
-    )
-    raise RateLimited(60)
+    forwarded = request.headers.get("x-forwarded-for")
+    if not forwarded:
+        return host or "unknown"
+    hops = [item.strip() for item in forwarded.split(",") if item.strip()]
+    for hop in reversed(hops):
+        if not is_trusted_proxy(hop):
+            return hop
+    # Every hop is a proxy we trust, so the caller is the far end of the chain.
+    return hops[0] if hops else host or "unknown"

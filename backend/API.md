@@ -199,7 +199,7 @@ Rules:
 - Deck: one per group. A member uploads a built deck with the `base_version` they read. A stale version gets 409 and adopts the winner. Limit: one write per 10 seconds per member per group, so one member cannot starve the rest. `seen_by` counts members by the Seen rule below.
 - `deck_inputs`: `tastes` are the members' taste documents (users only, including the caller). `wanted` is every member's watchlist (non-deleted, QID only) plus the shared list, with `n` = how many sources want the film. `seen` follows the Seen rule. Nothing names a member.
 - **Seen rule**: a film is seen if (a) it is in the viewer's own stubs, (b) it is in a stub the viewer could already see on that member's profile (friend, profile shared, not private), or (c) any member swiped `seen` on it. Never per member.
-- Blocked members stay in a group, but the blocker does not see them: their swipes do not count in `tallies` or `seen_by`, and their messages (text and system messages about them) are hidden. Their own view is unchanged.
+- Blocked members stay in a group, but each stops seeing the other in it, in both directions: a member either of them blocked does not count in `tallies` or `seen_by`, and their messages (text and system messages about them) are hidden. The member who was blocked loses the same view of the blocker. Only membership and the group itself are unaffected.
 - `tallies` counts all swipes per film and vote across members, guests included.
 - A member who leaves loses their swipes and votes. If the owner leaves, ownership moves to the earliest-joined linked member. With none left, the group is deleted.
 

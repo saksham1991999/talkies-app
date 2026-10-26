@@ -1,6 +1,5 @@
 """Match, wrap-up, cursors, record checks, and the limiter."""
 
-import logging
 import random
 from datetime import UTC, date, datetime, timedelta
 from uuid import UUID
@@ -25,6 +24,7 @@ from app.logic.validate import (
 )
 from app.logic.wrapup import Attendee, local_date, plan_wrapup
 from app.ratelimit import RULES, Limiter, client_ip
+from app.settings import get_settings
 from tests.helpers import FakeClock
 
 KANTARA = {
@@ -517,27 +517,78 @@ def _request(host: str | None, headers: dict[str, str] | None = None) -> Request
     )
 
 
+# The proxy in front of the server in these tests. It is loopback, which the
+# default TRUSTED_PROXIES trusts.
+PROXY = "127.0.0.1"
+
+
 def test_client_ip_uses_the_socket_address():
-    assert client_ip(_request("203.0.0.9")) == "203.0.0.9"
+    assert client_ip(_request("203.0.113.9")) == "203.0.113.9"
     assert client_ip(_request(None)) == "unknown"
 
 
-def test_client_ip_fails_closed_on_an_untrusted_forwarded_header(caplog):
-    # A forwarded header on a socket address that is not our proxy means the
-    # --proxy-headers pass did not run: refuse rather than share one bucket.
-    with caplog.at_level(logging.ERROR, logger="talkies"), pytest.raises(RateLimited):
-        client_ip(_request("203.0.0.9", {"x-forwarded-for": "1.2.3.4"}))
-    assert "--proxy-headers" in caplog.text
-    # A trusted proxy address, or no forwarded header at all, is fine.
-    assert client_ip(_request("127.0.0.1", {"x-forwarded-for": "1.2.3.4"})) == "127.0.0.1"
-    assert client_ip(_request("203.0.0.9", {"user-agent": "x"})) == "203.0.0.9"
-    # This is what a request looks like after uvicorn --proxy-headers rewrote it:
-    # the header is still on the request, but the socket now holds the client.
-    assert client_ip(_request("1.2.3.4", {"x-forwarded-for": "1.2.3.4"})) == "1.2.3.4"
-    assert client_ip(_request("1.2.3.4", {"x-forwarded-for": " 1.2.3.4 "})) == "1.2.3.4"
+@pytest.fixture
+def proxies(monkeypatch):
+    """Set TRUSTED_PROXIES for one test, and drop the cached settings after it."""
+
+    def use(spec: str) -> None:
+        monkeypatch.setenv("TRUSTED_PROXIES", spec)
+        get_settings.cache_clear()
+
+    yield use
+    get_settings.cache_clear()
 
 
-async def test_a_proxied_request_is_accepted_and_keyed_by_the_forwarded_address():
+def test_client_ip_ignores_the_header_from_an_untrusted_peer(proxies):
+    # The peer is the client itself, so whatever it put in the header is its own
+    # claim and cannot move the bucket. No trusted proxy: the header is not read.
+    assert client_ip(_request("203.0.113.9", {"x-forwarded-for": "1.2.3.4"})) == "203.0.113.9"
+    proxies("")
+    assert client_ip(_request("203.0.113.9", {"x-forwarded-for": "1.2.3.4"})) == "203.0.113.9"
+    assert client_ip(_request("203.0.113.9", {"user-agent": "x"})) == "203.0.113.9"
+
+
+def test_a_forged_leftmost_entry_cannot_pick_the_bucket():
+    # Our proxy appends the address it saw, so the chain reads
+    # "<whatever the client sent>, <the real client>". The leftmost entry is the
+    # client's own text; the rightmost untrusted one is what the proxy wrote.
+    for i in range(3):
+        assert client_ip(_request(PROXY, {"x-forwarded-for": f"10.0.0.{i}, 203.0.113.7"}))
+    assert client_ip(_request(PROXY, {"x-forwarded-for": "9.9.9.9, 203.0.113.7"})) == "203.0.113.7"
+    assert client_ip(_request(PROXY, {"x-forwarded-for": "203.0.113.7"})) == "203.0.113.7"
+    assert client_ip(_request(PROXY, {"x-forwarded-for": " 203.0.113.7 "})) == "203.0.113.7"
+
+
+def test_a_trusted_proxy_that_appends_the_real_client_ip_yields_it(proxies):
+    # Two hops we trust: our proxy and the CDN in front of it. The caller is the
+    # first address from the right that is not one of them.
+    proxies(f"{PROXY}, 198.51.100.0/24")
+    assert client_ip(_request(PROXY, {"x-forwarded-for": "1.2.3.4, 198.51.100.5"})) == "1.2.3.4"
+    # Every hop is trusted: the far end of the chain is the caller.
+    assert client_ip(_request(PROXY, {"x-forwarded-for": "1.2.3.4"})) == "1.2.3.4"
+    # A blank entry from a sloppy proxy is skipped, not returned.
+    assert client_ip(_request(PROXY, {"x-forwarded-for": " , 1.2.3.4 ,"})) == "1.2.3.4"
+
+
+def test_a_forged_header_cannot_escape_the_verify_limit():
+    # The finding: a client that sends a fresh first entry per request gets a
+    # fresh verify_ip bucket every time, and can guess codes forever. Every one
+    # of these requests has to land in the one bucket the proxy wrote.
+    clock = FakeClock()
+    limiter = Limiter(clock)
+    limit, _ = RULES["verify_ip"]
+    keys = set()
+    for i in range(limit):
+        header = {"x-forwarded-for": f"10.0.0.{i}, 203.0.113.7"}
+        keys.add(client_ip(_request(PROXY, header)))
+        limiter.check("verify_ip", client_ip(_request(PROXY, header)))
+    assert keys == {"203.0.113.7"}
+    with pytest.raises(RateLimited):
+        forged = {"x-forwarded-for": "10.9.9.9, 203.0.113.7"}
+        limiter.check("verify_ip", client_ip(_request(PROXY, forged)))
+
+
+async def test_a_proxied_request_is_keyed_by_the_address_the_proxy_wrote():
     """The deployment the Dockerfile defines: uvicorn --proxy-headers, then this app."""
     inner = FastAPI()
 
@@ -545,11 +596,11 @@ async def test_a_proxied_request_is_accepted_and_keyed_by_the_forwarded_address(
         return JSONResponse({"ip": client_ip(request)})
 
     inner.get("/who")(endpoint)
-    proxied = ProxyHeadersMiddleware(inner, trusted_hosts="*")  # --forwarded-allow-ips='*'
-    transport = httpx.ASGITransport(app=proxied, client=("172.17.0.1", 5000))
+    proxied = ProxyHeadersMiddleware(inner, trusted_hosts=[PROXY])  # --forwarded-allow-ips
+    transport = httpx.ASGITransport(app=proxied, client=(PROXY, 5000))
     async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
-        reply = await client.get("/who", headers={"x-forwarded-for": "203.0.113.7"})
-    # Before this was fixed the route answered 429: the rewrite had happened, so
-    # the old socket-address check refused every proxied request.
-    assert reply.status_code == 200
-    assert reply.json() == {"ip": "203.0.113.7"}
+        first = await client.get("/who", headers={"x-forwarded-for": "8.8.8.8, 203.0.113.7"})
+        forged = await client.get("/who", headers={"x-forwarded-for": "8.8.4.4, 203.0.113.7"})
+    assert first.status_code == 200
+    # A different forged first entry, the same bucket: the proxy appended the real one.
+    assert first.json() == forged.json() == {"ip": "203.0.113.7"}
