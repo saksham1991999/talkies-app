@@ -424,10 +424,16 @@ class SessionNotifier extends Notifier<Session?> {
 
   Future<bool> _refresh(String? stale) async {
     final tokens = ref.read(tokenStoreProvider);
+    // The account this refresh belongs to. Signing in as somebody else while the POST is in flight
+    // must not let the old reply overwrite the new pair, and must not let the old failure sign the
+    // new account out. Every decision below goes through this check first.
+    final before = state?.userId;
+    bool same() => state?.userId == before;
     final current = await tokens.access;
     if (current != null && current != stale) return true;
     final token = await tokens.refresh;
     if (token == null) {
+      if (!same()) throw const ApiAccountChanged();
       await expire();
       return false;
     }
@@ -435,6 +441,8 @@ class SessionNotifier extends Notifier<Session?> {
     try {
       reply = await ref.read(apiProvider).post('/v1/auth/refresh', body: RefreshRequest(token).toJson());
     } on ApiError catch (e) {
+      // The account moved on: this reply says nothing about the session that is signed in now.
+      if (!same()) throw const ApiAccountChanged();
       // The server is struggling: the session may be fine. Anything else means the token is dead.
       if (e.status >= 500 || e.status == 429) rethrow;
       await expire();
@@ -447,6 +455,14 @@ class SessionNotifier extends Notifier<Session?> {
       throw ApiOffline(e); // not a Talkies reply
     }
     if (!ref.mounted) return false;
+    // Discard a refresh that no longer describes the session. `_complete` writes the token pair
+    // before it writes `state`, so both halves have to be checked. Saving either way would leave
+    // `state` on one account and secure storage on another, and every later request would
+    // authenticate as the wrong user.
+    if (!same()) throw const ApiAccountChanged();
+    // Somebody else refreshed while this one was out. Their pair is the newer one, so the caller
+    // just needs to re-read the token; there is nothing to save here.
+    if (await tokens.access != current) return true;
     await tokens.save(s.accessToken, s.refreshToken);
     return true;
   }

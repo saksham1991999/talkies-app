@@ -60,19 +60,21 @@ StubDraft draft(Stub s, {double? rating, String? memo}) => StubDraft(
   private: s.private,
 );
 
-/// An http client that can hold the answer to one POST back, so the test can
-/// act while the request is on the wire.
+/// An http client that can hold the answer to one request back, so the test can
+/// act while the request is on the wire. [path], when given, narrows the hold to
+/// one endpoint: POST is used by both the push and the refresh.
 class _HoldClient extends http.BaseClient {
-  _HoldClient(this.inner, this.method);
+  _HoldClient(this.inner, this.method, {this.path});
   final http.Client inner;
   final String method;
+  final String? path;
   bool hold = false;
   final sent = Completer<void>();
   final release = Completer<void>();
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    if (request.method == method && hold) {
+    if (request.method == method && hold && (path == null || request.url.path == path)) {
       hold = false;
       sent.complete();
       await release.future;
@@ -874,21 +876,68 @@ void main() {
       expect(w.server.count('GET /v1/sync/pull'), pulls + 1);
     });
 
+    test('a refresh that outlives an account switch cannot touch the new account', () async {
+      final w = World();
+      final wire = _HoldClient(w.server.client, 'POST', path: '/v1/auth/refresh');
+      final a = Device(w.server, client: wire);
+      w.phones.add(a);
+      await a.signIn('one@example.test');
+      a.watch('Q1');
+      await a.sync();
+
+      // Kill the tokens and hold the refresh that the next 401 starts.
+      w.server.revokeAll();
+      wire.hold = true;
+      final refresh = a.session.refresh(await a.session.accessToken());
+      await wire.sent.future;
+
+      // Somebody else signs in while the old refresh is still on the wire.
+      await a.signIn('two@example.test');
+      final two = a.c.read(sessionProvider)!.userId;
+
+      wire.release.complete(); // the reply is account one's, and it is a 401
+      await expectLater(refresh, throwsA(isA<ApiAccountChanged>()));
+
+      // Account two is still signed in, and its own tokens are the ones in secure storage: a request
+      // now answers as two, rather than as one or as nobody.
+      expect(a.c.read(sessionProvider)!.userId, two);
+      final me = await a.c.read(apiProvider).get('/v1/me') as Map<String, dynamic>;
+      expect(me['id'], two);
+    });
+
     test('an expired session ends the run in flight but keeps what it had synced', () async {
       final w = World();
-      final a = await w.phone();
+      final gate = _PullGate(w.server.client);
+      final a = Device(w.server, client: gate);
+      w.phones.add(a);
+      await a.signIn();
       a.watch('Q1');
       await a.sync();
       await a.sync(); // the second pull is the one that passes the pushed row
       final cursor = a.store.cursor, gen = a.store.generation, user = a.store.lastUser;
       expect(cursor, greaterThan(0));
+
+      // A row the held pull would bring, so a run that wrongly finished leaves a trace.
+      final b = await w.phone();
+      b.watch('Q2');
+      await b.sync();
+      w.tick(const Duration(minutes: 1));
+
+      // Hold the pull on the wire, kill the tokens, then let it land: the 401 and its failed refresh
+      // arrive while the run is in flight, which is the state this test is named for.
+      gate.arm();
+      final run = a.engine.run();
+      await gate.hit.future;
       w.server.revokeAll();
-      await expectLater(a.c.read(apiProvider).get('/v1/me'), throwsA(isA<ApiUnauthorized>()));
-      // expire() keeps the store for the same account to resume, so only the generation can tell a
-      // run that began under it to stop.
-      expect(a.store.generation, greaterThan(gen));
+      gate.open();
+      await run;
+
+      // The run began under the old session and must write nothing: no cursor move, no rows applied.
       expect(a.store.cursor, cursor);
+      expect(a.store.generation, greaterThan(gen));
       expect(a.store.lastUser, user);
+      expect(a.diary.stubs.map((s) => s.filmId), ['Q1']);
+      expect(a.syncState, SyncState.idle);
     });
 
     test('an empty phone does not ask: it starts clean with whoever signs in', () async {

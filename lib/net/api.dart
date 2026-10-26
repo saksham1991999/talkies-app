@@ -29,6 +29,15 @@ class ApiUnauthorized extends ApiException {
   String toString() => 'ApiUnauthorized';
 }
 
+/// The account changed while the request was in flight, so the retry was dropped: the body was built
+/// from the old account's data. Deliberately **not** an [ApiUnauthorized], because the user is still
+/// signed in: a caller that treats this as a sign-out would leave the new account without a run.
+class ApiAccountChanged extends ApiException {
+  const ApiAccountChanged();
+  @override
+  String toString() => 'ApiAccountChanged';
+}
+
 /// Any other non-2xx reply: status, the `error.code` of the body, its message and detail.
 class ApiError extends ApiException {
   const ApiError(this.status, this.code, this.message, [this.detail]);
@@ -114,12 +123,15 @@ class HttpApi implements Api {
       // One refresh for every request that failed at the same time, then one retry.
       if (!await session.refresh(token)) throw const ApiUnauthorized();
       _live();
+      // Read the retry token first. This is the await that spans an account switch, and
+      // `TokenStore.save` lands before `state` does, so a check placed before this read can pass
+      // while the token already belongs to the new account.
+      final retryToken = await session.accessToken();
+      _live();
       // A request that outlived its session must not be replayed under another account: its body
       // was built from the old account's data. A sync push of a deleted account is the case.
-      if (_ref.read(sessionProvider)?.userId != user) throw const ApiUnauthorized();
-      token = await session.accessToken();
-      _live();
-      reply = await _send(method, path, query, body, token);
+      if (_ref.read(sessionProvider)?.userId != user) throw const ApiAccountChanged();
+      reply = await _send(method, path, query, body, retryToken);
       if (reply.status == 401) {
         await session.expire();
         throw const ApiUnauthorized();

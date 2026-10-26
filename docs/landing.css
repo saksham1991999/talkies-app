@@ -168,7 +168,6 @@ html:has(body.landing) { background: #3a1519; }
 .stores a:hover { opacity: 0.86; }
 .stores a:focus-visible { outline: 2px solid var(--sindoor); outline-offset: 3px; }
 .stores img { height: 48px; width: auto; display: block; }
-.admit .fine { font-size: 14px; color: var(--ink-soft); }
 
 /* Real screens from the app. */
 .screens {
@@ -298,10 +297,13 @@ html:has(body.landing) { background: #3a1519; }
 }
 
 /* Fine print and the Android note sit inside a stub body, whose own paragraph
-   rules are more specific than a bare class. Both selectors name the paragraph
-   element for that reason: the first versions lost the cascade and the notice
-   rendered at body size, flush against the paragraph above it. */
-.admit .stub-body p.fine { margin-top: 10px; }
+   rules are more specific than a bare class: `.admit .stub-body p` (0,2,1) beats
+   `.admit .fine` (0,2,0), so the notice rendered at 18px. Both selectors name the
+   paragraph element and repeat every property they set, because `font-size` and
+   `color` have to win separately, not just `margin`.
+   `.fine` has one user and it is inside `.admit .stub-body`, so the bare class is
+   gone rather than left as a rule that never applies. */
+.admit .stub-body p.fine { margin-top: 10px; font-size: 14px; color: var(--ink-soft); }
 .admit .stub-body p.android-soon,
 .guide .stub-body p.android-soon { font-size: 15px; color: var(--ink-soft); margin: 14px 0 0; }
 

@@ -306,6 +306,11 @@ class SyncEngine extends Notifier<SyncState> {
       _failures = 0;
       state = SyncState.idle;
       return true;
+    } on ApiAccountChanged {
+      // The run was for the account that was signed in when it started, and that is not the account
+      // any more. Nothing was written; loop once more so the new account still gets its run.
+      _again = true;
+      return true;
     } on ApiUnauthorized {
       if (ref.mounted) state = SyncState.idle; // signed out: nothing to retry
       return false;

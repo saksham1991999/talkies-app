@@ -33,6 +33,10 @@ class RemoteCrewRepo implements CrewRepo {
       throw const CrewOffline();
     } on ApiUnauthorized {
       throw const CrewOffline();
+    } on ApiAccountChanged {
+      // The account changed under the call, so it never ran. Offline is the honest outcome: the
+      // group screens retry, and nothing was written.
+      throw const CrewOffline();
     } on ApiError catch (e) {
       throw CrewRefused(e.code, e.status);
     } on TypeError {

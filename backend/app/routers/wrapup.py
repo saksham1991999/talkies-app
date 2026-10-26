@@ -136,6 +136,12 @@ async def _wrap_up_once(nid: UUID, body: WrapupPost, user: UUID, db: Db) -> dict
         attendees = [Attendee(r["name"], r["user_id"]) for r in rows]
         if any(a.user_id is not None and a.user_id not in locked for a in attendees):
             raise _MembershipChanged()
+        # A join shows up above as an attendee the snapshot never locked. A leave does not: the
+        # member is in `locked` and can still be in `WENT`, so nothing above notices, and the loop
+        # below would stamp a stub into the diary of somebody who is no longer in the crew. Re-read
+        # the membership so the plan is built from the set that was actually locked.
+        if {r["user_id"] for r in await c.fetch(GROUP_USERS, night["group_id"])} != locked:
+            raise _MembershipChanged()
         plans = plan_wrapup(
             nid,
             event["starts_at"],

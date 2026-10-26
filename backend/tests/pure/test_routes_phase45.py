@@ -542,6 +542,7 @@ async def test_wrapup_writes_one_stub_per_account_member_and_locks_each_user():
         SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT),
+        GROUP_MEMBERS,
         ("insert into stubs", 1),
         ("insert into stubs", None),  # the second user deleted this stub earlier: it stays deleted
         ("update nights set status = 'done'", "UPDATE 1"),
@@ -589,6 +590,7 @@ async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
         SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT[:2]),
+        GROUP_MEMBERS,
         ("insert into stubs", None),
         ("insert into stubs", None),
     )
@@ -605,6 +607,7 @@ async def test_wrapup_again_changes_no_status_and_names_members_when_asked():
         SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("m.id = any($2::uuid[])", [WENT[1], WENT[2]]),
+        GROUP_MEMBERS,
         ("insert into stubs", 1),
         ("update nights set status = 'done'", "UPDATE 1"),
         ("insert into messages", "INSERT 0 1"),
@@ -640,6 +643,7 @@ async def test_a_member_who_joins_mid_wrapup_is_locked_before_getting_a_stub():
         SEAT_OWNER,
         ("from nights n join night_options f", EVENT),
         ("join night_rsvps r", WENT),
+        GROUP_MEMBERS,
         ("insert into stubs", 1),
         ("insert into stubs", None),
         ("update nights set status = 'done'", "UPDATE 1"),
@@ -654,6 +658,35 @@ async def test_a_member_who_joins_mid_wrapup_is_locked_before_getting_a_stub():
         (str(USER),),
         (str(OTHER),),
     ]
+    conn.finished()
+
+
+async def test_a_member_who_leaves_mid_wrapup_never_gets_a_stub_and_the_write_is_refused():
+    # A leave is invisible to the attendee check: the leaver is in `locked`, and the
+    # RSVP read can still name them. Without the membership re-read the loop would
+    # stamp a stub into the diary of somebody who is no longer in the crew, so the
+    # write must be refused instead. Three attempts all see the short membership.
+    one_member_short = ("select user_id from group_members", [{"user_id": USER}])
+    attempt = [
+        NIGHT_OF_ROW(SET_NIGHT),
+        SEAT_OWNER,
+        GROUP_MEMBERS,
+        *LOCK_USERS,
+        LOCKED_NIGHT(SET_NIGHT),
+        SEAT_OWNER,
+        ("from nights n join night_options f", EVENT),
+        ("join night_rsvps r", WENT),  # still names OTHER, whose leave was not seen yet
+        one_member_short,  # the re-read: OTHER left after the snapshot was locked
+    ]
+    app, conn = app_for(*(attempt * 3))
+    body = {"seat_row": "F", "first_seat": 7, "member_ids": None}
+    async with client_for(app) as client:
+        reply = await client.post(f"/v1/nights/{NID}/wrapup", json=body, headers=HEADERS)
+    assert reply.status_code == 409, reply.text
+    assert reply.json()["error"]["code"] == "group_changed"
+    # Nothing was written: no stub for the leaver, and the night is untouched.
+    assert not [sql for _, sql, _ in conn.calls if "insert into stubs" in sql]
+    assert not [sql for _, sql, _ in conn.calls if "update nights set status" in sql]
     conn.finished()
 
 
