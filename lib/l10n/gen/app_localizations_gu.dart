@@ -76,7 +76,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get recent => 'હાલનું';
 
   @override
-  String get allStubs => 'બધા ટિકિટ';
+  String get allStubs => 'બધી ટિકિટો';
 
   @override
   String get newReleases => 'નવી રિલીઝ';
@@ -97,7 +97,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get seeAll => 'બધું જુઓ';
 
   @override
-  String get emptyHome => 'તમારું પ્રથમ ટિકિટ એક ફિલ્મ દૂર છે. + દબાવો અને શીર્ષક શોધો.';
+  String get emptyHome => 'તમારી પ્રથમ ટિકિટ એક ફિલ્મ દૂર છે. + દબાવો અને શીર્ષક શોધો.';
 
   @override
   String get venueCinema => 'સિનેમા હોલ';
@@ -292,7 +292,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get clearDate => 'તારીખ ખાલી કરો';
 
   @override
-  String get yourStubs => 'તમારા ટિકિટ';
+  String get yourStubs => 'તમારી ટિકિટો';
 
   @override
   String get openWikipedia => 'વિકિપેડિયા પર વાંચો';
@@ -376,7 +376,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get shareTicket => 'ટિકિટ શેર કરો';
 
   @override
-  String get recordTitle => 'નવા ટિકિટ';
+  String get recordTitle => 'નવી ટિકિટ';
 
   @override
   String get editTitle => 'ટિકિટ સુધારો';
@@ -532,13 +532,13 @@ class AppLocalizationsGu extends AppLocalizations {
   String get scopeAll => 'સમગ્ર કાળ';
 
   @override
-  String get totalStubs => 'ટિકિટ્સ';
+  String get totalStubs => 'ટિકિટો';
 
   @override
   String get totalTime => 'દર્શન સમય';
 
   @override
-  String get spent => 'ટિકિટ્સ પર ખર્ચ';
+  String get spent => 'ટિકિટો પર ખર્ચ';
 
   @override
   String get fdfsCount => 'FDFS';
@@ -694,7 +694,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get icon_green => 'લીલી ટિકિટ';
 
   @override
-  String get icon_blue => 'કાચી ટિકિટ';
+  String get icon_blue => 'વાદળી ટિકિટ';
 
   @override
   String get icon_night => 'રાત્રિ શો';
@@ -782,7 +782,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get aboutBody =>
-      'Talkies ભારતીય ફિલમ પ્રેમીઓ માટેના ટિકિટ દૈનિક ટીકીટ ડાયરી છે. તમારા ટિકિટ આ ફોન પર રહે છે. ફિલમ વિગતો Wikidata (CC0) થી અને પોસ્ટરો Wikipedia થી મળે છે.';
+      'Talkies ભારતીય ફિલમ પ્રેમીઓ માટેના ટિકિટ દૈનિક ટીકીટ ડાયરી છે. તમારી ટિકિટો આ ફોન પર રહે છે. ફિલમ વિગતો Wikidata (CC0) થી અને પોસ્ટરો Wikipedia થી મળે છે.';
 
   @override
   String get whatsNew => 'નવું શું છે';
@@ -1748,7 +1748,7 @@ class AppLocalizationsGu extends AppLocalizations {
       locale: localeName,
       zero: 'કોઈ ટિકિટ નથી',
       one: '1 ટિકિટ',
-      other: '$count ટિકિટ્સ',
+      other: '$count ટિકિટો',
     );
     return '$_temp0';
   }
